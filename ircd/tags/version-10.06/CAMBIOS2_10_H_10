@@ -1,0 +1,80 @@
+* 2007/09/07 zoltan@irc-dev.net      (u2.10.H.10.06)              FEATURE
+-------------------------------------------------------------------------
+  Parche de ocultacion de servidores para dificultar donde estan los
+  usuarios, que tipologia lleva la red, entre otros.
+
+  Se activa/desactiva a voluntad en la base de datos distribuida, es el
+  registro "ocultar.servidores" en la tabla z de la BDD.
+
+  Su activacion implica lo siguiente:
+
+  NETSPLIT: Se sustituye el quit de los usuarios cuando se forma un split,
+  en vez de salir los servidores, salen *.net *.split. En el notice que
+  sale teniendo mascara adecuada de +s salen los servidores, que esta 
+  puesto solo para ircops/opers.
+
+  NETJOIN: En los burst, en vez del servidor, sale *.irc-hispano.org
+  al ajustar los modos del canal.
+
+  WHO: No permite buscar usuarios por servidor.
+  En el hopcount sale siempre 3, salvo si es al mismo nick que sale 0
+  por temas de compatibilidad con clientes.
+  Los ircops/opers no tienen estas restricciones.
+
+  WHOWAS: No sale el nombre del servidor, sustituyendo por 
+  *.irc-hispano.org.
+  Los ircops/opers no tienen estas restricciones.
+
+  WHOIS: No sale el nombre del servidor, sustituyendo por
+  *.irc-hispano.org.
+  Para averiguar el idle hay que hacer /whois nick nick aunque hagamos 
+  a un nick en el mismo server.
+  Los ircops/opers no tienen estas restricciones.
+
+  KILL: Los KILL locales no sale el mensaje de "Local kill by..." sino
+  "Killed" como en los KILL remotos para no desvelar procedencia.
+  Tambien en las rutas se ocultan los servidores.
+
+  MAP y LINKS: Se restringen los comandos para solo Ircops y Opers.
+
+* 2007/09/06 daijo@irc-dev.net       (u2.10.H.10.05)                  FIX
+-------------------------------------------------------------------------
+  En los GCC modernos, salen warnings al utilizar size_t en las funciones
+  de red, en lugar de socklen_t que es el actual estandard.
+
+  Se incluye chequeo para comprobar si existe socklen_t en el sistema
+  durante la ejecucion del configure. En algunos sistemas como MacOS X
+  que no tienen socklen_t, y se define como un integer.
+
+  BUG SF ID TRACKER: #1754717
+
+* 2007/09/06 daijo@irc-dev.net       (u2.10.H.10.04)                  FIX
+-------------------------------------------------------------------------
+  La utilidad mkpasswd contiene una fuga de memoria.
+
+  BUG SF ID TRACKER: #1754122
+
+* 2007/09/04 daijo@irc-dev.net       (u2.10.H.10.03)                  FIX
+-------------------------------------------------------------------------
+  Corregido una asignacion multiple que no esta permitido en los GCC
+  modernos.
+
+  BUG SF ID TRACKER: #1754115
+
+* 2007/09/04 zoltan@irc-dev.net      (u2.10.H.10.02)              FEATURE
+-------------------------------------------------------------------------
+  Se agregan dentro del directorio ircd/crypt/tea dos aplicaciones para
+  pasar de IP real a IP virtual y viceversa.
+  
+* 2007/06/26 er.krali@gmail.com      (u2.10.H.10.01)                  FIX
+-------------------------------------------------------------------------
+  Compilación en amd64 y traducción de los mensajes.
+  Principalmente se ha eliminado el uso de variables de tipo "register"
+  y se ha actualizado la sintaxis de argumentos variables.
+
+  BUG SF ID TRACKER: #1743535
+
+* 2007/06/26 zoltan@irc-dev.net      (u2.10.H.10.00)              CLEANUP
+  -----------------------------------------------------------------------
+  Tres anios y 3 meses despues, volvemos a la carga.
+
