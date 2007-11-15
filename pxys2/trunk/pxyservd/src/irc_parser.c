@@ -300,8 +300,13 @@ parse_nick(toktabptr ttab)
         RET_BOGUS; /* doh; +rrhrhhrhrh ? */
       
       mode = ttab->tok[7];
+#if 1 /* P10-Hispano */
+      ip = ttab->tok[8];      /* base64 IP */
+      nn = ttab->tok[9];      /* base64 numnick */
+#else
       ip = ttab->tok[k];      /* base64 IP */
       nn = ttab->tok[k + 1];  /* base64 numnick */
+#endif
       }
     else
       {
@@ -350,7 +355,11 @@ parse_server(toktabptr ttab)
       }
   
   t1 = ttab->tok[6];
+#if 1 /* P10-Hispano */
+  if (atoi(t1+1) >= 9)
+#else
   if (atoi(t1+1) >= 10)
+#endif
     {
     yxx nyxx = yxx_to_int(ttab->tok[7]);
     irc_network_add_server(from, ttab->tok[2], nyxx.server_n, nyxx.client_n,
@@ -398,6 +407,14 @@ parse_ping(toktabptr ttab)
       send_raw("%s %s %s %s %s %d %s" CRLF, gMe.yy, TOK_PONG, gMe.yy,
                ttab->tok[2], ttab->tok[4], asll, militime_float(NULL));
       }
+#if 1 /* P10-Hispano */
+      /* Como no tiene AsLL ping, hay que
+       * poner el ping normal
+       */
+      else if (ttab->size == 3)
+       send_raw("%s %s %s %s" CRLF, gMe.yy, TOK_PONG, gMe.yy,
+                ttab->tok[2]);
+#endif
     }
   }
 
