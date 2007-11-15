@@ -1,0 +1,200 @@
+# -*- Perl -*-
+# $Id: test.desc,v 1.6 2004/01/18 01:39:45 mbuna Exp $
+
+$test = {
+    't_atomic1' => {
+        'file' => 't_atomic1',
+        'timeout' => {
+            'time' => 30,
+            'message' => 'Timeout',
+            'status' => [ 'warning', 'alarm' ],
+        },
+        'code' => {
+            '0' => {
+                'message' => 'Ok',
+                'status' => [ 'successful' ],
+            },
+            '1' => {
+                'message' => 'misc timer error',
+                'status' => [ 'error' ],
+            },
+            '2' => {
+                'message' => 'unable to set task info',
+                'status' => [ 'error' ],
+            },
+            '3' => {
+                'message' => 'atomic failure/result not coherent',
+                'status' => [ 'error' ],
+            },
+        },
+    },
+    't_atomic2' => {
+        'file' => 't_atomic2',
+        'timeout' => {
+            'time' => 15,
+            'message' => 'Timeout',
+            'status' => [ 'warning', 'alarm' ],
+        },
+        'code' => {
+            '0' => {
+                'message' => 'Ok',
+                'status' => [ 'successful' ],
+            },
+            '1' => {
+                'message' => 'misc timer error',
+                'status' => [ 'error' ],
+            },
+            '2' => {
+                'message' => 'unable to set task info',
+                'status' => [ 'error' ],
+            },
+            '3' => {
+                'message' => 'atomic failure/result not coherent',
+                'status' => [ 'error' ],
+            },
+        },
+    },
+    't_signal1' => {
+        'file' => 't_signal1',
+        'timeout' => {
+            'time' => 10,
+            'message' => 'Timeout',
+            'status' => [ 'warning', 'alarm' ],
+        },
+        'code' => {
+            '0' => {
+                'message' => 'Ok',
+                'status' => [ 'successful' ],
+            },
+            '1' => {
+                'message' => 'peak signal handler creation failed (error)',
+                'status' => [ 'error' ],
+            },
+            '2' => {
+                'message' => 'bad signum parameter (error)',
+                'status' => [ 'error' ],
+            },
+            '3' => {
+                'message' => 'bad context pointer management (error)',
+                'status' => [ 'error' ],
+            },
+            '4' => {
+                'message' => 'one or more signals lost (warning)',
+                'status' => [ 'warning' ],
+            },
+            '5' => {
+                'message' => 'other timer error',
+                'status' => [ 'error' ],
+            },
+        },
+    },
+    't_signal2' => {
+        'file' => 't_signal2',
+        'timeout' => {
+            'time' => 10,
+            'message' => 'Timeout',
+            'status' => [ 'warning', 'alarm' ],
+        },
+        'code' => {
+            '0' => {
+                'message' => 'Ok',
+                'status' => [ 'successful' ],
+            },
+            '1' => {
+                'message' => 'peak signal handler creation failed (error)',
+                'status' => [ 'error' ],
+            },
+            '2' => {
+                'message' => 'bad signum parameter (error)',
+                'status' => [ 'error' ],
+            },
+            '3' => {
+                'message' => 'bad context pointer management (error)',
+                'status' => [ 'error' ],
+            },
+            '4' => {
+                'message' => 'one or more signals lost (warning)',
+                'status' => [ 'warning' ],
+            },
+            '5' => {
+                'message' => 'other timer error',
+                'status' => [ 'error' ],
+            },
+            '6' => {
+                'message' => 'unable to get or set task info',
+                'status' => [ 'error' ],
+            },
+        },
+    },
+    't_timer1' => {
+        'file' => 't_timer1',
+        'timeout' => {
+            'time' => 5,
+            'message' => 'Timeout',
+            'status' => [ 'warning', 'alarm' ],
+        },
+        'code' => {
+            '0' => {
+                'message' => 'Ok',
+                'status' => [ 'successful' ],
+            },
+            '1' => {
+                'message' => 'timer creation failed (error)',
+                'status' => [ 'error' ],
+            },
+            '2' => {
+                'message' => 'bad context pointer management (error)',
+                'status' => [ 'error' ],
+            },
+        },
+    },
+    't_timer2' => {
+        'file' => 't_timer2',
+        'timeout' => {
+            'time' => 30,
+            'message' => 'Timeout',
+            'status' => [ 'warning', 'alarm' ],
+        },
+        'code' => {
+            '0' => {
+                'message' => 'Ok',
+                'status' => [ 'successful' ],
+            },
+            '1' => {
+                'message' => 'timer creation failed (error)',
+                'status' => [ 'error' ],
+            },
+            '2' => {
+                'message' => 'bad context pointer management (error)',
+                'status' => [ 'error' ],
+            },
+        },
+    },
+    't_timer3' => {
+        'file' => 't_timer3',
+        'timeout' => {
+            'time' => 30,
+            'message' => 'Timeout',
+            'status' => [ 'warning', 'alarm' ],
+        },
+        'code' => {
+            '0' => {
+                'message' => 'Ok',
+                'status' => [ 'successful' ],
+            },
+            '1' => {
+                'message' => 'timer creation failed (error)',
+                'status' => [ 'error' ],
+            },
+            '2' => {
+                'message' => 'bad context pointer management (error)',
+                'status' => [ 'error' ],
+            },
+            '3' => {
+                'message' => 'unable to get or set task info (error)',
+                'status' => [ 'error' ],
+            },
+        },
+    },
+}
+

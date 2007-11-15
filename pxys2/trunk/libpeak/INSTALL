@@ -1,0 +1,74 @@
+$Id: INSTALL,v 1.1 2004/01/19 17:37:47 mbuna Exp $
+      ----------------------------------------------------------------
+      PEAK Library :: Parallel Events and Asynchronous tasKing Library
+      ----------------------------------------------------------------
+
+INSTALLATION
+============
+
+The PEAK Library is easy to install on systems where it's
+supported. On most systems, GNU CC (gcc) is recommended to compile
+libpeak. However, on some architectures like POWER or PPC970, gcc
+still lacks some optimization support. We will then try to allow you
+to compile libpeak on such systems. Please note that it's low priority
+unless someone requests it; see the sourceforge.net project page for
+that: http://sourceforge.net/projects/peak.
+
+CONFIGURING COMPILATION
+=======================
+
+To install in /usr/local/lib and /usr/local/include/peak:
+
+   ./configure
+
+or to install in /usr/lib and /usr/include/peak:
+
+   ./configure --prefix=/usr
+
+or similarly to install in your home directory (another example..):
+
+   ./configure --prefix=$HOME
+
+If you plan to use libpeak on a uniprocessor machine *ONLY*, you can
+turn off possible SMP code overhead by adding this configure option:
+
+   --enable-uniprocessor-only
+
+At the end of the configure script, you will see a summary of the main
+options (installation paths, detected architecture, multiplexing
+engine used...). At this time you might want to force the use of
+another engine by adding this configure option (example to choose epoll):
+
+   --with-engine=epoll
+
+Obviously your system must support the choosen engine.
+
+
+COMPILING
+=========
+
+Then, to compile the library (default is to build a shared and static
+version, if possible):
+
+   make
+
+Optionally, you can compile and run the test suite to verify libpeak's
+working correctly:
+
+   make check
+
+
+INSTALLING
+==========
+
+Finally, you want to install it with:
+
+make install
+
+This will copy the libraries and its headers at the good
+places. Additionally, a little script named peak-config will be
+installed which allow programs using libpeak to detect it. The
+peak-config script should be in a place defined in your PATH
+environment variable.
+
+Please report installation problems to mbuna@bugged.org.

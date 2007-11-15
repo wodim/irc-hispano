@@ -1,0 +1,81 @@
+\hypertarget{struct__smat__head__s}{
+\section{\_\-smat\_\-head\_\-s Struct Reference}
+\label{struct__smat__head__s}\index{_smat_head_s@{\_\-smat\_\-head\_\-s}}
+}
+{\tt \#include $<$dbprim.h$>$}
+
+Collaboration diagram for \_\-smat\_\-head\_\-s:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=162pt]{struct__smat__head__s__coll__graph}
+\end{center}
+\end{figure}
+
+
+\subsection{Detailed Description}
+\begin{Desc}
+\item[For internal use only.]
+This is the implementation of the \hyperlink{group__dbprim__smat_ga1}{smat\_\-head\_\-t} type.\end{Desc}
+
+
+
+
+Definition at line 2005 of file dbprim.h.\subsection*{Data Fields}
+\begin{CompactItemize}
+\item 
+unsigned long \hyperlink{struct__smat__head__s_o0}{sh\_\-magic}
+\item 
+\hyperlink{group__dbprim__smat_ga6}{smat\_\-loc\_\-t} \hyperlink{struct__smat__head__s_o1}{sh\_\-elem}
+\item 
+\hyperlink{struct__smat__table__s}{smat\_\-table\_\-t} $\ast$ \hyperlink{struct__smat__head__s_o2}{sh\_\-table}
+\item 
+\hyperlink{struct__link__head__s}{link\_\-head\_\-t} \hyperlink{struct__smat__head__s_o3}{sh\_\-head}
+\end{CompactItemize}
+
+
+\subsection{Field Documentation}
+\hypertarget{struct__smat__head__s_o1}{
+\index{_smat_head_s@{\_\-smat\_\-head\_\-s}!sh_elem@{sh\_\-elem}}
+\index{sh_elem@{sh\_\-elem}!_smat_head_s@{\_\-smat\_\-head\_\-s}}
+\subsubsection[sh\_\-elem]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{group__dbprim__smat_ga6}{smat\_\-loc\_\-t} \hyperlink{struct__smat__head__s_o1}{\_\-smat\_\-head\_\-s::sh\_\-elem}}}
+\label{struct__smat__head__s_o1}
+
+
+0 or 1 to indicate first or second. 
+
+Definition at line 2007 of file dbprim.h.
+
+Referenced by sh\_\-find(), sh\_\-flush(), sh\_\-init(), sh\_\-iter(), sh\_\-move(), st\_\-add(), and st\_\-find().\hypertarget{struct__smat__head__s_o3}{
+\index{_smat_head_s@{\_\-smat\_\-head\_\-s}!sh_head@{sh\_\-head}}
+\index{sh_head@{sh\_\-head}!_smat_head_s@{\_\-smat\_\-head\_\-s}}
+\subsubsection[sh\_\-head]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{struct__link__head__s}{link\_\-head\_\-t} \hyperlink{struct__smat__head__s_o3}{\_\-smat\_\-head\_\-s::sh\_\-head}}}
+\label{struct__smat__head__s_o3}
+
+
+Linked list head. 
+
+Definition at line 2009 of file dbprim.h.
+
+Referenced by sh\_\-find(), sh\_\-flush(), sh\_\-init(), sh\_\-iter(), sh\_\-move(), st\_\-add(), and st\_\-find().\hypertarget{struct__smat__head__s_o0}{
+\index{_smat_head_s@{\_\-smat\_\-head\_\-s}!sh_magic@{sh\_\-magic}}
+\index{sh_magic@{sh\_\-magic}!_smat_head_s@{\_\-smat\_\-head\_\-s}}
+\subsubsection[sh\_\-magic]{\setlength{\rightskip}{0pt plus 5cm}unsigned long \hyperlink{struct__smat__head__s_o0}{\_\-smat\_\-head\_\-s::sh\_\-magic}}}
+\label{struct__smat__head__s_o0}
+
+
+Magic number. 
+
+Definition at line 2006 of file dbprim.h.
+
+Referenced by sh\_\-init().\hypertarget{struct__smat__head__s_o2}{
+\index{_smat_head_s@{\_\-smat\_\-head\_\-s}!sh_table@{sh\_\-table}}
+\index{sh_table@{sh\_\-table}!_smat_head_s@{\_\-smat\_\-head\_\-s}}
+\subsubsection[sh\_\-table]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{struct__smat__table__s}{smat\_\-table\_\-t}$\ast$ \hyperlink{struct__smat__head__s_o2}{\_\-smat\_\-head\_\-s::sh\_\-table}}}
+\label{struct__smat__head__s_o2}
+
+
+Table this object's in. 
+
+Definition at line 2008 of file dbprim.h.
+
+Referenced by sh\_\-flush(), sh\_\-init(), sh\_\-iter(), st\_\-add(), and st\_\-find().

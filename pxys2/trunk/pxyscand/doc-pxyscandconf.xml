@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<!-- Documented configuration file for pxyscand (from pxys v2 package)
+$Id: doc-pxyscandconf.xml,v 1.1 2004/01/03 00:04:58 mbuna Exp $
+-->
+<pxyscand>
+  
+  <!-- pxyscand uses a lightweight binary protocol (currently only implemented
+       over TCP) called the OPAS protocol. Protocol's draft is located in
+       pxys2/libopas/doc/draft-opas-1.txt.
+       
+       port: the port to listen to
+       bind-address: source address of the listener (empty for default)
+       protocol: only tcp for now
+       allow: can be defined several times, it defines an IP to allow
+       requests from.
+       limit: not implemented yet       
+  -->
+  <opas>
+    <port>9601</port>
+    <bind-address>172.16.0.5</bind-address>
+    <protocol>tcp</protocol>
+    <allow>172.16.0.5</allow>
+    <limit>0</limit><!-- requests per minute, 0=unlimited -->
+  </opas>
+  
+  <!-- The scanner tag defines very important settings of your proxy scanner:
+       
+       maxscans: number of max socket to open for scanning - the more you have,
+       the more you can scan at the same time. I use a value > 10000 on the
+       Undernet. Be careful, you often need to do some system's tunning to
+       increase this value (using sysctl for example on BSD systems...).
+       The total number of simultaneous IPs you can scan is
+       maxscans/number_of_modules_enabled.
+       4000 is already a very big value; a good way to do it is to try a low
+       value and see: if the scanning activity stays at 100% (use the
+       "/msg prox status -scan" command) then increase it.
+       
+       module: see, it's easy to add other http proxy ports, or to comment
+       a type of scan... Note that the wingate module contains the insecure
+       Cisco detection (2 in 1 scan).
+       
+       source-pool, optional tag: 1 or more source IPs to scan from ("vhosts").
+       An uniform random shuffle is done by the scanner to fool firewalls.
+       
+       target, for some scans like socks4 scanning, because the proxy doesn't
+       reply a proper error or status flag, we need to be sure the socks has
+       really connected to something (eg. an IRC server). IMPORTANT: so please
+       maintain an up-to-date list of one or a few targets (i recommend the
+       more stable servers of your IRC network). If the scanner has no more
+       target IP up, it can't scan!
+       
+       target-check: pxyscand performs a simple connect check on the current
+       target IP, to verify it's still up. If not, it trys the next one.
+       target-check is a delay in seconds of these checks' frequency.
+       
+       log-agent: relative or (prefered) full path of http agents logging, for
+       stats purpose, it's fun.
+       
+       timeout: connect() timeout in seconds. Important setting. If your
+       scanner get lagged, increase this value as some proxies might not be
+       found.
+       
+       string: a string to match when connecting to a target host via a proxy,
+       used to detect a real proxy connection, and thus to detect the proxy.
+       You can define several matching strings.
+       
+  -->
+  <scanner>
+    <maxscans>4000</maxscans>
+    <!-- built-in module types: wingate,socks,crazybandit,http -->
+    <module type="wingate" />
+    <module type="socks" />
+    <module type="crazybandit" />
+    <module type="http">3128</module>
+    <module type="http">6588</module>
+    <module type="http">8080</module>
+    <module type="http">4480</module>
+    <module type="http">80</module>
+    <module type="http">8000</module>
+    
+<!--
+    <source-pool>
+      <address>172.16.0.51</address>
+      <address>172.16.0.52</address>
+      <address>172.16.0.53</address>
+      <address>172.16.0.54</address>
+      <address>172.16.0.55</address>
+    </source-pool>
+-->
+
+    
+<!-- set scans target (for some scans): IPs of some of your network's stable 
+     servers..
+-->
+    <target>
+      <address>193.109.122.67</address>
+      <port>6668</port>
+    </target>
+    <target>
+      <address>62.235.13.228</address>
+      <port>6668</port>
+    </target>
+    <target-check>600</target-check>
+    <log-agent>agent.log</log-agent>
+    <timeout>30</timeout>
+    <string>NOTICE AUTH :</string>
+    <string>ERROR :</string>
+  </scanner>
+  
+  
+  <!-- pxyscand uses an efficient LRU IP cache for proxy and non-proxy IPs.
+       This usually avoid a LOT of scans to be performed again.
+       
+       directory: a (prefered) full path of the directory where the cache
+       files should be stored. The directory must exist.
+       
+       expire: expire duration in seconds for non-proxy IPs, should probably
+       be at least 1 day to not annoy too much.
+       
+       proxy-expire: expire duration in seconds of a proxy IP found. Please,
+       don't set a too high expiration duration here, some users fix their
+       proxy in a few hours, or sometimes it can be accidental, etc.
+       
+       maxips: max number of IPs of the noproxy IP cache. A prime number
+       increases performance.
+       
+  -->
+  <cache>
+    <directory>ipcache</directory>
+    <expire>86400</expire><!-- seconds -->
+    <proxy-expire>21600</proxy-expire>
+    <maxips>1000003</maxips><!-- a prime number is better -->
+    <!-- http://www.utm.edu/research/primes/lists/small/100ktwins.txt -->
+  </cache>
+  
+  
+  <!-- pxyscand has its own noscan tag too, like pxyservd, but only for IP
+       or IP ranges! By default, the local networks are enabled:
+  -->
+  <noscan>
+    <address>127.0.0.1</address>
+    <address>255.255.255.255</address>
+    <address>0/8</address>
+    <address>10/8</address>
+    <address>172.16/12</address>
+    <address>192.168/16</address>
+  </noscan>
+  
+</pxyscand>

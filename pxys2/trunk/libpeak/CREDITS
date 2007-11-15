@@ -1,0 +1,30 @@
+$Id: CREDITS,v 1.2 2007/05/24 13:33:28 mbuna Exp $
+
+Author: Stephane Thiell <mbuna@bugged.org>
+
+All concepts in libpeak are not mine. The experimental parallel events
+handling part is. Libpeak uses now well known concepts for
+asynchronous I/O events which can be found in several open source
+"event libraries". The runtime system is inspired from the open source
+Mac OS X CoreFoundation framework, but it's lighter in libpeak. The
+few assembly parts are taken from FreeBSD and Linux kernel source and
+from the PM2 software suite. They are only tuned a bit to fit in
+libpeak. I'm sorry if I forgot something here. I'm glad if libpeak
+might help for other projects too.
+
+Now some people who've put work into libpeak:
+
+Jean-Edouard Babin, author of the Perl script for the test suite. Also
+an excellent tester, especially on NetBSD and rare funky systems!
+
+Philippe Bourcier for his encouragements and ideas in several areas
+(possible applications for libpeak, benchmarking, etc).
+
+Pascal Gloor for his encouragements, advises and patches.
+
+Technical support is indispensable when developing a library like the
+PEAK Library. Thanks go to Jean-Edouard Babin (PPC970), Philippe
+Sainte-Marie (Linux x86 2.6.1), Kevin Roettger (Yellow Dog Linux PPC
+2.4, 2.6), Julien B. (Linux slackware, HP/UX), Nicolas Goy (Solaris
+2.9) and the University of Bordeaux I, France (AIX, older Solaris,
+Linux 2.4 SMP, Alpha, etc.) for providing the needed support.

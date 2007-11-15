@@ -1,0 +1,134 @@
+2007-05-24  Stephane Thiell  <mbuna@bugged.org>
+
+	* Add IA-64 arch support
+	* Cleanup in peak/arch to allow proper AC substitions
+	* Rebuild autotools files
+	* Added missing engine_mod_devpoll.c
+	* Release version 0.1.2
+
+2007-03-06  Stephane Thiell  <mbuna@bugged.org>
+
+	* Main for-loop for epoll_wait was wrong
+	  Submitted by Pascal Gloor <pascal.gloor@spale.com>
+
+2005-02-28  Stephane Thiell  <mbuna@bugged.org>
+
+	* Fixed a bug when the last timer is removed
+	* Changed engine private-extern function names
+
+2004-01-18  Stephane Thiell  <mbuna@bugged.org>
+
+	* Release of libpeak 0.1.0 (first public release).
+	* configure.ac: Fixed NetBSD compilation.
+	* CREDITS: New file with some info and credits.
+	* INSTALL: New file with some info about libpeak's installation.
+	* README.platforms: New file with some advices and info about
+	currently supported platforms.
+
+2004-01-17  Stephane Thiell  <mbuna@bugged.org>
+
+	* peak/engine_mod_devpoll.c: Fixed a bug when registering
+	signals in the engine (clients array wasn't allocated...), also
+	when we want to remove a signal.
+	* peak/arch/sparc: Added support for sparc processors. Tested a
+	bit on sparc-sun-solaris2.6, 2.8 and 2.9.
+
+2004-01-12  Stephane Thiell  <mbuna@bugged.org>
+
+	* peak/timer.c, peak/task.c: Fixed a bug when reconfiguring a
+	timer.
+	* peak/semaphore.h: Fixed header includes to avoid a warning on
+	FreeBSD 4.5.
+
+2004-01-10  Stephane Thiell  <mbuna@bugged.org>
+
+	* peak/task.c: Fixed a bug in __peak_task_timer_insert() when
+	updating task->_tifirst.
+	* peak/stream.c: Internal timer bug fix, following the changes in
+	peak/task.c.
+	* peak/task.h: Improved documentation for peak_task_timer_add()
+	and peak_task_timer_remove().
+	* peak/task.c: Fixed peak_task_timer_remove(): for convenience, it
+	does nothing if the timer is not added to the task. Missing code
+	in peak_task_timer_add() and remove() so that they respectively
+	retain and release the timer.
+
+2004-01-09  Stephane Thiell  <mbuna@bugged.org>
+
+	* peak/engine_mod_poll.c, peak/engine_mod_kqueue.c: Fixed code
+	when removing handled signals.
+	* tests/t_atomic1.c, tests/t_atomic2.c, tests/t_signal2.c: New
+	tests.
+	* peak/engine_mod_epoll.c: Fix bug (signal issue). Tested on
+	Linux 2.6.1.
+
+2004-01-08  Stephane Thiell  <mbuna@bugged.org>
+
+	* tests/t_timer3.c: Modified threaded test program to use
+	peak_atomic_dec(). Increased timeout delay too.
+	* configure.ac, peak/peak.h: Added peak/atomic.h
+	auto-generation. Added the peak_atomic's primitives to the API.
+	* peak/engine_mod_epoll.c: Added new epoll() task's underlying
+	engine (available on Linux 2.6).
+	* peak/errors.c: Removed use of strerror_r() as it's broken
+	on some Linux systems (glibc)...
+	* peak/signal.h: Added documentation for peak_signal objects.
+	Rebuilt docs.
+	* configure.ac, peak/*: Fixed some 64-bit portability warnings
+	on AIX.
+
+2004-01-07  Stephane Thiell  <mbuna@bugged.org>
+
+	* peak/semaphore.h, peak/arch/powerpc/spinlock.h: Fixed things
+	to make libpeak compile on Linux PPC (YDL 3.0).
+	* configure.ac, peak/Makefile.am, tests/Makefile.am,
+	peak/arch/powerpc/atomic.h peak/arch/powerpc/spinlock.h: Added
+	AIX support. Not tested with AIX < 5.
+
+2004-01-06  Stephane Thiell  <mbuna@bugged.org>
+
+	* acinclude.m4, tz.c: Added better struct tzhead availability. 
+	* peak/task.c, peak/timer_tree.c: Changed internal task's pending
+	timers management from a linked list to an ordered splay tree
+	(featuring a special "first access" in O(1)). Now instead of
+	O(1)/O(n)/O(n) we have O(1)/O(log(N))/O(log(N)) for first
+	accessor/any add/any remove complexity. And in practice, timers
+	insertions and removals are often in constant time.
+
+2004-01-05  Stephane Thiell  <mbuna@bugged.org>
+
+	* tests: Added timer tests; more tests to come...
+	* peak/task.c peak/timer.c: code cleaning for timers
+
+2004-01-04  Stephane Thiell  <mbuna@bugged.org>
+
+	* peak/task.c: Added TASK_FLAG_RUNNING to avoid setting
+	TASK_FLAG_ON_TIME when it's not running.
+	* doc: rebuilt docs
+	* peak/timer.h, peak/timer.c: Added peak_timer_set_context()
+	* tests: New tests directory
+	* tests/test-suite.pl:  New test suite script (to do)
+	* tests/t_timer1.c: New little timer test program
+	* Enabled make check to compile and run the (future) test suite.
+
+2004-01-03  Stephane Thiell  <mbuna@bugged.org>
+
+	* peak/time.c: Fixed a bad array subscript type 
+
+2004-01-02  Stephane Thiell  <mbuna@bugged.org>
+
+	* peak/arch/test/spinlocktest.c: Added this little spinlock test
+	program. Improved a bit the atomic test program and added an
+	option to enable normal code instead of atomic one (to see that's
+	the program fails).
+	* peak/arch/m68k: Added support for m68k (probably only 68020+),
+	assembly code only tested on m68k-unknown-netbsdelf1.6ZC.
+	* peak/stream.c: Removed fatal error from
+	__peak_stream_send_queued() and peak_stream_write_buffered(), as
+	asynchronous errors can happen there. For now, ignore any errors,
+	it should be handled by the engine at the next event loop.
+
+2003-12-30  Stephane Thiell  <mbuna@bugged.org>
+
+	* Sourceforge.net import
+

@@ -1,0 +1,181 @@
+\hypertarget{group__task__sync}{
+\section{Thread's synchronization}
+\label{group__task__sync}\index{Thread's synchronization@{Thread's synchronization}}
+}
+
+
+\subsection{Detailed Description}
+\begin{Desc}
+\item[]A task, in the PEAK's context, might process events in parallel, with the help of kernel threads (pthread(3)).\end{Desc}
+\begin{Desc}
+\item[]The PEAK library provides a set of functions for kernel threads synchronization within a task. If the task has only one thread to process events, these functions do nothing. Otherwise, they are prefered to more low level primitives as some optimizations can be done within a task. Be careful if you need to synchronize with other threads which are not related to a PEAK's task (eg. another thread in your program created explicitely): in that case you need more general primitives.\end{Desc}
+\begin{Desc}
+\item[]When in doubt, for example if you are not very familiar with threads synchronization primitives like mutex, conditions or semaphores, you have always the choice to configure your PEAK's task to not use more than one thread (see \hyperlink{group__task__common_ga17}{peak\_\-task\_\-set\_\-info()}) Then, all the problems are over because events aren't processed in parallel anymore and you have only one excecution stream. For most applications, that will do... several events libraries act this way and are already very efficient. But, although you don't block when processing events (and you must not!), if your event's processings are still consuming significative CPU time (eg. cache search for each event, huge I/O's, etc), PEAK task capabilities of processing multiple events in the same time has shown global improvement for the application.\end{Desc}
+\begin{Desc}
+\item[]Note: Synchronization between several PEAK's tasks are not yet available, as you can only have one task in the current version of the library. \end{Desc}
+
+
+\subsection*{Typedefs}
+\begin{CompactItemize}
+\item 
+\hypertarget{group__task__sync_ga0}{
+typedef \_\-\_\-peak\_\-task\_\-lock $\ast$ \hyperlink{group__task__sync_ga0}{peak\_\-task\_\-lock}}
+\label{group__task__sync_ga0}
+
+\begin{CompactList}\small\item\em Opaque task lock type. \item\end{CompactList}\item 
+\hypertarget{group__task__sync_ga1}{
+typedef \_\-\_\-peak\_\-task\_\-mutex $\ast$ \hyperlink{group__task__sync_ga1}{peak\_\-task\_\-mutex}}
+\label{group__task__sync_ga1}
+
+\begin{CompactList}\small\item\em Opaque task mutex type. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+void \hyperlink{group__task__sync_ga2}{peak\_\-task\_\-exclusivity} (void)
+\begin{CompactList}\small\item\em Acquire task execution exclusivity. \item\end{CompactList}\item 
+\hyperlink{group__task__sync_ga0}{peak\_\-task\_\-lock} \hyperlink{group__task__sync_ga3}{peak\_\-task\_\-lock\_\-create} (\hyperlink{group__task__common_ga0}{peak\_\-task} task)
+\begin{CompactList}\small\item\em Create a task's lock. \item\end{CompactList}\item 
+void \hyperlink{group__task__sync_ga4}{peak\_\-task\_\-lock\_\-acquire} (\hyperlink{group__task__sync_ga0}{peak\_\-task\_\-lock} lock)
+\begin{CompactList}\small\item\em Acquire a task's lock. \item\end{CompactList}\item 
+int \hyperlink{group__task__sync_ga5}{peak\_\-task\_\-lock\_\-try} (\hyperlink{group__task__sync_ga0}{peak\_\-task\_\-lock} lock)
+\begin{CompactList}\small\item\em Try to acquire a task's lock. \item\end{CompactList}\item 
+void \hyperlink{group__task__sync_ga6}{peak\_\-task\_\-lock\_\-release} (\hyperlink{group__task__sync_ga0}{peak\_\-task\_\-lock} lock)
+\begin{CompactList}\small\item\em Release a task's lock. \item\end{CompactList}\item 
+void \hyperlink{group__task__sync_ga7}{peak\_\-task\_\-lock\_\-handoff} (\hyperlink{group__task__sync_ga0}{peak\_\-task\_\-lock} lock)
+\begin{CompactList}\small\item\em Hand-off a task's lock. \item\end{CompactList}\item 
+\hyperlink{group__task__sync_ga1}{peak\_\-task\_\-mutex} \hyperlink{group__task__sync_ga8}{peak\_\-task\_\-mutex\_\-create} (\hyperlink{group__task__common_ga0}{peak\_\-task} task)
+\begin{CompactList}\small\item\em Create a task's mutex. \item\end{CompactList}\item 
+void \hyperlink{group__task__sync_ga9}{peak\_\-task\_\-mutex\_\-lock} (\hyperlink{group__task__sync_ga1}{peak\_\-task\_\-mutex} mutex)
+\begin{CompactList}\small\item\em Lock a task's mutex. \item\end{CompactList}\item 
+void \hyperlink{group__task__sync_ga10}{peak\_\-task\_\-mutex\_\-trylock} (\hyperlink{group__task__sync_ga1}{peak\_\-task\_\-mutex} mutex)
+\begin{CompactList}\small\item\em Try to lock a task's mutex. \item\end{CompactList}\item 
+void \hyperlink{group__task__sync_ga11}{peak\_\-task\_\-mutex\_\-unlock} (\hyperlink{group__task__sync_ga1}{peak\_\-task\_\-mutex} mutex)
+\begin{CompactList}\small\item\em Unlock a task's mutex. \item\end{CompactList}\end{CompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{group__task__sync_ga2}{
+\index{task_sync@{task\_\-sync}!peak_task_exclusivity@{peak\_\-task\_\-exclusivity}}
+\index{peak_task_exclusivity@{peak\_\-task\_\-exclusivity}!task_sync@{task\_\-sync}}
+\subsubsection[peak\_\-task\_\-exclusivity]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-task\_\-exclusivity (void)}}
+\label{group__task__sync_ga2}
+
+
+Acquire task execution exclusivity. 
+
+This function acquires temporary exclusive task execution among all task's threads. It's usually called at the beginning of an event-callback to avoid conflicts with other events (as they might be processed in parallel), when you deal with a lot of shared data in the callback.\par
+ This function does nothing if the task has only one running thread, and slow down event processing otherwise. Exclusive execution is garanteed in the whole callback, in fact, it's garanteed until the next event or timer on the current task.\par
+ Note there is no parameter at all: you can only acquire exclusive execution on the current task. \hypertarget{group__task__sync_ga4}{
+\index{task_sync@{task\_\-sync}!peak_task_lock_acquire@{peak\_\-task\_\-lock\_\-acquire}}
+\index{peak_task_lock_acquire@{peak\_\-task\_\-lock\_\-acquire}!task_sync@{task\_\-sync}}
+\subsubsection[peak\_\-task\_\-lock\_\-acquire]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-task\_\-lock\_\-acquire (\hyperlink{group__task__sync_ga0}{peak\_\-task\_\-lock} {\em lock})}}
+\label{group__task__sync_ga4}
+
+
+Acquire a task's lock. 
+
+This function acquires a task's lock. If the lock is already owned by another thread of the task, then the calling thread will block. However, this function does nothing if the task has only one thread. If a deadlock is detected, the program will abort, so be careful with recursions! Possibly, use \hyperlink{group__task__sync_ga5}{peak\_\-task\_\-lock\_\-try()}.\par
+ Note that you can only acquire a lock for the current task. \hypertarget{group__task__sync_ga3}{
+\index{task_sync@{task\_\-sync}!peak_task_lock_create@{peak\_\-task\_\-lock\_\-create}}
+\index{peak_task_lock_create@{peak\_\-task\_\-lock\_\-create}!task_sync@{task\_\-sync}}
+\subsubsection[peak\_\-task\_\-lock\_\-create]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{group__task__sync_ga0}{peak\_\-task\_\-lock} peak\_\-task\_\-lock\_\-create (\hyperlink{group__task__common_ga0}{peak\_\-task} {\em task})}}
+\label{group__task__sync_ga3}
+
+
+Create a task's lock. 
+
+Allow you to lock threads in order to create critical regions, for example, within a task, with \hyperlink{group__task__sync_ga4}{peak\_\-task\_\-lock\_\-acquire()}, \hyperlink{group__task__sync_ga6}{peak\_\-task\_\-lock\_\-release()}, etc. Like other PEAK's objets, you can destroy a lock with \hyperlink{group__alloc_ga7}{peak\_\-release()}. THEY ARE ACTIVE LOCKS FOR SMALL DATA STRUCTURES PROTECTION ONLY. If you think you will have almost no collision for a critical region, they are for you.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em task}]The task to associated with the lock (usually \hyperlink{group__task__common_ga8}{peak\_\-task\_\-self()}).\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]A new {\tt peak\_\-task\_\-lock} reference. \end{Desc}
+\hypertarget{group__task__sync_ga7}{
+\index{task_sync@{task\_\-sync}!peak_task_lock_handoff@{peak\_\-task\_\-lock\_\-handoff}}
+\index{peak_task_lock_handoff@{peak\_\-task\_\-lock\_\-handoff}!task_sync@{task\_\-sync}}
+\subsubsection[peak\_\-task\_\-lock\_\-handoff]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-task\_\-lock\_\-handoff (\hyperlink{group__task__sync_ga0}{peak\_\-task\_\-lock} {\em lock})}}
+\label{group__task__sync_ga7}
+
+
+Hand-off a task's lock. 
+
+To assume the lock's ownership, this function passes a task's lock from the calling thread to another thread of the task. The lock must be already owned by the calling thread. If no other thread is waiting for acquiring the lock, this call will block until it happens. If the task has only one running thread, this function will abort the program (because if you use this function, you want a special synchronization behaviour that can't happen with one thread only). See \hyperlink{group__task__common_ga17}{peak\_\-task\_\-set\_\-info()} to properly configure your task.\par
+ Note that you can only hand-off a lock for the current task. \hypertarget{group__task__sync_ga6}{
+\index{task_sync@{task\_\-sync}!peak_task_lock_release@{peak\_\-task\_\-lock\_\-release}}
+\index{peak_task_lock_release@{peak\_\-task\_\-lock\_\-release}!task_sync@{task\_\-sync}}
+\subsubsection[peak\_\-task\_\-lock\_\-release]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-task\_\-lock\_\-release (\hyperlink{group__task__sync_ga0}{peak\_\-task\_\-lock} {\em lock})}}
+\label{group__task__sync_ga6}
+
+
+Release a task's lock. 
+
+This function releases a task's lock, so one another thread of the task can acquire it. However, this function does nothing if the task has only one thread.\par
+ Note that you can only release a lock for the current task. \hypertarget{group__task__sync_ga5}{
+\index{task_sync@{task\_\-sync}!peak_task_lock_try@{peak\_\-task\_\-lock\_\-try}}
+\index{peak_task_lock_try@{peak\_\-task\_\-lock\_\-try}!task_sync@{task\_\-sync}}
+\subsubsection[peak\_\-task\_\-lock\_\-try]{\setlength{\rightskip}{0pt plus 5cm}int peak\_\-task\_\-lock\_\-try (\hyperlink{group__task__sync_ga0}{peak\_\-task\_\-lock} {\em lock})}}
+\label{group__task__sync_ga5}
+
+
+Try to acquire a task's lock. 
+
+This function attempts to acquire a task's lock without blocking. The return value indicatees whether the lock was acquired. This function does nothing if the task has only one running thread and in that case always succeeds.\par
+ Note that you can only try a lock for the current task.
+
+\begin{Desc}
+\item[Return values:]
+\begin{description}
+\item[{\em 1}]if the lock was acquired \item[{\em 0}]if the lock is already owned (busy) \end{description}
+\end{Desc}
+\hypertarget{group__task__sync_ga8}{
+\index{task_sync@{task\_\-sync}!peak_task_mutex_create@{peak\_\-task\_\-mutex\_\-create}}
+\index{peak_task_mutex_create@{peak\_\-task\_\-mutex\_\-create}!task_sync@{task\_\-sync}}
+\subsubsection[peak\_\-task\_\-mutex\_\-create]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{group__task__sync_ga1}{peak\_\-task\_\-mutex} peak\_\-task\_\-mutex\_\-create (\hyperlink{group__task__common_ga0}{peak\_\-task} {\em task})}}
+\label{group__task__sync_ga8}
+
+
+Create a task's mutex. 
+
+Allow you to create critical regions within a task, with \hyperlink{group__task__sync_ga9}{peak\_\-task\_\-mutex\_\-lock()}, \hyperlink{group__task__sync_ga11}{peak\_\-task\_\-mutex\_\-unlock()}, etc. Like other PEAK's objets, you can destroy a mutex with \hyperlink{group__alloc_ga7}{peak\_\-release()}. Task's mutex are more suitable to create large mutual exclusion regions than task's locks are, as they shouldn't spinlock much. However, if you need to protect basic and small data structures, it might be lighter to use task's locks (eg. for a simple operation like \char`\"{}object $\rightarrow$ i++;\char`\"{} ).
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em task}]The task to associated with the mutex (usually \hyperlink{group__task__common_ga8}{peak\_\-task\_\-self()}).\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]A new {\tt peak\_\-task\_\-mutex} reference. \end{Desc}
+\hypertarget{group__task__sync_ga9}{
+\index{task_sync@{task\_\-sync}!peak_task_mutex_lock@{peak\_\-task\_\-mutex\_\-lock}}
+\index{peak_task_mutex_lock@{peak\_\-task\_\-mutex\_\-lock}!task_sync@{task\_\-sync}}
+\subsubsection[peak\_\-task\_\-mutex\_\-lock]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-task\_\-mutex\_\-lock (\hyperlink{group__task__sync_ga1}{peak\_\-task\_\-mutex} {\em mutex})}}
+\label{group__task__sync_ga9}
+
+
+Lock a task's mutex. 
+
+This function locks a task's {\em mutex\/}. If the mutex is already locked then the calling thread will block until the mutex becomes available. However, this function does nothing if the task has only one thread. If a deadlock is detected, the program will abort. Possibly, use \hyperlink{group__task__sync_ga10}{peak\_\-task\_\-mutex\_\-trylock()}.\par
+ Note that you can only lock a mutex for the current task. \hypertarget{group__task__sync_ga10}{
+\index{task_sync@{task\_\-sync}!peak_task_mutex_trylock@{peak\_\-task\_\-mutex\_\-trylock}}
+\index{peak_task_mutex_trylock@{peak\_\-task\_\-mutex\_\-trylock}!task_sync@{task\_\-sync}}
+\subsubsection[peak\_\-task\_\-mutex\_\-trylock]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-task\_\-mutex\_\-trylock (\hyperlink{group__task__sync_ga1}{peak\_\-task\_\-mutex} {\em mutex})}}
+\label{group__task__sync_ga10}
+
+
+Try to lock a task's mutex. 
+
+This function locks a task's {\em mutex\/}. If the mutex is already locked then the calling thread will block until the mutex becomes available. However, this function does nothing if the task has only one thread.\par
+ Note that you can only lock a mutex for the current task. \hypertarget{group__task__sync_ga11}{
+\index{task_sync@{task\_\-sync}!peak_task_mutex_unlock@{peak\_\-task\_\-mutex\_\-unlock}}
+\index{peak_task_mutex_unlock@{peak\_\-task\_\-mutex\_\-unlock}!task_sync@{task\_\-sync}}
+\subsubsection[peak\_\-task\_\-mutex\_\-unlock]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-task\_\-mutex\_\-unlock (\hyperlink{group__task__sync_ga1}{peak\_\-task\_\-mutex} {\em mutex})}}
+\label{group__task__sync_ga11}
+
+
+Unlock a task's mutex. 
+
+This function unlocks a task's {\em mutex\/}. However, this function does nothing if the task has only one thread.\par
+ Note that you can only unlock a mutex for the current task. 

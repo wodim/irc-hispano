@@ -1,0 +1,3 @@
+${common} --license=LGPL --com_err --install --test --copy
+${acm4}
+./autogen.sh

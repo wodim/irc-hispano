@@ -1,0 +1,107 @@
+\hypertarget{struct__rb__tree__s}{
+\section{\_\-rb\_\-tree\_\-s Struct Reference}
+\label{struct__rb__tree__s}\index{_rb_tree_s@{\_\-rb\_\-tree\_\-s}}
+}
+{\tt \#include $<$dbprim.h$>$}
+
+Collaboration diagram for \_\-rb\_\-tree\_\-s:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=107pt]{struct__rb__tree__s__coll__graph}
+\end{center}
+\end{figure}
+
+
+\subsection{Detailed Description}
+\begin{Desc}
+\item[For internal use only.]
+This is the implementation of the \hyperlink{group__dbprim__rbtree_ga0}{rb\_\-tree\_\-t} type.\end{Desc}
+
+
+
+
+Definition at line 2539 of file dbprim.h.\subsection*{Data Fields}
+\begin{CompactItemize}
+\item 
+unsigned long \hyperlink{struct__rb__tree__s_o0}{rt\_\-magic}
+\item 
+unsigned long \hyperlink{struct__rb__tree__s_o1}{rt\_\-flags}
+\item 
+unsigned long \hyperlink{struct__rb__tree__s_o2}{rt\_\-count}
+\item 
+\hyperlink{struct__rb__node__s}{rb\_\-node\_\-t} $\ast$ \hyperlink{struct__rb__tree__s_o3}{rt\_\-root}
+\item 
+\hyperlink{group__dbprim__rbtree_ga3}{rb\_\-comp\_\-t} \hyperlink{struct__rb__tree__s_o4}{rt\_\-comp}
+\item 
+void $\ast$ \hyperlink{struct__rb__tree__s_o5}{rt\_\-extra}
+\end{CompactItemize}
+
+
+\subsection{Field Documentation}
+\hypertarget{struct__rb__tree__s_o4}{
+\index{_rb_tree_s@{\_\-rb\_\-tree\_\-s}!rt_comp@{rt\_\-comp}}
+\index{rt_comp@{rt\_\-comp}!_rb_tree_s@{\_\-rb\_\-tree\_\-s}}
+\subsubsection[rt\_\-comp]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{group__dbprim__rbtree_ga3}{rb\_\-comp\_\-t} \hyperlink{struct__rb__tree__s_o4}{\_\-rb\_\-tree\_\-s::rt\_\-comp}}}
+\label{struct__rb__tree__s_o4}
+
+
+Function for comparing tree keys. 
+
+Definition at line 2544 of file dbprim.h.
+
+Referenced by \_\-rb\_\-locate(), and rt\_\-init().\hypertarget{struct__rb__tree__s_o2}{
+\index{_rb_tree_s@{\_\-rb\_\-tree\_\-s}!rt_count@{rt\_\-count}}
+\index{rt_count@{rt\_\-count}!_rb_tree_s@{\_\-rb\_\-tree\_\-s}}
+\subsubsection[rt\_\-count]{\setlength{\rightskip}{0pt plus 5cm}unsigned long \hyperlink{struct__rb__tree__s_o2}{\_\-rb\_\-tree\_\-s::rt\_\-count}}}
+\label{struct__rb__tree__s_o2}
+
+
+Number of nodes in the tree. 
+
+Definition at line 2542 of file dbprim.h.
+
+Referenced by \_\-rb\_\-locate(), rt\_\-find(), rt\_\-flush(), rt\_\-init(), and rt\_\-remove().\hypertarget{struct__rb__tree__s_o5}{
+\index{_rb_tree_s@{\_\-rb\_\-tree\_\-s}!rt_extra@{rt\_\-extra}}
+\index{rt_extra@{rt\_\-extra}!_rb_tree_s@{\_\-rb\_\-tree\_\-s}}
+\subsubsection[rt\_\-extra]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ \hyperlink{struct__rb__tree__s_o5}{\_\-rb\_\-tree\_\-s::rt\_\-extra}}}
+\label{struct__rb__tree__s_o5}
+
+
+Extra data associated with the tree. 
+
+Definition at line 2545 of file dbprim.h.
+
+Referenced by rt\_\-init().\hypertarget{struct__rb__tree__s_o1}{
+\index{_rb_tree_s@{\_\-rb\_\-tree\_\-s}!rt_flags@{rt\_\-flags}}
+\index{rt_flags@{rt\_\-flags}!_rb_tree_s@{\_\-rb\_\-tree\_\-s}}
+\subsubsection[rt\_\-flags]{\setlength{\rightskip}{0pt plus 5cm}unsigned long \hyperlink{struct__rb__tree__s_o1}{\_\-rb\_\-tree\_\-s::rt\_\-flags}}}
+\label{struct__rb__tree__s_o1}
+
+
+Flags associated with the table. 
+
+Definition at line 2541 of file dbprim.h.
+
+Referenced by rt\_\-add(), rt\_\-flush(), rt\_\-init(), rt\_\-iter(), rt\_\-move(), and rt\_\-remove().\hypertarget{struct__rb__tree__s_o0}{
+\index{_rb_tree_s@{\_\-rb\_\-tree\_\-s}!rt_magic@{rt\_\-magic}}
+\index{rt_magic@{rt\_\-magic}!_rb_tree_s@{\_\-rb\_\-tree\_\-s}}
+\subsubsection[rt\_\-magic]{\setlength{\rightskip}{0pt plus 5cm}unsigned long \hyperlink{struct__rb__tree__s_o0}{\_\-rb\_\-tree\_\-s::rt\_\-magic}}}
+\label{struct__rb__tree__s_o0}
+
+
+Magic number. 
+
+Definition at line 2540 of file dbprim.h.
+
+Referenced by rt\_\-init().\hypertarget{struct__rb__tree__s_o3}{
+\index{_rb_tree_s@{\_\-rb\_\-tree\_\-s}!rt_root@{rt\_\-root}}
+\index{rt_root@{rt\_\-root}!_rb_tree_s@{\_\-rb\_\-tree\_\-s}}
+\subsubsection[rt\_\-root]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{struct__rb__node__s}{rb\_\-node\_\-t}$\ast$ \hyperlink{struct__rb__tree__s_o3}{\_\-rb\_\-tree\_\-s::rt\_\-root}}}
+\label{struct__rb__tree__s_o3}
+
+
+Pointer to the root node of the tree. 
+
+Definition at line 2543 of file dbprim.h.
+
+Referenced by \_\-rb\_\-locate(), \_\-rb\_\-rotate(), rt\_\-add(), rt\_\-flush(), rt\_\-init(), rt\_\-next(), and rt\_\-remove().

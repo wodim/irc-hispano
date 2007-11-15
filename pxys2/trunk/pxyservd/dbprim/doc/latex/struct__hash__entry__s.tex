@@ -1,0 +1,107 @@
+\hypertarget{struct__hash__entry__s}{
+\section{\_\-hash\_\-entry\_\-s Struct Reference}
+\label{struct__hash__entry__s}\index{_hash_entry_s@{\_\-hash\_\-entry\_\-s}}
+}
+{\tt \#include $<$dbprim.h$>$}
+
+Collaboration diagram for \_\-hash\_\-entry\_\-s:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=176pt]{struct__hash__entry__s__coll__graph}
+\end{center}
+\end{figure}
+
+
+\subsection{Detailed Description}
+\begin{Desc}
+\item[For internal use only.]
+This is the implementation of the \hyperlink{group__dbprim__hash_ga2}{hash\_\-entry\_\-t} type.\end{Desc}
+
+
+
+
+Definition at line 1487 of file dbprim.h.\subsection*{Data Fields}
+\begin{CompactItemize}
+\item 
+unsigned long \hyperlink{struct__hash__entry__s_o0}{he\_\-magic}
+\item 
+\hyperlink{struct__link__elem__s}{link\_\-elem\_\-t} \hyperlink{struct__hash__entry__s_o1}{he\_\-elem}
+\item 
+\hyperlink{struct__hash__table__s}{hash\_\-table\_\-t} $\ast$ \hyperlink{struct__hash__entry__s_o2}{he\_\-table}
+\item 
+unsigned long \hyperlink{struct__hash__entry__s_o3}{he\_\-hash}
+\item 
+\hyperlink{struct__db__key__s}{db\_\-key\_\-t} \hyperlink{struct__hash__entry__s_o4}{he\_\-key}
+\item 
+void $\ast$ \hyperlink{struct__hash__entry__s_o5}{he\_\-value}
+\end{CompactItemize}
+
+
+\subsection{Field Documentation}
+\hypertarget{struct__hash__entry__s_o1}{
+\index{_hash_entry_s@{\_\-hash\_\-entry\_\-s}!he_elem@{he\_\-elem}}
+\index{he_elem@{he\_\-elem}!_hash_entry_s@{\_\-hash\_\-entry\_\-s}}
+\subsubsection[he\_\-elem]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{struct__link__elem__s}{link\_\-elem\_\-t} \hyperlink{struct__hash__entry__s_o1}{\_\-hash\_\-entry\_\-s::he\_\-elem}}}
+\label{struct__hash__entry__s_o1}
+
+
+Link element. 
+
+Definition at line 1489 of file dbprim.h.
+
+Referenced by he\_\-init(), ht\_\-add(), ht\_\-move(), and ht\_\-remove().\hypertarget{struct__hash__entry__s_o3}{
+\index{_hash_entry_s@{\_\-hash\_\-entry\_\-s}!he_hash@{he\_\-hash}}
+\index{he_hash@{he\_\-hash}!_hash_entry_s@{\_\-hash\_\-entry\_\-s}}
+\subsubsection[he\_\-hash]{\setlength{\rightskip}{0pt plus 5cm}unsigned long \hyperlink{struct__hash__entry__s_o3}{\_\-hash\_\-entry\_\-s::he\_\-hash}}}
+\label{struct__hash__entry__s_o3}
+
+
+Hash value. 
+
+Definition at line 1491 of file dbprim.h.
+
+Referenced by he\_\-init(), ht\_\-add(), ht\_\-move(), ht\_\-remove(), and ht\_\-resize().\hypertarget{struct__hash__entry__s_o4}{
+\index{_hash_entry_s@{\_\-hash\_\-entry\_\-s}!he_key@{he\_\-key}}
+\index{he_key@{he\_\-key}!_hash_entry_s@{\_\-hash\_\-entry\_\-s}}
+\subsubsection[he\_\-key]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{struct__db__key__s}{db\_\-key\_\-t} \hyperlink{struct__hash__entry__s_o4}{\_\-hash\_\-entry\_\-s::he\_\-key}}}
+\label{struct__hash__entry__s_o4}
+
+
+Entry's key. 
+
+Definition at line 1492 of file dbprim.h.
+
+Referenced by he\_\-init(), ht\_\-add(), ht\_\-move(), and ht\_\-resize().\hypertarget{struct__hash__entry__s_o0}{
+\index{_hash_entry_s@{\_\-hash\_\-entry\_\-s}!he_magic@{he\_\-magic}}
+\index{he_magic@{he\_\-magic}!_hash_entry_s@{\_\-hash\_\-entry\_\-s}}
+\subsubsection[he\_\-magic]{\setlength{\rightskip}{0pt plus 5cm}unsigned long \hyperlink{struct__hash__entry__s_o0}{\_\-hash\_\-entry\_\-s::he\_\-magic}}}
+\label{struct__hash__entry__s_o0}
+
+
+Magic number. 
+
+Definition at line 1488 of file dbprim.h.
+
+Referenced by he\_\-init().\hypertarget{struct__hash__entry__s_o2}{
+\index{_hash_entry_s@{\_\-hash\_\-entry\_\-s}!he_table@{he\_\-table}}
+\index{he_table@{he\_\-table}!_hash_entry_s@{\_\-hash\_\-entry\_\-s}}
+\subsubsection[he\_\-table]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{struct__hash__table__s}{hash\_\-table\_\-t}$\ast$ \hyperlink{struct__hash__entry__s_o2}{\_\-hash\_\-entry\_\-s::he\_\-table}}}
+\label{struct__hash__entry__s_o2}
+
+
+Hash table we're in. 
+
+Definition at line 1490 of file dbprim.h.
+
+Referenced by he\_\-init(), ht\_\-add(), ht\_\-move(), and ht\_\-remove().\hypertarget{struct__hash__entry__s_o5}{
+\index{_hash_entry_s@{\_\-hash\_\-entry\_\-s}!he_value@{he\_\-value}}
+\index{he_value@{he\_\-value}!_hash_entry_s@{\_\-hash\_\-entry\_\-s}}
+\subsubsection[he\_\-value]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ \hyperlink{struct__hash__entry__s_o5}{\_\-hash\_\-entry\_\-s::he\_\-value}}}
+\label{struct__hash__entry__s_o5}
+
+
+Actual entry. 
+
+Definition at line 1493 of file dbprim.h.
+
+Referenced by he\_\-init().

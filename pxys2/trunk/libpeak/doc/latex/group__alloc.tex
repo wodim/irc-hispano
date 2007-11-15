@@ -1,0 +1,159 @@
+\hypertarget{group__alloc}{
+\section{Allocation}
+\label{group__alloc}\index{Allocation@{Allocation}}
+}
+
+
+\subsection{Detailed Description}
+\begin{Desc}
+\item[]Peak's allocation mechanism uses the standard malloc/free pair but can be configured as wish with \hyperlink{group__alloc_ga3}{peak\_\-alloc\_\-configure()} providing your own allocation and deallocation primitives.\end{Desc}
+\begin{Desc}
+\item[]Although written in C, peak is object oriented and features a lightweight support for reference counting in all peak objects. This module offers access to the \hyperlink{group__alloc_ga6}{peak\_\-retain()} an \hyperlink{group__alloc_ga7}{peak\_\-release()} method.\par
+ Strings, however, are normal C strings and not wrapped by the peak library. For convenience, a \hyperlink{group__alloc_ga6}{peak\_\-strdup()} method is provided as well. \end{Desc}
+
+
+\subsection*{Typedefs}
+\begin{CompactItemize}
+\item 
+\hypertarget{group__alloc_ga0}{
+typedef void $\ast$($\ast$ \hyperlink{group__alloc_ga0}{peak\_\-alloc\_\-malloc\_\-func} )(size\_\-t size)}
+\label{group__alloc_ga0}
+
+\begin{CompactList}\small\item\em Malloc-like function pointer type. \item\end{CompactList}\item 
+\hypertarget{group__alloc_ga1}{
+typedef void($\ast$ \hyperlink{group__alloc_ga1}{peak\_\-alloc\_\-free\_\-func} )(void $\ast$p)}
+\label{group__alloc_ga1}
+
+\begin{CompactList}\small\item\em Free-like function pointer type. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+void \hyperlink{group__alloc_ga2}{peak\_\-alloc\_\-configure} (\hyperlink{group__alloc_ga0}{peak\_\-alloc\_\-malloc\_\-func} malloc\_\-fun, \hyperlink{group__alloc_ga1}{peak\_\-alloc\_\-free\_\-func} free\_\-fun)
+\begin{CompactList}\small\item\em Configure peak's allocation for your program. \item\end{CompactList}\item 
+void $\ast$ \hyperlink{group__alloc_ga3}{peak\_\-allocate} (size\_\-t size)
+\begin{CompactList}\small\item\em Allocate memory. \item\end{CompactList}\item 
+void \hyperlink{group__alloc_ga4}{peak\_\-deallocate} (void $\ast$ptr)
+\begin{CompactList}\small\item\em Free memory. \item\end{CompactList}\item 
+char $\ast$ \hyperlink{group__alloc_ga5}{peak\_\-strdup} (const char $\ast$str)
+\begin{CompactList}\small\item\em Copy a string. \item\end{CompactList}\item 
+void $\ast$ \hyperlink{group__alloc_ga6}{peak\_\-retain} (void $\ast$obj)
+\begin{CompactList}\small\item\em Retain a peak object. \item\end{CompactList}\item 
+void \hyperlink{group__alloc_ga7}{peak\_\-release} (void $\ast$obj)
+\begin{CompactList}\small\item\em Release a peak object. \item\end{CompactList}\item 
+int \hyperlink{group__alloc_ga8}{peak\_\-get\_\-retcnt} (void $\ast$obj)
+\begin{CompactList}\small\item\em Get the retain count of a peak object. \item\end{CompactList}\end{CompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{group__alloc_ga2}{
+\index{alloc@{alloc}!peak_alloc_configure@{peak\_\-alloc\_\-configure}}
+\index{peak_alloc_configure@{peak\_\-alloc\_\-configure}!alloc@{alloc}}
+\subsubsection[peak\_\-alloc\_\-configure]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-alloc\_\-configure (\hyperlink{group__alloc_ga0}{peak\_\-alloc\_\-malloc\_\-func} {\em malloc\_\-fun}, \hyperlink{group__alloc_ga1}{peak\_\-alloc\_\-free\_\-func} {\em free\_\-fun})}}
+\label{group__alloc_ga2}
+
+
+Configure peak's allocation for your program. 
+
+Pointed functions must properly align memory and be thread-safe like malloc() and free()...
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em malloc\_\-fun}]A pointer to your custom malloc-like function. \item[{\em free\_\-fun}]A pointer to your custom free-like function. \end{description}
+\end{Desc}
+\hypertarget{group__alloc_ga3}{
+\index{alloc@{alloc}!peak_allocate@{peak\_\-allocate}}
+\index{peak_allocate@{peak\_\-allocate}!alloc@{alloc}}
+\subsubsection[peak\_\-allocate]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ peak\_\-allocate (size\_\-t {\em size})}}
+\label{group__alloc_ga3}
+
+
+Allocate memory. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em size}]Number of bytes of memory to allocate.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]A pointer to the fresh allocated memory. \end{Desc}
+\hypertarget{group__alloc_ga4}{
+\index{alloc@{alloc}!peak_deallocate@{peak\_\-deallocate}}
+\index{peak_deallocate@{peak\_\-deallocate}!alloc@{alloc}}
+\subsubsection[peak\_\-deallocate]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-deallocate (void $\ast$ {\em ptr})}}
+\label{group__alloc_ga4}
+
+
+Free memory. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em ptr}]Pointer to the memory space to deallocate. \end{description}
+\end{Desc}
+\hypertarget{group__alloc_ga8}{
+\index{alloc@{alloc}!peak_get_retcnt@{peak\_\-get\_\-retcnt}}
+\index{peak_get_retcnt@{peak\_\-get\_\-retcnt}!alloc@{alloc}}
+\subsubsection[peak\_\-get\_\-retcnt]{\setlength{\rightskip}{0pt plus 5cm}int peak\_\-get\_\-retcnt (void $\ast$ {\em obj})}}
+\label{group__alloc_ga8}
+
+
+Get the retain count of a peak object. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em obj}]Any peak object.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]Retain count or -1 for constant objects. \end{Desc}
+\hypertarget{group__alloc_ga7}{
+\index{alloc@{alloc}!peak_release@{peak\_\-release}}
+\index{peak_release@{peak\_\-release}!alloc@{alloc}}
+\subsubsection[peak\_\-release]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-release (void $\ast$ {\em obj})}}
+\label{group__alloc_ga7}
+
+
+Release a peak object. 
+
+Decrease the reference count of the object {\em obj\/}. If the refcount is 0, the object is deallocated.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em obj}]Any peak object. \end{description}
+\end{Desc}
+\hypertarget{group__alloc_ga6}{
+\index{alloc@{alloc}!peak_retain@{peak\_\-retain}}
+\index{peak_retain@{peak\_\-retain}!alloc@{alloc}}
+\subsubsection[peak\_\-retain]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ peak\_\-retain (void $\ast$ {\em obj})}}
+\label{group__alloc_ga6}
+
+
+Retain a peak object. 
+
+Increase the reference count of the object {\em obj\/}.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em obj}]Any peak object.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]For convenience, a pointer to {\em obj\/}. \end{Desc}
+\hypertarget{group__alloc_ga5}{
+\index{alloc@{alloc}!peak_strdup@{peak\_\-strdup}}
+\index{peak_strdup@{peak\_\-strdup}!alloc@{alloc}}
+\subsubsection[peak\_\-strdup]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ peak\_\-strdup (const char $\ast$ {\em str})}}
+\label{group__alloc_ga5}
+
+
+Copy a string. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em str}]The string to copy/duplicate.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]A pointer to a new allocated copy of the string. It should be passed to \hyperlink{group__alloc_ga5}{peak\_\-deallocate()} if you want to free it. \end{Desc}

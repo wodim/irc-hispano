@@ -1,0 +1,51 @@
+\hypertarget{group__task__timer}{
+\section{Task and timer}
+\label{group__task__timer}\index{Task and timer@{Task and timer}}
+}
+
+
+\subsection{Detailed Description}
+Timers are special objects which must be explicitely added to the task. See \hyperlink{group__timer_ga9}{peak\_\-timer\_\-create()} and other timer functions for more info. 
+
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+void \hyperlink{group__task__timer_ga0}{peak\_\-task\_\-timer\_\-add} (\hyperlink{group__task__common_ga0}{peak\_\-task} task, \hyperlink{group__timer_ga0}{peak\_\-timer} ti)
+\begin{CompactList}\small\item\em Add a peak timer. \item\end{CompactList}\item 
+void \hyperlink{group__task__timer_ga1}{peak\_\-task\_\-timer\_\-remove} (\hyperlink{group__task__common_ga0}{peak\_\-task} task, \hyperlink{group__timer_ga0}{peak\_\-timer} ti)
+\begin{CompactList}\small\item\em Remove a peak timer. \item\end{CompactList}\end{CompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{group__task__timer_ga0}{
+\index{task_timer@{task\_\-timer}!peak_task_timer_add@{peak\_\-task\_\-timer\_\-add}}
+\index{peak_task_timer_add@{peak\_\-task\_\-timer\_\-add}!task_timer@{task\_\-timer}}
+\subsubsection[peak\_\-task\_\-timer\_\-add]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-task\_\-timer\_\-add (\hyperlink{group__task__common_ga0}{peak\_\-task} {\em task}, \hyperlink{group__timer_ga0}{peak\_\-timer} {\em ti})}}
+\label{group__task__timer_ga0}
+
+
+Add a peak timer. 
+
+Add a previously configured peak timer to the specified task. You can create a timer with \hyperlink{group__timer_ga9}{peak\_\-timer\_\-create()}. This function increases the timer's retain count, so you can safely call \hyperlink{group__alloc_ga7}{peak\_\-release()} on it if needed. If the timer is already added to a task, then it is first removed then added.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em task}]The task reference. \item[{\em ti}]The timer to add. \end{description}
+\end{Desc}
+\hypertarget{group__task__timer_ga1}{
+\index{task_timer@{task\_\-timer}!peak_task_timer_remove@{peak\_\-task\_\-timer\_\-remove}}
+\index{peak_task_timer_remove@{peak\_\-task\_\-timer\_\-remove}!task_timer@{task\_\-timer}}
+\subsubsection[peak\_\-task\_\-timer\_\-remove]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-task\_\-timer\_\-remove (\hyperlink{group__task__common_ga0}{peak\_\-task} {\em task}, \hyperlink{group__timer_ga0}{peak\_\-timer} {\em ti})}}
+\label{group__task__timer_ga1}
+
+
+Remove a peak timer. 
+
+Remove a timer previously added to the task and decrease its retain count. If the retain count is 0 then the timer is deleted. If the timer wasn't previously added to the task, then this function does nothing.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em task}]The task reference. \item[{\em ti}]The timer to remove. \end{description}
+\end{Desc}

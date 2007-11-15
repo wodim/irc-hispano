@@ -1,0 +1,191 @@
+\hypertarget{group__task__common}{
+\section{Task common}
+\label{group__task__common}\index{Task common@{Task common}}
+}
+
+
+\subsection{Detailed Description}
+Task common stuffs. 
+
+\subsection*{Typedefs}
+\begin{CompactItemize}
+\item 
+typedef \_\-\_\-peak\_\-task $\ast$ \hyperlink{group__task__common_ga0}{peak\_\-task}
+\begin{CompactList}\small\item\em Opaque task type. \item\end{CompactList}\item 
+typedef enum \hyperlink{group__task__common_ga10}{\_\-peak\_\-task\_\-flavor\_\-e} \hyperlink{group__task__common_ga1}{peak\_\-task\_\-flavor\_\-t}
+\begin{CompactList}\small\item\em Task info's flavors. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Enumerations}
+\begin{CompactItemize}
+\item 
+enum \hyperlink{group__task__common_ga10}{\_\-peak\_\-task\_\-flavor\_\-e} \{ \par
+\hyperlink{group__task__common_gga10a2}{PEAK\_\-TASK\_\-FLAVOR\_\-NTHREADS}, 
+\par
+\hyperlink{group__task__common_gga10a3}{PEAK\_\-TASK\_\-FLAVOR\_\-MAXFDS}
+ \}
+\begin{CompactList}\small\item\em Task info's flavors. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+\hyperlink{group__task__common_ga0}{peak\_\-task} \hyperlink{group__task__common_ga4}{peak\_\-task\_\-self} (void)
+\begin{CompactList}\small\item\em Get the owning task of the current execution stream. \item\end{CompactList}\item 
+int \hyperlink{group__task__common_ga5}{peak\_\-task\_\-get\_\-info} (\hyperlink{group__task__common_ga0}{peak\_\-task} task, \hyperlink{group__task__common_ga1}{peak\_\-task\_\-flavor\_\-t} flavor, int $\ast$info)
+\begin{CompactList}\small\item\em Get task information. \item\end{CompactList}\item 
+int \hyperlink{group__task__common_ga6}{peak\_\-task\_\-set\_\-info} (\hyperlink{group__task__common_ga0}{peak\_\-task} task, \hyperlink{group__task__common_ga1}{peak\_\-task\_\-flavor\_\-t} flavor, int $\ast$info)
+\begin{CompactList}\small\item\em Set task information. \item\end{CompactList}\item 
+const char $\ast$ \hyperlink{group__task__common_ga7}{peak\_\-task\_\-get\_\-engine\_\-name} (\hyperlink{group__task__common_ga0}{peak\_\-task} task)
+\begin{CompactList}\small\item\em Get task's underlying engine name. \item\end{CompactList}\item 
+void \hyperlink{group__task__common_ga8}{peak\_\-task\_\-run} (\hyperlink{group__task__common_ga0}{peak\_\-task} task)
+\begin{CompactList}\small\item\em Enter and process the event loop. \item\end{CompactList}\item 
+void \hyperlink{group__task__common_ga9}{peak\_\-task\_\-break} (\hyperlink{group__task__common_ga0}{peak\_\-task} task)
+\begin{CompactList}\small\item\em Terminate task's event loop. \item\end{CompactList}\end{CompactItemize}
+
+
+\subsection{Typedef Documentation}
+\hypertarget{group__task__common_ga0}{
+\index{task_common@{task\_\-common}!peak_task@{peak\_\-task}}
+\index{peak_task@{peak\_\-task}!task_common@{task\_\-common}}
+\subsubsection[peak\_\-task]{\setlength{\rightskip}{0pt plus 5cm}typedef struct \_\-\_\-peak\_\-task$\ast$ \hyperlink{group__task__common_ga0}{peak\_\-task}}}
+\label{group__task__common_ga0}
+
+
+Opaque task type. 
+
+One task to rule them all... \hypertarget{group__task__common_ga1}{
+\index{task_common@{task\_\-common}!peak_task_flavor_t@{peak\_\-task\_\-flavor\_\-t}}
+\index{peak_task_flavor_t@{peak\_\-task\_\-flavor\_\-t}!task_common@{task\_\-common}}
+\subsubsection[peak\_\-task\_\-flavor\_\-t]{\setlength{\rightskip}{0pt plus 5cm}typedef enum \hyperlink{group__task__common_ga10}{\_\-peak\_\-task\_\-flavor\_\-e} \hyperlink{group__task__common_ga1}{peak\_\-task\_\-flavor\_\-t}}}
+\label{group__task__common_ga1}
+
+
+Task info's flavors. 
+
+See the documentation for the enumeration \hyperlink{group__task__common_ga10}{\_\-peak\_\-task\_\-flavor\_\-e}. 
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{group__task__common_ga10}{
+\index{task_common@{task\_\-common}!_peak_task_flavor_e@{\_\-peak\_\-task\_\-flavor\_\-e}}
+\index{_peak_task_flavor_e@{\_\-peak\_\-task\_\-flavor\_\-e}!task_common@{task\_\-common}}
+\subsubsection[\_\-peak\_\-task\_\-flavor\_\-e]{\setlength{\rightskip}{0pt plus 5cm}enum \hyperlink{group__task__common_ga10}{\_\-peak\_\-task\_\-flavor\_\-e}}}
+\label{group__task__common_ga10}
+
+
+Task info's flavors. 
+
+\begin{Desc}
+\item[Enumeration values: ]\par
+\begin{description}
+\index{PEAK_TASK_FLAVOR_NTHREADS@{PEAK\_\-TASK\_\-FLAVOR\_\-NTHREADS}!task_common@{task\_\-common}}\index{task_common@{task\_\-common}!PEAK_TASK_FLAVOR_NTHREADS@{PEAK\_\-TASK\_\-FLAVOR\_\-NTHREADS}}\item[{\em 
+\hypertarget{group__task__common_gga10a2}{
+PEAK\_\-TASK\_\-FLAVOR\_\-NTHREADS}
+\label{group__task__common_gga10a2}
+}]Specify the number of threads a task should run. 
+
+\begin{Desc}
+\item[Info's value]\end{Desc}
+Use 0 for automatic detection which depends on the number of available CPUs when you $\ast$run$\ast$ the application. \index{PEAK_TASK_FLAVOR_MAXFDS@{PEAK\_\-TASK\_\-FLAVOR\_\-MAXFDS}!task_common@{task\_\-common}}\index{task_common@{task\_\-common}!PEAK_TASK_FLAVOR_MAXFDS@{PEAK\_\-TASK\_\-FLAVOR\_\-MAXFDS}}\item[{\em 
+\hypertarget{group__task__common_gga10a3}{
+PEAK\_\-TASK\_\-FLAVOR\_\-MAXFDS}
+\label{group__task__common_gga10a3}
+}]Specify the max number of open files allowed. 
+
+This defines only the max number of open files allowed to open by the PEAK library and doesn't count application-level file descriptors. WARNING: This is not true when using the basic select() engine, due to an implementation limitation.
+
+\begin{Desc}
+\item[Info's value]\end{Desc}
+Use 0 to set the default specified at the library compile time (usually 256). \end{description}
+\end{Desc}
+
+
+
+\subsection{Function Documentation}
+\hypertarget{group__task__common_ga9}{
+\index{task_common@{task\_\-common}!peak_task_break@{peak\_\-task\_\-break}}
+\index{peak_task_break@{peak\_\-task\_\-break}!task_common@{task\_\-common}}
+\subsubsection[peak\_\-task\_\-break]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-task\_\-break (\hyperlink{group__task__common_ga0}{peak\_\-task} {\em task})}}
+\label{group__task__common_ga9}
+
+
+Terminate task's event loop. 
+
+This is done asynchronously: the engine waits for events being currently processed and the blocked \hyperlink{group__task__common_ga19}{peak\_\-task\_\-run()} exits.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em task}]The task to break (usually \hyperlink{group__task__common_ga8}{peak\_\-task\_\-self()}). \end{description}
+\end{Desc}
+\hypertarget{group__task__common_ga7}{
+\index{task_common@{task\_\-common}!peak_task_get_engine_name@{peak\_\-task\_\-get\_\-engine\_\-name}}
+\index{peak_task_get_engine_name@{peak\_\-task\_\-get\_\-engine\_\-name}!task_common@{task\_\-common}}
+\subsubsection[peak\_\-task\_\-get\_\-engine\_\-name]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ peak\_\-task\_\-get\_\-engine\_\-name (\hyperlink{group__task__common_ga0}{peak\_\-task} {\em task})}}
+\label{group__task__common_ga7}
+
+
+Get task's underlying engine name. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em task}]The task reference.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]A pointer to the name of engine (constant). \end{Desc}
+\hypertarget{group__task__common_ga5}{
+\index{task_common@{task\_\-common}!peak_task_get_info@{peak\_\-task\_\-get\_\-info}}
+\index{peak_task_get_info@{peak\_\-task\_\-get\_\-info}!task_common@{task\_\-common}}
+\subsubsection[peak\_\-task\_\-get\_\-info]{\setlength{\rightskip}{0pt plus 5cm}int peak\_\-task\_\-get\_\-info (\hyperlink{group__task__common_ga0}{peak\_\-task} {\em task}, \hyperlink{group__task__common_ga1}{peak\_\-task\_\-flavor\_\-t} {\em flavor}, int $\ast$ {\em info})}}
+\label{group__task__common_ga5}
+
+
+Get task information. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em task}]The task reference. \item[{\em flavor}]One of the available flavor. \item[{\em info}]A pointer to a varying array of int, depending on the flavor. You must properly allocate it.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]0 if successful \end{Desc}
+\hypertarget{group__task__common_ga8}{
+\index{task_common@{task\_\-common}!peak_task_run@{peak\_\-task\_\-run}}
+\index{peak_task_run@{peak\_\-task\_\-run}!task_common@{task\_\-common}}
+\subsubsection[peak\_\-task\_\-run]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-task\_\-run (\hyperlink{group__task__common_ga0}{peak\_\-task} {\em task})}}
+\label{group__task__common_ga8}
+
+
+Enter and process the event loop. 
+
+Block the task's master thread if no event to process nor timers to fire are found. If called with \hyperlink{group__task__common_ga8}{peak\_\-task\_\-self()}, blocks the current thread and use it as the master thread.\par
+ Returns only if there is nothing to process (ie. no timer, no registered signal, no object scheduled) or after a call to \hyperlink{group__task__common_ga20}{peak\_\-task\_\-break()}.\par
+ Usually called once at the beginning (after initializations).
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em task}]The task to run (usually \hyperlink{group__task__common_ga8}{peak\_\-task\_\-self()}). \end{description}
+\end{Desc}
+\hypertarget{group__task__common_ga4}{
+\index{task_common@{task\_\-common}!peak_task_self@{peak\_\-task\_\-self}}
+\index{peak_task_self@{peak\_\-task\_\-self}!task_common@{task\_\-common}}
+\subsubsection[peak\_\-task\_\-self]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{group__task__common_ga0}{peak\_\-task} peak\_\-task\_\-self (void)}}
+\label{group__task__common_ga4}
+
+
+Get the owning task of the current execution stream. 
+
+A task can have several threads, but this function will reference the same task in all of them. \hypertarget{group__task__common_ga6}{
+\index{task_common@{task\_\-common}!peak_task_set_info@{peak\_\-task\_\-set\_\-info}}
+\index{peak_task_set_info@{peak\_\-task\_\-set\_\-info}!task_common@{task\_\-common}}
+\subsubsection[peak\_\-task\_\-set\_\-info]{\setlength{\rightskip}{0pt plus 5cm}int peak\_\-task\_\-set\_\-info (\hyperlink{group__task__common_ga0}{peak\_\-task} {\em task}, \hyperlink{group__task__common_ga1}{peak\_\-task\_\-flavor\_\-t} {\em flavor}, int $\ast$ {\em info})}}
+\label{group__task__common_ga6}
+
+
+Set task information. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em task}]The task reference. \item[{\em flavor}]One of the available flavor. \item[{\em info}]A pointer to a varying array of int, depending on the flavor, containing the value you want to set.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]0 if successful \end{Desc}

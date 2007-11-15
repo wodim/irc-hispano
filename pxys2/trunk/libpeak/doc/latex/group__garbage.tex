@@ -1,0 +1,106 @@
+\hypertarget{group__garbage}{
+\section{Garbage collector}
+\label{group__garbage}\index{Garbage collector@{Garbage collector}}
+}
+
+
+\subsection{Detailed Description}
+\begin{Desc}
+\item[]In brief: this module adds a feature to delay the destruction of pointers of different sizes, thus allowing the application to reuse some pointers not really deleted yet. See the {\tt mem\_\-pool} module for another type of allocation optimization feature.\end{Desc}
+\begin{Desc}
+\item[]A simple garbage collector (with explicit collection) which provides asynchronous deletion. It is probably only useful when an application could avoid to recreate the same objects, when all objects are not of the same size. If it's better for you to just keep them a few seconds or minutes before really delete them, in case you want to reuse them, so this module is probably for you. When it's time to really delete an object, the library calls your callback: if the object has been reused since, just ignore the call... or really delete it otherwise.\end{Desc}
+\begin{Desc}
+\item[]This module has been created in order to optimize allocations of IRC channels, which are allocated structures of different sizes (different names) and commonly deleted and re-allocated just after (part/join of an empty channel). I am not sure it will suit for something else.\end{Desc}
+\begin{Desc}
+\item[]Usage is very easy: initialize a garbage collector object with \hyperlink{group__garbage_ga9}{peak\_\-garbage\_\-create()} providing a generic deletion callback for all collected objects, then call \hyperlink{group__garbage_ga10}{peak\_\-garbage\_\-collect()} for each object you want to delete using the collector. The objects will be automatically deleted (you shouldn't predict the deletion, as the frequency is only a hint - note it's usually less because all collected objects are always deleted at the same time). If needed, you can force all objects deletion with the \hyperlink{group__garbage_ga12}{peak\_\-garbage\_\-vacuum()} function. \end{Desc}
+
+
+\subsection*{Typedefs}
+\begin{CompactItemize}
+\item 
+\hypertarget{group__garbage_ga0}{
+typedef \_\-\_\-peak\_\-garbage $\ast$ \hyperlink{group__garbage_ga0}{peak\_\-garbage}}
+\label{group__garbage_ga0}
+
+\begin{CompactList}\small\item\em Opaque garbage collector pointer type. \item\end{CompactList}\item 
+\hypertarget{group__garbage_ga1}{
+typedef void($\ast$ \hyperlink{group__garbage_ga1}{peak\_\-garbage\_\-callback} )(\hyperlink{group__garbage_ga0}{peak\_\-garbage} g, void $\ast$ptr, void $\ast$context)}
+\label{group__garbage_ga1}
+
+\begin{CompactList}\small\item\em Deletion's callback definition. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+\hyperlink{group__garbage_ga0}{peak\_\-garbage} \hyperlink{group__garbage_ga2}{peak\_\-garbage\_\-create} (int max\_\-ptrs, double frequency, \hyperlink{group__task__common_ga0}{peak\_\-task} task, \hyperlink{group__garbage_ga1}{peak\_\-garbage\_\-callback} callout, void $\ast$context)
+\begin{CompactList}\small\item\em Create a garbage object. \item\end{CompactList}\item 
+void \hyperlink{group__garbage_ga3}{peak\_\-garbage\_\-collect} (\hyperlink{group__garbage_ga0}{peak\_\-garbage} g, void $\ast$ptr)
+\begin{CompactList}\small\item\em Collect a pointer and schedules the garbage's task for deletion. \item\end{CompactList}\item 
+int \hyperlink{group__garbage_ga4}{peak\_\-garbage\_\-get\_\-collected\_\-count} (\hyperlink{group__garbage_ga0}{peak\_\-garbage} g)
+\begin{CompactList}\small\item\em Get the current number of pointers collected for deletion. \item\end{CompactList}\item 
+void \hyperlink{group__garbage_ga5}{peak\_\-garbage\_\-vacuum} (\hyperlink{group__garbage_ga0}{peak\_\-garbage} g)
+\begin{CompactList}\small\item\em Perform manual vacuuming. \item\end{CompactList}\end{CompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{group__garbage_ga3}{
+\index{garbage@{garbage}!peak_garbage_collect@{peak\_\-garbage\_\-collect}}
+\index{peak_garbage_collect@{peak\_\-garbage\_\-collect}!garbage@{garbage}}
+\subsubsection[peak\_\-garbage\_\-collect]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-garbage\_\-collect (\hyperlink{group__garbage_ga0}{peak\_\-garbage} {\em g}, void $\ast$ {\em ptr})}}
+\label{group__garbage_ga3}
+
+
+Collect a pointer and schedules the garbage's task for deletion. 
+
+Guaranteed O(1) unless {\em max\_\-ptrs\/} is reached.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em g}]The garbage object reference. \item[{\em ptr}]Pointer to collect for deletion. \end{description}
+\end{Desc}
+\hypertarget{group__garbage_ga2}{
+\index{garbage@{garbage}!peak_garbage_create@{peak\_\-garbage\_\-create}}
+\index{peak_garbage_create@{peak\_\-garbage\_\-create}!garbage@{garbage}}
+\subsubsection[peak\_\-garbage\_\-create]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{group__garbage_ga0}{peak\_\-garbage} peak\_\-garbage\_\-create (int {\em max\_\-ptrs}, double {\em frequency}, \hyperlink{group__task__common_ga0}{peak\_\-task} {\em task}, \hyperlink{group__garbage_ga1}{peak\_\-garbage\_\-callback} {\em callout}, void $\ast$ {\em context})}}
+\label{group__garbage_ga2}
+
+
+Create a garbage object. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em max\_\-ptrs}]Max pointers that the garbage object can collect at the same time. Must be strictly positive. If reached, a vacuuming is performed and the object properly collected. \item[{\em frequency}]Frequency hint in seconds at which you want to do the vacuuming (deletions), it's usually less because when vacuuming the callback is called for all objects already collected. \item[{\em task}]Task to schedule, can be {\tt NULL} to use current task. \item[{\em callout}]A pointer to your deletion callback function which is triggered when automatic of manual vacuuming. \item[{\em context}]An extra application-defined pointer that will be passed to your garbage callback function.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]A newly allocated {\tt peak\_\-garbage} reference or {\tt NULL} if the object cannot be created. \end{Desc}
+\hypertarget{group__garbage_ga4}{
+\index{garbage@{garbage}!peak_garbage_get_collected_count@{peak\_\-garbage\_\-get\_\-collected\_\-count}}
+\index{peak_garbage_get_collected_count@{peak\_\-garbage\_\-get\_\-collected\_\-count}!garbage@{garbage}}
+\subsubsection[peak\_\-garbage\_\-get\_\-collected\_\-count]{\setlength{\rightskip}{0pt plus 5cm}int peak\_\-garbage\_\-get\_\-collected\_\-count (\hyperlink{group__garbage_ga0}{peak\_\-garbage} {\em g})}}
+\label{group__garbage_ga4}
+
+
+Get the current number of pointers collected for deletion. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em g}]The garbage object reference.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]Collected pointers count. \end{Desc}
+\hypertarget{group__garbage_ga5}{
+\index{garbage@{garbage}!peak_garbage_vacuum@{peak\_\-garbage\_\-vacuum}}
+\index{peak_garbage_vacuum@{peak\_\-garbage\_\-vacuum}!garbage@{garbage}}
+\subsubsection[peak\_\-garbage\_\-vacuum]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-garbage\_\-vacuum (\hyperlink{group__garbage_ga0}{peak\_\-garbage} {\em g})}}
+\label{group__garbage_ga5}
+
+
+Perform manual vacuuming. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em g}]The garbage object reference. \end{description}
+\end{Desc}

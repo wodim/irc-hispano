@@ -1,0 +1,74 @@
+2004-05-02  Stephane Thiell  <mbuna@bugged.org>
+	* src/pxyservd_log.c, src/irc_userbase.c: Added remote clients
+	connections debugging option.
+
+2004-01-17  Stephane Thiell  <mbuna@bugged.org>
+
+	* src/irc_client.c: Limit our virtual client's nick name length
+	to 9 characters.
+	* src/irc_network.c: Fixed a core in the squit handler (in the
+	recursion loop).
+	* src/irc_membership.c: Added HASH_FLAG_AUTOSHRINK again, as it
+	looks like the issue wasn't in dbprim.
+
+2004-01-15  Stephane Thiell  <mbuna@bugged.org>
+
+	* configure.ac: Changed --with-nicklen= to --with-maxnicklen to
+	conform a bit more with ircu's F lines.
+	* src/irc_membership.c: Removed HASH_FLAG_AUTOSHRINK as it breaks
+	things.
+	* src/glineq.c: Bug fix when allocated space was growing.
+
+2004-01-12  Stephane Thiell  <mbuna@bugged.org>
+
+	* src/cfgloader.c, src/cmd_help.c: Fixed a bug on the HELP
+	command, that happened for specific help items.
+	* src/cmd_stats.c: Added L1 IPCache hits counter.
+	* src/scan.c: Fixed a detail that resulted in users not flagged as
+	"scanned" although they were (when hitting local IP cache).
+
+2004-01-11  Stephane Thiell  <mbuna@bugged.org>
+
+	* src/cmd_recheck.c: Added recheck command, works with users or
+	channels. Added appropriate documentation in pxyservdconf.xml.
+	* pxyservdconf.xml, doc-pxyservdconf.xml: Finished current
+	commands' documentation.
+
+2004-01-10  Stephane Thiell  <mbuna@bugged.org>
+
+	* src/cmd_info.c: Renamed whois command to info. Now supports both
+	client and channel (show basic info + scan related info).
+	* src/session.c: Fix squit bug.
+	* src/irc_channel.c, src/irc_parser.c: Channel creation fix:
+	update creation time if channel already created or chuck()'ed.
+	* src/scan.c: Fixed peak's timers management, as
+	peak_task_timer_add() increases retain count.
+
+2004-01-03  Stephane Thiell  <mbuna@bugged.org>
+
+	* doc-pxyservdconf.xml: New documented configuration file.
+
+2004-01-02  Stephane Thiell  <mbuna@bugged.org>
+
+	* Fixed linked list bug in evreg.c - I should use dbprim for that
+	anyway, doh.
+	* Added logging for OPAS feed failures.
+	* Changed max pxyservd->pxyscand sendQ (was only 32KB only
+	doh). This value should be moved to the configuration file. 
+	* Added pxyservd's version at the end of the help command reply.
+
+2004-01-01  Stephane Thiell  <mbuna@bugged.org>
+
+	* Added --with-nicklen=NICKLEN configure option for pxyservd
+	(defaulting to 9).
+	* Added username and IP in evreg +o (/oper report)
+	* Added evreg flags p (proxy), c (cached proxy) and x (pxyscand
+	events) support.
+	* Added <show-cached> in the configuration to display (1) or hide
+	(0) cached proxies found on the console channel, useful if you
+	don't gline the proxies for too long (eg. 30 min) but pxyscand's
+	<proxy-expire> is longer (eg. 4h).
+	* Removed system.log logging in irc_membership_remove(). We remove
+	the client from the channel after a kick or a part message, we
+	don't care about zombies so the membership relation is sometimes
+	already deleted. 

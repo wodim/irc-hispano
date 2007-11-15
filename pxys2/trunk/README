@@ -1,0 +1,88 @@
+Undernet Proxy Scanner version 2 (pxys)
+
+[pxys is a diminutive for ProXYScanner]
+
+See the INSTALL file for requirements and (quick) installation instructions.
+
+
+        ------------------------------------------
+        Pxys v2 software suite package source tree
+        ------------------------------------------
+
++ pxys2
+    |
+    +--- ipcache (IP cache template files)
+    |
+    +--- libopas (Open Proxy Ascertainment Service Library)
+    |
+    +--- pxyscand (Proxyscanner daemon)
+    |      |
+    |      +--- px (Command line pxyscand client)
+    |      |
+    |      +--- src (Source code of pxyscand)
+    |
+    +--- pxyservd (Undernet ircu service server daemon)
+           |
+           +--- dbprim (*) (Database Primitives Library)
+           |
+           +--- src (Source code of pxyservd)
+
+
+Not included: libpeak (Parallel Events and Asynchronous tasKing Library)
+
+(*) = Third party library where only configuration scripts may differ from
+      the original source.
+
+
+ipcache
+-------
+Source code of a LRU IP cache model, which is used in both daemons (pxyscand
+and pxyservd). It's not a library but more a template to instantiate directly
+in each program. A quick check of the defines in ipcache_template.c will show
+you why it's like that. pxyservd only uses it as a little "level 1" cache but
+pxyscand make heavy usage of it to store last recently used proxy and non
+proxy IPs. It's used in conjonction of libpeak in both programs to improve
+memory allocation and time stuffs.
+
+libopas
+-------
+The OPAS Library helps communications between pxyscand and pxyservd. It
+implements the OPAS (binary) protocol as defined in libopas/draft-opas-1.txt.
+It's based on a simple query/reply concept and is able to encapsulate user
+defined messages, thus the transport channel can be used for several purposes.
+
+pxyscand
+--------
+Our proxy scanner daemon. The only code in C++ here, I guess. It implements
+an OPAS server to communicate with OPAS clients (like pxyservd). There is
+a base class (PXScanModule) to overload when you write a new scan type, check
+out the existing scan modules like PXMHttpProxy.cc, it's not hard to add new
+type of scan!
+
+pxyservd
+--------
+IRCU (Undernet ircd) service server daemon. Compatible with ircu2.10.10+,
+it's an interface between the IRC network and pxyscand. It creates a server
+which links to the network. It communicates with pxyscand to check the users
+and glines the proxies. It has a logging system with a daily rotation that
+your abuse team will enjoy. It uses Kevin L Mitchell dbprim library. This
+library offers a very efficient (for CPU and memory) and convenient way to
+work especially with linked lists, hash tables and sparse matrix, which are
+used a lot in such a service.
+Additionally, pxyservd creates a virtual client on the network, which acts
+like an interface between coders/opers and the daemon. We can say it's an
+oper service, however it's willingly limited to proxy related and statisticals
+stuffs. If you want a complete IRCU services suite, try GNUWorld at
+http://gnuworld.sf.net.
+
+pxtarget
+--------
+pxtarget - A daemon answering to forwarded (from open proxies) queries and
+           replying with a sha256 hash. (based on a shared secret + a
+           timestamp).
+pscheck -  Command line tool to verify a pxtarget daemon is running
+           correctly.
+
+
+S. Thiell
+$Id: README,v 1.2 2006/09/11 22:46:58 spale Exp $

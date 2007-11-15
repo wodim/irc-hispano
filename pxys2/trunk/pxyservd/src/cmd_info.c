@@ -1,0 +1,228 @@
+/* Copyright (C) 2003, 2004 Stephane Thiell
+ *
+ * This file is part of pxyservd (from pxys)
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *
+ */
+#define RCSID "$Id: cmd_info.c,v 1.1 2004/01/10 18:15:36 mbuna Exp $"
+
+#include "irc_cmd.h"
+#include "irc_msg.h"
+#include "irc_send.h"
+#include "cfgloader.h"
+
+#include "irc_membership.h"
+#include "irc_channel.h"
+#include "irc_client.h"
+#include "irc_userbase.h"
+#include "scan.h" /* scan_check_noscan() */
+
+#include <peak/peak.h>
+
+#include <assert.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+
+
+struct _iter_pack
+  {
+  const char *dst;
+  peak_tz tz;
+  };
+
+static unsigned long
+info_chan_iter_cb(smat_table_t *table, smat_entry_t *e, void *extra)
+  {
+  struct Client *cptr;
+  struct _iter_pack *pack = (struct _iter_pack *)extra;
+  const char *dst = pack->dst;
+  peak_tz tz = pack->tz;
+  peak_time_date gdate;
+  char host[64], sbuf[128];
+  int af;
+  
+  cptr = se_object(e, MEMBERSHIP_LOC_CLIENT);
+  
+  af = (cptr->flags & CLIENT_FLAG_IPV6) ? AF_INET6 : AF_INET;
+  
+  inet_ntop(af, &cptr->addr, host, sizeof(host));
+  
+  if (cptr == MYCLIENT_PTR)
+    strcpy(sbuf, "myself!");
+  else if (cptr->flags & CLIENT_FLAG_SCANNING)
+    snprintf(sbuf, sizeof(sbuf), "being scanned (query %ld secs ago)",
+             peak_time() - cptr->scan_timestamp);
+  else if (cptr->flags & CLIENT_FLAG_SCANFAIL)
+    snprintf(sbuf, sizeof(sbuf), "unscannable (failed %ld secs ago)",
+             peak_time() - cptr->scan_timestamp);
+  else if (!scan_check_noscan(cptr))
+    {
+    if (!cptr->scan_timestamp)
+      strcpy(sbuf, "not scanned yet");
+    else
+      {
+      gdate = peak_time_get_date(cptr->scan_timestamp, tz);
+      snprintf(sbuf, sizeof(sbuf), "scanned @ %d-%d-%d %d:%02d:%02d %s",
+               gdate.year, gdate.month, gdate.day,
+               gdate.hour, gdate.minute, (int)gdate.second,
+               peak_tz_get_abbreviation(tz, cptr->scan_timestamp));
+      }
+    }
+  else
+    strcpy(sbuf, "NOSCAN");
+  
+  send_client_to_one(dst, "%s %s %s (%s)", cptr->nick, cptr->user, host, sbuf);
+  
+  return 0;
+  }
+
+static void
+info_chan(const char *dst, toktabptr ttab)
+  {
+  struct Channel *c;
+  unsigned long err, cnt;
+  peak_tz tz;
+  
+  if (!(c = irc_channel_get(ttab->tok[4])))
+    {
+    send_client_to_one(dst, "Channel not found.");
+    return;
+    }
+  
+  if (ttab->size > 5)
+    tz = peak_tz_create(ttab->tok[5]);
+  else
+    tz = peak_tz_create_system();
+  
+  if (!tz)
+    {
+    send_client_to_one(dst, "Sorry, this time zone is unknown for me");
+    return;
+    }
+  
+  cnt = sh_count(&c->mhead);
+  if (cnt > 0)
+    {
+    struct _iter_pack pack = { dst, tz };
+    err = sh_iter(&c->mhead, NULL, info_chan_iter_cb, &pack, 0);
+    assert(err == 0);
+    send_client_to_one(dst, "%s - %lu users", c->chname, cnt);
+    }
+  else
+    {
+    /* Channel chucked, not yet really deleted. */
+    send_client_to_one(dst, "Channel's just been deleted: no user found");
+    }
+  
+  peak_release(tz);
+  }
+
+/* Get info about a nickname (ex whois command)
+ */
+static void
+info_nick(const char *dst, toktabptr ttab)
+  {
+  struct Client *u;
+  struct Server *sptr;
+  peak_tz tz;
+  peak_time_date gdate;
+  char host[64];
+  int af;
+  
+  if (!(u = irc_userbase_get_by_nick(ttab->tok[4])))
+    {
+    send_client_to_one(dst, "User not found.");
+    return;
+    }
+  
+  if (ttab->size > 5)
+    tz = peak_tz_create(ttab->tok[5]);
+  else
+    tz = peak_tz_create_system();
+  
+  if (!tz)
+    {
+    send_client_to_one(dst, "Sorry, this time zone is unknown for me");
+    return;
+    }
+  
+  if (!(u->flags & CLIENT_FLAG_IPV6))
+    af = AF_INET;
+  else
+    af = AF_INET6;
+  
+  inet_ntop(af, &u->addr, host, sizeof(host));
+  send_client_to_one(dst, "%s is %s@%s", u->nick, u->user, host);
+  if (u->flags & CLIENT_FLAG_OPER)
+    send_client_to_one(dst, "%s is an IRC Operator", u->nick);
+  
+  sptr = irc_network_get_server(u->nserv);
+  send_client_to_one(dst, "%s is on IRC via %s", u->nick, sptr->name);
+  gdate = peak_time_get_date(u->firsttime, tz);
+  send_client_to_one(dst, "%s signed on at %d-%d-%d %d:%02d:%02d %s", u->nick,
+                     gdate.year, gdate.month, gdate.day, gdate.hour,
+                     gdate.minute, (int)gdate.second,
+                     peak_tz_get_abbreviation(tz, u->firsttime));
+  
+  /* Scan stuffs */
+  if (u->flags & CLIENT_FLAG_SCANNING)
+    send_client_to_one(dst, "%s is being scanned (scan query %d secs ago)",
+                       u->nick, peak_time() - u->scan_timestamp);
+  else if (u->flags & CLIENT_FLAG_SCANFAIL)
+    send_client_to_one(dst, "%s is unscannable (last scan failed %d secs ago)",
+                       u->nick, peak_time() - u->scan_timestamp);
+  else if (!scan_check_noscan(u))
+    {
+    if (!u->scan_timestamp)
+      send_client_to_one(dst, "%s has not been scanned yet", u->nick);
+    else
+      {
+      gdate = peak_time_get_date(u->scan_timestamp, tz);
+      
+      send_client_to_one(dst, "%s was last scanned at "
+                         "%d-%d-%d %d:%02d:%02d %s",
+                         u->nick, gdate.year, gdate.month, gdate.day,
+                         gdate.hour, gdate.minute, (int)gdate.second,
+                         peak_tz_get_abbreviation(tz, u->scan_timestamp));
+      }
+    }
+  else
+    send_client_to_one(dst, "Attributes of %s match \"NOSCAN\" rules"
+                       " - scanning disabled", u->nick);
+  
+  peak_release(tz);
+  }
+
+void
+cmd_info(struct Client *cptr, toktabptr ttab)
+  {
+  const char *dst = ttab->tok[0];
+  
+  if (ttab->size < 5)
+    {
+    send_client_to_one(dst, "Syntax: INFO <nickname|channel> [TZ]");
+    return;
+    }
+  
+  if (IsChannelName(ttab->tok[4]))
+    info_chan(dst, ttab);
+  else
+    info_nick(dst, ttab);
+  }

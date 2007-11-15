@@ -1,0 +1,115 @@
+\hypertarget{group__dbprim}{
+\section{Database Primitives}
+\label{group__dbprim}\index{Database Primitives@{Database Primitives}}
+}
+
+
+\subsection{Detailed Description}
+This module describes interfaces common to all database modules--mainly the macros concerned with manipulating database keys and the definition of the key structure.
+
+The key may be any arbitrary pointer, including a pointer to a string. Everything that handles a key either copies the contents of the \hyperlink{group__dbprim_ga0}{db\_\-key\_\-t} structure or passes it to a user-defined function. If required, as in the case of a string, a length may also be represented in the key structure.
+
+\subsection*{Data Structures}
+\begin{CompactItemize}
+\item 
+struct \hyperlink{struct__db__key__s}{\_\-db\_\-key\_\-s}
+\begin{CompactList}\small\item\em Database key structure. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Defines}
+\begin{CompactItemize}
+\item 
+\#define \hyperlink{group__dbprim_ga1}{DB\_\-KEY\_\-INIT}(key, size)
+\begin{CompactList}\small\item\em Database key static initializer. \item\end{CompactList}\item 
+\#define \hyperlink{group__dbprim_ga2}{dk\_\-key}(key)
+\begin{CompactList}\small\item\em Database key accessor macro. \item\end{CompactList}\item 
+\#define \hyperlink{group__dbprim_ga3}{dk\_\-len}(key)
+\begin{CompactList}\small\item\em Database key length accessor macro. \item\end{CompactList}\item 
+\#define \hyperlink{group__dbprim_ga4}{DB\_\-FLAG\_\-REVERSE}
+\begin{CompactList}\small\item\em Reverse flag. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Typedefs}
+\begin{CompactItemize}
+\item 
+typedef \hyperlink{struct__db__key__s}{\_\-db\_\-key\_\-s} \hyperlink{group__dbprim_ga0}{db\_\-key\_\-t}
+\begin{CompactList}\small\item\em Database key. \item\end{CompactList}\end{CompactItemize}
+
+
+\subsection{Define Documentation}
+\hypertarget{group__dbprim_ga4}{
+\index{dbprim@{dbprim}!DB_FLAG_REVERSE@{DB\_\-FLAG\_\-REVERSE}}
+\index{DB_FLAG_REVERSE@{DB\_\-FLAG\_\-REVERSE}!dbprim@{dbprim}}
+\subsubsection[DB\_\-FLAG\_\-REVERSE]{\setlength{\rightskip}{0pt plus 5cm}\#define DB\_\-FLAG\_\-REVERSE}}
+\label{group__dbprim_ga4}
+
+
+This flag can be passed to ordered iterations to reverse the order of the iterations.
+
+Definition at line 629 of file dbprim.h.
+
+Referenced by ll\_\-iter(), and rt\_\-next().\hypertarget{group__dbprim_ga1}{
+\index{dbprim@{dbprim}!DB_KEY_INIT@{DB\_\-KEY\_\-INIT}}
+\index{DB_KEY_INIT@{DB\_\-KEY\_\-INIT}!dbprim@{dbprim}}
+\subsubsection[DB\_\-KEY\_\-INIT]{\setlength{\rightskip}{0pt plus 5cm}\#define DB\_\-KEY\_\-INIT(key, size)}}
+\label{group__dbprim_ga1}
+
+
+This macro allows a \hyperlink{group__dbprim_ga0}{db\_\-key\_\-t} to be initialized statically.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[\mbox{$\leftarrow$} {\em key}]A pointer to the key. \item[\mbox{$\leftarrow$} {\em size}]Size of the key.\end{description}
+\end{Desc}
+
+
+Definition at line 596 of file dbprim.h.\hypertarget{group__dbprim_ga2}{
+\index{dbprim@{dbprim}!dk_key@{dk\_\-key}}
+\index{dk_key@{dk\_\-key}!dbprim@{dbprim}}
+\subsubsection[dk\_\-key]{\setlength{\rightskip}{0pt plus 5cm}\#define dk\_\-key(key)}}
+\label{group__dbprim_ga2}
+
+
+This macro allows access to the key field of a \hyperlink{group__dbprim_ga0}{db\_\-key\_\-t}. It may be used as an lvalue in order to assign a key to a \hyperlink{group__dbprim_ga0}{db\_\-key\_\-t}.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[\mbox{$\leftarrow$} {\em key}]A pointer to a \hyperlink{group__dbprim_ga0}{db\_\-key\_\-t}.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]A pointer to a key ({\tt void $\ast$}).\end{Desc}
+
+
+Definition at line 608 of file dbprim.h.
+
+Referenced by \_\-sh\_\-find\_\-comp(), hash\_\-comp(), hash\_\-fnv1(), hash\_\-fnv1a(), rbtree\_\-comp(), sh\_\-find(), st\_\-add(), and st\_\-find().\hypertarget{group__dbprim_ga3}{
+\index{dbprim@{dbprim}!dk_len@{dk\_\-len}}
+\index{dk_len@{dk\_\-len}!dbprim@{dbprim}}
+\subsubsection[dk\_\-len]{\setlength{\rightskip}{0pt plus 5cm}\#define dk\_\-len(key)}}
+\label{group__dbprim_ga3}
+
+
+This macro allows access to the key length field of a \hyperlink{group__dbprim_ga0}{db\_\-key\_\-t}. It may be used as an lvalue in order to assign a length to a \hyperlink{group__dbprim_ga0}{db\_\-key\_\-t}.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[\mbox{$\leftarrow$} {\em key}]A pointer to a \hyperlink{group__dbprim_ga0}{db\_\-key\_\-t}.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]An {\tt int} describing the length of the key.\end{Desc}
+
+
+Definition at line 621 of file dbprim.h.
+
+Referenced by hash\_\-comp(), hash\_\-fnv1(), hash\_\-fnv1a(), rbtree\_\-comp(), st\_\-add(), and st\_\-find().
+
+\subsection{Typedef Documentation}
+\hypertarget{group__dbprim_ga0}{
+\index{dbprim@{dbprim}!db_key_t@{db\_\-key\_\-t}}
+\index{db_key_t@{db\_\-key\_\-t}!dbprim@{dbprim}}
+\subsubsection[db\_\-key\_\-t]{\setlength{\rightskip}{0pt plus 5cm}typedef struct \hyperlink{struct__db__key__s}{\_\-db\_\-key\_\-s} \hyperlink{struct__db__key__s}{db\_\-key\_\-t}}}
+\label{group__dbprim_ga0}
+
+
+This structure is a generic key containing a void $\ast$ pointer and a length parameter. It should be accessed with \hyperlink{group__dbprim_ga2}{dk\_\-key()} and \hyperlink{group__dbprim_ga3}{dk\_\-len()}.
+
+Definition at line 254 of file dbprim.h.

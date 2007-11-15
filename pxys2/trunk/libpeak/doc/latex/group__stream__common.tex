@@ -1,0 +1,287 @@
+\hypertarget{group__stream__common}{
+\section{Stream common}
+\label{group__stream__common}\index{Stream common@{Stream common}}
+}
+
+
+\subsection{Detailed Description}
+Creation methods and other common methods for socket streams. 
+
+
+
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+\hyperlink{group__stream_ga0}{peak\_\-stream} \hyperlink{group__stream__common_ga0}{peak\_\-stream\_\-socket\_\-create} (struct sockaddr $\ast$name, int namelen, uint32\_\-t opt, \hyperlink{group__stream_ga1}{peak\_\-stream\_\-event\_\-callback} cb, void $\ast$context)
+\begin{CompactList}\small\item\em Creates a new socket stream from a socket address. \item\end{CompactList}\item 
+\hyperlink{group__stream_ga0}{peak\_\-stream} \hyperlink{group__stream__common_ga1}{peak\_\-stream\_\-accept\_\-create} (\hyperlink{group__stream_ga0}{peak\_\-stream} ss, uint32\_\-t opt, \hyperlink{group__stream_ga1}{peak\_\-stream\_\-event\_\-callback} cb, void $\ast$context)
+\begin{CompactList}\small\item\em Creates a new socket stream from a incoming connection on a listening stream. \item\end{CompactList}\item 
+\hyperlink{group__stream_ga0}{peak\_\-stream} \hyperlink{group__stream__common_ga2}{peak\_\-stream\_\-raw\_\-create} (int fd, uint32\_\-t opt, \hyperlink{group__stream_ga1}{peak\_\-stream\_\-event\_\-callback} cb, void $\ast$context)
+\begin{CompactList}\small\item\em Creates a new socket stream from a \char`\"{}raw\char`\"{} file descriptor (which must be a valid opened socket). \item\end{CompactList}\item 
+int \hyperlink{group__stream__common_ga3}{peak\_\-stream\_\-is\_\-open} (\hyperlink{group__stream_ga0}{peak\_\-stream} s)
+\begin{CompactList}\small\item\em Test is a socket stream is open. \item\end{CompactList}\item 
+int \hyperlink{group__stream__common_ga4}{peak\_\-stream\_\-get\_\-error} (\hyperlink{group__stream_ga0}{peak\_\-stream} s)
+\begin{CompactList}\small\item\em Get last stream system error code. \item\end{CompactList}\item 
+int \hyperlink{group__stream__common_ga5}{peak\_\-stream\_\-get\_\-address} (\hyperlink{group__stream_ga0}{peak\_\-stream} s, struct sockaddr $\ast$name, int $\ast$namelen)
+\begin{CompactList}\small\item\em Get peer's name (address). \item\end{CompactList}\item 
+int \hyperlink{group__stream__common_ga6}{peak\_\-stream\_\-set\_\-address} (\hyperlink{group__stream_ga0}{peak\_\-stream} s, struct sockaddr $\ast$name, int namelen)
+\begin{CompactList}\small\item\em Assign a name (address) to an unnamed socket. \item\end{CompactList}\item 
+int \hyperlink{group__stream__common_ga7}{peak\_\-stream\_\-connect} (\hyperlink{group__stream_ga0}{peak\_\-stream} s)
+\begin{CompactList}\small\item\em Connect the stream. \item\end{CompactList}\item 
+void \hyperlink{group__stream__common_ga8}{peak\_\-stream\_\-disconnect} (\hyperlink{group__stream_ga0}{peak\_\-stream} s)
+\begin{CompactList}\small\item\em Disconnect the stream. \item\end{CompactList}\item 
+void $\ast$ \hyperlink{group__stream__common_ga9}{peak\_\-stream\_\-get\_\-context} (\hyperlink{group__stream_ga0}{peak\_\-stream} s)
+\begin{CompactList}\small\item\em Get the context pointer of a stream. \item\end{CompactList}\item 
+void \hyperlink{group__stream__common_ga10}{peak\_\-stream\_\-set\_\-context} (\hyperlink{group__stream_ga0}{peak\_\-stream} s, void $\ast$context)
+\begin{CompactList}\small\item\em Change the context pointer of a stream. \item\end{CompactList}\item 
+size\_\-t \hyperlink{group__stream__common_ga11}{peak\_\-stream\_\-get\_\-read\_\-count} (\hyperlink{group__stream_ga0}{peak\_\-stream} s)
+\begin{CompactList}\small\item\em Get amount of bytes actually read from the stream. \item\end{CompactList}\item 
+size\_\-t \hyperlink{group__stream__common_ga12}{peak\_\-stream\_\-get\_\-write\_\-count} (\hyperlink{group__stream_ga0}{peak\_\-stream} s)
+\begin{CompactList}\small\item\em Get amount of bytes actually written to the stream. \item\end{CompactList}\item 
+void \hyperlink{group__stream__common_ga13}{peak\_\-stream\_\-set\_\-timeout} (\hyperlink{group__stream_ga0}{peak\_\-stream} s, int timeout)
+\begin{CompactList}\small\item\em Configure event timeout checking for a specified stream. \item\end{CompactList}\end{CompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{group__stream__common_ga1}{
+\index{stream_common@{stream\_\-common}!peak_stream_accept_create@{peak\_\-stream\_\-accept\_\-create}}
+\index{peak_stream_accept_create@{peak\_\-stream\_\-accept\_\-create}!stream_common@{stream\_\-common}}
+\subsubsection[peak\_\-stream\_\-accept\_\-create]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{group__stream_ga0}{peak\_\-stream} peak\_\-stream\_\-accept\_\-create (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em ss}, uint32\_\-t {\em opt}, \hyperlink{group__stream_ga1}{peak\_\-stream\_\-event\_\-callback} {\em cb}, void $\ast$ {\em context})}}
+\label{group__stream__common_ga1}
+
+
+Creates a new socket stream from a incoming connection on a listening stream. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em ss}]The server's socket stream that got a PEAK\_\-STREAM\_\-EVT\_\-ACCEPT event. \item[{\em opt}]Stream creation options. \item[{\em cb}]A pointer to your notification callback function that handles events that will occur on this stream once scheduled. \item[{\em context}]An extra application-defined pointer that will be passed to your event callback function (it's not used by the library).\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]A newly allocated peak\_\-stream reference or NULL if the stream cannot be created. \end{Desc}
+\hypertarget{group__stream__common_ga7}{
+\index{stream_common@{stream\_\-common}!peak_stream_connect@{peak\_\-stream\_\-connect}}
+\index{peak_stream_connect@{peak\_\-stream\_\-connect}!stream_common@{stream\_\-common}}
+\subsubsection[peak\_\-stream\_\-connect]{\setlength{\rightskip}{0pt plus 5cm}int peak\_\-stream\_\-connect (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s})}}
+\label{group__stream__common_ga7}
+
+
+Connect the stream. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Return values:]
+\begin{description}
+\item[{\em 0}]if the operation is successful. \item[{\em -1}]if the connection to the remote host failed. \end{description}
+\end{Desc}
+\hypertarget{group__stream__common_ga8}{
+\index{stream_common@{stream\_\-common}!peak_stream_disconnect@{peak\_\-stream\_\-disconnect}}
+\index{peak_stream_disconnect@{peak\_\-stream\_\-disconnect}!stream_common@{stream\_\-common}}
+\subsubsection[peak\_\-stream\_\-disconnect]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-stream\_\-disconnect (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s})}}
+\label{group__stream__common_ga8}
+
+
+Disconnect the stream. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference. \end{description}
+\end{Desc}
+\hypertarget{group__stream__common_ga5}{
+\index{stream_common@{stream\_\-common}!peak_stream_get_address@{peak\_\-stream\_\-get\_\-address}}
+\index{peak_stream_get_address@{peak\_\-stream\_\-get\_\-address}!stream_common@{stream\_\-common}}
+\subsubsection[peak\_\-stream\_\-get\_\-address]{\setlength{\rightskip}{0pt plus 5cm}int peak\_\-stream\_\-get\_\-address (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s}, struct sockaddr $\ast$ {\em name}, int $\ast$ {\em namelen})}}
+\label{group__stream__common_ga5}
+
+
+Get peer's name (address). 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference. \item[{\em name}]A pointer to an allocated space for the address, enough to hold it (eg. a struct sockaddr\_\-in for an IPv4 address). \item[{\em namelen}]Input/output argument, should be initialized to indicate the amount of size pointed to by {\em name\/}. On return it contains the actual size of the name returned (in bytes).\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Return values:]
+\begin{description}
+\item[{\em 0}]if the operation is successful. \item[{\em -1}]if the buffer {\em name\/} is too small. \end{description}
+\end{Desc}
+\hypertarget{group__stream__common_ga9}{
+\index{stream_common@{stream\_\-common}!peak_stream_get_context@{peak\_\-stream\_\-get\_\-context}}
+\index{peak_stream_get_context@{peak\_\-stream\_\-get\_\-context}!stream_common@{stream\_\-common}}
+\subsubsection[peak\_\-stream\_\-get\_\-context]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ peak\_\-stream\_\-get\_\-context (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s})}}
+\label{group__stream__common_ga9}
+
+
+Get the context pointer of a stream. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]The application-defined pointer. \end{Desc}
+\hypertarget{group__stream__common_ga4}{
+\index{stream_common@{stream\_\-common}!peak_stream_get_error@{peak\_\-stream\_\-get\_\-error}}
+\index{peak_stream_get_error@{peak\_\-stream\_\-get\_\-error}!stream_common@{stream\_\-common}}
+\subsubsection[peak\_\-stream\_\-get\_\-error]{\setlength{\rightskip}{0pt plus 5cm}int peak\_\-stream\_\-get\_\-error (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s})}}
+\label{group__stream__common_ga4}
+
+
+Get last stream system error code. 
+
+Returns the last socket or system error code as defined in sys/errno.h.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]The error code. \end{Desc}
+\hypertarget{group__stream__common_ga11}{
+\index{stream_common@{stream\_\-common}!peak_stream_get_read_count@{peak\_\-stream\_\-get\_\-read\_\-count}}
+\index{peak_stream_get_read_count@{peak\_\-stream\_\-get\_\-read\_\-count}!stream_common@{stream\_\-common}}
+\subsubsection[peak\_\-stream\_\-get\_\-read\_\-count]{\setlength{\rightskip}{0pt plus 5cm}size\_\-t peak\_\-stream\_\-get\_\-read\_\-count (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s})}}
+\label{group__stream__common_ga11}
+
+
+Get amount of bytes actually read from the stream. 
+
+Statistical function.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]Number of bytes read since the stream's creation. \end{Desc}
+\hypertarget{group__stream__common_ga12}{
+\index{stream_common@{stream\_\-common}!peak_stream_get_write_count@{peak\_\-stream\_\-get\_\-write\_\-count}}
+\index{peak_stream_get_write_count@{peak\_\-stream\_\-get\_\-write\_\-count}!stream_common@{stream\_\-common}}
+\subsubsection[peak\_\-stream\_\-get\_\-write\_\-count]{\setlength{\rightskip}{0pt plus 5cm}size\_\-t peak\_\-stream\_\-get\_\-write\_\-count (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s})}}
+\label{group__stream__common_ga12}
+
+
+Get amount of bytes actually written to the stream. 
+
+Statistical function.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]Number of bytes written since the stream's creation. \end{Desc}
+\hypertarget{group__stream__common_ga3}{
+\index{stream_common@{stream\_\-common}!peak_stream_is_open@{peak\_\-stream\_\-is\_\-open}}
+\index{peak_stream_is_open@{peak\_\-stream\_\-is\_\-open}!stream_common@{stream\_\-common}}
+\subsubsection[peak\_\-stream\_\-is\_\-open]{\setlength{\rightskip}{0pt plus 5cm}int peak\_\-stream\_\-is\_\-open (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s})}}
+\label{group__stream__common_ga3}
+
+
+Test is a socket stream is open. 
+
+An open stream is a connected socket for connection oriented streams.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Return values:]
+\begin{description}
+\item[{\em 0}]Stream not open. \item[{\em 1}]Stream open. \end{description}
+\end{Desc}
+\hypertarget{group__stream__common_ga2}{
+\index{stream_common@{stream\_\-common}!peak_stream_raw_create@{peak\_\-stream\_\-raw\_\-create}}
+\index{peak_stream_raw_create@{peak\_\-stream\_\-raw\_\-create}!stream_common@{stream\_\-common}}
+\subsubsection[peak\_\-stream\_\-raw\_\-create]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{group__stream_ga0}{peak\_\-stream} peak\_\-stream\_\-raw\_\-create (int {\em fd}, uint32\_\-t {\em opt}, \hyperlink{group__stream_ga1}{peak\_\-stream\_\-event\_\-callback} {\em cb}, void $\ast$ {\em context})}}
+\label{group__stream__common_ga2}
+
+
+Creates a new socket stream from a \char`\"{}raw\char`\"{} file descriptor (which must be a valid opened socket). 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em fd}]The socket file descriptor. \item[{\em opt}]Stream creation options. \item[{\em cb}]A pointer to your notification callback function that handles events that will occur on this stream once scheduled. \item[{\em context}]An extra application-defined pointer that will be passed to your event callback function (it's not used by the library).\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]A newly allocated peak\_\-stream reference or NULL if the stream cannot be created. \end{Desc}
+\hypertarget{group__stream__common_ga6}{
+\index{stream_common@{stream\_\-common}!peak_stream_set_address@{peak\_\-stream\_\-set\_\-address}}
+\index{peak_stream_set_address@{peak\_\-stream\_\-set\_\-address}!stream_common@{stream\_\-common}}
+\subsubsection[peak\_\-stream\_\-set\_\-address]{\setlength{\rightskip}{0pt plus 5cm}int peak\_\-stream\_\-set\_\-address (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s}, struct sockaddr $\ast$ {\em name}, int {\em namelen})}}
+\label{group__stream__common_ga6}
+
+
+Assign a name (address) to an unnamed socket. 
+
+This function allow you to bind the stream to a local address which is not the default (eg. for a vhost). Not for use with streams with the {\tt PEAK\_\-STREAM\_\-OPT\_\-LISTEN} option flag.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference. \item[{\em name}]A pointer to a structure describing the name (address) to assign to the stream socket. \item[{\em namelen}]The length of the pointed structure by name.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Return values:]
+\begin{description}
+\item[{\em 0}]if the operation is successful. \item[{\em -1}]otherwise. \end{description}
+\end{Desc}
+\hypertarget{group__stream__common_ga10}{
+\index{stream_common@{stream\_\-common}!peak_stream_set_context@{peak\_\-stream\_\-set\_\-context}}
+\index{peak_stream_set_context@{peak\_\-stream\_\-set\_\-context}!stream_common@{stream\_\-common}}
+\subsubsection[peak\_\-stream\_\-set\_\-context]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-stream\_\-set\_\-context (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s}, void $\ast$ {\em context})}}
+\label{group__stream__common_ga10}
+
+
+Change the context pointer of a stream. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference. \item[{\em context}]An extra application-defined pointer that will be passed to your event callback function (it's not used by the library). \end{description}
+\end{Desc}
+\hypertarget{group__stream__common_ga13}{
+\index{stream_common@{stream\_\-common}!peak_stream_set_timeout@{peak\_\-stream\_\-set\_\-timeout}}
+\index{peak_stream_set_timeout@{peak\_\-stream\_\-set\_\-timeout}!stream_common@{stream\_\-common}}
+\subsubsection[peak\_\-stream\_\-set\_\-timeout]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-stream\_\-set\_\-timeout (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s}, int {\em timeout})}}
+\label{group__stream__common_ga13}
+
+
+Configure event timeout checking for a specified stream. 
+
+This is a convenience feature. First, because an explicit timer isn't needed to check stream's timeout in your application anymore. But for thread safety too: when peak is not explicitely configured to use only one thread, an independant timer might be processed at the same time with an event on the stream, so you need to add mutual exclusive region (implementation is possible with \hyperlink{group__task__sync_ga21}{peak\_\-task\_\-exclusivity()}), and verify all it's well synchronized. With \hyperlink{group__stream__common_ga53}{peak\_\-stream\_\-set\_\-timeout()} however, the timeout event acts like a normal stream events and cannot be processed at the same time with another on the same stream.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference. \item[{\em timeout}]Time in seconds until an event of type {\em PEAK\_\-STREAM\_\-EVT\_\-TIMEDOUT\/} will be sent. Use 0 to disable timeout checking. \end{description}
+\end{Desc}
+\hypertarget{group__stream__common_ga0}{
+\index{stream_common@{stream\_\-common}!peak_stream_socket_create@{peak\_\-stream\_\-socket\_\-create}}
+\index{peak_stream_socket_create@{peak\_\-stream\_\-socket\_\-create}!stream_common@{stream\_\-common}}
+\subsubsection[peak\_\-stream\_\-socket\_\-create]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{group__stream_ga0}{peak\_\-stream} peak\_\-stream\_\-socket\_\-create (struct sockaddr $\ast$ {\em name}, int {\em namelen}, uint32\_\-t {\em opt}, \hyperlink{group__stream_ga1}{peak\_\-stream\_\-event\_\-callback} {\em cb}, void $\ast$ {\em context})}}
+\label{group__stream__common_ga0}
+
+
+Creates a new socket stream from a socket address. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em name}]Pointer to a socket's name/address. For listening sockets, this is the name/local address of the socket, but for outgoing sockets this is the name/address of the other socket. Several socket protocol types are supported (PF\_\-INET, PF\_\-INET6). \item[{\em namelen}]Length of the structure pointed by name. \item[{\em opt}]Stream creation options. \item[{\em cb}]A pointer to your notification callback function that handles events that will occur on this stream once scheduled. \item[{\em context}]An extra application-defined pointer that will be passed to your event callback function (it's not used by the library).\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]A newly allocated peak\_\-stream reference or NULL if the stream cannot be created. \end{Desc}

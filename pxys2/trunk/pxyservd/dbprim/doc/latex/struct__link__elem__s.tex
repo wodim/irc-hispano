@@ -1,0 +1,107 @@
+\hypertarget{struct__link__elem__s}{
+\section{\_\-link\_\-elem\_\-s Struct Reference}
+\label{struct__link__elem__s}\index{_link_elem_s@{\_\-link\_\-elem\_\-s}}
+}
+{\tt \#include $<$dbprim.h$>$}
+
+Collaboration diagram for \_\-link\_\-elem\_\-s:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=88pt]{struct__link__elem__s__coll__graph}
+\end{center}
+\end{figure}
+
+
+\subsection{Detailed Description}
+\begin{Desc}
+\item[For internal use only.]
+This is the implementation of the \hyperlink{group__dbprim__link_ga1}{link\_\-elem\_\-t} type.\end{Desc}
+
+
+
+
+Definition at line 895 of file dbprim.h.\subsection*{Data Fields}
+\begin{CompactItemize}
+\item 
+unsigned long \hyperlink{struct__link__elem__s_o0}{le\_\-magic}
+\item 
+\hyperlink{struct__link__elem__s}{link\_\-elem\_\-t} $\ast$ \hyperlink{struct__link__elem__s_o1}{le\_\-next}
+\item 
+\hyperlink{struct__link__elem__s}{link\_\-elem\_\-t} $\ast$ \hyperlink{struct__link__elem__s_o2}{le\_\-prev}
+\item 
+void $\ast$ \hyperlink{struct__link__elem__s_o3}{le\_\-object}
+\item 
+\hyperlink{struct__link__head__s}{link\_\-head\_\-t} $\ast$ \hyperlink{struct__link__elem__s_o4}{le\_\-head}
+\item 
+unsigned long \hyperlink{struct__link__elem__s_o5}{le\_\-flags}
+\end{CompactItemize}
+
+
+\subsection{Field Documentation}
+\hypertarget{struct__link__elem__s_o5}{
+\index{_link_elem_s@{\_\-link\_\-elem\_\-s}!le_flags@{le\_\-flags}}
+\index{le_flags@{le\_\-flags}!_link_elem_s@{\_\-link\_\-elem\_\-s}}
+\subsubsection[le\_\-flags]{\setlength{\rightskip}{0pt plus 5cm}unsigned long \hyperlink{struct__link__elem__s_o5}{\_\-link\_\-elem\_\-s::le\_\-flags}}}
+\label{struct__link__elem__s_o5}
+
+
+Flags associated with this element. 
+
+Definition at line 901 of file dbprim.h.
+
+Referenced by le\_\-init().\hypertarget{struct__link__elem__s_o4}{
+\index{_link_elem_s@{\_\-link\_\-elem\_\-s}!le_head@{le\_\-head}}
+\index{le_head@{le\_\-head}!_link_elem_s@{\_\-link\_\-elem\_\-s}}
+\subsubsection[le\_\-head]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{struct__link__head__s}{link\_\-head\_\-t}$\ast$ \hyperlink{struct__link__elem__s_o4}{\_\-link\_\-elem\_\-s::le\_\-head}}}
+\label{struct__link__elem__s_o4}
+
+
+The head of the list. 
+
+Definition at line 900 of file dbprim.h.
+
+Referenced by le\_\-init(), ll\_\-add(), ll\_\-find(), ll\_\-iter(), ll\_\-move(), and ll\_\-remove().\hypertarget{struct__link__elem__s_o0}{
+\index{_link_elem_s@{\_\-link\_\-elem\_\-s}!le_magic@{le\_\-magic}}
+\index{le_magic@{le\_\-magic}!_link_elem_s@{\_\-link\_\-elem\_\-s}}
+\subsubsection[le\_\-magic]{\setlength{\rightskip}{0pt plus 5cm}unsigned long \hyperlink{struct__link__elem__s_o0}{\_\-link\_\-elem\_\-s::le\_\-magic}}}
+\label{struct__link__elem__s_o0}
+
+
+Magic number. 
+
+Definition at line 896 of file dbprim.h.
+
+Referenced by le\_\-init().\hypertarget{struct__link__elem__s_o1}{
+\index{_link_elem_s@{\_\-link\_\-elem\_\-s}!le_next@{le\_\-next}}
+\index{le_next@{le\_\-next}!_link_elem_s@{\_\-link\_\-elem\_\-s}}
+\subsubsection[le\_\-next]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{struct__link__elem__s}{link\_\-elem\_\-t}$\ast$ \hyperlink{struct__link__elem__s_o1}{\_\-link\_\-elem\_\-s::le\_\-next}}}
+\label{struct__link__elem__s_o1}
+
+
+Next element in list. 
+
+Definition at line 897 of file dbprim.h.
+
+Referenced by le\_\-init(), ll\_\-add(), ll\_\-find(), ll\_\-iter(), ll\_\-move(), and ll\_\-remove().\hypertarget{struct__link__elem__s_o3}{
+\index{_link_elem_s@{\_\-link\_\-elem\_\-s}!le_object@{le\_\-object}}
+\index{le_object@{le\_\-object}!_link_elem_s@{\_\-link\_\-elem\_\-s}}
+\subsubsection[le\_\-object]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ \hyperlink{struct__link__elem__s_o3}{\_\-link\_\-elem\_\-s::le\_\-object}}}
+\label{struct__link__elem__s_o3}
+
+
+The object pointed to by this link. 
+
+Definition at line 899 of file dbprim.h.
+
+Referenced by le\_\-init(), and ll\_\-find().\hypertarget{struct__link__elem__s_o2}{
+\index{_link_elem_s@{\_\-link\_\-elem\_\-s}!le_prev@{le\_\-prev}}
+\index{le_prev@{le\_\-prev}!_link_elem_s@{\_\-link\_\-elem\_\-s}}
+\subsubsection[le\_\-prev]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{struct__link__elem__s}{link\_\-elem\_\-t}$\ast$ \hyperlink{struct__link__elem__s_o2}{\_\-link\_\-elem\_\-s::le\_\-prev}}}
+\label{struct__link__elem__s_o2}
+
+
+Previous element in list. 
+
+Definition at line 898 of file dbprim.h.
+
+Referenced by le\_\-init(), ll\_\-add(), ll\_\-iter(), ll\_\-move(), and ll\_\-remove().

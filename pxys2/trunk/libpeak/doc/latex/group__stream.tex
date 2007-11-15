@@ -1,0 +1,178 @@
+\hypertarget{group__stream}{
+\section{Socket streams}
+\label{group__stream}\index{Socket streams@{Socket streams}}
+}
+
+
+\subsection{Detailed Description}
+This API provides a functional interface to asynchronously processed socket streams. For simplicity, unlike other implementations, one stream instance can be readable and writable at the same time. Once configured, a stream must be scheduled with a task. The library will then notify the application using a notification callback, which will be called by one of the task's thread. 
+
+\subsection*{Modules}
+\begin{CompactItemize}
+\item 
+\hyperlink{group__stream__common}{Stream common}
+\begin{CompactList}\small\item\em Creation methods and other common methods for socket streams. \item\end{CompactList}
+
+\item 
+\hyperlink{group__stream__low}{Non-buffered operations}
+\begin{CompactList}\small\item\em Low level read/write primitives. \item\end{CompactList}
+
+\item 
+\hyperlink{group__stream__line}{Line-mode operations}
+\begin{CompactList}\small\item\em Line-mode based stream methods. \item\end{CompactList}
+
+\item 
+\hyperlink{group__stream__buf}{Write-buffered operations}
+\begin{CompactList}\small\item\em Write-buffered stream methods. \item\end{CompactList}
+
+\item 
+\hyperlink{group__stream__sched}{Scheduling}
+\begin{CompactList}\small\item\em Scheduling task for streams. \item\end{CompactList}
+
+\end{CompactItemize}
+\subsection*{Typedefs}
+\begin{CompactItemize}
+\item 
+\hypertarget{group__stream_ga0}{
+typedef \_\-\_\-peak\_\-stream $\ast$ \hyperlink{group__stream_ga0}{peak\_\-stream}}
+\label{group__stream_ga0}
+
+\begin{CompactList}\small\item\em Opaque stream pointer type. \item\end{CompactList}\item 
+typedef void($\ast$ \hyperlink{group__stream_ga1}{peak\_\-stream\_\-event\_\-callback} )(\hyperlink{group__stream_ga0}{peak\_\-stream} s, int type, void $\ast$context)
+\begin{CompactList}\small\item\em Stream client event callback. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Enumerations}
+\begin{CompactItemize}
+\item 
+enum \{ \par
+\hyperlink{group__stream_gga2a5}{PEAK\_\-STREAM\_\-OPT\_\-DEFAULT} =  0, 
+\par
+\hyperlink{group__stream_gga2a6}{PEAK\_\-STREAM\_\-OPT\_\-DGRAM} =  1 $<$$<$ 0, 
+\par
+\hyperlink{group__stream_gga2a7}{PEAK\_\-STREAM\_\-OPT\_\-LISTEN} =  1 $<$$<$ 1, 
+\par
+\hyperlink{group__stream_gga2a8}{PEAK\_\-STREAM\_\-OPT\_\-LINEMODE} =  1 $<$$<$ 2, 
+\par
+\hyperlink{group__stream_gga2a9}{PEAK\_\-STREAM\_\-OPT\_\-AUTOSCHEDULE} =  1 $<$$<$ 3
+ \}
+\begin{CompactList}\small\item\em Stream creation options. \item\end{CompactList}\item 
+enum \{ \par
+\hyperlink{group__stream_gga3a10}{PEAK\_\-STREAM\_\-EVT\_\-NONE} =  0, 
+\par
+\hyperlink{group__stream_gga3a11}{PEAK\_\-STREAM\_\-EVT\_\-OPEN}, 
+\par
+\hyperlink{group__stream_gga3a12}{PEAK\_\-STREAM\_\-EVT\_\-ACCEPT}, 
+\par
+\hyperlink{group__stream_gga3a13}{PEAK\_\-STREAM\_\-EVT\_\-READ}, 
+\par
+\hyperlink{group__stream_gga3a14}{PEAK\_\-STREAM\_\-EVT\_\-WRITE}, 
+\par
+\hyperlink{group__stream_gga3a15}{PEAK\_\-STREAM\_\-EVT\_\-END}, 
+\par
+\hyperlink{group__stream_gga3a16}{PEAK\_\-STREAM\_\-EVT\_\-ERROR}, 
+\par
+\hyperlink{group__stream_gga3a17}{PEAK\_\-STREAM\_\-EVT\_\-TIMEDOUT}
+ \}
+\begin{CompactList}\small\item\em Types of event passed to your stream event callback function. \item\end{CompactList}\end{CompactItemize}
+
+
+\subsection{Typedef Documentation}
+\hypertarget{group__stream_ga1}{
+\index{stream@{stream}!peak_stream_event_callback@{peak\_\-stream\_\-event\_\-callback}}
+\index{peak_stream_event_callback@{peak\_\-stream\_\-event\_\-callback}!stream@{stream}}
+\subsubsection[peak\_\-stream\_\-event\_\-callback]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ \hyperlink{group__stream_ga1}{peak\_\-stream\_\-event\_\-callback})(\hyperlink{group__stream_ga0}{peak\_\-stream} s, int type, void $\ast$context)}}
+\label{group__stream_ga1}
+
+
+Stream client event callback. 
+
+Defines a pointer to your notification callback function that handles interesting events that occur on a scheduled stream. 
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{group__stream_ga2}{
+\subsubsection["@4]{\setlength{\rightskip}{0pt plus 5cm}anonymous enum}}
+\label{group__stream_ga2}
+
+
+Stream creation options. 
+
+\begin{Desc}
+\item[Enumeration values: ]\par
+\begin{description}
+\index{PEAK_STREAM_OPT_DEFAULT@{PEAK\_\-STREAM\_\-OPT\_\-DEFAULT}!stream@{stream}}\index{stream@{stream}!PEAK_STREAM_OPT_DEFAULT@{PEAK\_\-STREAM\_\-OPT\_\-DEFAULT}}\item[{\em 
+\hypertarget{group__stream_gga2a5}{
+PEAK\_\-STREAM\_\-OPT\_\-DEFAULT}
+\label{group__stream_gga2a5}
+}]Default: SOCK\_\-STREAM socket (reliable stream), ie. TCP. \index{PEAK_STREAM_OPT_DGRAM@{PEAK\_\-STREAM\_\-OPT\_\-DGRAM}!stream@{stream}}\index{stream@{stream}!PEAK_STREAM_OPT_DGRAM@{PEAK\_\-STREAM\_\-OPT\_\-DGRAM}}\item[{\em 
+\hypertarget{group__stream_gga2a6}{
+PEAK\_\-STREAM\_\-OPT\_\-DGRAM}
+\label{group__stream_gga2a6}
+}]UDP socket stream (not a reliable stream). \index{PEAK_STREAM_OPT_LISTEN@{PEAK\_\-STREAM\_\-OPT\_\-LISTEN}!stream@{stream}}\index{stream@{stream}!PEAK_STREAM_OPT_LISTEN@{PEAK\_\-STREAM\_\-OPT\_\-LISTEN}}\item[{\em 
+\hypertarget{group__stream_gga2a7}{
+PEAK\_\-STREAM\_\-OPT\_\-LISTEN}
+\label{group__stream_gga2a7}
+}]Listening socket stream. Will use the address argument as the local address (where to bind). \index{PEAK_STREAM_OPT_LINEMODE@{PEAK\_\-STREAM\_\-OPT\_\-LINEMODE}!stream@{stream}}\index{stream@{stream}!PEAK_STREAM_OPT_LINEMODE@{PEAK\_\-STREAM\_\-OPT\_\-LINEMODE}}\item[{\em 
+\hypertarget{group__stream_gga2a8}{
+PEAK\_\-STREAM\_\-OPT\_\-LINEMODE}
+\label{group__stream_gga2a8}
+}]Line mode, useful for line-based text streams; the callback is called for every line received. \index{PEAK_STREAM_OPT_AUTOSCHEDULE@{PEAK\_\-STREAM\_\-OPT\_\-AUTOSCHEDULE}!stream@{stream}}\index{stream@{stream}!PEAK_STREAM_OPT_AUTOSCHEDULE@{PEAK\_\-STREAM\_\-OPT\_\-AUTOSCHEDULE}}\item[{\em 
+\hypertarget{group__stream_gga2a9}{
+PEAK\_\-STREAM\_\-OPT\_\-AUTOSCHEDULE}
+\label{group__stream_gga2a9}
+}]Auto schedule, avoid a call to peak\_\-stream\_\-schedule. Useful for accepted socket. \end{description}
+\end{Desc}
+
+\hypertarget{group__stream_ga3}{
+\subsubsection["@5]{\setlength{\rightskip}{0pt plus 5cm}anonymous enum}}
+\label{group__stream_ga3}
+
+
+Types of event passed to your stream event callback function. 
+
+\begin{Desc}
+\item[Enumeration values: ]\par
+\begin{description}
+\index{PEAK_STREAM_EVT_NONE@{PEAK\_\-STREAM\_\-EVT\_\-NONE}!stream@{stream}}\index{stream@{stream}!PEAK_STREAM_EVT_NONE@{PEAK\_\-STREAM\_\-EVT\_\-NONE}}\item[{\em 
+\hypertarget{group__stream_gga3a10}{
+PEAK\_\-STREAM\_\-EVT\_\-NONE}
+\label{group__stream_gga3a10}
+}]Never used. \index{PEAK_STREAM_EVT_OPEN@{PEAK\_\-STREAM\_\-EVT\_\-OPEN}!stream@{stream}}\index{stream@{stream}!PEAK_STREAM_EVT_OPEN@{PEAK\_\-STREAM\_\-EVT\_\-OPEN}}\item[{\em 
+\hypertarget{group__stream_gga3a11}{
+PEAK\_\-STREAM\_\-EVT\_\-OPEN}
+\label{group__stream_gga3a11}
+}]Open event. The stream is now open (connection established). \index{PEAK_STREAM_EVT_ACCEPT@{PEAK\_\-STREAM\_\-EVT\_\-ACCEPT}!stream@{stream}}\index{stream@{stream}!PEAK_STREAM_EVT_ACCEPT@{PEAK\_\-STREAM\_\-EVT\_\-ACCEPT}}\item[{\em 
+\hypertarget{group__stream_gga3a12}{
+PEAK\_\-STREAM\_\-EVT\_\-ACCEPT}
+\label{group__stream_gga3a12}
+}]Accept event. A new stream can be created using \hyperlink{group__stream__common_ga32}{peak\_\-stream\_\-accept\_\-create()}. \index{PEAK_STREAM_EVT_READ@{PEAK\_\-STREAM\_\-EVT\_\-READ}!stream@{stream}}\index{stream@{stream}!PEAK_STREAM_EVT_READ@{PEAK\_\-STREAM\_\-EVT\_\-READ}}\item[{\em 
+\hypertarget{group__stream_gga3a13}{
+PEAK\_\-STREAM\_\-EVT\_\-READ}
+\label{group__stream_gga3a13}
+}]Read event. There's something to read on the stream. 
+
+Until you don't really read it, you won't be notified again with this event type. \index{PEAK_STREAM_EVT_WRITE@{PEAK\_\-STREAM\_\-EVT\_\-WRITE}!stream@{stream}}\index{stream@{stream}!PEAK_STREAM_EVT_WRITE@{PEAK\_\-STREAM\_\-EVT\_\-WRITE}}\item[{\em 
+\hypertarget{group__stream_gga3a14}{
+PEAK\_\-STREAM\_\-EVT\_\-WRITE}
+\label{group__stream_gga3a14}
+}]Write event. You can efficiently write on the stream NOW. 
+
+Until you don't really write something, you won't be notified again with this event type. \index{PEAK_STREAM_EVT_END@{PEAK\_\-STREAM\_\-EVT\_\-END}!stream@{stream}}\index{stream@{stream}!PEAK_STREAM_EVT_END@{PEAK\_\-STREAM\_\-EVT\_\-END}}\item[{\em 
+\hypertarget{group__stream_gga3a15}{
+PEAK\_\-STREAM\_\-EVT\_\-END}
+\label{group__stream_gga3a15}
+}]End of stream event. No further bytes can be read/written. 
+
+You should release the stream with \hyperlink{group__alloc_ga7}{peak\_\-release()}. \index{PEAK_STREAM_EVT_ERROR@{PEAK\_\-STREAM\_\-EVT\_\-ERROR}!stream@{stream}}\index{stream@{stream}!PEAK_STREAM_EVT_ERROR@{PEAK\_\-STREAM\_\-EVT\_\-ERROR}}\item[{\em 
+\hypertarget{group__stream_gga3a16}{
+PEAK\_\-STREAM\_\-EVT\_\-ERROR}
+\label{group__stream_gga3a16}
+}]An error occured on the stream's connection. 
+
+You should release the stream with \hyperlink{group__alloc_ga7}{peak\_\-release()}. \index{PEAK_STREAM_EVT_TIMEDOUT@{PEAK\_\-STREAM\_\-EVT\_\-TIMEDOUT}!stream@{stream}}\index{stream@{stream}!PEAK_STREAM_EVT_TIMEDOUT@{PEAK\_\-STREAM\_\-EVT\_\-TIMEDOUT}}\item[{\em 
+\hypertarget{group__stream_gga3a17}{
+PEAK\_\-STREAM\_\-EVT\_\-TIMEDOUT}
+\label{group__stream_gga3a17}
+}]Stream's event timed out. 
+
+Sent only when you enable stream's event timeout checking with \hyperlink{group__stream__common_ga53}{peak\_\-stream\_\-set\_\-timeout()}. You might release the stream with \hyperlink{group__alloc_ga7}{peak\_\-release()}. If you ignore it, another event of type {\em PEAK\_\-STREAM\_\-EVT\_\-TIMEDOUT\/} will be sent after {\tt timeout} seconds as defined in \hyperlink{group__stream__common_ga53}{peak\_\-stream\_\-set\_\-timeout()}. \end{description}
+\end{Desc}
+

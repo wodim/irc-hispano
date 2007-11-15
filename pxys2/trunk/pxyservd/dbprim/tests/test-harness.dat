@@ -1,0 +1,107 @@
+# Copyright (C) 2004 by Kevin L. Mitchell <klmitch@mit.edu>
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General Public
+# License along with this library; if not, write to the Free
+# Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+# MA 02111-1307, USA
+#
+# @(#)$Id: test-harness.dat,v 1.7 2004/09/25 14:17:24 klmitch Exp $
+
+program t_linklists t_linklists \
+	"Test linked list functionality"
+
+test ll_init			t_linklists	PASS	\
+	"Test that ll_init() may be called"
+test le_init			t_linklists	PASS	\
+	"Test that le_init() may be called"
+test ll_add			t_linklists	PASS	\
+	"Test that ll_add() works properly"
+test ll_move			t_linklists	PASS	\
+	"Test that ll_move() works properly"
+test ll_remove			t_linklists	PASS	\
+	"Test that ll_remove() works properly"
+test ll_find			t_linklists	PASS	\
+	"Test that ll_find() works properly"
+test ll_iter			t_linklists	PASS	\
+	"Test that ll_iter() works properly"
+test ll_flush			t_linklists	PASS	\
+	"Test that ll_flush() works properly"
+
+program t_hashtab t_hashtab \
+	"Test hash table functionality"
+t_hashtab: t_linklists
+
+test ht_init			t_hashtab	PASS	\
+	"Test that ht_init() may be called"
+test he_init			t_hashtab	PASS	\
+	"Test that he_init() may be called"
+test ht_add			t_hashtab	PASS	\
+	"Test that ht_add() adds entries to hash table"
+test ht_find			t_hashtab	PASS	\
+	"Test that ht_find() finds entries in hash table"
+test ht_move			t_hashtab	PASS	\
+	"Test that ht_move() moves entries around"
+test ht_remove			t_hashtab	PASS	\
+	"Test that ht_remove() removes entries"
+test ht_iter			t_hashtab	PASS	\
+	"Test that ht_iter() iterates properly"
+test ht_resize			t_hashtab	PASS	\
+	"Test that ht_resize() may be called"
+test ht_flush			t_hashtab	PASS	\
+	"Test that ht_flush() flushes the table"
+test ht_free			t_hashtab	PASS	\
+	"Test that ht_free() may be called"
+test ht_add_autogrow		t_hashtab	PASS	\
+	"Test that ht_add() automatically grows the table"
+test ht_find_autogrow		t_hashtab	PASS	\
+	"Test that ht_find() can still find entries for autogrow"
+test ht_remove_autoshrink	t_hashtab	PASS	\
+	"Test that ht_remove() automatically shrinks the table"
+test ht_find_autoshrink		t_hashtab	PASS	\
+	"Test that ht_find() can still find entries for autoshrink"
+
+program t_smat t_smat \
+	"Test sparse matrix functionality"
+t_smat: t_linklists t_hashtab
+
+test st_init			t_smat		PASS	\
+	"Test that st_init() may be called"
+test sh_init			t_smat		PASS	\
+	"Test that sh_init() may be called"
+test st_add			t_smat		PASS	\
+	"Test that st_add() adds elements to a sparse matrix"
+test st_find			t_smat		PASS	\
+	"Test that st_find() can locate elements in a sparse matrix"
+test st_remove			t_smat		PASS	\
+	"Test that st_remove() can remove elements in a sparse matrix"
+
+# Pretty much everything else is so simple and straightforward that it
+# should just work.  If you do find a bug, write a test case for it :)
+
+program t_redblack t_redblack \
+	"Test red-black tree functionality"
+
+test rt_init			t_redblack	PASS	\
+	"Test that rt_init() may be called"
+test rn_init			t_redblack	PASS	\
+	"Test that rn_init() may be called"
+test rt_add			t_redblack	PASS	\
+	"Test that rt_add() adds entries to the tree"
+test rt_find			t_redblack	PASS	\
+	"Test that rt_find() finds entries in tree"
+test rt_remove			t_redblack	PASS	\
+	"Test that rt_remove() removes nodes"
+test rt_flush			t_redblack	PASS	\
+	"Test that rt_flush() flushes the tree"
+test rt_iter			t_redblack	PASS	\
+	"Test that rt_iter() iterates over the tree in the correct order"

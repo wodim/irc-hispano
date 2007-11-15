@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<pxyscand>
+  
+  <opas>
+    <port>9601</port>
+    <bind-address>172.16.0.5</bind-address>
+    <protocol>tcp</protocol>
+    <allow>172.16.0.5</allow>
+    <limit>0</limit><!-- requests per minute, 0=unlimited -->
+  </opas>
+  
+  <scanner>
+    <maxscans>512</maxscans>
+    <!-- built-in module types: wingate,socks,crazybandit,http -->
+    <module type="wingate" />
+    <module type="socks">1080</module>
+    <module type="crazybandit" />
+    <module type="http">3128</module>
+    <module type="http">6588</module>
+    <module type="http">8080</module>
+    <module type="http">4480</module>
+    <module type="http">80</module>
+    <module type="http">8000</module>
+    
+<!--
+    <source-pool>
+      <address>172.16.0.51</address>
+      <address>172.16.0.52</address>
+      <address>172.16.0.53</address>
+      <address>172.16.0.54</address>
+      <address>172.16.0.55</address>
+    </source-pool>
+-->
+
+    
+<!-- set scans pxtarget (the pxtarget daemon!) -->
+    <target>
+      <address>1.2.3.4</address>
+      <port>9001</port>
+      <secret>mysecret</secret>
+    </target>
+    <target>
+      <address>2.3.4.5</address>
+      <port>1234</port>
+      <secret>myothersecret</secret>
+    </target>
+    <target-check>600</target-check>
+    <log-agent>agent.log</log-agent>
+    <timeout>30</timeout>
+  </scanner>
+  
+  <cache>
+    <directory>ipcache</directory>
+    <expire>86400</expire><!-- seconds -->
+    <proxy-expire>21600</proxy-expire>
+    <maxips>1000003</maxips><!-- a prime number is better -->
+    <!-- http://www.utm.edu/research/primes/lists/small/100ktwins.txt -->
+  </cache>
+  
+  <noscan>
+    <address>127.0.0.1</address>
+    <address>255.255.255.255</address>
+    <address>0/8</address>
+    <address>10/8</address>
+    <address>172.16/12</address>
+    <address>192.168/16</address>
+  </noscan>
+  
+</pxyscand>

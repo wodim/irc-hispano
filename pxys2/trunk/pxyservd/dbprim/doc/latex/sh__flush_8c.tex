@@ -1,0 +1,36 @@
+\hypertarget{sh__flush_8c}{
+\section{sh\_\-flush.c File Reference}
+\label{sh__flush_8c}\index{sh_flush.c@{sh\_\-flush.c}}
+}
+
+
+\subsection{Detailed Description}
+\begin{Desc}
+\item[For internal use only.]
+This file contains the implementation of the \hyperlink{group__dbprim__smat_ga22}{sh\_\-flush()} function, used to release all entries in a sparse matrix linked list.\end{Desc}
+
+
+Definition in file \hyperlink{sh__flush_8c-source}{sh\_\-flush.c}.
+
+{\tt \#include \char`\"{}dbprim.h\char`\"{}}\par
+{\tt \#include \char`\"{}dbprim\_\-int.h\char`\"{}}\par
+
+
+Include dependency graph for sh\_\-flush.c:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=188pt]{sh__flush_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{CompactItemize}
+\item 
+struct \hyperlink{struct__sh__flush__s}{\_\-sh\_\-flush\_\-s}
+\begin{CompactList}\small\item\em Sparse matrix flush function shim structure. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+static unsigned long \hyperlink{group__dbprim__smat_ga28}{\_\-sh\_\-flush\_\-iter} (\hyperlink{struct__link__head__s}{link\_\-head\_\-t} $\ast$head, \hyperlink{struct__link__elem__s}{link\_\-elem\_\-t} $\ast$elem, void $\ast$extra)
+\begin{CompactList}\small\item\em Sparse matrix linked list flush callback. \item\end{CompactList}\item 
+unsigned long \hyperlink{group__dbprim__smat_ga22}{sh\_\-flush} (\hyperlink{struct__smat__head__s}{smat\_\-head\_\-t} $\ast$head, \hyperlink{group__dbprim__smat_ga4}{smat\_\-iter\_\-t} flush\_\-func, void $\ast$extra)
+\begin{CompactList}\small\item\em Flush a row or column of a sparse matrix. \item\end{CompactList}\end{CompactItemize}

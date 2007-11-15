@@ -1,0 +1,51 @@
+\hypertarget{group__stream__sched}{
+\section{Scheduling}
+\label{group__stream__sched}\index{Scheduling@{Scheduling}}
+}
+
+
+\subsection{Detailed Description}
+Scheduling task for streams. 
+
+Well that's the way to really use 'em. 
+
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+void \hyperlink{group__stream__sched_ga0}{peak\_\-stream\_\-schedule} (\hyperlink{group__stream_ga0}{peak\_\-stream} s, \hyperlink{group__task__common_ga0}{peak\_\-task} task)
+\begin{CompactList}\small\item\em Schedule a task for a stream. \item\end{CompactList}\item 
+void \hyperlink{group__stream__sched_ga1}{peak\_\-stream\_\-unschedule} (\hyperlink{group__stream_ga0}{peak\_\-stream} s, \hyperlink{group__task__common_ga0}{peak\_\-task} task)
+\begin{CompactList}\small\item\em Unschedule a task for a stream. \item\end{CompactList}\end{CompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{group__stream__sched_ga0}{
+\index{stream_sched@{stream\_\-sched}!peak_stream_schedule@{peak\_\-stream\_\-schedule}}
+\index{peak_stream_schedule@{peak\_\-stream\_\-schedule}!stream_sched@{stream\_\-sched}}
+\subsubsection[peak\_\-stream\_\-schedule]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-stream\_\-schedule (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s}, \hyperlink{group__task__common_ga0}{peak\_\-task} {\em task})}}
+\label{group__stream__sched_ga0}
+
+
+Schedule a task for a stream. 
+
+Schedule a task on which you can be notified. It will call your event callback function when an event is available for this stream.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference. \item[{\em task}]The task reference (the current implementation only support \hyperlink{group__task__common_ga8}{peak\_\-task\_\-self()}). \end{description}
+\end{Desc}
+\hypertarget{group__stream__sched_ga1}{
+\index{stream_sched@{stream\_\-sched}!peak_stream_unschedule@{peak\_\-stream\_\-unschedule}}
+\index{peak_stream_unschedule@{peak\_\-stream\_\-unschedule}!stream_sched@{stream\_\-sched}}
+\subsubsection[peak\_\-stream\_\-unschedule]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-stream\_\-unschedule (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s}, \hyperlink{group__task__common_ga0}{peak\_\-task} {\em task})}}
+\label{group__stream__sched_ga1}
+
+
+Unschedule a task for a stream. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference. \item[{\em task}]The task reference (the current implementation only support \hyperlink{group__task__common_ga8}{peak\_\-task\_\-self()}). \end{description}
+\end{Desc}

@@ -1,0 +1,336 @@
+   OPAS 1.0                                           Stephane Thiell
+   Draft (v.1.0.0)                                      December 2003
+
+
+
+
+               Open Proxy Ascertainment Service (OPAS)
+
+
+
+Status of this Memo
+
+   This document is a working personal document which may be used as
+   reference material althrough it's a work in progress. It might be
+   updated to become an Internet Draft if the community think it's
+   really needed.
+
+   The latest version of this document is available at
+   http://www.bugged.org/opas/draft-opas-1.txt
+
+
+Copyright Notice
+
+   Copyright (C) Stephane Thiell (2003). All Rights Reserved.
+
+
+Abstract
+
+   This document specifies the Open Proxy Ascertainment Service (OPAS)
+   protocol, used (1) for interaction between OPAS servers and OPAS
+   clients and (2) for interactions among multiple OPAS servers to
+   create a distributed system of OPAS servers (proxy scanners). Due
+   to the overwhelming abuse of open proxy servers being exploited
+   daily for common Internet services like HTTP, SMTP or IRC, the need
+   of having open proxy checking services has grown. OPAS provides a
+   lightweight and efficient way to handle such a verification service
+   even in an heterogeneous environment.
+
+   Comments are solicited and should be addressed to the authors.
+
+
+Acknowledgements
+
+   <todo>
+
+
+Table of Contents
+
+   Status of this Memo
+   Copyright Notice
+   Abstract
+   Acknowledgements
+   1. OPAS Architectural Components
+   1.1. OPAS Client
+   1.2. OPAS Server
+   2. OPAS Protocol
+   2.1. Protocol level
+   2.2. OPAS messages
+   2.2.1. Structure of an OPAS message
+   2.2.2.1 Ping/Pong
+   2.2.2.2 Query (Client->Server)
+   2.2.2.3 Reply (Server->Client)
+   2.2.2.4 User commands
+   [3.x Distributed system]
+   A - Resource Classification
+   A.1 OPAS types of open proxy
+
+
+1. OPAS Architectural Components
+
+   The Open Proxy Ascertainment Service is destined to other Internet
+   services which want to verify their own clients for possible open
+   proxy insecurity. Such a service will be called an OPAS client here,
+   as it will query an OPAS server for the verification.
+
+
+1.1. OPAS Client
+
+   OPAS clients initiate transactions with OPAS servers using the OPAS
+   protocol. An IRC server is an example of possible OPAS client.
+   After an OPAS session is initialized, the client sends queries to
+   an OPAS servers and listen/wait for a positive or negative reply.
+
+
+1.2. OPAS Server
+
+   After eventual initialization (like authentification), OPAS servers
+   respond to OPAS protocol queries. An OPAS server can be a
+   standalone proxy scanner that will do all the checks, or can
+   redirect some or all queries to another OPAS servers. The goal of
+   this draft is not to deal with the choices of such actions (it
+   could be to provide load balancing or for network reachability
+   reasons), we won't even deal with the procedure to really check
+   an open proxy or how to manage the cache. No, our real goal here is
+   to support all these possible cases with a description of the
+   functionality and eventual limits.
+
+
+2. OPAS Protocol
+
+
+2.1. Protocol level
+
+   The OPAS protocol is not dependant to the network layer. Meanwhile
+   as it's used in an Internet context, we will mainly consider OPAS
+   over IP (TCP or UDP).
+
+
+2.2. OPAS messages
+
+
+2.2.1. Structure of an OPAS message
+
+   An OPAS message (query or reply) shares the same 32 bit header
+   structure, which is described as follow.
+   
+                  0      7 8     15 16    23 24    31   bit
+                 +--------+--------+--------+--------+
+                 |   OPAS version  |  flags | length |
+                 +--------+--------+--------+--------+
+
+   Fields
+   ------
+
+   OPAS version is a representation of the OPAS client protocol
+   version. Bits 0-7 contain the major version and bits 8-15 the minor
+   version. For example, for OPAS version 1.0, only bit 7 is set.
+   
+   Message flags determines what's next. Here is a table of current
+   used bits.
+   
+    Bit | If set...
+   ----------------------------------------------------------------
+     17 | it's a ping/pong message
+     18 | the IP to verify uses IPv6
+     19 | an user command is following this message
+    
+    Reply only
+    ----------
+     20 | the message is a reply (originated from an OPAS server)
+     21 | the IP is an open proxy
+     22 | result was found in a cache (no scan was really performed)
+     23 | error message - scan wasn't performed
+    
+    Server to server only
+    ---------------------
+     16 | it's a server to server message (remote query)
+   
+   Bit 19  allows an application to use OPAS messages to enhance the
+   protocol with private commands/queries. Care should be taken when
+   adding commands for security reasons, ie. proper verification must
+   be done by the server.
+
+   The length field specifies the length in bytes of the message
+   following the 4-bytes header. So we have:
+   
+      total message length = 4 + length    (bytes)
+
+
+2.2.2. Client to server proxy verification
+
+2.2.2.1 Ping/Pong
+
+   A bit is reserved for the use of ping/pong messages. Only an header
+   is sent using this bit. The pong message adds the reply bit, and
+   that's all. OPAS servers and even clients should use this ping/pong
+   capability to quickly detect a dead connection.
+
+   This is one of the rare convenience currently offered by the OPAS
+   protocol. You can implement more elaborated ping/pong messages using
+   a custom user command message (see 2.2.2.4) if you want.
+
+
+2.2.2.2 Query (Client->Server)
+
+   Header: all flags bits must be 0 for an IPv4 proxy verification, or
+   only bit 18 set for an IPv6 verification.
+
+   Header's length field should contain 8 for IPv4, 20 for IPv6.
+
+   32 bits user data next to the header are data reserved for the
+   application and are not modified by the server. The reply message
+   from the OPAS server will always contain those bits intact.
+
+   The IP (v4 or v6) is then appended to the message.
+
+   Summary: query message
+   ----------------------
+                                                     12 (IPv4)
+         byte    0           4           8           24 (IPv6)
+                 +-----------+-----------+--------...+
+                 |   header  | user data |    IP     |
+                 +-----------+-----------+--------...+
+
+
+2.2.2.3 Reply (Server->Client)
+
+   The header of a reply message should set the reply bit to 1 (bit
+   20) and if the IP is known to host an open proxy, the result bit
+   should be set too (bit 21).
+
+   A negative reply message is sent back to the client when the server
+   is sure the host isn't an open proxy according to its own
+   configuration. Usually a scan has been performed or a successful
+   cache hit occured.
+   
+   Summary: negative reply message (header bit 21 not set)
+   -------------------------------
+                                     IPv4/v6
+    0           4           8         12/24
+    +-----------+-----------+--------...+
+    |   header  | user data |     IP    |
+    +-----------+-----------+--------...+
+
+   It's just the same message back (as the query one) but with bit 20
+   (reply) set.
+
+
+   An error reply message is sent back to the client when the server
+   encountered a problem to answer (hardware, network, etc.). Current
+   choice is to reply after having appended an 32 bit error code to
+   the query and set the reply and error bits.
+
+   OPAS error numbers are defined in Appendix A.2.
+
+   Summary: error reply message (header bit 23 set)
+   -------------------------------
+                                     IPv4/v6     IPv4/v6
+    0           4           8         12/24       16/28
+    +-----------+-----------+--------...+-----------+
+    |   header  | user data |     IP    | error no  |
+    +-----------+-----------+--------...+-----------+
+
+
+   Finally, a positive reply message is sent back to the client when
+   the server ascertained the presence of an open proxy with success.
+
+   Summary: positive reply message (header bit 21 set)
+   -------------------------------
+                                     IPv4/v6
+    0           4           8         12/24       16/28 18/30 20/32
+    +-----------+-----------+--------...+-----------+-----+-----+
+    |   header  | user data |     IP    | timestamp | type| port|
+    +-----------+-----------+--------...+-----------+-----+-----+
+
+  20/32
+    +-----------+--------...
+    |   proxy description...
+    +-----------+--------...
+    
+   Fields
+   ------
+
+   timestamp: Contains the value of time in seconds since 0 hours,
+              0 minutes, 0 seconds, January 1, 1970, Coordinated
+              Universal Time (the "epoch").
+
+   type: OPAS type of proxy, see appendix A.1.
+
+   port: The port (TCP or UDP) at which the proxy has been found.
+
+   proxy description: variable length human readable proxy description
+                      zero terminated C string.
+
+   To calculate the length of the proxy description, use:
+
+       descr_len = length - (20 - 4) = length - 16     (for IPv4)
+       descr_len = length - (32 - 4) = length - 28     (for IPv6)
+
+   where length is the length field of the header.
+
+   If the length of the description is zero, the message is invalid.
+
+
+2.2.2.4 User commands
+
+   As seen in section 2.2.1, OPAS support user commands transport
+   between an OPAS client service and an OPAS server. OPAS does not
+   define any "standard" commands; in the meanwhile, ideas of commands
+   are: statistical commands, remote control of the OPAS server,
+   get the types of scan supported, etc. Security concerns like
+   authentication (which might be embedded in OPAS's user commands)
+   are let to the OPAS client and server developer.
+
+   If the OPAS server doesn't understand the user command, then a
+   reply with bits 20 and 21 set and a zero data length field can be
+   used.
+
+   Summary: user command
+   ---------------------
+               0           4           8          12
+               +-----------+-----------+-----------+
+               |   header  | user data |data length|
+               +-----------+-----------+-----------+
+
+   Fields
+   ------
+
+   Header's flags bit 19 must be set to indicate it's an user command.
+   For the reply, the reply flag (bit 20) must be also set.
+   
+   The user data field is always a 32 bit free area which is returned
+   intact by the OPAS server to the OPAS client.
+
+   The data length field is the user command data length following
+   this message.
+
+   The user command data should not be counted in the header's length
+   field, which should always be set to 12 - 4 = 8 for user command
+   messages. This allow long user command query or reply to be
+   supported.
+
+
+Appendix A - Resource Classification
+
+
+A.1 OPAS types of open proxy
+
+   O. Unknown/generic type
+   1. WinGate proxy
+   2. Socks v.4
+   3. Socks v.5
+   4. HTTP proxy (using the "CONNECT" method)
+   5. HTTP "POST"
+   6. Insecure Cisco router
+   7. Insecure IRC bouncer
+
+A.2 OPAS reply error numbers
+
+   Error numbers from 0 to 255 (8 lower bits) are reserved by the OPAS
+   protocol as follow:
+      O. Unknown error (still an error)
+      1. Network is down
+      2. Network is unreachable
+
+   Other numbers (on 24 higher bits) are available for private usage.

@@ -1,0 +1,93 @@
+\hypertarget{group__stream__line}{
+\section{Line-mode operations}
+\label{group__stream__line}\index{Line-mode operations@{Line-mode operations}}
+}
+
+
+\subsection{Detailed Description}
+Line-mode based stream methods. 
+
+
+
+\subsection*{Defines}
+\begin{CompactItemize}
+\item 
+\#define \hyperlink{group__stream__line_ga3}{LINEMODE\_\-BUFFER\_\-SIZE}\ 1024
+\begin{CompactList}\small\item\em Internal library buffer size for line mode. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+int \hyperlink{group__stream__line_ga0}{peak\_\-stream\_\-is\_\-linemode\_\-enabled} (\hyperlink{group__stream_ga0}{peak\_\-stream} s)
+\begin{CompactList}\small\item\em Test if the stream is currently in line mode. \item\end{CompactList}\item 
+void \hyperlink{group__stream__line_ga1}{peak\_\-stream\_\-set\_\-linemode} (\hyperlink{group__stream_ga0}{peak\_\-stream} s)
+\begin{CompactList}\small\item\em Set line mode dynamically. \item\end{CompactList}\item 
+char $\ast$ \hyperlink{group__stream__line_ga2}{peak\_\-stream\_\-get\_\-line} (\hyperlink{group__stream_ga0}{peak\_\-stream} s)
+\begin{CompactList}\small\item\em Get a pointer to the next line read on a stream. \item\end{CompactList}\end{CompactItemize}
+
+
+\subsection{Define Documentation}
+\hypertarget{group__stream__line_ga3}{
+\index{stream_line@{stream\_\-line}!LINEMODE_BUFFER_SIZE@{LINEMODE\_\-BUFFER\_\-SIZE}}
+\index{LINEMODE_BUFFER_SIZE@{LINEMODE\_\-BUFFER\_\-SIZE}!stream_line@{stream\_\-line}}
+\subsubsection[LINEMODE\_\-BUFFER\_\-SIZE]{\setlength{\rightskip}{0pt plus 5cm}\#define LINEMODE\_\-BUFFER\_\-SIZE\ 1024}}
+\label{group__stream__line_ga3}
+
+
+Internal library buffer size for line mode. 
+
+The length of the line obtained via \hyperlink{group__stream__line_ga44}{peak\_\-stream\_\-get\_\-line()} cannot be highter than that. 
+
+\subsection{Function Documentation}
+\hypertarget{group__stream__line_ga2}{
+\index{stream_line@{stream\_\-line}!peak_stream_get_line@{peak\_\-stream\_\-get\_\-line}}
+\index{peak_stream_get_line@{peak\_\-stream\_\-get\_\-line}!stream_line@{stream\_\-line}}
+\subsubsection[peak\_\-stream\_\-get\_\-line]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ peak\_\-stream\_\-get\_\-line (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s})}}
+\label{group__stream__line_ga2}
+
+
+Get a pointer to the next line read on a stream. 
+
+This function loan you a pointer to a mutable buffer. You are allowed to modify it (at least the bytes until the 0 sentinel character). It's useful and efficient for inline tokenizers. Please note this buffer is only valid until the next stream operation.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]A pointer to the line read (mutable buffer). \end{Desc}
+\hypertarget{group__stream__line_ga0}{
+\index{stream_line@{stream\_\-line}!peak_stream_is_linemode_enabled@{peak\_\-stream\_\-is\_\-linemode\_\-enabled}}
+\index{peak_stream_is_linemode_enabled@{peak\_\-stream\_\-is\_\-linemode\_\-enabled}!stream_line@{stream\_\-line}}
+\subsubsection[peak\_\-stream\_\-is\_\-linemode\_\-enabled]{\setlength{\rightskip}{0pt plus 5cm}int peak\_\-stream\_\-is\_\-linemode\_\-enabled (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s})}}
+\label{group__stream__line_ga0}
+
+
+Test if the stream is currently in line mode. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Return values:]
+\begin{description}
+\item[{\em 0}]if linemode is disabled. \item[{\em 1}]if linemode is enabled: you can use \hyperlink{group__stream__line_ga44}{peak\_\-stream\_\-get\_\-line()}. \end{description}
+\end{Desc}
+\hypertarget{group__stream__line_ga1}{
+\index{stream_line@{stream\_\-line}!peak_stream_set_linemode@{peak\_\-stream\_\-set\_\-linemode}}
+\index{peak_stream_set_linemode@{peak\_\-stream\_\-set\_\-linemode}!stream_line@{stream\_\-line}}
+\subsubsection[peak\_\-stream\_\-set\_\-linemode]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-stream\_\-set\_\-linemode (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s})}}
+\label{group__stream__line_ga1}
+
+
+Set line mode dynamically. 
+
+Note that you cannot disable linemode with the current implementation.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference. \end{description}
+\end{Desc}

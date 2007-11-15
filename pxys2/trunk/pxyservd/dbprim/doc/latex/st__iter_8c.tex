@@ -1,0 +1,36 @@
+\hypertarget{st__iter_8c}{
+\section{st\_\-iter.c File Reference}
+\label{st__iter_8c}\index{st_iter.c@{st\_\-iter.c}}
+}
+
+
+\subsection{Detailed Description}
+\begin{Desc}
+\item[For internal use only.]
+This file contains the implementation of the \hyperlink{group__dbprim__smat_ga14}{st\_\-iter()} function, used to iterate over all entries in a sparse matrix table.\end{Desc}
+
+
+Definition in file \hyperlink{st__iter_8c-source}{st\_\-iter.c}.
+
+{\tt \#include \char`\"{}dbprim.h\char`\"{}}\par
+{\tt \#include \char`\"{}dbprim\_\-int.h\char`\"{}}\par
+
+
+Include dependency graph for st\_\-iter.c:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=183pt]{st__iter_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{CompactItemize}
+\item 
+struct \hyperlink{struct__st__iter__s}{\_\-st\_\-iter\_\-s}
+\begin{CompactList}\small\item\em Sparse matrix iteration function shim structure. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+static unsigned long \hyperlink{group__dbprim__smat_ga31}{\_\-st\_\-iter\_\-iter} (\hyperlink{struct__hash__table__s}{hash\_\-table\_\-t} $\ast$table, \hyperlink{struct__hash__entry__s}{hash\_\-entry\_\-t} $\ast$ent, void $\ast$extra)
+\begin{CompactList}\small\item\em Sparse matrix hash iteration callback. \item\end{CompactList}\item 
+unsigned long \hyperlink{group__dbprim__smat_ga14}{st\_\-iter} (\hyperlink{struct__smat__table__s}{smat\_\-table\_\-t} $\ast$table, \hyperlink{group__dbprim__smat_ga4}{smat\_\-iter\_\-t} iter\_\-func, void $\ast$extra)
+\begin{CompactList}\small\item\em Iterate over each entry in a sparse matrix. \item\end{CompactList}\end{CompactItemize}

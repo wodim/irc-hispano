@@ -1,0 +1,440 @@
+2006-07-15  Kevin L. Mitchell  <klmitch@mit.edu>
+
+	* _smat_comp.c: remove deprecated _smat_comp() function (internal
+	interface, no one should notice)
+
+	* st_init.c (st_init): utilize hash_comp() instead of deprecated
+	_smat_comp() function
+
+	* rbtree_comp.c (rbtree_comp): memcmp()-based red-black tree
+	comparison function
+
+	* hash_comp.c (hash_comp): memcmp()-based hash comparison function
+
+	* dbprim_int.h: move declaration for _smat_resize() to the
+	internal header
+
+	* dbprim.h: add hash_comp() (based on memcmp()) to complement
+	hash_fnv1() and hash_fnv1a(); remove now-deprecated _smat_comp()
+	(in preference for hash_comp()); move _smat_resize() declaration
+	to dbprim_int.h; fix a minor documentation typo; add
+	rbtree_comp(), similar to hash_comp() but for red-black trees
+
+	* Makefile.am: add hash_comp.c and rbtree_comp.c; versioning
+	info's 'age' field can be 1
+
+2006-07-13  Kevin L. Mitchell  <klmitch@mit.edu>
+
+	* doc/Doxyfile.in (PREDEFINED): correct a missing \
+
+	* dbprim.h: correct a couple of documentation snafus
+
+	* doc/Doxyfile.in: turn off man page generation
+
+	* st_init.c (st_init): use hash_fnv1a() instead of custom
+	_smat_hash() function
+
+	* st_find.c (st_find): initialize object pointers with memset() in
+	case of padding
+
+	* st_add.c (st_add): set key size
+
+	* smat_freelist.c (_smat_alloc): use memset() to initialize the
+	object pointers
+
+	* hash_fnv1a.c: implementation of FNV-1a hash
+
+	* hash_fnv1.c: implementation of FNV-1 hash
+
+	* dbprim_int.h: bump copyright date; add FNV hash parameters
+
+	* dbprim.h: bump copyright date; add FNV-1 and FNV-1a hash
+	functions; remove deprecated _smat_hash() function
+
+	* configure.ac: bump version number for impending updated
+	release...
+
+	* _smat_hash.c: remove now-deprecated _smat_hash() function
+
+	* Makefile.am: add FNV hash function files; remove old
+	_smat_hash.c file; tidy up sources list; update library version
+	info; drop man page information
+
+	* rn_init.c, rt_add.c, rt_find.c, rt_flush.c, rt_init.c,
+	rt_iter.c, rt_move.c, rt_next.c, rt_remove.c, sh_find.c,
+	sh_flush.c, sh_init.c, sh_iter.c, sh_move.c, smat_freelist.c,
+	st_add.c, st_find.c, st_flush.c, st_free.c, st_init.c, st_iter.c,
+	st_remove.c, st_resize.c: pull documentation comments into
+	dbprim.h
+
+	* dbprim_int.h: document internal entities
+
+	* dbprim.h: finish futzing with documentation
+
+	* _hash_prime.c, _rb_locate.c, _rb_rotate.c, _smat_comp.c,
+	_smat_hash.c, _smat_resize.c: file documentation
+
+2006-07-12  Kevin L. Mitchell  <klmitch@mit.edu>
+
+	* tests/test-harness.h: update to most recent version
+
+	* tests/test-harness.c: update to most recent version
+
+	* m4/ac_config_libconfig_in.m4, m4/ac_define_version.m4,
+	m4/com_err-lib.m4, m4/com_err-obj.m4, m4/with-com_err.m4: autoconf
+	macros used by revised build methodology
+
+	* doc/Doxyfile.in: revise for new documentation methodology
+
+	* he_init.c, ht_add.c, ht_find.c, ht_flush.c, ht_free.c,
+	ht_init.c, ht_iter.c, ht_move.c, ht_remove.c, ht_resize.c,
+	le_init.c, ll_add.c, ll_find.c, ll_flush.c, ll_init.c, ll_iter.c,
+	ll_move.c, ll_remove.c: pull documentation comments into dbprim.h
+
+	* dbprim.spec.in: don't re-run doxygen and related stuff
+
+	* dbprim.h: begin revision of documentation; declare
+	DBPRIM_BEGIN_C_DECLS and DBPRIM_END_C_DECLS
+
+	* configure.ac: revise for more recent build methodology
+
+	* autogen.sh: revise for more recent build methodology
+
+	* acinclude.m4: remove acinclude.m4; now using macros in directory
+	m4
+
+	* Makefile.am: revise for more recent build methodology
+
+	* AUTHORS: add an AUTHORS file
+
+2004-10-20  Kevin L Mitchell  <klmitch@mit.edu>
+
+	* configure.ac: bump version number for initial production release
+
+2004-09-25  Kevin L Mitchell  <klmitch@mit.edu>
+
+	* acinclude.m4: update checks for com_err
+
+	* configure.ac: bump the patch level
+
+	* tests/test-harness.dat: add test descriptions for red-black
+	trees
+
+	* tests/t_redblack.c: finish writing red-black tree test suite
+
+2004-09-23  Kevin L Mitchell  <klmitch@mit.edu>
+
+	* tests/t_redblack.c: add treecheck() function to verify that a
+	tree really is a red-black tree
+
+	* rt_remove.c: rewrote rt_remove() to correctly remove nodes and
+	properly balance tree
+
+	* _rb_locate.c: swap order of arguments to comparison function to
+	order tree correctly
+
+2004-09-21  Kevin L Mitchell  <klmitch@mit.edu>
+
+	* tests/test-harness.dat: add sparse matrices test cases
+
+	* tests/t_smat.c: add test program for sparse matrices
+
+	* tests/t_redblack.c: add the first part of the red-black tree
+	test suite...which has, unfortunately, discovered a bug in
+	rt_remove() that I haven't been able to squash yet
+
+	* tests/t_hashtab.c (main): flip order of FAIL() message to be
+	more consistent
+
+	* tests/Makefile.am (check_PROGRAMS): add t_smat and t_redblack
+
+	* dbprim.h: fix a grammatical error in a doc comment
+
+	* tests/test-harness.h: update test-harness.h header to set output
+	buffering
+
+	* tests/test-harness.dat: change some whitespace and add the
+	necessary information for t_hashtab.c
+
+	* tests/t_hashtab.c: test program for hash tables
+
+	* tests/Makefile.am (check_PROGRAMS): add t_hashtab
+
+	* ht_remove.c (ht_remove): move the table shrinkage to before the
+	ll_remove(), so that if ht_resize() fails, we can bail out before
+	removing the element
+
+	* ht_free.c (ht_free): must zero rollover and rollunder
+
+	* ht_add.c (ht_add): make the element count increment the last
+	thing done after the ll_add()
+
+2004-09-20  Kevin L Mitchell  <klmitch@mit.edu>
+
+	* _smat_hash.c (_smat_hash): uh, oops--type mismatch
+
+	* tests/t_linklists.c: put ChkOrder macro in a more reasonable
+	location
+	(ChkOrder): don't let a test fail twice...
+
+	* tests/test-harness.h: new test-harness header file defining some
+	macros which are useful for unit tests
+
+	* tests/test-harness.dat: update for new test suite
+
+	* tests/t_linklists.c: test program for linked lists
+
+	* tests/Makefile.am: update for new test suite
+
+	* tests/*.c: remove old tests to replace with a new, hopefully
+	simpler test suite
+
+	* le_init.c (le_init): allow object to be NULL
+
+2004-03-03  Kevin L Mitchell  <klmitch@mit.edu>
+
+	* tests/t_st_init.c: include dbprim_err.h and dbprim_version.h
+
+	* tests/t_ll_remove.c: include dbprim_err.h and dbprim_version.h
+
+	* tests/t_ll_move.c: include dbprim_err.h and dbprim_version.h
+
+	* tests/t_ll_iter.c: include dbprim_err.h and dbprim_version.h
+
+	* tests/t_ll_init.c: include dbprim_err.h and dbprim_version.h
+
+	* tests/t_ll_flush.c: include dbprim_err.h and dbprim_version.h
+
+	* tests/t_ll_find.c: include dbprim_err.h and dbprim_version.h
+
+	* tests/t_ll_add.c: include dbprim_err.h and dbprim_version.h
+
+	* tests/t_le_init.c: include dbprim_err.h and dbprim_version.h
+
+	* tests/t_ht_init.c: include dbprim_err.h and dbprim_version.h
+
+	* tests/t_he_init.c: include dbprim_err.h and dbprim_version.h
+
+	* tests/Makefile.in: regenerate Makefile.in
+
+	* tests/Makefile.am (AM_CPPFLAGS): define __DBPRIM_LIBRARY__
+	during build
+
+	* mkinstalldirs: regenerate mkinstalldirs
+
+	* missing: regenerate missing
+
+	* ltmain.sh: regenerate ltmain.sh
+
+	* install-sh: regenerate install-sh
+
+	* depcomp: regenerate depcomp
+
+	* dbprim_int.h: include dbprim_err.h and dbprim_version.h
+
+	* dbprim.h: use dbprim/* for inclusions; only include if
+	__DBPRIM_LIBRARY__ is not defined
+
+	* configure.ac: bump version
+
+	* configure: regenerate configure
+
+	* config.sub: regenerate config.sub
+
+	* config.guess: regenerate config.guess
+
+	* aclocal.m4: regenerate aclocal.m4
+
+	* Makefile.in: regenerate Makefile.in
+
+	* Makefile.am (AM_CPPFLAGS): define __DBPRIM_LIBRARY__ during
+	build
+
+2004-01-21  Kevin L Mitchell  <klmitch@mit.edu>
+
+	* dbprim.h: add 'extern "C"' support so that hopefully this thing
+	can be used with C++...
+
+	* ht_remove.c (ht_remove): apply a fix to (hopefully) prevent a
+	CPU-sucker condition for autoshrinking hash tables...
+
+2003-12-11  Kevin L Mitchell  <klmitch@mit.edu>
+
+	* configure.ac: update version number
+
+	* smat_freelist.c (_smat_alloc): force entry to point to smat
+	entry
+
+2003-11-22  Kevin L Mitchell  <klmitch@mit.edu>
+
+	* tests/test-harness.dat (t_st_init): remove static initializer
+	tests
+
+	* tests/t_st_init.c (main): remove static initializer check
+
+	* dbprim.h: SMAT_TABLE_INIT() won't work, because the hash table
+	must point up to the smat_table, which can't be done in a static
+	initializer
+
+	* tests/t_st_init.c (check_init): fix test--test st_extra instead
+	of ht_extra
+
+	* st_init.c (st_init): bah, make the table extra be the table
+	pointer
+
+	* _smat_hash.c (_smat_hash): change "<" to "<=" (reported by
+	mbuna); coerce object pointer into an unsigned string
+
+	* _smat_comp.c (_smat_comp): change "<" to "<=" (reported by
+	mbuna)
+
+	* dbprim.h: add st_extra element to smat_table_t and use it
+
+	* st_init.c (st_init): use an "extra" pointer in a smat_table_t
+	instead of the hash_table_t
+
+	* st_add.c (st_add): only set *entry_p if it's *not* NULL--bah
+	(reported by mbuna)
+
+2003-08-31  Kevin L Mitchell  <klmitch@mit.edu>
+
+	* configure.ac: update version to beta release number 0.9.0
+
+2003-08-23  Kevin L Mitchell  <klmitch@mit.edu>
+
+	* Makefile.am: distribute autogen.sh; remove CVS directories in
+	dist-hook
+
+	* doc/Doxyfile.in: rename Doxyfile to Doxyfile.in and use @
+	substitution for project name and project number
+
+	* dbprim.spec.in: BuildRequires for doxygen and tetex-latex
+
+	* configure.ac: substitute doc/Doxyfile for package and versioning
+	information
+
+	* Makefile.am: remove dbprim.h from CLEANFILES and
+	DISTHOOKCLEANFILES
+
+	* dbprim.spec.in: remove Serial tag--we don't need it
+
+	* tests/Makefile.am: use check_PROGRAMS to get programs built for
+	us by automake; make sure test-harness.log gets cleaned up by make
+	distclean target
+
+	* doc/Doxyfile: regenerated by doxywizard--add Id tag to
+	PROJECT_NUMBER tag; various updates, including activating PDF
+	hyperlinks option for latex output
+
+	* dbprim.spec.in: RPM spec file for libdbprim
+
+	* dbprim.h: rename dbprim_key group to dbprim and update
+	documentation accordingly; include dbprim_version.h for versioning
+	information
+
+	* configure.ac: update library version to 0.2.0; remove
+	AC_CONFIG_PKGCONFIG_IN; call new AC_DEFINE_VERSION macro; add
+	dbprim.spec to output files
+
+	* Makefile.am: add dbprim_version.c to the list of sources; put
+	include files into pkgincludedir; install dbprim-config; mark
+	dbprim_err.h as built source; install man pages; add spec files to
+	EXTRA_DIST; make sure certain files get cleaned up at appropriate
+	times
+
+2003-08-16  Kevin L Mitchell  <klmitch@mit.edu>
+
+	* doc/Doxyfile (INPUT): rename dbprim.h.top to dbprim.h
+
+	* ll_move.c: correct documentation of ll_move.c to use the correct
+	argument names
+
+	* dbprim.h: consolidate dbprim.h.top and dbprim.h.bot into a
+	single dbprim.h to be distributed and make it include dbprim_err.h
+	directly
+
+	* configure.ac: rename configure.in to configure.ac; update for
+	new autoconf/automake syntax; include AC_CONFIG_LIBCONFIG_IN and
+	AC_CONFIG_PKGCONFIG_IN
+
+	* Makefile.am: add dbprim.h and dbprim_err.h to sources list; add
+	dbprim_err.h to include_HEADERS; remove dbprim.h.{top,bot} from
+	EXTRA_DIST; remove dbprim.h from CLEANFILES; make dbprim_err.h a
+	dependancy of libdbprim_la_OBJECTS; remove creation of dbprim.h;
+	don't remove dbprim.h in dist-hook, but do remove dbprim_err.c and
+	dbprim_err.h using $(distdir) substitution
+
+2003-06-28  Kevin L Mitchell  <klmitch@mit.edu>
+
+	* Makefile.am (libdbprim_la_LDFLAGS): update library version
+	numbers
+
+	* configure.in: update dbprim version
+
+	* tests/t_ll_iter.c (main): update calls to ll_iter() to include
+	new flags
+
+	* doc/Doxyfile (INPUT): include red-black tree sources
+
+	* sh_iter.c (sh_iter): accept a flags argument that will be passed
+	to ll_iter()
+
+	* rt_remove.c: function to remove a node from a red-black tree
+
+	* rt_next.c: function to find the next or previous node in a
+	red-black tree traversal
+
+	* rt_move.c: function to re-key a red-black tree node
+
+	* rt_iter.c: function to iterate through a red-black tree
+
+	* rt_init.c: function to initialize a red-black tree
+
+	* rt_flush.c: function to flush a red-black tree
+
+	* rt_find.c: function to look up a node in a red-black tree
+
+	* rt_add.c: function to add a node to a red-black tree
+
+	* rn_init.c: function to initialize a red-black tree node
+
+	* ll_iter.c (ll_iter): add flags argument; traverse list backwards
+	if DB_FLAG_REVERSE is passed in
+
+	* dbprim_int.h: declare _rb_locate() and _rb_rotate()
+
+	* dbprim.h.top: add documentation for red-black trees; add
+	structure definitions and function declarations for red-black
+	trees; add DB_FLAG_REVERSE flag for reversing ordering; fixed
+	ht_frozen() macro; added \warning tags for all macros that
+	evaluate their arguments multiple times; added flags argument to
+	ll_iter() and sh_iter()
+
+	* _rb_rotate.c: function to rotate a child up a level
+
+	* _rb_locate.c: function to locate a node in a tree, adding a new
+	one and initializing it if necessary
+
+	* Makefile.am (libdbprim_la_SOURCES): add red-black tree sources
+
+2003-06-25  Kevin L Mitchell  <klmitch@mit.edu>
+
+	* tests/t_ll_iter.c (main): call ll_iter() with its new argument
+
+	* tests/Makefile.am: may need to link the tests with -lcom_err
+
+	* sh_iter.c (sh_iter): provide a start argument to indicate where
+	in the row or column to begin iterating
+
+	* ll_iter.c (ll_iter): provide a start argument to indicate where
+	in the linked list to begin iterating
+
+	* dbprim.h.top: add start arguments to ll_iter() and sh_iter()
+
+	* configure.in: may need to link the tests with -lcom_err
+
+2003-06-13  Kevin L Mitchell  <klmitch@mit.edu>
+
+	* ll_iter.c (ll_iter): allow iter_func to ll_remove() the current
+	item
+

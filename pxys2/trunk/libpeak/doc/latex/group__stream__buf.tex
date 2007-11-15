@@ -1,0 +1,192 @@
+\hypertarget{group__stream__buf}{
+\section{Write-buffered operations}
+\label{group__stream__buf}\index{Write-buffered operations@{Write-buffered operations}}
+}
+
+
+\subsection{Detailed Description}
+Write-buffered stream methods. 
+
+
+
+\subsection*{Typedefs}
+\begin{CompactItemize}
+\item 
+typedef void($\ast$ \hyperlink{group__stream__buf_ga0}{peak\_\-stream\_\-error\_\-callback} )(\hyperlink{group__stream_ga0}{peak\_\-stream} s, int error\_\-type, void $\ast$context)
+\begin{CompactList}\small\item\em Error callback for write-buffered streams. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Enumerations}
+\begin{CompactItemize}
+\item 
+enum \{ \hyperlink{group__stream__buf_gga8a18}{PEAK\_\-STREAM\_\-ERR\_\-MAX\_\-MSGBUF\_\-EXCEEDED} =  -10001
+ \}
+\begin{CompactList}\small\item\em Possible error codes passed to your stream error callback function. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+void \hyperlink{group__stream__buf_ga1}{peak\_\-stream\_\-set\_\-buffered} (\hyperlink{group__stream_ga0}{peak\_\-stream} s, int enable, size\_\-t msg\_\-size, size\_\-t max\_\-size, \hyperlink{group__stream__buf_ga0}{peak\_\-stream\_\-error\_\-callback} cb)
+\begin{CompactList}\small\item\em Enable or disable buffered write mode for a specified stream. \item\end{CompactList}\item 
+void \hyperlink{group__stream__buf_ga2}{peak\_\-stream\_\-msgbuf\_\-get\_\-info} (\hyperlink{group__stream_ga0}{peak\_\-stream} s, size\_\-t $\ast$msg\_\-size, size\_\-t $\ast$max\_\-msgs, size\_\-t $\ast$alloc\_\-msgs, size\_\-t $\ast$queue\_\-msgs, size\_\-t $\ast$queue\_\-size)
+\begin{CompactList}\small\item\em Get info on current buffered write mode settings. \item\end{CompactList}\item 
+void \hyperlink{group__stream__buf_ga3}{peak\_\-stream\_\-write\_\-buffered} (\hyperlink{group__stream_ga0}{peak\_\-stream} s, const void $\ast$buffer, size\_\-t bufsize)
+\begin{CompactList}\small\item\em Copy and commit a buffer to the stream for writing. \item\end{CompactList}\item 
+void $\ast$ \hyperlink{group__stream__buf_ga4}{peak\_\-stream\_\-msgbuf\_\-new} (\hyperlink{group__stream_ga0}{peak\_\-stream} s)
+\begin{CompactList}\small\item\em Get a new message buffer. \item\end{CompactList}\item 
+void \hyperlink{group__stream__buf_ga5}{peak\_\-stream\_\-msgbuf\_\-commit} (\hyperlink{group__stream_ga0}{peak\_\-stream} s, void $\ast$buffer, int length)
+\begin{CompactList}\small\item\em Commit a message buffer. \item\end{CompactList}\item 
+void \hyperlink{group__stream__buf_ga6}{peak\_\-stream\_\-msgbuf\_\-make} (\hyperlink{group__stream_ga0}{peak\_\-stream} s, const char $\ast$format,...)
+\begin{CompactList}\small\item\em Make a formatted message buffer and commit it for writing. \item\end{CompactList}\item 
+void \hyperlink{group__stream__buf_ga7}{peak\_\-stream\_\-msgbuf\_\-vmake} (\hyperlink{group__stream_ga0}{peak\_\-stream} s, const char $\ast$format, va\_\-list vl)
+\begin{CompactList}\small\item\em Make a formatted message buffer and commit it for writing. \item\end{CompactList}\end{CompactItemize}
+
+
+\subsection{Typedef Documentation}
+\hypertarget{group__stream__buf_ga0}{
+\index{stream_buf@{stream\_\-buf}!peak_stream_error_callback@{peak\_\-stream\_\-error\_\-callback}}
+\index{peak_stream_error_callback@{peak\_\-stream\_\-error\_\-callback}!stream_buf@{stream\_\-buf}}
+\subsubsection[peak\_\-stream\_\-error\_\-callback]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ \hyperlink{group__stream__buf_ga0}{peak\_\-stream\_\-error\_\-callback})(\hyperlink{group__stream_ga0}{peak\_\-stream} s, int error\_\-type, void $\ast$context)}}
+\label{group__stream__buf_ga0}
+
+
+Error callback for write-buffered streams. 
+
+Defines a pointer to your error handling callback function that will be triggered when a stream error happens.\par
+ Warning: NEVER release a stream inside this callback! 
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{group__stream__buf_ga8}{
+\subsubsection["@6]{\setlength{\rightskip}{0pt plus 5cm}anonymous enum}}
+\label{group__stream__buf_ga8}
+
+
+Possible error codes passed to your stream error callback function. 
+
+These are currently only used with write-buffered configured streams. \begin{Desc}
+\item[Enumeration values: ]\par
+\begin{description}
+\index{PEAK_STREAM_ERR_MAX_MSGBUF_EXCEEDED@{PEAK\_\-STREAM\_\-ERR\_\-MAX\_\-MSGBUF\_\-EXCEEDED}!stream_buf@{stream\_\-buf}}\index{stream_buf@{stream\_\-buf}!PEAK_STREAM_ERR_MAX_MSGBUF_EXCEEDED@{PEAK\_\-STREAM\_\-ERR\_\-MAX\_\-MSGBUF\_\-EXCEEDED}}\item[{\em 
+\hypertarget{group__stream__buf_gga8a18}{
+PEAK\_\-STREAM\_\-ERR\_\-MAX\_\-MSGBUF\_\-EXCEEDED}
+\label{group__stream__buf_gga8a18}
+}]All allowed message buffers of a write-buffered stream have been consumed! \end{description}
+\end{Desc}
+
+
+
+\subsection{Function Documentation}
+\hypertarget{group__stream__buf_ga5}{
+\index{stream_buf@{stream\_\-buf}!peak_stream_msgbuf_commit@{peak\_\-stream\_\-msgbuf\_\-commit}}
+\index{peak_stream_msgbuf_commit@{peak\_\-stream\_\-msgbuf\_\-commit}!stream_buf@{stream\_\-buf}}
+\subsubsection[peak\_\-stream\_\-msgbuf\_\-commit]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-stream\_\-msgbuf\_\-commit (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s}, void $\ast$ {\em buffer}, int {\em length})}}
+\label{group__stream__buf_ga5}
+
+
+Commit a message buffer. 
+
+After a message buffer (obtained with the help of \hyperlink{group__stream__buf_ga57}{peak\_\-stream\_\-msgbuf\_\-new()}) has been filled partially or completely, you MUST call this function to commit the message for sending. This function is O(1).
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference. \item[{\em buffer}]A filled buffer obtained with \hyperlink{group__stream__buf_ga57}{peak\_\-stream\_\-msgbuf\_\-new()}. \item[{\em length}]Actual length of data you want to commit, you might use a value of 0 to properly cancel the allocated msgbuf, but obviously it's not something efficient to do.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]A pointer to a new msgbuf or NULL is max\_\-msgs is reached internally. \end{Desc}
+\hypertarget{group__stream__buf_ga2}{
+\index{stream_buf@{stream\_\-buf}!peak_stream_msgbuf_get_info@{peak\_\-stream\_\-msgbuf\_\-get\_\-info}}
+\index{peak_stream_msgbuf_get_info@{peak\_\-stream\_\-msgbuf\_\-get\_\-info}!stream_buf@{stream\_\-buf}}
+\subsubsection[peak\_\-stream\_\-msgbuf\_\-get\_\-info]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-stream\_\-msgbuf\_\-get\_\-info (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s}, size\_\-t $\ast$ {\em msg\_\-size}, size\_\-t $\ast$ {\em max\_\-msgs}, size\_\-t $\ast$ {\em alloc\_\-msgs}, size\_\-t $\ast$ {\em queue\_\-msgs}, size\_\-t $\ast$ {\em queue\_\-size})}}
+\label{group__stream__buf_ga2}
+
+
+Get info on current buffered write mode settings. 
+
+You may only call this function if the stream {\em s\/} is configured in write-buffered mode. {\em msg\_\-size\/} and {\em max\_\-msgs\/} can be configured using the \hyperlink{group__stream__buf_ga54}{peak\_\-stream\_\-set\_\-buffered()} function.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference. \item[{\em msg\_\-size}]If not {\tt NULL}, the value pointed will contain the max size in bytes of each message buffers. \item[{\em max\_\-msgs}]If not {\tt NULL}, the value pointed will contain the maximum number of message. \item[{\em alloc\_\-msgs}]If not {\tt NULL}, the value pointed will contain the number of actual allocated message buffer ({\em alloc\_\-msgs\/} $<$= {\em max\_\-msgs\/}). \item[{\em queue\_\-msgs}]If not {\tt NULL}, the value pointed will contain the current number of message buffers queued (used). Obviously you can get the free count of message buffers with ({\em max\_\-msgs\/} - {\em queue\_\-msgs\/}). \item[{\em queue\_\-size}]If not {\tt NULL}, the value pointed will contain the current write queue size in bytes (also named \char`\"{}Send\-Q\char`\"{}). \end{description}
+\end{Desc}
+\hypertarget{group__stream__buf_ga6}{
+\index{stream_buf@{stream\_\-buf}!peak_stream_msgbuf_make@{peak\_\-stream\_\-msgbuf\_\-make}}
+\index{peak_stream_msgbuf_make@{peak\_\-stream\_\-msgbuf\_\-make}!stream_buf@{stream\_\-buf}}
+\subsubsection[peak\_\-stream\_\-msgbuf\_\-make]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-stream\_\-msgbuf\_\-make (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s}, const char $\ast$ {\em format}, ...)}}
+\label{group__stream__buf_ga6}
+
+
+Make a formatted message buffer and commit it for writing. 
+
+This convenience function allows you to write a formatted string to the stream in write-buffered mode.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference. \item[{\em format}]Format string. \end{description}
+\end{Desc}
+\hypertarget{group__stream__buf_ga4}{
+\index{stream_buf@{stream\_\-buf}!peak_stream_msgbuf_new@{peak\_\-stream\_\-msgbuf\_\-new}}
+\index{peak_stream_msgbuf_new@{peak\_\-stream\_\-msgbuf\_\-new}!stream_buf@{stream\_\-buf}}
+\subsubsection[peak\_\-stream\_\-msgbuf\_\-new]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ peak\_\-stream\_\-msgbuf\_\-new (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s})}}
+\label{group__stream__buf_ga4}
+
+
+Get a new message buffer. 
+
+Low-level function to get a pointer to a new msgbuf, of msg\_\-size bytes (previously configured with \hyperlink{group__stream__buf_ga54}{peak\_\-stream\_\-set\_\-buffered()}). This function is usually O(1), except for the few first calls or it needs to do real allocations. You can fill it partially or completely and then you MUST call \hyperlink{group__stream__buf_ga58}{peak\_\-stream\_\-msgbuf\_\-commit()} to commit the message for sending.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]A pointer to a new msgbuf or NULL is max\_\-msgs is reached internally. \end{Desc}
+\hypertarget{group__stream__buf_ga7}{
+\index{stream_buf@{stream\_\-buf}!peak_stream_msgbuf_vmake@{peak\_\-stream\_\-msgbuf\_\-vmake}}
+\index{peak_stream_msgbuf_vmake@{peak\_\-stream\_\-msgbuf\_\-vmake}!stream_buf@{stream\_\-buf}}
+\subsubsection[peak\_\-stream\_\-msgbuf\_\-vmake]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-stream\_\-msgbuf\_\-vmake (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s}, const char $\ast$ {\em format}, va\_\-list {\em vl})}}
+\label{group__stream__buf_ga7}
+
+
+Make a formatted message buffer and commit it for writing. 
+
+This convenience function allows you to write a formatted string to the stream in write-buffered mode.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference. \item[{\em format}]Format string. \item[{\em vl}]Arguments. \end{description}
+\end{Desc}
+\hypertarget{group__stream__buf_ga1}{
+\index{stream_buf@{stream\_\-buf}!peak_stream_set_buffered@{peak\_\-stream\_\-set\_\-buffered}}
+\index{peak_stream_set_buffered@{peak\_\-stream\_\-set\_\-buffered}!stream_buf@{stream\_\-buf}}
+\subsubsection[peak\_\-stream\_\-set\_\-buffered]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-stream\_\-set\_\-buffered (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s}, int {\em enable}, size\_\-t {\em msg\_\-size}, size\_\-t {\em max\_\-size}, \hyperlink{group__stream__buf_ga0}{peak\_\-stream\_\-error\_\-callback} {\em cb})}}
+\label{group__stream__buf_ga1}
+
+
+Enable or disable buffered write mode for a specified stream. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference. \item[{\em enable}]Enable (1) or disable (0) buffered mode ? \item[{\em msg\_\-size}]Size in bytes of a single message. Take care when setting this when you want to write lines: it's the maximum number of characters a line can contain when using the peak\_\-stream\_\-msgbuf's API. Use 0 to get an optimized value if you don't use the peak\_\-stream\_\-msgbuf's API. \item[{\em max\_\-size}]Set a limit of the total size in bytes of all messages, as you wish, depending on you needs and traffic. Also known as the Send\-Q's total size, but remember a few more bytes are allocated internally to implement the buffered writes. \item[{\em cb}]A pointer to your errors handling callback function for write-buffered related errors or NULL if you don't care. But be careful, the write stream isn't reliable anymore if you don't handle write-buffered errors because messages might be dropped in secret. \end{description}
+\end{Desc}
+\hypertarget{group__stream__buf_ga3}{
+\index{stream_buf@{stream\_\-buf}!peak_stream_write_buffered@{peak\_\-stream\_\-write\_\-buffered}}
+\index{peak_stream_write_buffered@{peak\_\-stream\_\-write\_\-buffered}!stream_buf@{stream\_\-buf}}
+\subsubsection[peak\_\-stream\_\-write\_\-buffered]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-stream\_\-write\_\-buffered (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s}, const void $\ast$ {\em buffer}, size\_\-t {\em bufsize})}}
+\label{group__stream__buf_ga3}
+
+
+Copy and commit a buffer to the stream for writing. 
+
+This is the write-buffered version of \hyperlink{group__stream__low_ga46}{peak\_\-stream\_\-write()}. If max\_\-msgs (previously configured with \hyperlink{group__stream__buf_ga54}{peak\_\-stream\_\-set\_\-buffered()}) is not reached, this function will send the whole buffer without error.\par
+ If you want maximum efficiency and if it's adapted for you, please use the \hyperlink{group__stream__buf_ga57}{peak\_\-stream\_\-msgbuf\_\-new()} and \hyperlink{group__stream__buf_ga58}{peak\_\-stream\_\-msgbuf\_\-commit()} pair, as they provide zero-copy buffering.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference. \item[{\em buffer}]The bytes to write. \item[{\em bufsize}]Number of bytes to write.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]The number of bytes which where written or -1 if an error occured. \end{Desc}

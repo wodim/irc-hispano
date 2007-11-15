@@ -1,0 +1,66 @@
+\hypertarget{struct__sh__iter__s}{
+\section{\_\-sh\_\-iter\_\-s Struct Reference}
+\label{struct__sh__iter__s}\index{_sh_iter_s@{\_\-sh\_\-iter\_\-s}}
+}
+Collaboration diagram for \_\-sh\_\-iter\_\-s:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=140pt]{struct__sh__iter__s__coll__graph}
+\end{center}
+\end{figure}
+
+
+\subsection{Detailed Description}
+\begin{Desc}
+\item[For internal use only.]
+This structure is used by \hyperlink{group__dbprim__smat_ga21}{sh\_\-iter()} in its call to \hyperlink{group__dbprim__link_ga10}{ll\_\-iter()}. The structure contains state that \hyperlink{group__dbprim__link_ga10}{ll\_\-iter()} cannot directly pass to \hyperlink{group__dbprim__smat_ga29}{\_\-sh\_\-iter\_\-iter()}.\end{Desc}
+
+
+
+
+Definition at line 41 of file sh\_\-iter.c.\subsection*{Data Fields}
+\begin{CompactItemize}
+\item 
+\hyperlink{struct__smat__table__s}{smat\_\-table\_\-t} $\ast$ \hyperlink{struct__sh__iter__s_o0}{si\_\-table}
+\item 
+\hyperlink{group__dbprim__smat_ga4}{smat\_\-iter\_\-t} \hyperlink{struct__sh__iter__s_o1}{si\_\-iter}
+\item 
+void $\ast$ \hyperlink{struct__sh__iter__s_o2}{si\_\-extra}
+\end{CompactItemize}
+
+
+\subsection{Field Documentation}
+\hypertarget{struct__sh__iter__s_o2}{
+\index{_sh_iter_s@{\_\-sh\_\-iter\_\-s}!si_extra@{si\_\-extra}}
+\index{si_extra@{si\_\-extra}!_sh_iter_s@{\_\-sh\_\-iter\_\-s}}
+\subsubsection[si\_\-extra]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ \hyperlink{struct__sh__iter__s_o2}{\_\-sh\_\-iter\_\-s::si\_\-extra}}}
+\label{struct__sh__iter__s_o2}
+
+
+Extra data. 
+
+Definition at line 44 of file sh\_\-iter.c.
+
+Referenced by \_\-sh\_\-iter\_\-iter(), and sh\_\-iter().\hypertarget{struct__sh__iter__s_o1}{
+\index{_sh_iter_s@{\_\-sh\_\-iter\_\-s}!si_iter@{si\_\-iter}}
+\index{si_iter@{si\_\-iter}!_sh_iter_s@{\_\-sh\_\-iter\_\-s}}
+\subsubsection[si\_\-iter]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{group__dbprim__smat_ga4}{smat\_\-iter\_\-t} \hyperlink{struct__sh__iter__s_o1}{\_\-sh\_\-iter\_\-s::si\_\-iter}}}
+\label{struct__sh__iter__s_o1}
+
+
+Iter function. 
+
+Definition at line 43 of file sh\_\-iter.c.
+
+Referenced by \_\-sh\_\-iter\_\-iter(), and sh\_\-iter().\hypertarget{struct__sh__iter__s_o0}{
+\index{_sh_iter_s@{\_\-sh\_\-iter\_\-s}!si_table@{si\_\-table}}
+\index{si_table@{si\_\-table}!_sh_iter_s@{\_\-sh\_\-iter\_\-s}}
+\subsubsection[si\_\-table]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{struct__smat__table__s}{smat\_\-table\_\-t}$\ast$ \hyperlink{struct__sh__iter__s_o0}{\_\-sh\_\-iter\_\-s::si\_\-table}}}
+\label{struct__sh__iter__s_o0}
+
+
+Pointer to the smat table. 
+
+Definition at line 42 of file sh\_\-iter.c.
+
+Referenced by \_\-sh\_\-iter\_\-iter(), and sh\_\-iter().

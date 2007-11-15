@@ -1,0 +1,43 @@
+\hypertarget{structpeak__dict__init__entry}{
+\section{peak\_\-dict\_\-init\_\-entry Struct Reference}
+\label{structpeak__dict__init__entry}\index{peak_dict_init_entry@{peak\_\-dict\_\-init\_\-entry}}
+}
+{\tt \#include $<$dict.h$>$}
+
+
+
+\subsection{Detailed Description}
+Structure containing a key and value pair to be used at the creation of the dictionary. 
+
+It's a convenience to allow application's developers to easily create dictionaries where entries are predefined in an array containing {\em peak\_\-dict\_\-init\_\-entry\/} structures.
+
+\begin{Desc}
+\item[]For example, 
+
+\footnotesize\begin{verbatim}
+ * static const peak_dist_init_entry init_values[] = {
+ *     { "key1", "value1" },
+ *     { "key2", "value2" }
+ * }; \end{verbatim}
+\normalsize
+\end{Desc}
+
+
+\subsection*{Data Fields}
+\begin{CompactItemize}
+\item 
+\hypertarget{structpeak__dict__init__entry_o0}{
+const void $\ast$ \hyperlink{structpeak__dict__init__entry_o0}{key}}
+\label{structpeak__dict__init__entry_o0}
+
+\begin{CompactList}\small\item\em the key \item\end{CompactList}\item 
+\hypertarget{structpeak__dict__init__entry_o1}{
+const void $\ast$ \hyperlink{structpeak__dict__init__entry_o1}{value}}
+\label{structpeak__dict__init__entry_o1}
+
+\begin{CompactList}\small\item\em the value \item\end{CompactList}\end{CompactItemize}
+
+
+The documentation for this struct was generated from the following file:\begin{CompactItemize}
+\item 
+dict.h\end{CompactItemize}

@@ -1,0 +1,58 @@
+/* PEAK Library
+ * @configure_input@
+ *
+ * Intel x86 atomic operations
+ *
+ * $Id: atomic.h.in,v 1.1 2007/05/24 12:54:10 mbuna Exp $
+ */
+#ifndef INCLUDED_PEAK_ATOMIC_H_
+#define INCLUDED_PEAK_ATOMIC_H_
+
+@ATOMIC_HEADERS@
+
+#ifdef PEAK_CONFIG_UNIPROCESSOR
+#define LOCK ""
+#else
+#define LOCK "lock ; "
+#endif
+
+typedef struct { volatile int counter; } peak_atomic_t;
+
+#define PEAK_ATOMIC_INIT(i)     { (i) }
+
+#define peak_atomic_read(v)     ((v)->counter)
+#define peak_atomic_set(v,i)    (((v)->counter) = (i))
+
+static __inline__ void peak_atomic_add(int a, peak_atomic_t *v)
+{
+        __asm__ __volatile__(
+		LOCK "addl %1,%0"
+		:"=m" (v->counter)
+		:"ir" (a), "m" (v->counter));
+}
+
+static __inline__ void peak_atomic_sub(int a, peak_atomic_t *v)
+{
+	__asm__ __volatile__(
+		LOCK "subl %1,%0"
+		:"=m" (v->counter)
+		:"ir" (a), "m" (v->counter));
+}
+
+static __inline__ void peak_atomic_inc(peak_atomic_t *v)
+{
+	__asm__ __volatile__(
+		LOCK "incl %0"
+		:"=m" (v->counter)
+		:"m" (v->counter));
+}
+
+static __inline__ void peak_atomic_dec(peak_atomic_t *v)
+{
+	__asm__ __volatile__(
+		LOCK "decl %0"
+		:"=m" (v->counter)
+		:"m" (v->counter));
+}
+
+#endif /* INCLUDED_PEAK_ATOMIC_H_ */

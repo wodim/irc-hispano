@@ -1,0 +1,33 @@
+2004-01-16  Stephane Thiell  <mbuna@bugged.org>
+
+	* src/PXScanManager.cc: Now restart checking targets when all have
+	already been checked (but wait a bit). Bind to source IP when
+	checking target if source IPs are provided (take one randomly..).
+
+2004-01-10  Stephane Thiell  <mbuna@bugged.org>
+
+	* src/PXRepeater.cc: Fixed peak's timers management, as
+	peak_task_timer_add() increases retain count.
+
+2004-01-03  Stephane Thiell  <mbuna@bugged.org>
+
+	* src/PXScan.cc: I forgot to handle the special case of a PXScan
+	object waiting for Completed() to be called.. but a proxy or error
+	has been found and all launched modules have already completed
+	(ouch my brain hurts). 
+	* px/px.c: Improved OPAS simple command line client!
+	* doc-pxyscandconf.xml: New documented configuration file.
+
+2004-01-02  Stephane Thiell  <mbuna@bugged.org>
+
+	* Added some temporary stderr debugs. We need a real logging
+	system like pxyservd for pxyscand, but with iostream. 
+	* Added config parser directives to handle dynamic scan modules
+	registration. Built-in types are wingate, socks, http and
+	crazybandit.
+
+2004-01-01  Stephane Thiell  <mbuna@bugged.org>
+
+	* Add uint32_t cast in PXServer::CreateStatus for the target's
+	port, to allow htonl to work (all integers sent are 32 bits
+	integer).

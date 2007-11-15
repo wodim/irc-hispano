@@ -1,0 +1,68 @@
+$Id: NEWS,v 1.1.1.1 2003/12/30 17:08:35 mbuna Exp $
+
+2003-12-30  Stephane Thiell  pxys v2
+------------------------------------
+
+Woohoo! I found the time to complete the pxys v2 software suite. I now call it
+software suite as it's no more a single program to run: tasks are separated.
+I will try to be brief and understandable as possible.
+
+Some things never change...and some things do (Ok... easy!). Well, almost
+all the work has been to improve the internal coding design, program
+architecture and efficiency. In the meantime, and you probably want to know
+first what's changing in practice from an administrative point of view and not
+too much from a developer one. So, some major things have changed:
+
+   - There are two main programs now. First, the IRCU service server daemon,
+named pxyservd which links to the IRC network. It manages the remote clients,
+provides a virtual client and an oper commands interface, send glines,
+provides logs, etc. ok almost like in pxys v1. The difference is that pxyservd
+doesn't perform any scans. The scanner daemon is named pxyscand, it performs
+the scans, keeps IP caches, etc. and connects to pxyservd via a TCP socket
+(for now only TCP is available). It has been completely rewritten in C++. To
+communicate, they use a very cheap binary protocol I designed for the occasion,
+it's called OPAS protocol and I wrote a library (see the libopas directory) to
+implement it. When a client connects to the network, pxyservd sends a request
+to pxyscand which performs the scan (in not in cache) and then reply (like a
+DNS query).
+
+   - Both programs now use XML configuration files (pxyservdconf.xml and
+pxyscandconf.xml) with the help of libxml2's standard XPath parsing (see
+http://www.w3.org/TR/xpath). Don't worry, it's very easy to edit them using
+a simple text editor (but if you use emacs, I recommend you the use of
+the nXML major mode, you can find it at the following URL:
+http://www.thaiopensource.com/download/, or another XML mode). This adds a
+constraint to pxys2's installation: the very portable libxml2 is required
+(you can find it at http://xmlsoft.org). It's not included to pxys v2 package
+as it's a very common library (available in FreeBSD's ports, etc.).
+
+   - Another library I wrote is needed which however is not part of the pxys
+v2 package (it's under the BSD license). I almost wrote it especially for
+pxys. It's a original event library. You can find it at http://peak.sf.net.
+
+   - The use of this event-based library and the new internal design of the
+scanner make it VERY efficient. No more 200 threads that take all the CPU time
+for context switch! 1 thread per CPU is configured for pxyscand. pxyservd,
+however, is limited to 1 thread as it's not useful (peak doesn't parallelize
+events on a single socket stream).
+
+   - pxyservd now handles channels! For now, it's only a test and there is
+no real usage of this feature, but some will be rapidely possible: an oper
+will be able to ask for a rescan of a whole channel, if needed (proxies are so
+volatile these days...), or the scanner could detect if a channel is regularly
+joined by proxied users and report that to the console channel, for example.
+Channels management is possible thanks to another library: dbprim written by
+Kev. It will be a good test for his (cpu and memory) efficient library before
+it's integrated into Undernet IRCU itself. dbprim is included in pxys v2
+package as a third party library for convenience.
+
+   - pxyservd is only P10 n2k compatible. P9 and non n2k networks can't use it.
+
+   - pxyscand can now use several IPs as scanning IP source (taken randomly).
+
+That's almost all for the visible part; IRC commands are still oper only
+and almost the same, mostly for stats/status purpose. If you are a pxys v1
+user you will barely see the difference.
+
+Known limitation: libpeak only supports x86 and PowerPC processors at the
+moment. Sparc and several other processor types will be supported soon.

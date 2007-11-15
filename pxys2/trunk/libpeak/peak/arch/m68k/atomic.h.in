@@ -1,0 +1,38 @@
+/* PEAK Library
+ * @configure_input@
+ *
+ * Motorola 68k atomic operations
+ *
+ * $Id: atomic.h.in,v 1.1 2007/05/24 12:54:09 mbuna Exp $
+ */
+#ifndef INCLUDED_PEAK_ATOMIC_H_
+#define INCLUDED_PEAK_ATOMIC_H_
+
+typedef struct { volatile int counter; } peak_atomic_t;
+
+#define PEAK_ATOMIC_INIT(i)     { (i) }
+
+#define peak_atomic_read(v)     ((v)->counter)
+#define peak_atomic_set(v,i)    (((v)->counter) = (i))
+
+static __inline__ void peak_atomic_add(int a, peak_atomic_t *v)
+{
+         __asm__ __volatile__("addl %1,%0" : "=m" (*v) : "id" (a), "0" (*v));
+}
+
+static __inline__ void peak_atomic_sub(int a, peak_atomic_t *v)
+{
+	__asm__ __volatile__("subl %1,%0" : "=m" (*v) : "id" (a), "0" (*v));
+}
+
+static __inline__ void peak_atomic_inc(peak_atomic_t *v)
+{
+        __asm__ __volatile__("addql #1,%0" : "=m" (*v): "0" (*v));
+}
+
+static __inline__ void peak_atomic_dec(peak_atomic_t *v)
+{
+        __asm__ __volatile__("subql #1,%0" : "=m" (*v): "0" (*v));
+}
+
+#endif /* INCLUDED_PEAK_ATOMIC_H_ */
