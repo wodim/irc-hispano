@@ -78,6 +78,8 @@ AC_MSG_RESULT([$pxyservd_cv_with_maxnicklen])
 AC_DEFINE_UNQUOTED(NICKLEN, $pxyservd_cv_with_maxnicklen,
     [Maximum nick length of network clients])
 
+AC_DEFINE([IRC_HISPANO], 1, [Red IRC de IRC-Hispano])
+AC_DEFINE([SPANISH], 1, [Mensajes en castellano])
 
 AC_CONFIG_FILES([Makefile src/Makefile])
 AC_OUTPUT
