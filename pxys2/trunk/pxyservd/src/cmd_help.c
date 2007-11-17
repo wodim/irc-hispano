@@ -102,7 +102,11 @@ cmd_help_specific(const char *dst, const char *topic)
       return;
       }
   
+#ifdef SPANISH
+  send_client_to_one(dst, "No existe ayuda del comando %s.", topic);
+#else  
   send_client_to_one(dst, "HELP topic not found.");
+#endif
   }
 
 void

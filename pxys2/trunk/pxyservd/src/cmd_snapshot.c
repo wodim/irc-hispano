@@ -47,7 +47,11 @@ cmd_snapshot(struct Client *cptr, toktabptr ttab)
   if (tz)
     {
     gdate = peak_time_get_date(peak_time_float(), tz);
+#ifdef SPANISH
+    send_client_to_one(dst, "SNAPSHOT desde %d-%d-%d a las %d:%02d:%02d %s",
+#else
     send_client_to_one(dst, "SNAPSHOT @ %d-%d-%d %d:%02d:%02d %s",
+#endif
                        gdate.year, gdate.month, gdate.day,
                        gdate.hour, gdate.minute, (int)gdate.second,
                        peak_tz_get_abbreviation(tz, peak_time()));
@@ -56,5 +60,9 @@ cmd_snapshot(struct Client *cptr, toktabptr ttab)
   
   irc_membership_iterate(snapshot_matrix, (void*)dst);
   
+#ifdef SPANISH
+  send_client_to_one(dst, "FIN DE SNAPSHOT");
+#else  
   send_client_to_one(dst, "END OF SNAPSHOT");
+#endif
   }

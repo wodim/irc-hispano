@@ -130,7 +130,11 @@ cmd_servers(struct Client *cptr, toktabptr ttab)
           if (details & 1)
             noscan = scan_check_noscan_server(sptr);
           
+#ifdef SPANISH
+          send_client_to_one(dst, "%s%u:%s%s%s   [%u clientes]   [%u chanrefs]",
+#else          
           send_client_to_one(dst, "%s%u:%s%s%s   [%u clients]   [%u chanrefs]",
+#endif
                              prompt, sptr->nserv, noscan ? "" : "\2",
                              sptr->name, noscan ? "" : "\2",
                              sptr->clients, cnt);

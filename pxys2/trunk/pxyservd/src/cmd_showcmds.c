@@ -60,7 +60,11 @@ cmd_showcmds(struct Client *cptr, toktabptr ttab)
   cnt = peak_dict_get_count(cmds_map);
   assert(cnt > 0);
   
+#ifdef SPANISH
+  send_client_to_one(dst, "%d COMANDOS HABILITADOS", cnt);
+#else  
   send_client_to_one(dst, "%d COMMANDS ENABLED", cnt);
+#endif
   send_client_to_one(dst, "------------------------", cnt);
   
   /* Allocate on stack if possible. Could use peak_dict_apply() too, but

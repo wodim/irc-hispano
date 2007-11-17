@@ -36,8 +36,13 @@ cmd_pxstats(struct Client *cptr, toktabptr ttab)
   send_client_to_one(dst, "\2PXSTATS\2");
   
   if (scan_send_simple_command(cptr, PXYSCAND_SIG, PX_CMD_STATS) == -1)
+#ifdef SPANISH
+    send_client_to_one(dst, "/!\\ El demonio de Escaneo no esta conectado."
+                       " No puedo recibir datos de estadisticas desde el demonio.");
+#else
     send_client_to_one(dst, "/!\\ Scanner daemon not connected."
                        " Can't retrieve stats data from pxyscand.");
+#endif
   }
 
 void
@@ -51,6 +56,61 @@ cmd_pxstats_reply(struct Client *cptr, PXSStats *stats)
   inttobase64(dst + 2, cptr->nnick, 3);
   dst[5] = '\0';
   
+#ifdef SPANISH
+  send_client_to_one(dst, "Estasticas recibidas desde %s", stats->version);
+  send_client_to_one(dst, "--------------------------------");
+  send_client_to_one(dst, "Contadores globales: peticiones %lu  scaneados %lu  "
+                     "proxies %lu",
+                     ntohl(stats->servQueryCount),
+                     ntohl(stats->servScannedCount),
+                     ntohl(stats->servProxyCount));
+  send_client_to_one(dst, "Entradas Cache: IPCache %lu  PXCache %lu",
+                     ntohl(stats->servIPCacheHits),
+                     ntohl(stats->servPXCacheHits));
+  send_client_to_one(dst, "Contador de escaneos en proceso: %lu",
+                     ntohl(stats->servInProgressCount));
+  send_client_to_one(dst, "Entradas lista de \"noscan\" del escaneador: %lu",
+                     ntohl(stats->servNoScanHits));
+  send_client_to_one(dst, "--------------------------------");
+  send_client_to_one(dst, "IP CACHES:");
+  v1 = ntohl(stats->servIP4CacheCount);
+  v2 = ntohl(stats->servIP4CacheSize);
+  pt = v2 > 0 ? 100.0 * (double)v1/(double)v2 : 0.;
+  send_client_to_one(dst, "IPv4 \"no proxy\" cache: %lu/%lu IPs (%.1f%%)",
+                     v1, v2, pt);
+  send_client_to_one(dst, "IPv4 \"no proxy\" cache expiracion en: %d segundos",
+                     ntohl(stats->servIP4CacheExpire));
+  v1 = ntohl(stats->servPX4CacheCount);
+  v2 = ntohl(stats->servPX4CacheSize);
+  pt = v2 > 0 ? 100.0 * (double)v1/(double)v2 : 0.;
+  send_client_to_one(dst, "IPv4 \"proxy\" cache: %lu/%lu IPs (%.1f%%)",
+                     v1, v2, pt);
+  send_client_to_one(dst, "IPv4 \"proxy\" cache expiracion en: %d segundos",
+                     ntohl(stats->servPX4CacheExpire));
+  send_client_to_one(dst, "--------------------------------");
+
+  send_client_to_one(dst, "Sesiones OPAS actuales:");
+
+  send_client_to_one(dst, "Contadores: peticiones %lu  error %lu",
+                     ntohl(stats->sessQueryCount),
+                     ntohl(stats->sessErrorCount));
+
+  v1 = ntohl(stats->sessScannedCount);
+  v2 = ntohl(stats->sessProxyCount);
+  pt = v1 > 0 ? 100.0 * (double)v2 / (double) v1 : 0.;
+  send_client_to_one(dst, "Contadores: escaneados %lu  proxy %lu (%g%%)",
+                     v1, v2, pt);
+  send_client_to_one(dst, "Trafico de sesiones: leidos %lu  escritos %lu (bytes)",
+                     ntohl(stats->sessReadBytes),
+                     ntohl(stats->sessWriteBytes));
+  send_client_to_one(dst, "--------------------------------");
+
+  send_client_to_one(dst, "Contador de sesiones OPAS %lu  total %lu  "
+                     "rechazados %lu",
+                     ntohl(stats->sessCurrent),
+                     ntohl(stats->sessCount),
+                     ntohl(stats->sessRejectedCount));
+#else
   send_client_to_one(dst, "Received stats from %s", stats->version);
   send_client_to_one(dst, "--------------------------------");
   send_client_to_one(dst, "Global counters: query %lu  scanned %lu  "
@@ -104,4 +164,5 @@ cmd_pxstats_reply(struct Client *cptr, PXSStats *stats)
                      ntohl(stats->sessCurrent),
                      ntohl(stats->sessCount),
                      ntohl(stats->sessRejectedCount));
+#endif
   }

@@ -66,8 +66,13 @@ recheck_chan_iter_cb(smat_table_t *table, smat_entry_t *e, void *extra)
     if (scan_send_command(pack->cptr, PXYSCAND_SIG, PX_CMD_REMOVE,
                           &rem_request, sizeof(rem_request)) == -1)
       {
+#ifdef SPANISH
+      send_client_to_one(pack->dst, "/!\\ El demonio de Escaneo no esta conectado."
+                         " No se puede rescanear en este momento.");
+#else
       send_client_to_one(pack->dst, "/!\\ Scanner daemon not connected."
                          " Can't recheck at the moment.");
+#endif
       return 1; /* stop iterate */
       }
     pack->scan_cnt++;
@@ -85,7 +90,11 @@ recheck_chan(struct Client *cptr, const char *dst, toktabptr ttab)
   
   if (!(c = irc_channel_get(ttab->tok[4])))
     {
+#ifdef SPANISH
+    send_client_to_one(dst, "Canal no encontrado.");
+#else
     send_client_to_one(dst, "Channel not found.");
+#endif
     return;
     }
   
@@ -98,9 +107,15 @@ recheck_chan(struct Client *cptr, const char *dst, toktabptr ttab)
       {
       char ipbuf[64];
       
+#ifdef SPANISH
+      send_client_to_one(dst, "RECHECK: %s - %lu usuarios (%lu agregados a la cola de escaneos,"
+                         " %lu en NOSCAN)", c->chname, cnt, pack.scan_cnt,
+                         pack.noscan_cnt);
+#else
       send_client_to_one(dst, "RECHECK: %s - %lu users (%lu added to ScanQ,"
                          " %lu in NOSCAN)", c->chname, cnt, pack.scan_cnt,
                          pack.noscan_cnt);
+#endif
       
       inet_ntop(cptr->flags & CLIENT_FLAG_IPV6 ? AF_INET6 : AF_INET,
                 &cptr->addr, ipbuf, sizeof(ipbuf));
@@ -111,7 +126,11 @@ recheck_chan(struct Client *cptr, const char *dst, toktabptr ttab)
   else
     {
     /* Channel chucked, not yet really deleted. */
+#ifdef SPANISH
+    send_client_to_one(dst, "El canal ha sido borrado: no hay usuarios");
+#else
     send_client_to_one(dst, "Channel's just been deleted: no user found");
+#endif
     }
   }
 
@@ -124,13 +143,21 @@ recheck_nick(struct Client *cptr, const char *dst, toktabptr ttab)
   
   if (!(target = irc_userbase_get_by_nick(ttab->tok[4])))
     {
+#ifdef SPANISH
+    send_client_to_one(dst, "Usuario no encontrado.");
+#else
     send_client_to_one(dst, "User not found.");
+#endif
     return;
     }
   
   if (scan_check_noscan(target))
     {
+#ifdef SPANISH
+    send_client_to_one(dst, "El usuario esta marcado como NOSCAN; no se puede reescanear");
+#else
     send_client_to_one(dst, "User's tagged as NOSCAN; can't recheck");
+#endif
     return;
     }
   
@@ -141,8 +168,13 @@ recheck_nick(struct Client *cptr, const char *dst, toktabptr ttab)
   
   if (target->flags & CLIENT_FLAG_SCANNING)
     {
+#ifdef SPANISH
+    send_client_to_one(dst, "El usuario %s (%s) esta todavia en la cola de escaneos"
+                       " (esperando o empezando a escanear)", target->nick, ipbuf);
+#else
     send_client_to_one(dst, "User %s (%s) is already in ScanQ"
                        " (waiting or being scanned)", target->nick, ipbuf);
+#endif
     return;
     }
   
@@ -151,13 +183,23 @@ recheck_nick(struct Client *cptr, const char *dst, toktabptr ttab)
   if (scan_send_command(cptr, PXYSCAND_SIG, PX_CMD_REMOVE,
                         &rem_request, sizeof(rem_request)) == -1)
     {
+#ifdef SPANISH
+    send_client_to_one(dst, "/!\\ El demonio de escaneo no esta conectado."
+                       " No se puede reescanear en este momento.");
+#else
     send_client_to_one(dst, "/!\\ Scanner daemon not connected."
                        " Can't recheck at the moment.");
+#endif
     return;
     }
   scan_start(target); /* start scan */
+#ifdef SPANISH
+  send_client_to_one(dst, "El usuario %s (%s) agregado a la cola de escaneos"
+                     " (sera escaneado ASAP)", target->nick, ipbuf);
+#else
   send_client_to_one(dst, "User %s (%s) added to ScanQ"
                      " (will be scanned ASAP)", target->nick, ipbuf);
+#endif
   }
 
 void
@@ -167,7 +209,11 @@ cmd_recheck(struct Client *cptr, toktabptr ttab)
   
   if (ttab->size < 5)
     {
+#ifdef SPANISH
+    send_client_to_one(dst, "Sintaxis: RECHECK <nick|canal>");
+#else
     send_client_to_one(dst, "Syntax: RECHECK <nickname|channel>");
+#endif
     return;
     }
   

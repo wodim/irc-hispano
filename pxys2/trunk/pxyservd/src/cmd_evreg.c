@@ -34,7 +34,11 @@ cmd_evreg(struct Client *cptr, toktabptr ttab)
   
   if (ttab->size != 5)
     {
+#ifdef SPANISH
+    send_client_to_one(dst, "Sintaxis: EVREG <+/-><flags>");
+#else
     send_client_to_one(dst, "Syntax: EVREG <+/-><flags>");
+#endif
     return;
     }
   
@@ -65,7 +69,11 @@ cmd_evreg(struct Client *cptr, toktabptr ttab)
             flag = EVREG_FLAG_PXYSCAND;
             break;
           default:
+#ifdef SPANISH
+            send_client_to_one(dst, "EVREG: Flag invalido '%c'", ch);
+#else
             send_client_to_one(dst, "EVREG: Invalid flag '%c'", ch);
+#endif
             return;
           }
         if (tog)
@@ -83,11 +91,19 @@ cmd_evreg(struct Client *cptr, toktabptr ttab)
     }
   
   if (!addflags && !(cptr->flags & CLIENT_FLAG_EVREG))
+#ifdef SPANISH
+    send_client_to_one(dst, "EVREG: No estas registrado");
+#else
     send_client_to_one(dst, "EVREG: You are not registered");
+#endif
   else
     {
     if ((flag = evreg_mod(cptr, addflags, clrflags)) == 0)
+#ifdef SPANISH
+      send_client_to_one(dst, "EVREG: Tus flags de eventos ahora estan vacios");
+#else
       send_client_to_one(dst, "EVREG: Your event flags are now empty");
+#endif
     else
       {
       char flagbuf[16];
@@ -103,7 +119,11 @@ cmd_evreg(struct Client *cptr, toktabptr ttab)
       if (flag & EVREG_FLAG_PXYSCAND)
         flagbuf[i++] = 'x';
       flagbuf[i] = '\0';
+#ifdef SPANISH
+      send_client_to_one(dst, "EVREG: Tus flags de eventos ahora son: %s", flagbuf);
+#else
       send_client_to_one(dst, "EVREG: Your event flags are now %s", flagbuf);
+#endif
       }
     }
   }

@@ -41,14 +41,22 @@ cmd_noscan(struct Client *cptr, toktabptr ttab)
     switch (noscan->noscan.type)
       {
       case NOSCAN_TYPE_SERVER:
+#ifdef SPANISH
+        send_client_to_one(dst, "Servidor: %s", noscan->noscan.u.server);
+#else
         send_client_to_one(dst, "Server: %s", noscan->noscan.u.server);
+#endif
         break;
       case NOSCAN_TYPE_USERIP:
         if (inet_ntop(AF_INET, &noscan->noscan.u.userip.network,
                       netbuf, sizeof(netbuf))
             && inet_ntop(AF_INET, &noscan->noscan.u.userip.netmask,
                          maskbuf, sizeof(maskbuf)))
+#ifdef SPANISH
+          send_client_to_one(dst, "Red IRC:%s/%s", netbuf, maskbuf);
+#else
           send_client_to_one(dst, "Network: %s/%s", netbuf, maskbuf);
+#endif
         break;
       default:
         break;

@@ -1,0 +1,15 @@
+* 2007/11/17 zoltan@irc-dev.net                                   CLEANUP
+-------------------------------------------------------------------------
+  Hago la traduccion de todos los comandos y sus respuestas al castellano
+  para su uso en IRC-Hispano.
+  Ojo, falta corregir los tildes y demas simbolos castellanos.
+
+
+* 2007/11/15 zoltan@irc-dev.net                                       FIX
+-------------------------------------------------------------------------
+  Corrigo el parseo de los siguientes comandos para que pueda funcionar
+  el Pxys en IRC-Hispano.
+
+  NICK: Dado que no hay ACCOUNT, reduzco a 1 los parametros necesarios.
+
+  PING: Como no hay "AsLL PING" pongo parseo de PING normal.

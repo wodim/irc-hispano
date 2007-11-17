@@ -51,6 +51,60 @@ cmd_stats(struct Client *cptr, toktabptr ttab)
   read_count = peak_stream_get_read_count(gIRCStream);
   write_count = peak_stream_get_write_count(gIRCStream);
   
+#ifdef SPANISH
+  send_client_to_one(dst, "\2STATS\2");
+  send_client_to_one(dst, "Usando libpeak %s/%s", peak_version_get_string(),
+                     peak_task_get_engine_name(peak_task_self()));
+  send_client_to_one(dst, "IRC socket: recibidos %u enviados %u (bytes)",
+                     read_count, write_count);
+
+  up = (double)(peak_time() - link_timestamp) * 1024.0;
+
+  send_client_to_one(dst, "IRC socket: recibidos %.2fKB/s enviados %.2fKB/s",
+                     (double)read_count/up, (double)write_count/up);
+
+  send_client_to_one(dst, "Entradas cache local de IP: %lu", l1_cache_hits);
+
+  send_client_to_one(dst, " ");
+  send_client_to_one(dst, "ESTADO DE ESTRUCTURAS INTERNAS (dbprim):");
+
+  peak_stream_msgbuf_get_info(gIRCStream, &msg_size, &max_msgs, &alloc_msgs,
+                              &queue_msgs, &queue_size);
+
+  send_client_to_one(dst, "Buffer de mensajess: tamano %u contador %u/%u usados %u "
+                     "(cola envios %u)", msg_size, alloc_msgs, max_msgs,
+                     queue_msgs, queue_size);
+
+  send_client_to_one(dst, "Tabla Hash de Servidores: contador %d tamano en memoria %u",
+                     irc_network_get_server_count(),
+                     irc_network_get_hash_table_size());
+
+  send_client_to_one(dst, "Tabla Hash de Clientes: contador %d tamano en memoria %u",
+                     irc_userbase_get_count(),
+                     irc_userbase_get_hash_table_size());
+
+  send_client_to_one(dst, "Area de memoria de Clientes: usados %d libres %d (tamanio %d)",
+                     peak_mem_pool_get_used_count(user_pool),
+                     peak_mem_pool_get_free_count(user_pool),
+                     peak_mem_pool_get_size(user_pool));
+
+  send_client_to_one(dst, "Tabla Hash de Canales: contador %d tamano en memoria %u",
+                     irc_channel_get_hash_table_count(),
+                     irc_channel_get_hash_table_size());
+
+  up = 100.0 * (double)rehabilitated_channels/(double)destructed_channels;
+  send_client_to_one(dst, "Garbage de Canales: chucked %d rehabilitados %u"
+                     " (%.1f%%) destruidos %u",
+                     irc_channel_get_chucked_count(), rehabilitated_channels,
+                     up, destructed_channels);
+
+  send_client_to_one(dst, "Matriz de Usuarios en Canales: contador %d tamao en memoria %u",
+                     irc_membership_get_count(),
+                     irc_membership_get_smat_size());
+
+  send_client_to_one(dst, "Matriz de Usuarios en Canales memoria liberada: %lu",
+                     smat_freemem());
+#else  
   send_client_to_one(dst, "\2STATS\2");
   send_client_to_one(dst, "Using libpeak %s/%s", peak_version_get_string(),
                      peak_task_get_engine_name(peak_task_self()));
@@ -103,4 +157,5 @@ cmd_stats(struct Client *cptr, toktabptr ttab)
   
   send_client_to_one(dst, "Membership sparse matrix freemem: %lu",
                      smat_freemem());
+#endif
   }

@@ -35,7 +35,11 @@
 static void
 grem_usage(const char *dst)
   {
+#ifdef SPANISH
+  send_client_to_one(dst, "Sintaxis: GREM <IP>");
+#else
   send_client_to_one(dst, "Syntax: GREM <IP>");
+#endif
   }
 
 void
@@ -66,8 +70,13 @@ cmd_grem(struct Client *cptr, toktabptr ttab)
   
   if (scan_send_command(cptr, PXYSCAND_SIG, PX_CMD_REMOVE,
                         &rem_request, sizeof(rem_request)) == -1)
+#ifdef SPANISH
+    send_client_to_one(dst, "/!\\ El demonio de Scan no esta conectado."
+                       " No se puede pedirlo para quitar la IP de la cache en este momento.");
+#else
     send_client_to_one(dst, "/!\\ Scanner daemon not connected."
                        " Can't ask it to remove IP from cache at the moment.");
+#endif
   else
     cptr->flags |= CLIENT_FLAG_GREM;
   }
@@ -90,16 +99,29 @@ cmd_grem_reply(struct Client *cptr, PXSRemove4 *rem_reply)
     time_t now = time(NULL);
     if (status)
       {
+#ifdef SPANISH
+      send_client_to_one(dst, "GREM: Borrado efectuado del cache para la IP %s "
+                         "(from pxyscand)", ipbuf);
+      send_client_to_one(dst, "GREM: Enviando borrado de la GLINE a la red de IRC");
+#else
       send_client_to_one(dst, "GREM: Cache REMOVE successful for IP %s "
                          "(from pxyscand)", ipbuf);
       send_client_to_one(dst, "GREM: Sending remgline to IRC network");
+#endif
       }
     else
       {
+#ifdef SPANISH
+      send_client_to_one(dst, "GREM: Borrado fallido del cache para la IP %s "
+                         "(desde pxyscand). Probablemente no esta en cache",
+                         ipbuf);
+      send_client_to_one(dst, "GREM: Enviando borrado de la GLINE de todas las formas")
+#else
       send_client_to_one(dst, "GREM: Cache REMOVE failed for IP %s "
                          "(from pxyscand). Probably not in cache anymore",
                          ipbuf);
       send_client_to_one(dst, "GREM: Sending remgline anyway");
+#endif
       }
     send_raw("%s " TOK_GLINE " * -*@%s %li %li" CRLF, gMe.yy, ipbuf, (long int)now, (long int)now);
     }

@@ -169,7 +169,11 @@ evreg_show(const char *dst)
   {
   struct EVRegClient *rcptr;
   
+#ifdef SPANISH
+  send_client_to_one(dst, "Lista de Clientes con EVREG")
+#else  
   send_client_to_one(dst, "EVREG Client List");
+#endif
   for (rcptr = evreg_clist_head; rcptr; rcptr = rcptr->next)
     {
     char flagbuf[16];
@@ -190,5 +194,9 @@ evreg_show(const char *dst)
                        irc_network_get_server(rcptr->client->nserv)->name,
                        flagbuf);
     }
+#ifdef SPANISH
+  send_client_to_one(dst, "Fin de la lista de Clientes EVREG");
+#else
   send_client_to_one(dst, "End of EVREG Client List");
+#endif
   }

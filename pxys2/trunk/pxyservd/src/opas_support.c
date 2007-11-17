@@ -245,10 +245,17 @@ opas_support_stream_cleanup(peak_stream s)
     opas_support_last_disconnection = peak_time();
     opas_support_last_warning = opas_support_last_disconnection;
     session_open = 0;
+#ifdef SPANISH
+    send_to_console("[%s] Conexion con el demonio de Escaneo cerrada.",
+                   gConfig->server.id);
+    evreg_broadcast(EVREG_FLAG_PXYSCAND,
+                    "[EV] Conexion con el demonio de Escaneo cerrada.");
+#else
     send_to_console("[%s] Connection with pxyscand closed.",
                     gConfig->server.id);
     evreg_broadcast(EVREG_FLAG_PXYSCAND,
                     "[EV] Connection with pxyscand closed.");
+#endif
     }
   opas_support_retry_later();
   }
@@ -284,15 +291,31 @@ opas_support_stream_event(peak_stream s, int type, void *context)
       opas_support_last_connection = peak_time();
       if (!opas_support_last_disconnection)
         {
+#ifdef SPANISH
+        send_to_console("[%s] Conexion con el demonio de Escaneo establecida.",
+                        gConfig->server.id);
+        evreg_broadcast(EVREG_FLAG_PXYSCAND,
+                        "[EV] Conexion con el demonio de Escaneo establecida.");
+#else
         send_to_console("[%s] Connection with pxyscand established.",
                         gConfig->server.id);
         evreg_broadcast(EVREG_FLAG_PXYSCAND,
                         "[EV] Connection with pxyscand established.");
+#endif
         }
       else
         {
         time_t t =
           opas_support_last_connection - opas_support_last_disconnection;
+#ifdef SPANISH
+        send_to_console("[%s] Conexion con el demonio de Escaneo establecida"
+               " (downtime: %d:%02d:%02d).", gConfig->server.id,
+                        (t / 3600) % 24, (t / 60) % 60, t % 60);
+        evreg_broadcast(EVREG_FLAG_PXYSCAND,
+                        "[EV] Conexion con el demonio de Escaneo establecida"
+                        " (downtime: %d:%02d:%02d).",
+                        (t / 3600) % 24, (t / 60) % 60, t % 60);
+#else
         send_to_console("[%s] Connection with pxyscand established"
                         " (downtime: %d:%02d:%02d).", gConfig->server.id,
                         (t / 3600) % 24, (t / 60) % 60, t % 60);
@@ -300,6 +323,7 @@ opas_support_stream_event(peak_stream s, int type, void *context)
                         "[EV] Connection with pxyscand established"
                         " (downtime: %d:%02d:%02d).",
                         (t / 3600) % 24, (t / 60) % 60, t % 60);
+#endif
         }
       break;
     case PEAK_STREAM_EVT_END:
@@ -318,8 +342,13 @@ opas_support_stream_event(peak_stream s, int type, void *context)
         opas_ping(session);
         break;
         }
+#ifdef SPANISH
+      send_to_console("[%s] No hay respuesta desde el demonio de Escaneo, cerrando la conexion.",
+                      gConfig->server.id);
+#else
       send_to_console("[%s] No response from pxyscand, closing connection.",
                       gConfig->server.id);
+#endif
       opas_support_stream_cleanup(s);
       break;
     default:

@@ -243,5 +243,9 @@ irc_client_handle_private(toktabptr ttab)
   if ((f = (cmd_func)peak_dict_get_value(cmds_map, cmd)))
     (*f)(cptr, ttab);
   else
+#ifdef SPANISH
+    send_client_to_one(dst, "Lo siento, comando no encontrado.");
+#else
     send_client_to_one(dst, "Sorry, command not found.");
+#endif
   }

@@ -94,7 +94,11 @@ cmd_proxytop(struct Client *cptr, toktabptr ttab)
   if (!total)
     total = 1;
   
+#ifdef SPANISH
+  send_client_to_one(dst, "RANK SERVIDOR PROXY-CONTADOR/PORCENTAJE (MAXIMO DE USUARIOS)
+#else
   send_client_to_one(dst, "RANK SERVER PROXY-COUNT/PERCENTAGE (MAXUSERS)");
+#endif
   
   for (i = 0, p = base, rank = 1; i < count; i++)
     {
@@ -112,7 +116,11 @@ cmd_proxytop(struct Client *cptr, toktabptr ttab)
     {
     time_t last = proxy_count_last_reset_time;
     gdate = peak_time_get_date(last, tz);
+#ifdef SPANISH
+    send_client_to_one(dst, "PROXYTOP desde el dia %d-%d-%d a las %d:%02d:%02d %s",
+#else
     send_client_to_one(dst, "PROXYTOP SINCE %d-%d-%d %d:%02d:%02d %s",
+#endif
                        gdate.year, gdate.month, gdate.day, gdate.hour,
                        gdate.minute, (int)gdate.second,
                        peak_tz_get_abbreviation(tz, last));
