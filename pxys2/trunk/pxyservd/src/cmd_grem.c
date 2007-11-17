@@ -115,7 +115,7 @@ cmd_grem_reply(struct Client *cptr, PXSRemove4 *rem_reply)
       send_client_to_one(dst, "GREM: Borrado fallido del cache para la IP %s "
                          "(desde pxyscand). Probablemente no esta en cache",
                          ipbuf);
-      send_client_to_one(dst, "GREM: Enviando borrado de la GLINE de todas las formas")
+      send_client_to_one(dst, "GREM: Enviando borrado de la GLINE de todas las formas");
 #else
       send_client_to_one(dst, "GREM: Cache REMOVE failed for IP %s "
                          "(from pxyscand). Probably not in cache anymore",

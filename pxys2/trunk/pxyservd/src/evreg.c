@@ -170,7 +170,7 @@ evreg_show(const char *dst)
   struct EVRegClient *rcptr;
   
 #ifdef SPANISH
-  send_client_to_one(dst, "Lista de Clientes con EVREG")
+  send_client_to_one(dst, "Lista de Clientes con EVREG");
 #else  
   send_client_to_one(dst, "EVREG Client List");
 #endif

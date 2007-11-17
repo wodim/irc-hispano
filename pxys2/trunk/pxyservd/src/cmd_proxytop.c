@@ -95,7 +95,7 @@ cmd_proxytop(struct Client *cptr, toktabptr ttab)
     total = 1;
   
 #ifdef SPANISH
-  send_client_to_one(dst, "RANK SERVIDOR PROXY-CONTADOR/PORCENTAJE (MAXIMO DE USUARIOS)
+  send_client_to_one(dst, "RANK SERVIDOR PROXY-CONTADOR/PORCENTAJE (MAXIMO DE USUARIOS)");
 #else
   send_client_to_one(dst, "RANK SERVER PROXY-COUNT/PERCENTAGE (MAXUSERS)");
 #endif
