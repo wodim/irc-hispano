@@ -146,7 +146,7 @@ scanner_status(struct Client *cptr, const char *dst)
   
   if (scan_send_simple_command(cptr, PXYSCAND_SIG, PX_CMD_STATUS) == -1)
 #ifdef SPANISH
-    send_client_to_one(dst, "/!\\ El demonio de Escaneador no esta conectado."
+    send_client_to_one(dst, "/!\\ El demonio de Escaneo no esta conectado."
                        " No puedo recibir datos de estadisticas desde el demonio.");
 #else
     send_client_to_one(dst, "/!\\ Scanner daemon not connected."

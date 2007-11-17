@@ -181,7 +181,11 @@ opas_support_timer_callback(peak_timer ti, void *context)
   if (peak_time() - opas_support_last_warning >= WARNING_DELAY)
     {
     opas_support_last_warning = peak_time();
+#ifdef SPANISH
+    send_to_console("[%s] [PELIGRO!] No esta conectado al demonio de Escaneo!",
+#else
     send_to_console("[%s] [WARNING] Not connected to the proxy scanner!",
+#endif
                     gConfig->server.id);
     }
   

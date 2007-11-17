@@ -1,5 +1,11 @@
 * 2007/11/17 zoltan@irc-dev.net                                   CLEANUP
 -------------------------------------------------------------------------
+  Corrigo varios bugs del ultimo commit.
+  Pongo que se reconozca al modo +h en vez de +o.
+
+
+* 2007/11/17 zoltan@irc-dev.net                                   CLEANUP
+-------------------------------------------------------------------------
   Hago la traduccion de todos los comandos y sus respuestas al castellano
   para su uso en IRC-Hispano.
   Ojo, falta corregir los tildes y demas simbolos castellanos.

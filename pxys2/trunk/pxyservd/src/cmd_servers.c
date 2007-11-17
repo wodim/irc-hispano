@@ -45,9 +45,14 @@ servers_end_map(const char *dst)
   services = irc_network_get_server_count_flagged(SERVER_FLAG_SERVICE);
   leaves = total - irc_network_get_server_count_flagged(SERVER_FLAG_HUB
                                                         |SERVER_FLAG_SERVICE);
-  
+
+#ifdef SPANISH
+  send_client_to_one(dst, "Fin del map (%d servidores: %d hubs, %d services, "
+                     "%d leaves)", total, hubs, services, leaves);
+#else  
   send_client_to_one(dst, "End of map (%d servers: %d hubs, %d services, "
                      "%d leaves)", total, hubs, services, leaves);
+#endif
   }
 
 void

@@ -105,7 +105,11 @@ send_to_console(const char *fmt, ...)
   vsnprintf(msgbuf, sizeof(msgbuf), fmt, vl);
   va_end(vl);
   if (gIRCStream)
+#ifdef IRC_HISPANO
+    peak_stream_msgbuf_make(gIRCStream, "%s " TOK_PRIVATE " %s :%s" CRLF,
+#else
     peak_stream_msgbuf_make(gIRCStream, "%s " TOK_NOTICE " %s :%s" CRLF,
+#endif
                             gMe.yy, gConfig->client.channel, msgbuf);
   }
 
@@ -137,7 +141,11 @@ send_client_to_one(const char *dst, const char *fmt, ...)
   vsnprintf(msgbuf, sizeof(msgbuf), fmt, vl);
   va_end(vl);
   if (gIRCStream)
+#ifdef IRC_HISPANO
+    peak_stream_msgbuf_make(gIRCStream, "%s%s " TOK_PRIVATE " %s :%s" CRLF,
+#else
     peak_stream_msgbuf_make(gIRCStream, "%s%s " TOK_NOTICE " %s :%s" CRLF,
+#endif
                             gMe.yy, myCli64, dst, msgbuf);
   }
 

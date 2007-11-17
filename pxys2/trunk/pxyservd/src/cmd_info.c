@@ -212,7 +212,11 @@ info_nick(const char *dst, toktabptr ttab)
 #ifdef SPANISH
   send_client_to_one(dst, "%s es %s@%s", u->nick, u->user, host);
   if (u->flags & CLIENT_FLAG_OPER)
+#ifdef IRC_HISPANO
+    send_client_to_one(dst, "%s es un Operador de la Red", u->nick);
+#else
     send_client_to_one(dst, "%s es un \"IRC Operator\"", u->nick);
+#endif
 #else
   send_client_to_one(dst, "%s is %s@%s", u->nick, u->user, host);
   if (u->flags & CLIENT_FLAG_OPER)

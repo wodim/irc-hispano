@@ -83,7 +83,11 @@ operchange(int * ioOper, const char * mode)
       case '-':
         tog = 0;
         continue;
+#ifdef IRC_HISPANO
+      case 'h':
+#else
       case 'o':
+#endif
         *ioOper = tog;
       default:
         break;

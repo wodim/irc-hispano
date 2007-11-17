@@ -462,7 +462,11 @@ parse_ea(toktabptr ttab)
   if (irc_network_is_my_downlink(yy_int))
     {
     size_t recvBytes = peak_stream_get_read_count(gIRCStream);
+#ifdef SPANISH
+    send_to_console("[%s] Cargados %ld clientes en %ld segundos "
+#else
     send_to_console("[%s] Loaded %ld clients in %ld seconds "
+#endif
                     "(%ldKB - %4.2fKB/s)",
                     gConfig->server.id, irc_userbase_get_count(), burst_delay,
                     (int)(recvBytes/1024),
