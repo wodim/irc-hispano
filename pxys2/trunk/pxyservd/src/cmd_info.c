@@ -104,7 +104,11 @@ info_chan_iter_cb(smat_table_t *table, smat_entry_t *e, void *extra)
   else
     strcpy(sbuf, "NOSCAN");
   
+#ifdef IRC_HISPANO
+  send_client_to_one(dst, "%s %s host_hidden (%s)", cptr->nick, cptr->user, sbuf);
+#else
   send_client_to_one(dst, "%s %s %s (%s)", cptr->nick, cptr->user, host, sbuf);
+#endif
   
   return 0;
   }
@@ -210,11 +214,13 @@ info_nick(const char *dst, toktabptr ttab)
   
   inet_ntop(af, &u->addr, host, sizeof(host));
 #ifdef SPANISH
-  send_client_to_one(dst, "%s es %s@%s", u->nick, u->user, host);
-  if (u->flags & CLIENT_FLAG_OPER)
 #ifdef IRC_HISPANO
+  send_client_to_one(dst, "%s es %s@host_hidden", u->nick, u->user);
+  if (u->flags & CLIENT_FLAG_OPER)
     send_client_to_one(dst, "%s es un Operador de la Red", u->nick);
 #else
+  send_client_to_one(dst, "%s es %s@%s", u->nick, u->user, host);
+  if (u->flags & CLIENT_FLAG_OPER)
     send_client_to_one(dst, "%s es un \"IRC Operator\"", u->nick);
 #endif
 #else

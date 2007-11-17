@@ -143,6 +143,9 @@ irc_channel_create(const char *chname, time_t creationtime)
   channel = irc_channel_get(chname);
   if (channel)
     {
+#if 1 /* P10 IRC-HISPANO */
+    if (creationtime)
+#endif      
     channel->creationtime = creationtime; /* resync */
     return channel;
     }

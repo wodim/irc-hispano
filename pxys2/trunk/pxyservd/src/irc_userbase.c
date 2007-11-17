@@ -161,7 +161,11 @@ irc_userbase_add(
   cptr->flags = flags;
   if (*user == '~')
     cptr->flags |= CLIENT_FLAG_IDENT;
+#ifdef IRC_HISPANO
+  if (mode && strchr(mode, 'h'))
+#else
   if (mode && strchr(mode, 'o'))
+#endif
     cptr->flags |= CLIENT_FLAG_OPER;
   
   cptr->addr = addr;

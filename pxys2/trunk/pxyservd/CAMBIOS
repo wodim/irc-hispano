@@ -2,7 +2,7 @@
 -------------------------------------------------------------------------
   Corrigo varios bugs del ultimo commit.
   Pongo que se reconozca al modo +h en vez de +o.
-
+  Oculto las IPS
 
 * 2007/11/17 zoltan@irc-dev.net                                   CLEANUP
 -------------------------------------------------------------------------

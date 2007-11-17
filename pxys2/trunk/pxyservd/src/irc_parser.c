@@ -626,9 +626,11 @@ parse_join(toktabptr ttab)
     irc_membership_remove_client(client);
     return;
     }
-  
+
+#if 0 /* P10 IRC-HISPANO */
   if (ttab->size < 4)
     RET_BOGUS;
+#endif
   
   FOREACH_CHANNEL(ttab->tok[2],
     if (!(channel = irc_channel_get(CHANNEL)))
@@ -636,7 +638,11 @@ parse_join(toktabptr ttab)
       /* channel not created. bug? */
       Debug((DL_BASIC, "parse_join: channel %s not created", CHANNEL));
       log_system("parse_join: channel %s not created", CHANNEL);
+#if 1 /* P10 IRC-HISPANO */
+      channel = irc_channel_create(CHANNEL, 0);
+#else
       channel = irc_channel_create(CHANNEL, (time_t)atoi(ttab->tok[3]));
+#endif
       }
     if (!(client = irc_network_find_client(yxx_to_int(ttab->tok[0]))))
       abort();
