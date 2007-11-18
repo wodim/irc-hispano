@@ -96,7 +96,9 @@ cmd_grem_reply(struct Client *cptr, PXSRemove4 *rem_reply)
   
   if (inet_ntop(AF_INET, &rem_reply->addr, ipbuf, sizeof(ipbuf)))
     {
+#if 0 /* P10 IRC-Hispano */
     time_t now = time(NULL);
+#endif
     if (status)
       {
 #ifdef SPANISH
@@ -123,6 +125,10 @@ cmd_grem_reply(struct Client *cptr, PXSRemove4 *rem_reply)
       send_client_to_one(dst, "GREM: Sending remgline anyway");
 #endif
       }
+#if 1 /* P10 IRC-Hispano */
+    send_raw("%s " TOK_GLINE " * -*@%s" CRLF, gMe.yy, ipbuf);
+#else
     send_raw("%s " TOK_GLINE " * -*@%s %li %li" CRLF, gMe.yy, ipbuf, (long int)now, (long int)now);
+#endif
     }
   }

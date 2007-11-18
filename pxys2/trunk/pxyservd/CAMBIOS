@@ -1,3 +1,10 @@
+* 2007/11/18 zoltan@irc-dev.net                                       FIX
+-------------------------------------------------------------------------
+  El comando GLINE usa el antiguo formato de P10 en IRC-Hispano. El nuevo
+  formato es a partir de u2.10.12, tenerlo en cuenta al migrar al IRCD de
+  IRC-Dev.
+
+
 * 2007/11/17 zoltan@irc-dev.net                                   CLEANUP
 -------------------------------------------------------------------------
   Corrigo varios bugs del ultimo commit.
@@ -16,6 +23,6 @@
   Corrigo el parseo de los siguientes comandos para que pueda funcionar
   el Pxys en IRC-Hispano.
 
-  NICK: Dado que no hay ACCOUNT, reduzco a 1 los parametros necesarios.
+  NICK: Dado que no hay ACCOUNT, reduzco 1 los parametros necesarios.
 
   PING: Como no hay "AsLL PING" pongo parseo de PING normal.
