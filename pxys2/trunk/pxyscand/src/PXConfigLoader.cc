@@ -269,7 +269,8 @@ PXConfigLoader::DoLoad(PXConfig *cfg)
           m.id = CONFIG_MODULE_CRAZYBANDIT;
         
         /* Handle new module type here. */
-        
+        else if (!xmlStrcasecmp(s, (xmlChar*)"3com812"))
+          m.id = CONFIG_MODULE_3COM812;        
         else
           PXXMLException::Throw("Unknown scanner/module type attribute",
                                 "scanner/module");

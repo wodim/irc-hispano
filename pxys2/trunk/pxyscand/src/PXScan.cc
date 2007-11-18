@@ -25,6 +25,7 @@
 #include "PXSession.h"
 
 /* Module headers */
+#include "PXM3Com812.h"
 #include "PXMWingate.h"
 #include "PXMSocks.h"
 #include "PXMHttpProxy.h"
@@ -64,6 +65,9 @@ PXScan::PXScan(const opas_msg_query &inQuery, PXSession *inSession,
         break;
       case CONFIG_MODULE_CRAZYBANDIT:
         this->RegisterModule(new PXMCrazyBandit(this));
+        break;
+      case CONFIG_MODULE_3COM812:
+        this->RegisterModule(new PXM3Com812(this));
         break;
       default:
         abort();

@@ -12,7 +12,9 @@
   <scanner>
     <maxscans>512</maxscans>
     <!-- built-in module types: wingate,socks,crazybandit,http -->
+    <!-- Solo wingate o 3com812 ya que usan el mismo puerto -->
     <module type="wingate" />
+    <module type="3com812" />
     <module type="socks">1080</module>
     <module type="crazybandit" />
     <module type="http">3128</module>

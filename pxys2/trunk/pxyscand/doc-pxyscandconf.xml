@@ -68,7 +68,9 @@ $Id: doc-pxyscandconf.xml,v 1.1 2004/01/03 00:04:58 mbuna Exp $
   <scanner>
     <maxscans>4000</maxscans>
     <!-- built-in module types: wingate,socks,crazybandit,http -->
+    <!-- Solo wingate o 3com812 ya que usan el mismo puerto -->
     <module type="wingate" />
+    <module type="3com812" />
     <module type="socks" />
     <module type="crazybandit" />
     <module type="http">3128</module>
