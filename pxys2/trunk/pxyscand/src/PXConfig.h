@@ -56,7 +56,8 @@ enum
   CONFIG_MODULE_HTTP,
   CONFIG_MODULE_CRAZYBANDIT,
   /* Add new module type id here. */
-  CONFIG_MODULE_3COM812
+  CONFIG_MODULE_3COM812,
+  CONFIG_MODULE_BOUNCERHISPANO
   };
 
 struct PXConfigScannerTarget

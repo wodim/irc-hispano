@@ -25,6 +25,7 @@
 #include "PXSession.h"
 
 /* Module headers */
+#include "PXMBouncerHispano.h"
 #include "PXM3Com812.h"
 #include "PXMWingate.h"
 #include "PXMSocks.h"
@@ -68,6 +69,9 @@ PXScan::PXScan(const opas_msg_query &inQuery, PXSession *inSession,
         break;
       case CONFIG_MODULE_3COM812:
         this->RegisterModule(new PXM3Com812(this));
+        break;
+      case CONFIG_MODULE_BOUNCERHISPANO:
+        this->RegisterModule(new PXMBouncerHispano(this, mod->port));
         break;
       default:
         abort();

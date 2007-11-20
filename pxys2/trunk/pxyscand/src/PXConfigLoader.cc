@@ -271,6 +271,14 @@ PXConfigLoader::DoLoad(PXConfig *cfg)
         /* Handle new module type here. */
         else if (!xmlStrcasecmp(s, (xmlChar*)"3com812"))
           m.id = CONFIG_MODULE_3COM812;        
+        else if (!xmlStrcmp(s, (xmlChar*)"bouncerhispano"))
+          {
+          m.id = CONFIG_MODULE_BOUNCERHISPANO;
+          m.port = this->GetInteger(XP_SCANNER_MODULE, i, 65536);
+          // Note: port 0 not allowed for convenience.
+          if (m.port <= 0 || m.port >= 65536)
+            PXXMLException::Throw("Bad bouncer port number", "scanner/module");
+          }
         else
           PXXMLException::Throw("Unknown scanner/module type attribute",
                                 "scanner/module");
