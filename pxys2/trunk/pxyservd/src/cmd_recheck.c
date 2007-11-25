@@ -67,7 +67,7 @@ recheck_chan_iter_cb(smat_table_t *table, smat_entry_t *e, void *extra)
                           &rem_request, sizeof(rem_request)) == -1)
       {
 #ifdef SPANISH
-      send_client_to_one(pack->dst, "/!\\ El demonio de Escaneo no esta conectado."
+      send_client_to_one(pack->dst, "/!\\ El demonio de Escaneo no está conectado."
                          " No se puede rescanear en este momento.");
 #else
       send_client_to_one(pack->dst, "/!\\ Scanner daemon not connected."
@@ -154,7 +154,7 @@ recheck_nick(struct Client *cptr, const char *dst, toktabptr ttab)
   if (scan_check_noscan(target))
     {
 #ifdef SPANISH
-    send_client_to_one(dst, "El usuario esta marcado como NOSCAN; no se puede reescanear");
+    send_client_to_one(dst, "El usuario está marcado como NOSCAN; no se puede reescanear");
 #else
     send_client_to_one(dst, "User's tagged as NOSCAN; can't recheck");
 #endif
@@ -169,7 +169,7 @@ recheck_nick(struct Client *cptr, const char *dst, toktabptr ttab)
   if (target->flags & CLIENT_FLAG_SCANNING)
     {
 #ifdef SPANISH
-    send_client_to_one(dst, "El usuario %s (%s) esta todavia en la cola de escaneos"
+    send_client_to_one(dst, "El usuario %s (%s) está todavía en la cola de escaneos"
                        " (esperando o empezando a escanear)", target->nick, ipbuf);
 #else
     send_client_to_one(dst, "User %s (%s) is already in ScanQ"
@@ -184,7 +184,7 @@ recheck_nick(struct Client *cptr, const char *dst, toktabptr ttab)
                         &rem_request, sizeof(rem_request)) == -1)
     {
 #ifdef SPANISH
-    send_client_to_one(dst, "/!\\ El demonio de escaneo no esta conectado."
+    send_client_to_one(dst, "/!\\ El demonio de Escaneo no está conectado."
                        " No se puede reescanear en este momento.");
 #else
     send_client_to_one(dst, "/!\\ Scanner daemon not connected."

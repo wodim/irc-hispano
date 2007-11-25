@@ -48,7 +48,7 @@ server_status(const char *dst)
   time_t t;
   
 #ifdef SPANISH
-  send_client_to_one(dst, "\2Estadisticas de la red IRC\2");
+  send_client_to_one(dst, "\2Estadísticas de la red IRC\2");
   send_client_to_one(dst, "  Servidores |  Clientes | Canales ");
   send_client_to_one(dst, "-----------------------------------");
   send_client_to_one(dst, "%12d |%10d |%7d", irc_network_get_server_count(),
@@ -56,7 +56,7 @@ server_status(const char *dst)
   send_client_to_one(dst, "-----------------------------------");
 
   if (msg_bogus > 0)
-    send_client_to_one(dst, "Bogus IRC messages: %d", msg_bogus);
+    send_client_to_one(dst, "Mensajes IRC falsos: %d", msg_bogus);
 
   send_client_to_one(dst, "Cola de escaneo: %d usuarios", scan_client_get_count());
   send_client_to_one(dst, "Clientes no escaneables: %d",
@@ -64,7 +64,7 @@ server_status(const char *dst)
 
   t = peak_time() - gBirthTime;
   if (t >= 86400)
-    send_client_to_one(dst, "Servidor Online desde hace: %d dias, %02d horas %02d minutos %02d segundos", t / 86400,
+    send_client_to_one(dst, "Servidor Online desde hace: %d días, %02d horas %02d minutos %02d segundos", t / 86400,
                        (t / 3600) % 24, (t / 60) % 60, t % 60);
   else
     send_client_to_one(dst, "Sevidor Online desde hace: %d horas %02d minutos %02d segundos",
@@ -108,8 +108,8 @@ scanner_status(struct Client *cptr, const char *dst)
   tz = peak_tz_create_system();
   
 #ifdef SPANISH
-  send_client_to_one(dst, "\2Estadisticas del Escaneador\2");
-  send_client_to_one(dst, "Conexion con el demonio de Escaneo %sesta establecida",
+  send_client_to_one(dst, "\2Estadísticas del Escaneador\2");
+  send_client_to_one(dst, "Conexion con el demonio de Escaneo %sestá establecida",
                      opas_support_is_ready() ? "" : "NO ");
 #else
   send_client_to_one(dst, "\2Scanner status\2");
@@ -121,7 +121,7 @@ scanner_status(struct Client *cptr, const char *dst)
     {
     gdate = peak_time_get_date(opas_support_last_connection, tz);
 #ifdef SPANISH
-    send_client_to_one(dst, "Conectado desde el dia %d-%d-%d  a las %d:%02d:%02d %s",
+    send_client_to_one(dst, "Conectado desde el día %d-%d-%d  a las %d:%02d:%02d %s",
 #else
     send_client_to_one(dst, "Connected since %d-%d-%d %d:%02d:%02d %s",
 #endif
@@ -134,7 +134,7 @@ scanner_status(struct Client *cptr, const char *dst)
     {
     gdate = peak_time_get_date(opas_support_last_disconnection, tz);
 #ifdef SPANISH
-    send_client_to_one(dst, "Desconectado desde el dia %d-%d-%d a las %d:%02d:%02d %s",
+    send_client_to_one(dst, "Desconectado desde el día %d-%d-%d a las %d:%02d:%02d %s",
 #else
     send_client_to_one(dst, "Disconnected since %d-%d-%d %d:%02d:%02d %s",
 #endif
@@ -146,7 +146,7 @@ scanner_status(struct Client *cptr, const char *dst)
   
   if (scan_send_simple_command(cptr, PXYSCAND_SIG, PX_CMD_STATUS) == -1)
 #ifdef SPANISH
-    send_client_to_one(dst, "/!\\ El demonio de Escaneo no esta conectado."
+    send_client_to_one(dst, "/!\\ El demonio de Escaneo no está conectado."
                        " No puedo recibir datos de estadisticas desde el demonio.");
 #else
     send_client_to_one(dst, "/!\\ Scanner daemon not connected."
@@ -212,7 +212,7 @@ cmd_status_reply(struct Client *cptr, PXSStatus *status, size_t length)
                      ntohl(status->servScannedCount),
                      3600.0 * (double)total / (double)t);
   send_client_to_one(dst, "Cola de escaneos: %lu IPs", ntohl(status->scanQSize));
-  send_client_to_one(dst, "Target: %s:%u (ultimo escaneo hace %d segundos)",
+  send_client_to_one(dst, "Target: %s:%u (último escaneo hace %d segundos)",
                      inet_ntoa(status->targetAddr),
                      (uint16_t)status->targetPort,
                      ntohl(status->targetLastCheck));

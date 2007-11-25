@@ -71,24 +71,24 @@ cmd_stats(struct Client *cptr, toktabptr ttab)
   peak_stream_msgbuf_get_info(gIRCStream, &msg_size, &max_msgs, &alloc_msgs,
                               &queue_msgs, &queue_size);
 
-  send_client_to_one(dst, "Buffer de mensajess: tamano %u contador %u/%u usados %u "
+  send_client_to_one(dst, "Buffer de mensajes: tamaño %u contador %u/%u usados %u "
                      "(cola envios %u)", msg_size, alloc_msgs, max_msgs,
                      queue_msgs, queue_size);
 
-  send_client_to_one(dst, "Tabla Hash de Servidores: contador %d tamano en memoria %u",
+  send_client_to_one(dst, "Tabla Hash de Servidores: contador %d tamaño en memoria %u",
                      irc_network_get_server_count(),
                      irc_network_get_hash_table_size());
 
-  send_client_to_one(dst, "Tabla Hash de Clientes: contador %d tamano en memoria %u",
+  send_client_to_one(dst, "Tabla Hash de Clientes: contador %d tamaño en memoria %u",
                      irc_userbase_get_count(),
                      irc_userbase_get_hash_table_size());
 
-  send_client_to_one(dst, "Area de memoria de Clientes: usados %d libres %d (tamanio %d)",
+  send_client_to_one(dst, "Área de memoria de Clientes: usados %d libres %d (tamaño %d)",
                      peak_mem_pool_get_used_count(user_pool),
                      peak_mem_pool_get_free_count(user_pool),
                      peak_mem_pool_get_size(user_pool));
 
-  send_client_to_one(dst, "Tabla Hash de Canales: contador %d tamano en memoria %u",
+  send_client_to_one(dst, "Tabla Hash de Canales: contador %d tamaño en memoria %u",
                      irc_channel_get_hash_table_count(),
                      irc_channel_get_hash_table_size());
 
@@ -98,7 +98,7 @@ cmd_stats(struct Client *cptr, toktabptr ttab)
                      irc_channel_get_chucked_count(), rehabilitated_channels,
                      up, destructed_channels);
 
-  send_client_to_one(dst, "Matriz de Usuarios en Canales: contador %d tamao en memoria %u",
+  send_client_to_one(dst, "Matriz de Usuarios en Canales: contador %d tamaño en memoria %u",
                      irc_membership_get_count(),
                      irc_membership_get_smat_size());
 

@@ -71,8 +71,8 @@ cmd_grem(struct Client *cptr, toktabptr ttab)
   if (scan_send_command(cptr, PXYSCAND_SIG, PX_CMD_REMOVE,
                         &rem_request, sizeof(rem_request)) == -1)
 #ifdef SPANISH
-    send_client_to_one(dst, "/!\\ El demonio de Scan no esta conectado."
-                       " No se puede pedirlo para quitar la IP de la cache en este momento.");
+    send_client_to_one(dst, "/!\\ El demonio de Escaneo no está conectado."
+                       " No se puede pedirlo para quitar la IP de la caché en este momento.");
 #else
     send_client_to_one(dst, "/!\\ Scanner daemon not connected."
                        " Can't ask it to remove IP from cache at the moment.");
@@ -102,7 +102,7 @@ cmd_grem_reply(struct Client *cptr, PXSRemove4 *rem_reply)
     if (status)
       {
 #ifdef SPANISH
-      send_client_to_one(dst, "GREM: Borrado efectuado del cache para la IP %s "
+      send_client_to_one(dst, "GREM: Borrado efectuado de la caché para la IP %s "
                          "(from pxyscand)", ipbuf);
       send_client_to_one(dst, "GREM: Enviando borrado de la GLINE a la red de IRC");
 #else
@@ -114,8 +114,8 @@ cmd_grem_reply(struct Client *cptr, PXSRemove4 *rem_reply)
     else
       {
 #ifdef SPANISH
-      send_client_to_one(dst, "GREM: Borrado fallido del cache para la IP %s "
-                         "(desde pxyscand). Probablemente no esta en cache",
+      send_client_to_one(dst, "GREM: Borrado fallido de la caché para la IP %s "
+                         "(desde pxyscand). Probablemente no está en caché",
                          ipbuf);
       send_client_to_one(dst, "GREM: Enviando borrado de la GLINE de todas las formas");
 #else

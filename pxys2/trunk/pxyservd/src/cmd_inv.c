@@ -39,7 +39,7 @@ cmd_inv(struct Client *cptr, toktabptr ttab)
     {
 #ifdef SPANISH
     send_client_to_one(dst, "Lo siento, no te puedo invitarte; mi canal de consola"
-                       " esta deshabilitado.");
+                       " está deshabilitado.");
 #else
     send_client_to_one(dst, "Sorry, can't invite you; my console channel"
                        " is disabled.");
@@ -54,7 +54,7 @@ cmd_inv(struct Client *cptr, toktabptr ttab)
   if (irc_membership_exists(ch, cptr))
     {
 #ifdef SPANISH
-    send_client_to_one(dst, "Hazte un WHOIS! Tu estas en %s :-)",
+    send_client_to_one(dst, "Hazte un WHOIS! Tu estás en %s :-)",
                        ch->chname);
 #else
     send_client_to_one(dst, "Just whois yourself! You are on %s :-)",

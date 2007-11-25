@@ -84,7 +84,7 @@ info_chan_iter_cb(smat_table_t *table, smat_entry_t *e, void *extra)
     {
     if (!cptr->scan_timestamp)
 #ifdef SPANISH
-      strcpy(sbuf, "no escaneado todavia");
+      strcpy(sbuf, "no escaneado todavía");
 #else
       strcpy(sbuf, "not scanned yet");
 #endif
@@ -92,7 +92,7 @@ info_chan_iter_cb(smat_table_t *table, smat_entry_t *e, void *extra)
       {
       gdate = peak_time_get_date(cptr->scan_timestamp, tz);
 #ifdef SPANISH
-      snprintf(sbuf, sizeof(sbuf), "escaneado el dia %d-%d-%d a las %d:%02d:%02d %s",
+      snprintf(sbuf, sizeof(sbuf), "escaneado el día %d-%d-%d a las %d:%02d:%02d %s",
 #else
       snprintf(sbuf, sizeof(sbuf), "scanned @ %d-%d-%d %d:%02d:%02d %s",
 #endif
@@ -231,13 +231,13 @@ info_nick(const char *dst, toktabptr ttab)
   
   sptr = irc_network_get_server(u->nserv);
 #ifdef SPANISH
-  send_client_to_one(dst, "%s esta en IRC utilizando el servidor %s", u->nick, sptr->name);
+  send_client_to_one(dst, "%s está en IRC utilizando el servidor %s", u->nick, sptr->name);
 #else
   send_client_to_one(dst, "%s is on IRC via %s", u->nick, sptr->name);
 #endif
   gdate = peak_time_get_date(u->firsttime, tz);
 #ifdef SPANISH
-  send_client_to_one(dst, "%s esta conectado desde el dia %d-%d-%d a las %d:%02d:%02d %s", u->nick,
+  send_client_to_one(dst, "%s está conectado desde el dia %d-%d-%d a las %d:%02d:%02d %s", u->nick,
 #else
   send_client_to_one(dst, "%s signed on at %d-%d-%d %d:%02d:%02d %s", u->nick,
 #endif
@@ -248,14 +248,14 @@ info_nick(const char *dst, toktabptr ttab)
   /* Scan stuffs */
   if (u->flags & CLIENT_FLAG_SCANNING)
 #ifdef SPANISH
-    send_client_to_one(dst, "%s esta siendo escaneado (desde hace %d segundos)",
+    send_client_to_one(dst, "%s está siendo escaneado (desde hace %d segundos)",
 #else
     send_client_to_one(dst, "%s is being scanned (scan query %d secs ago)",
 #endif
                        u->nick, peak_time() - u->scan_timestamp);
   else if (u->flags & CLIENT_FLAG_SCANFAIL)
 #ifdef SPANISH
-    send_client_to_one(dst, "%s no es escaneable (ultimo escaneo ha fallado hace %s segundos)",
+    send_client_to_one(dst, "%s no es escaneable (último escaneo ha fallado hace %s segundos)",
 #else
     send_client_to_one(dst, "%s is unscannable (last scan failed %d secs ago)",
 #endif
@@ -264,7 +264,7 @@ info_nick(const char *dst, toktabptr ttab)
     {
     if (!u->scan_timestamp)
 #ifdef SPANISH
-      send_client_to_one(dst, "%s todavia no ha sido escaneado", u->nick);
+      send_client_to_one(dst, "%s todavía no ha sido escaneado", u->nick);
 #else
       send_client_to_one(dst, "%s has not been scanned yet", u->nick);
 #endif
@@ -273,7 +273,7 @@ info_nick(const char *dst, toktabptr ttab)
       gdate = peak_time_get_date(u->scan_timestamp, tz);
       
 #ifdef SPANISH
-      send_client_to_one(dst, "%s fue escaneado el dia "
+      send_client_to_one(dst, "%s fue escaneado el día "
                          "%d-%d-%d a las %d:%02d:%02d %s",
 #else
       send_client_to_one(dst, "%s was last scanned at "

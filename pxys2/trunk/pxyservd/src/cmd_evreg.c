@@ -70,7 +70,7 @@ cmd_evreg(struct Client *cptr, toktabptr ttab)
             break;
           default:
 #ifdef SPANISH
-            send_client_to_one(dst, "EVREG: Flag invalido '%c'", ch);
+            send_client_to_one(dst, "EVREG: Flag inválido '%c'", ch);
 #else
             send_client_to_one(dst, "EVREG: Invalid flag '%c'", ch);
 #endif
@@ -92,7 +92,7 @@ cmd_evreg(struct Client *cptr, toktabptr ttab)
   
   if (!addflags && !(cptr->flags & CLIENT_FLAG_EVREG))
 #ifdef SPANISH
-    send_client_to_one(dst, "EVREG: No estas registrado");
+    send_client_to_one(dst, "EVREG: No estás registrado");
 #else
     send_client_to_one(dst, "EVREG: You are not registered");
 #endif
@@ -100,7 +100,7 @@ cmd_evreg(struct Client *cptr, toktabptr ttab)
     {
     if ((flag = evreg_mod(cptr, addflags, clrflags)) == 0)
 #ifdef SPANISH
-      send_client_to_one(dst, "EVREG: Tus flags de eventos ahora estan vacios");
+      send_client_to_one(dst, "EVREG: Tus flags de eventos ahora están vacíos");
 #else
       send_client_to_one(dst, "EVREG: Your event flags are now empty");
 #endif
