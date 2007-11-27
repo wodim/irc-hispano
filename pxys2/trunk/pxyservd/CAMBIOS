@@ -1,3 +1,8 @@
+* 2007/11/27 ruharen@gmail.net                                        DOC
+-------------------------------------------------------------------------
+  Traduccion de los helps de pxyservd.
+
+
 * 2007/11/18 zoltan@irc-dev.net                                       FIX
 -------------------------------------------------------------------------
   El comando GLINE usa el antiguo formato de P10 en IRC-Hispano. El nuevo

@@ -90,239 +90,250 @@ IRC-Hispano Proxy Scanner Service Help Menu
   ------------------------------------
     INV             - Te invita al canal de consola
     SERVERS [...]   - Muestra estadisticas de servidores
-    STATUS [...]    - Estadisticas del servidor y del demonio de Escaneo
+    STATUS [...]    - Estadísticas del servidor y del demonio de Escaneo
     NOSCAN          - Visualiza la configuracion de NOSCAN
     PROXYTOP        - Proxies encontrados por servidor
-    STATS           - Estadisticas Tecnicas
-    PXSTATS         - Etatistiicas del demonio de Escaneo
+    STATS           - Estadísticas Técnicas
+    PXSTATS         - Estadísticas del demonio de Escaneo
     GREM &lt;GLINE&gt;    - Elimina una Gline puesta por mi
     INFO <nick>     - Muestra informacion del usuario
     INFO <canal>    - Muestra informacion de todos los usuarios del canal
     RECHECK <nick>  - Reescanea a un usuario
     RECHECK <canal> - Reescanea a todos los usuarios de un canal
     HELP CREDITS    - Creditos del bot
-    HELP &lt;COMMAND&gt;  - Mas ayuda para el comando &lt;COMMAND&gt;
+    HELP &lt;COMMAND&gt;  - Más ayuda para el comando &lt;COMMAND&gt;
   </help-menu>
   
   <help topic="inv">
 INV
 ===
-  This command gives any global IRC operator an invite on my
-  current console channel.
+  Este comando invita a cualquier Operador global a mi canal de consola.
   </help>
   
   <help topic="servers">
 SERVERS [-info] [-noscan]
 ==============================================
-Show IRC network tree with optional info:
-  -info : Display user count
-  -scan : Show scanned servers in bold
+Muestra un Árbol de Red de IRC con info opcional:
+  -info : Muestra número de usuarios
+  -scan : Muestra en negrita los servidores escaneados
   </help>
   
   <help topic="status">
 STATUS [-serv|-scan]                     (1/3)
 ==============================================
-General and probably the more interesting command provided by
-pxyservd. Call it how often you want to quickly check how pxys
-is working.
+Seguramente es el comando más interesante de pxydserv. Utilízalo
+cuantas veces quieras para ver rápidamente cómo está funcionando pxys.
  
-IRC server status
------------------
-A first part displays the IRC server status: number of servers
-on the network, number of clients and channels, classical.
-pxyservd retrieves the IPs of the network's clients and sends
-them to pxyscand, the associated scanner daemon process, for
-proxy scanning. "Scan ClientQ" is the number of clients that
-haven't been confirmed yet, pxyservd is waiting for a positive
-or negative reply from the scanner daemon. Take a look at this
-value as it shouldn't grow too much in normal conditions, and
-drop as soon as possible otherwise. Note it's normal to always
-have some clients in the scan queue... the scanner daemon can't
-always reply quickly.
-"Unscannable clients" shows the current number of *connected*
-clients concerned by a failed scan. A failed scan occurs when
-the host or network of this client is unreachable from the proxy
-scanner daemon. It is followed by the server's uptime (pxyservd
-uptime).
+Estado de servidores de IRC
+---------------------------
+Una primera parte visualiza el estado del servidor: número de
+servidores en la Red, número de clientes y canales, lo típico.
+pxyservd obtiene las IPs de los clientes de la Red, y las manda
+a pxyscand, el proceso asociado del demonio de escaneo, para
+buscar proxys. "Scan ClientQ" es el número de clientes que no
+han sido comprobados todavía; pxyservd está esperando una
+respuesta positiva o negativa del demonio de escaneo. Hay que
+controlar este valor  ya que no debería crecer mucho en
+condiciones normales y si lo hace, debería reducirse rápidamente.
+Es normal tener siempre algunos clientes en la cola de escaneo...
+el demonio de scaneo no siempre puede responder rápidamente.
+"Unscannable clients" muestra el número actual de clientes 
+*conectados* cuyo escaneo fue fallido. Un escaneo fallido ocurre
+cuando el host o la red de ese cliente es inalcanzable desde el
+demonio de escaneo de proxys. Le sigue el tiempo en activo del 
+servidor (tiempo en activo de pxyservd).
  
-Please consult HELP STATUS 2 for detailed description of the
-scanner status part.
+Por favor consulte HELP STATUS 2 para una descripción detallada
+de la parte del estado del escaner.
   </help>
 
   <help topic="status 2">
 STATUS [-serv|-scan]                     (2/3)
 ==============================================
-Scanner status
---------------
-First, you need to know that the scanner daemon (pxyscand) is
-now separated from the IRC(u) service server (pxyservd).
-However, they are able to communicate: first to request proxy
-scanning, but for status/stats purposes too. So you may notice
-a delay before receiving the scanner status reply if the scanner
-daemon is not running locally, for example.
-The first lines display status info about the connection between
-the server and the scanner daemon. If they are not connected
-(eg. the scanner daemon is down), you will see a warning there.
-"Scanning activity" is a good indicator about the load of the
-scanner daemon. 100%% means all socket slots are taken and it's
-doing its best to scan them. Lower values means the scanner
-could handle more clients at this time. This percentage is
-followed by more precise values: the number of unique IPs
-currently being scanned, and the number of scans being performed
-at this time. Usually, you have several scans for one IP. The
-number of scan is in fact the number of sockets needed to
-perform the scans for these IPs (although it's not exactly the
-number of open sockets, but more, as some of them might not be
-created yet or already closed).
-"IP scans completed" is a simple real IP scan counter for the
-current session (all sessions in parenthesis). To consult the
-scanner's cache hits counter, please use the PXSTATS command.
-An average value of scan performed is given too.
+Estado del escaner
+------------------
+Primero, debes saber que el demonio de escaneo (pxyscand) ahora 
+está separado del servidor de servicios de IRC(u) (pxyservd).
+Sin embargo, se pueden comunicar: primero para solicitar escaneo
+de proxys, pero también para obtener estados/estadísticas. Así
+que se puede notar un retardo antes de recibir la respuesta
+de estado del scanner si el demonio de escaneo no está ejecutándose
+localmente, por ejemplo.
+Las primeras líneas muestran info del estado de la conexión entre
+el servidor y el demonio de escaneo. Si no están conectados
+(ej. el demonio de escaneo está caído), verás un aviso ahí.
+"Scanning activity" es un buen indicador de la carga del demonio
+de escaneo. 100%% significa que todos los sockets están ocupados
+y está haciendo lo posible para escanearlos. Valores menores
+significan que el scanner podría manejar más clientes en ese
+momento. Ese porcentaje va seguido por valores más precisos: el
+número de IPs únicas que están siendo escaneadas en el momento, y
+el número de escaneos que están siendo ejecutados en ese momento.
+Normalmente, tienes varios escaneos por una IP. El número de
+escaneos es de hecho el número de sockets necesarios para
+ejecutar los escaneos de esas IPs (aunque no es exactamente el
+número de sockets abiertos, y lo que es más, algunos de ellos
+podrían no estar aún creados o estar ya cerrados).
+"IP scans completed" es simplemente un contador de IPs reales
+escaneadas en la sesión actual (total de todas las sesiones entre
+paréntesis). Para consultar el scanner's cache hits contador, usa
+el comando PXSTATS.
+También se muestra una media de escaneos ejecutados.
  
-Please use HELP STATUS 3 for next page.
+Por favor use HELP STATUS 3 para ver la siguiente página.
   </help>
   
   <help topic="status 3">
 STATUS [-serv|-scan]                     (3/3)
 ==============================================
-When "ScanQ size" is not zero, the current scanning activity
-should be 100%% (the maximum) and you know the scanner can't
-process all IPs at the same time: it then adds the IP scan
-requests in a queue for later processing. This number should
-drop until 0, otherwise you have a little problem.
-"Target" is the current selected needed target IP for some
-scans (as for Socks 4 discovery). It should be set to an IP of
-one of your network's stable IRC server.
-"Scan connect() timeout" indicates the number of seconds to
-wait before a scan bails out.
+Cuando "ScanQ size" no es cero, la actividad actual de escaneo
+debería estar en 100%% (el máximo) y sabiendo que el scanner no
+puede procesar todas las IPs al mismo tiempo: el proceso añade
+las peticiones de escaneo de IP a una cola para procesarlas más
+tarde. Ese número debería bajar hasta 0, si no, es que tienes un
+pequeño problema.
+"Target" es la IP actual necesaria para algúnos escaneos (como
+para descubrir Socks 4). Se debe configurar con la IP de uno de
+los servidores estables de tu red.
+"Scan connect() timeout" indica el número de segundos a
+esperar antes de que un escaneo desista.
  
-Following the total number of proxy found, you will find there
-the uptime of the scanner daemon. The last part of the STATUS
-command shows a detailed table with proxy found counters since
-the scanner daemon is launched. For information, additional
-"open" counters are provided that count established connections.
+A continuación del número total de proxy encontrados, verás el
+tiempo de conexión del demonio de escaneo. La última parte del
+comando STATUS muestra una tabla detallada con contadores de
+proxys encontrados desde que el demonio de escaneo se arrancó.
+Como dato, se muestran contadores "open" adicionales de
+conexiones establecidas.
  
-Options:
-        -serv : only displays IRC server status
-        -scan : only displays proxy scanner daemon status
+Opciones:
+        -serv : sólo visualiza el estado de servidores IRC
+        -scan : sólo visualiza el estado del demonio de escaneo
+				de proxys
   </help>
 
   <help topic="noscan">
 NOSCAN
 ==============================================
-Show pxyservd's "noscan" rules. pxyservd, the IRC(u) service
-server part of pxys v2, is configured with a list of IP blocks
-that are ignored. Clients using one of these IPs are tagged as
-"scanning disabled". Additonally, a list of remote server names
-can be provided: clients using these servers are ignored too,
-thus useful for services, hubs, or IRC operator only servers.
+Muestra  las reglas "noscan" de pxyservd. pxyservd, el
+servicio servidor de IRC(u) parte de pxys v2, se configura con
+una lista de bloques de IPs que se ignoran. Los clientes
+conectados desde estas ips se catalogan como "scanning disabled".
+Además se puede añadri una lista de servidores remotos: los
+clientes que usen estos servidores también se ignoran, de manera
+que es útil para services, hubs, o servidores reservados a IRCops.
   </help>
 
   <help topic="proxytop">
 PROXYTOP
 ==============================================
-This command shows the top list of servers where proxy were
-found on them (and then G-lined!). It might help you to find
-very-open servers with possibly bad I/K-lines rules, or servers
-floodbots like... Don't forget to relativize using the provided
-MAXUSERS indicator, as big servers obviously have more chance to
-host proxied clients.
+Este comando muestra los servidores donde más proxys se
+encontraron (y que fueron glineados). Puede ayudar a encontrar
+servidores 'muy abiertos' con líneas I/K posiblemente mal puestas,
+o servidores preferidos de los bots de flood... Dale el justo
+valor al indicador de MAXUSERS, ya que los servidores grandes
+tienen más posibilidades de albergar clientes con proxy.
   </help>
   
   <help topic="stats">
 STATS
 ==============================================
-Display statistics about sockets, internal structures and
-memory's consumption.
+Muestra estadísticas soble sockets, estructuras internas y 
+consumo de memoria.
   </help>
 
   <help topic="pxstats">
 PXSTATS
 ==============================================
-Query the proxy scanner daemon for internal statistics. Only
-available when pxyscand is connected. Along other obscure
-values, it shows the IP cache hits count of already scanned
-users. This cache allows the scanner to work in very hard
-conditions, avoiding the re-scan of recently checked IPs.
+Obtiene estadísticas internas del demonio de escaneo de proxys.
+Sólo disponibles cuando pxyscand está conectado. Entre otros
+valores extraños, muestra la cuenta de IPs en caché de usuarios
+ya escaneados. Esta caché permite al escaner trabajar en
+condiciones extremas, evitando volver a escanear IPs comprobadas
+recientemente.
   </help>
 
   <help topic="grem">
 GREM &lt;IP|GLINE&gt;
 ==============================================
-G-line removal method (only for proxyscan G-lines). Please
-provide the IP or the banned user@host mask, ie. *@&lt;IP&gt;.
-After the remgline, the IP is not ignored, it will be re-scanned
-if seen again.
+Método de eliminar las G-Lines de proxyscan. Hay que dar la IP
+o la máscara user@host baneados, por ej.: *@&lt;IP&gt;.
+Después de borrar la g-line, la IP no es ignorada, y se escaneará
+de nuevo si se vuelve a ver.
   </help>
 
   <help topic="info">
-INFO &lt;NICK|CHANNEL&gt;
+INFO &lt;NICK|CANAL&gt;
 ==============================================
-Info command about a client or a channel. Its purpose is to give
-some proxyscan-related info about a client or channel's clients.
+Comando que da inforamción sobre clientes o canales. Proporciona
+algo de información sobre los clientes o canales relacionada con
+el escaneo de proxys.
  
-Examples:
+Ejemplos:
         INFO bot-42
         INFO #floodland
   </help>
   
   <help topic="recheck">
-RECHECK &lt;NICK|CHANNEL&gt;
+RECHECK &lt;NICK|CANAL&gt;
 ==============================================
-Like GREM, this command performs an action and its purpose is
-not only informative, please use with care.
-The RECHECK command allows a global IRC operator to ask for a
-recheck of a specified user or all users on a given channel.
+Al igual que GREM, este comando ejecuta una acción y su propósito
+no es sólo informativo. Úsalo con cuidado.
+El comando RECHECK permite a un operador global del IRC solicitar
+la recomprobación de un usuario concreto o de todos los usuarios
+de un canal especificado.
+
+No obstante, tenga en cuenta que los usuarios afectados por
+reglas NOSCAN nunca se comprueban. Además, si el usuario no ha
+sido escaneado antes (por ej.: si acaba de conectar), el comando
+no hace nada. No dude en usar previamente el comando INFO sobre
+el canal o el usuario si es necesario.
  
-Please note, however, that users matching NOSCAN rules are never
-proxy-checked. Also, if the user has not be scanned yet (eg.
-he's just connected), this command does nothing. Don't hesitate
-to use previously the INFO command on the user or channel if
-needed.
+Recuerda que se envía un aviso a mi canal de log si se hace
+RECHECK de un canal entero.
  
-Note that a notice is sent to my console channel for recheck of
-a whole channel.
- 
-Examples:
+Ejemplos:
         RECHECK bot-42
         RECHECK #floodland
   </help>
   
   <help topic="evreg">
-EVREG &lt;MODES&gt;
+EVREG &lt;MODOS&gt;
 =============
-  This command allows global IRC operators to register for specific
-  events. Several modes are provided, each character identifying an
-  event. Opers who have event X enabled will be notified by the
-  proxyscanner's virtual client (me) when event X occurs.
+  Este comando permite a operadores globales de IRC recibir
+  notificaciones de sucesos concretos. Existen varios modos, 
+  con un carácter diferente para cada uno. Los operadores con
+  el modo X activado recibirán notificaciones del cliente virtual
+  del escaner de proxys (yo) cuando el evento X se produzca.
   
-  MODES
+  MODOS
   -----
-    'p' : new insecure proxy found, show it
-    'c' : show proxy-cache hits
-    'o' : show global IRC operators using /oper
-    'x' : pxyscand connection related events
+    'p' : encontrado un nuevo proxy inseguro, lo muestra
+    'c' : muestra las coincidencias con proxys en caché
+    'o' : muestra IRCops que usan /oper
+    'x' : eventos relacionados con conexiones de pxyscand
+
+  Por ejemplo, un operador que quiere ser avisado cuando se detecte
+  un nuevo proxy y cuando se use /oper tendría que escribir:
+  /msg &lt;me&gt; evreg +po  
+
+  Para desactivar sólo las notificaciones de uso de /oper:
+  /msg &lt;me&gt; evreg -o
   
-  For example, an oper who want to be notified when a new proxy has
-  been found and for /oper's would type: /msg &lt;me&gt; evreg +po
-  
-  To disable /oper's notifications only: /msg &lt;me&gt; evreg -o
-  
-  NOTE: Your modes remain until you disconnect or a split between
-        you and the proxyscanner occurs.
+  NOTA: Estos modos permanecen hasta que desconectas o se produce
+        un split entre tú y el escaner de proxys.
   </help>
   
   <help topic="credits">
-pxyservd v2 - part of pxys v2 software suite
-============================================
-See: http://pxys.sf.net
+pxyservd v2 - parte del software pxys v2
+========================================
+Visita: http://pxys.sf.net
 
 Adaptado para IRC-Hispano por
-  Toni Garcia   zoltan    <zoltan@irc-dev.net>
+  Toni Garcia   zoltan    &lt;zoltan@irc-dev.net&gt;
 
 Traducido al castellano por
-  Toni Garcia   zoltan    <zoltan@irc-dev.net>
-  Vacante
+  Toni Garcia   zoltan    &lt;zoltan@irc-dev.net&gt;
+  E.G.A         Ruharen   &lt;ruharen@gmail.net&gt;
   </help>
   
 </pxyservd>
