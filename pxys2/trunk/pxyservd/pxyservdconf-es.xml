@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <pxyservd>
-  
+
   <server>
     <name>ceres.irc-hispano.org</name>
     <id>P1</id>
@@ -90,18 +90,18 @@ IRC-Hispano Proxy Scanner Service Help Menu
   ------------------------------------
     INV             - Te invita al canal de consola
     SERVERS [...]   - Muestra estadisticas de servidores
-    STATUS [...]    - Estadísticas del servidor y del demonio de Escaneo
+    STATUS [...]    - Estadisticas del servidor y del demonio de Escaneo
     NOSCAN          - Visualiza la configuracion de NOSCAN
     PROXYTOP        - Proxies encontrados por servidor
-    STATS           - Estadísticas Técnicas
-    PXSTATS         - Estadísticas del demonio de Escaneo
+    STATS           - Estadisticas Tecnicas
+    PXSTATS         - Estadisticas del demonio de Escaneo
     GREM &lt;GLINE&gt;    - Elimina una Gline puesta por mi
-    INFO <nick>     - Muestra informacion del usuario
-    INFO <canal>    - Muestra informacion de todos los usuarios del canal
-    RECHECK <nick>  - Reescanea a un usuario
-    RECHECK <canal> - Reescanea a todos los usuarios de un canal
+    INFO &lt;nick&gt;     - Muestra informacion del usuario
+    INFO &lt;canal&gt;    - Muestra informacion de todos los usuarios del canal
+    RECHECK &lt;nick&gt;  - Reescanea a un usuario
+    RECHECK &lt;canal&gt; - Reescanea a todos los usuarios de un canal
     HELP CREDITS    - Creditos del bot
-    HELP &lt;COMMAND&gt;  - Más ayuda para el comando &lt;COMMAND&gt;
+    HELP &lt;COMMAND&gt;  - Mas ayuda para el comando &lt;COMMAND&gt;
   </help-menu>
   
   <help topic="inv">
@@ -113,37 +113,37 @@ INV
   <help topic="servers">
 SERVERS [-info] [-noscan]
 ==============================================
-Muestra un Árbol de Red de IRC con info opcional:
-  -info : Muestra número de usuarios
+Muestra un arbol de Red de IRC con info opcional:
+  -info : Muestra numero de usuarios
   -scan : Muestra en negrita los servidores escaneados
   </help>
   
   <help topic="status">
 STATUS [-serv|-scan]                     (1/3)
 ==============================================
-Seguramente es el comando más interesante de pxydserv. Utilízalo
-cuantas veces quieras para ver rápidamente cómo está funcionando pxys.
+Seguramente es el comando mas interesante de pxydserv. Utizalo
+cuantas veces quieras para ver rapidamente como esta funcionando pxys.
  
 Estado de servidores de IRC
 ---------------------------
-Una primera parte visualiza el estado del servidor: número de
-servidores en la Red, número de clientes y canales, lo típico.
+Una primera parte visualiza el estado del servidor: numero de
+servidores en la Red, numero de clientes y canales, lo tipico.
 pxyservd obtiene las IPs de los clientes de la Red, y las manda
 a pxyscand, el proceso asociado del demonio de escaneo, para
-buscar proxys. "Scan ClientQ" es el número de clientes que no
-han sido comprobados todavía; pxyservd está esperando una
+buscar proxys. "Scan ClientQ" es el numero de clientes que no
+han sido comprobados todavia; pxyservd esta esperando una
 respuesta positiva o negativa del demonio de escaneo. Hay que
-controlar este valor  ya que no debería crecer mucho en
-condiciones normales y si lo hace, debería reducirse rápidamente.
+controlar este valor  ya que no deberia crecer mucho en
+condiciones normales y si lo hace, deberia reducirse rapidamente.
 Es normal tener siempre algunos clientes en la cola de escaneo...
-el demonio de scaneo no siempre puede responder rápidamente.
-"Unscannable clients" muestra el número actual de clientes 
+el demonio de scaneo no siempre puede responder rapidamente.
+"Unscannable clients" muestra el numero actual de clientes 
 *conectados* cuyo escaneo fue fallido. Un escaneo fallido ocurre
 cuando el host o la red de ese cliente es inalcanzable desde el
 demonio de escaneo de proxys. Le sigue el tiempo en activo del 
 servidor (tiempo en activo de pxyservd).
  
-Por favor consulte HELP STATUS 2 para una descripción detallada
+Por favor consulte HELP STATUS 2 para una descripcion detallada
 de la parte del estado del escaner.
   </help>
 
@@ -153,61 +153,61 @@ STATUS [-serv|-scan]                     (2/3)
 Estado del escaner
 ------------------
 Primero, debes saber que el demonio de escaneo (pxyscand) ahora 
-está separado del servidor de servicios de IRC(u) (pxyservd).
+esta separado del servidor de servicios de IRC(u) (pxyservd).
 Sin embargo, se pueden comunicar: primero para solicitar escaneo
-de proxys, pero también para obtener estados/estadísticas. Así
+de proxys, pero tambien para obtener estados/estadisticas. Asi
 que se puede notar un retardo antes de recibir la respuesta
-de estado del scanner si el demonio de escaneo no está ejecutándose
+de estado del scanner si el demonio de escaneo no esta ejecutandose
 localmente, por ejemplo.
-Las primeras líneas muestran info del estado de la conexión entre
-el servidor y el demonio de escaneo. Si no están conectados
-(ej. el demonio de escaneo está caído), verás un aviso ahí.
+Las primeras lineas muestran info del estado de la conexion entre
+el servidor y el demonio de escaneo. Si no estan conectados
+(ej. el demonio de escaneo esta caido), veras un aviso ahi.
 "Scanning activity" es un buen indicador de la carga del demonio
-de escaneo. 100%% significa que todos los sockets están ocupados
-y está haciendo lo posible para escanearlos. Valores menores
-significan que el scanner podría manejar más clientes en ese
-momento. Ese porcentaje va seguido por valores más precisos: el
-número de IPs únicas que están siendo escaneadas en el momento, y
-el número de escaneos que están siendo ejecutados en ese momento.
-Normalmente, tienes varios escaneos por una IP. El número de
-escaneos es de hecho el número de sockets necesarios para
+de escaneo. 100%% significa que todos los sockets estan ocupados
+y esta haciendo lo posible para escanearlos. Valores menores
+significan que el scanner podria manejar mis clientes en ese
+momento. Ese porcentaje va seguido por valores mas precisos: el
+numero de IPs unicas que estan siendo escaneadas en el momento, y
+el numero de escaneos que estan siendo ejecutados en ese momento.
+Normalmente, tienes varios escaneos por una IP. El numero de
+escaneos es de hecho el numero de sockets necesarios para
 ejecutar los escaneos de esas IPs (aunque no es exactamente el
-número de sockets abiertos, y lo que es más, algunos de ellos
-podrían no estar aún creados o estar ya cerrados).
+numero de sockets abiertos, y lo que es mas, algunos de ellos
+podrian no estar aun creados o estar ya cerrados).
 "IP scans completed" es simplemente un contador de IPs reales
-escaneadas en la sesión actual (total de todas las sesiones entre
-paréntesis). Para consultar el scanner's cache hits contador, usa
+escaneadas en la sesion actual (total de todas las sesiones entre
+parentesis). Para consultar el scanner's cache hits contador, usa
 el comando PXSTATS.
-También se muestra una media de escaneos ejecutados.
+Tambien se muestra una media de escaneos ejecutados.
  
-Por favor use HELP STATUS 3 para ver la siguiente página.
+Por favor use HELP STATUS 3 para ver la siguiente pagina.
   </help>
   
   <help topic="status 3">
 STATUS [-serv|-scan]                     (3/3)
 ==============================================
 Cuando "ScanQ size" no es cero, la actividad actual de escaneo
-debería estar en 100%% (el máximo) y sabiendo que el scanner no
-puede procesar todas las IPs al mismo tiempo: el proceso añade
-las peticiones de escaneo de IP a una cola para procesarlas más
-tarde. Ese número debería bajar hasta 0, si no, es que tienes un
-pequeño problema.
-"Target" es la IP actual necesaria para algúnos escaneos (como
+deberia estar en 100%% (el maximo) y sabiendo que el scanner no
+puede procesar todas las IPs al mismo tiempo: el proceso aniade
+las peticiones de escaneo de IP a una cola para procesarlas mas
+tarde. Ese numero deberia bajar hasta 0, si no, es que tienes un
+pequenio problema.
+"Target" es la IP actual necesaria para algunos escaneos (como
 para descubrir Socks 4). Se debe configurar con la IP de uno de
 los servidores estables de tu red.
-"Scan connect() timeout" indica el número de segundos a
+"Scan connect() timeout" indica el numero de segundos a
 esperar antes de que un escaneo desista.
  
-A continuación del número total de proxy encontrados, verás el
-tiempo de conexión del demonio de escaneo. La última parte del
+A continuacion del numero total de proxy encontrados, veras el
+tiempo de conexion del demonio de escaneo. La ultima parte del
 comando STATUS muestra una tabla detallada con contadores de
-proxys encontrados desde que el demonio de escaneo se arrancó.
+proxys encontrados desde que el demonio de escaneo se arranco.
 Como dato, se muestran contadores "open" adicionales de
 conexiones establecidas.
  
 Opciones:
-        -serv : sólo visualiza el estado de servidores IRC
-        -scan : sólo visualiza el estado del demonio de escaneo
+        -serv : solo visualiza el estado de servidores IRC
+        -scan : solo visualiza el estado del demonio de escaneo
 				de proxys
   </help>
 
@@ -218,36 +218,36 @@ Muestra  las reglas "noscan" de pxyservd. pxyservd, el
 servicio servidor de IRC(u) parte de pxys v2, se configura con
 una lista de bloques de IPs que se ignoran. Los clientes
 conectados desde estas ips se catalogan como "scanning disabled".
-Además se puede añadri una lista de servidores remotos: los
-clientes que usen estos servidores también se ignoran, de manera
-que es útil para services, hubs, o servidores reservados a IRCops.
+Ademas se puede aniadir una lista de servidores remotos: los
+clientes que usen estos servidores tambien se ignoran, de manera
+que es util para services, hubs, o servidores reservados a IRCops.
   </help>
 
   <help topic="proxytop">
 PROXYTOP
 ==============================================
-Este comando muestra los servidores donde más proxys se
+Este comando muestra los servidores donde mas proxys se
 encontraron (y que fueron glineados). Puede ayudar a encontrar
-servidores 'muy abiertos' con líneas I/K posiblemente mal puestas,
+servidores 'muy abiertos' con lineas I/K posiblemente mal puestas,
 o servidores preferidos de los bots de flood... Dale el justo
 valor al indicador de MAXUSERS, ya que los servidores grandes
-tienen más posibilidades de albergar clientes con proxy.
+tienen mas posibilidades de albergar clientes con proxy.
   </help>
   
   <help topic="stats">
 STATS
 ==============================================
-Muestra estadísticas soble sockets, estructuras internas y 
+Muestra estadisticas soble sockets, estructuras internas y 
 consumo de memoria.
   </help>
 
   <help topic="pxstats">
 PXSTATS
 ==============================================
-Obtiene estadísticas internas del demonio de escaneo de proxys.
-Sólo disponibles cuando pxyscand está conectado. Entre otros
-valores extraños, muestra la cuenta de IPs en caché de usuarios
-ya escaneados. Esta caché permite al escaner trabajar en
+Obtiene estadisticas internas del demonio de escaneo de proxys.
+Solo disponibles cuando pxyscand esta conectado. Entre otros
+valores extraidos, muestra la cuenta de IPs en cache de usuarios
+ya escaneados. Esta cache permite al escaner trabajar en
 condiciones extremas, evitando volver a escanear IPs comprobadas
 recientemente.
   </help>
@@ -255,17 +255,17 @@ recientemente.
   <help topic="grem">
 GREM &lt;IP|GLINE&gt;
 ==============================================
-Método de eliminar las G-Lines de proxyscan. Hay que dar la IP
-o la máscara user@host baneados, por ej.: *@&lt;IP&gt;.
-Después de borrar la g-line, la IP no es ignorada, y se escaneará
+Metodo de eliminar las G-Lines de proxyscan. Hay que dar la IP
+o la mascara user@host baneados, por ej.: *@&lt;IP&gt;.
+Despues de borrar la g-line, la IP no es ignorada, y se escanearia
 de nuevo si se vuelve a ver.
   </help>
 
   <help topic="info">
 INFO &lt;NICK|CANAL&gt;
 ==============================================
-Comando que da inforamción sobre clientes o canales. Proporciona
-algo de información sobre los clientes o canales relacionada con
+Comando que da inforamcion sobre clientes o canales. Proporciona
+algo de informacion sobre los clientes o canales relacionada con
 el escaneo de proxys.
  
 Ejemplos:
@@ -276,19 +276,19 @@ Ejemplos:
   <help topic="recheck">
 RECHECK &lt;NICK|CANAL&gt;
 ==============================================
-Al igual que GREM, este comando ejecuta una acción y su propósito
-no es sólo informativo. Úsalo con cuidado.
+Al igual que GREM, este comando ejecuta una accion y su proposito
+no es solo informativo. Usalo con cuidado.
 El comando RECHECK permite a un operador global del IRC solicitar
-la recomprobación de un usuario concreto o de todos los usuarios
+la recomprobacion de un usuario concreto o de todos los usuarios
 de un canal especificado.
 
 No obstante, tenga en cuenta que los usuarios afectados por
-reglas NOSCAN nunca se comprueban. Además, si el usuario no ha
+reglas NOSCAN nunca se comprueban. Ademas, si el usuario no ha
 sido escaneado antes (por ej.: si acaba de conectar), el comando
 no hace nada. No dude en usar previamente el comando INFO sobre
 el canal o el usuario si es necesario.
  
-Recuerda que se envía un aviso a mi canal de log si se hace
+Recuerda que se envia un aviso a mi canal de consola si se hace
 RECHECK de un canal entero.
  
 Ejemplos:
@@ -301,26 +301,26 @@ EVREG &lt;MODOS&gt;
 =============
   Este comando permite a operadores globales de IRC recibir
   notificaciones de sucesos concretos. Existen varios modos, 
-  con un carácter diferente para cada uno. Los operadores con
-  el modo X activado recibirán notificaciones del cliente virtual
+  con un caracter diferente para cada uno. Los operadores con
+  el modo X activado recibiran notificaciones del cliente virtual
   del escaner de proxys (yo) cuando el evento X se produzca.
   
   MODOS
   -----
     'p' : encontrado un nuevo proxy inseguro, lo muestra
-    'c' : muestra las coincidencias con proxys en caché
+    'c' : muestra las coincidencias con proxys en cache
     'o' : muestra IRCops que usan /oper
     'x' : eventos relacionados con conexiones de pxyscand
 
   Por ejemplo, un operador que quiere ser avisado cuando se detecte
-  un nuevo proxy y cuando se use /oper tendría que escribir:
+  un nuevo proxy y cuando se use /oper tendria que escribir:
   /msg &lt;me&gt; evreg +po  
 
-  Para desactivar sólo las notificaciones de uso de /oper:
+  Para desactivar solo las notificaciones de uso de /oper:
   /msg &lt;me&gt; evreg -o
   
   NOTA: Estos modos permanecen hasta que desconectas o se produce
-        un split entre tú y el escaner de proxys.
+        un split entre tu y el escaner de proxys.
   </help>
   
   <help topic="credits">
