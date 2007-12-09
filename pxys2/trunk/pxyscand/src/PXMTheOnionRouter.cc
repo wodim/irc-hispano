@@ -17,17 +17,17 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
-#define RCSID "$Id: PXMBouncerHispano.cc,v 1.2 2004/01/01 02:18:10 mbuna Exp $"
+#define RCSID "$Id: PXMTheOnionRouter.cc,v 1.2 2004/01/01 02:18:10 mbuna Exp $"
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
 
-#define BOUNCERHISPANO_SHORTNAME "BouncerHispano"
-#define BOUNCERHISPANO_DESCR     "Insecure Bouncer to IRC-Hispano"
+#define THEONIONROUTER_SHORTNAME "TheOnionRouter"
+#define THEONIONROUTER_DESCR     "Insecure Socks server"
+#define THEONIONROUTER_PORT      9100     
 
-
-#include "PXMBouncerHispano.h"
+#include "PXMTheOnionRouter.h"
 
 #include <iostream>
 #include <cassert>
@@ -38,33 +38,27 @@
 using std::clog;
 using std::endl;
 
-map<uint16_t, uint32_t*> PXMBouncerHispano::sConnCountMap;
-map<uint16_t, uint32_t*> PXMBouncerHispano::sBouncerCountMap;
+uint32_t PXMTheOnionRouter::sConnCount = 0;
+uint32_t PXMTheOnionRouter::sTorCount = 0;
 
-PXMBouncerHispano::PXMBouncerHispano(PXScan *inScan, int inPort)
-  : PXScanModule(inScan), mPort(inPort)
+PXMTheOnionRouter::PXMTheOnionRouter(PXScan *inScan)
+  : PXScanModule(inScan)
   {
-  if (sConnCountMap.find(mPort) == sConnCountMap.end())
-    {
-    sConnCountMap[mPort] = new uint32_t;
-    *sConnCountMap[mPort] = 0;
-    sBouncerCountMap[mPort] = new uint32_t;
-    *sBouncerCountMap[mPort] = 0;
-    }
   }
 
-PXMBouncerHispano::~PXMBouncerHispano()
+PXMTheOnionRouter::~PXMTheOnionRouter()
   {
   }
 
 void
-PXMBouncerHispano::InitModule()
+PXMTheOnionRouter::InitModule()
   {
-  RegisterPXM(BOUNCERHISPANO_SHORTNAME, mPort, sConnCountMap[mPort], sBouncerCountMap[mPort]);
+  RegisterPXM(THEONIONROUTER_SHORTNAME, THEONIONROUTER_PORT,
+              &sConnCount, &sTorCount); 
   }
 
 bool
-PXMBouncerHispano::StartScan()
+PXMTheOnionRouter::StartScan()
   {
   peak_task task = peak_task_self();
   
@@ -72,7 +66,7 @@ PXMBouncerHispano::StartScan()
   memset(&sin, 0, sizeof(struct sockaddr_in));
   sin.sin_family = AF_INET;
   sin.sin_addr = this->GetAddress();
-  sin.sin_port = htons((uint16_t)mPort);
+  sin.sin_port = htons((uint16_t)THEONIONROUTER_PORT);
   
   mStream = peak_stream_socket_create((struct sockaddr *)&sin, sizeof(sin),
                                       PEAK_STREAM_OPT_LINEMODE,
@@ -108,7 +102,7 @@ PXMBouncerHispano::StartScan()
   }
 
 void
-PXMBouncerHispano::Cleanup()
+PXMTheOnionRouter::Cleanup()
   {
   assert(mStream != NULL);
   peak_release(mStream);
@@ -116,7 +110,7 @@ PXMBouncerHispano::Cleanup()
   }
 
 void
-PXMBouncerHispano::ProcessEvent(peak_stream s, int type)
+PXMTheOnionRouter::ProcessEvent(peak_stream s, int type)
   {
   char *line;
   int err;
@@ -124,16 +118,17 @@ PXMBouncerHispano::ProcessEvent(peak_stream s, int type)
   switch (type)
     {
     case PEAK_STREAM_EVT_OPEN:
-      (*sConnCountMap[mPort])++;
+      sConnCount++;
       break;
     case PEAK_STREAM_EVT_READ:
       line = peak_stream_get_line(s);
       
       if (strstr(line, ".irc-hispano.org"))
         {
-        (*sBouncerCountMap[mPort])++;
+        sTorCount++;
         this->Cleanup();
-        this->ProxyFound(OPAS_PROXY_TYPE_BOUNCERHISPANO, mPort, BOUNCERHISPANO_DESCR);
+        this->ProxyFound(OPAS_PROXY_TYPE_TOR, THEONIONROUTER_PORT,
+                         THEONIONROUTER_DESCR);
         return; /* done! */
         }
       /* fall through */
@@ -158,8 +153,8 @@ PXMBouncerHispano::ProcessEvent(peak_stream s, int type)
   }
 
 void
-PXMBouncerHispano::EventCallback(peak_stream s, int type, void *context)
+PXMTheOnionRouter::EventCallback(peak_stream s, int type, void *context)
   {
-  PXMBouncerHispano *pxm = reinterpret_cast<PXMBouncerHispano*>(context);
+  PXMTheOnionRouter *pxm = reinterpret_cast<PXMTheOnionRouter*>(context);
   pxm->ProcessEvent(s, type);
   }

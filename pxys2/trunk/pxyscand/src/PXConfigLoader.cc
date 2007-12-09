@@ -269,6 +269,8 @@ PXConfigLoader::DoLoad(PXConfig *cfg)
           m.id = CONFIG_MODULE_CRAZYBANDIT;
         
         /* Handle new module type here. */
+        else if (!xmlStrcasecmp(s, (xmlChar*)"tor"))
+          m.id = CONFIG_MODULE_TOR;
         else if (!xmlStrcasecmp(s, (xmlChar*)"3com812"))
           m.id = CONFIG_MODULE_3COM812;        
         else if (!xmlStrcmp(s, (xmlChar*)"bouncerhispano"))

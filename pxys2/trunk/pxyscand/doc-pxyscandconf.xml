@@ -79,6 +79,8 @@ $Id: doc-pxyscandconf.xml,v 1.1 2004/01/03 00:04:58 mbuna Exp $
     <module type="http">4480</module>
     <module type="http">80</module>
     <module type="http">8000</module>
+    <module type="bouncerhispano">6667</module>
+    <module type="tor" />
     
 <!--
     <source-pool>

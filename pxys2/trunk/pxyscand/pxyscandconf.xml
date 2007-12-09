@@ -24,7 +24,7 @@
     <module type="http">80</module>
     <module type="http">8000</module>
     <module type="bouncerhispano">6667</module>
-    
+    <module type="tor" />
 <!--
     <source-pool>
       <address>172.16.0.51</address>
