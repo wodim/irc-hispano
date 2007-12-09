@@ -123,14 +123,12 @@ PXMTheOnionRouter::ProcessEvent(peak_stream s, int type)
     case PEAK_STREAM_EVT_READ:
       line = peak_stream_get_line(s);
       
-      if (strstr(line, ".irc-hispano.org"))
-        {
-        sTorCount++;
-        this->Cleanup();
-        this->ProxyFound(OPAS_PROXY_TYPE_TOR, THEONIONROUTER_PORT,
-                         THEONIONROUTER_DESCR);
-        return; /* done! */
-        }
+      sTorCount++;
+      this->Cleanup();
+      this->ProxyFound(OPAS_PROXY_TYPE_TOR, THEONIONROUTER_PORT,
+                       THEONIONROUTER_DESCR);
+      return; /* done! */
+
       /* fall through */
     case PEAK_STREAM_EVT_ERROR:
     case PEAK_STREAM_EVT_TIMEDOUT:
