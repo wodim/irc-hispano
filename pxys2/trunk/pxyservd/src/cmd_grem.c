@@ -105,10 +105,16 @@ cmd_grem_reply(struct Client *cptr, PXSRemove4 *rem_reply)
       send_client_to_one(dst, "GREM: Borrado efectuado de la caché para la IP %s "
                          "(from pxyscand)", ipbuf);
       send_client_to_one(dst, "GREM: Enviando borrado de la GLINE a la red de IRC");
+      send_msg_client_to_console("%s ha eliminado la GLINE a la IP %s",
+                                 cptr->nick, ipbuf);
 #else
       send_client_to_one(dst, "GREM: Cache REMOVE successful for IP %s "
                          "(from pxyscand)", ipbuf);
       send_client_to_one(dst, "GREM: Sending remgline to IRC network");
+      send_msg_client_to_console("%s ha eliminado la GLINE a la IP %s",
+                                 cptr->nick, ipbuf)
+      send_msg_client_to_console("%s removes GLINE to %s",
+                                 cptr->nick, ipbuf);
 #endif
       }
     else
@@ -118,11 +124,15 @@ cmd_grem_reply(struct Client *cptr, PXSRemove4 *rem_reply)
                          "(desde pxyscand). Probablemente no está en caché",
                          ipbuf);
       send_client_to_one(dst, "GREM: Enviando borrado de la GLINE de todas las formas");
+      send_msg_client_to_console("%s ha eliminado la GLINE a la IP %s",
+                                 cptr->nick, ipbuf);
 #else
       send_client_to_one(dst, "GREM: Cache REMOVE failed for IP %s "
                          "(from pxyscand). Probably not in cache anymore",
                          ipbuf);
       send_client_to_one(dst, "GREM: Sending remgline anyway");
+      send_msg_client_to_console("%s removes GLINE to %s",
+                                 cptr->nick, ipbuf);
 #endif
       }
 #if 1 /* P10 IRC-Hispano */

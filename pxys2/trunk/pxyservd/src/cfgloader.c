@@ -96,6 +96,10 @@
 #define XP_GLINE_REASON5        "reason[@type=\"5\"]"
 #define XP_GLINE_REASON6        "reason[@type=\"6\"]"
 #define XP_GLINE_REASON7        "reason[@type=\"7\"]"
+#define XP_GLINE_REASON8        "reason[@type=\"8\"]"
+#define XP_GLINE_REASON9        "reason[@type=\"9\"]"
+#define XP_GLINE_REASON10       "reason[@type=\"10\"]"
+#define XP_GLINE_REASON11       "reason[@type=\"11\"]"
 
 #define XP_NOTICE_LINE          "/pxyservd/notice/line"
 
@@ -532,7 +536,12 @@ cfgloader_doparse(Config *cfg, xmlXPathContextPtr cx, xmlDocPtr doc)
   cfg->gline.reason[5] = cfgloader_gets(XP_GLINE_REASON5, cx, doc, 0);
   cfg->gline.reason[6] = cfgloader_gets(XP_GLINE_REASON6, cx, doc, 0);
   cfg->gline.reason[7] = cfgloader_gets(XP_GLINE_REASON7, cx, doc, 0);
-  for (i = 1; i < 8; i++)
+  cfg->gline.reason[8] = cfgloader_gets(XP_GLINE_REASON8, cx, doc, 0);
+  cfg->gline.reason[9] = cfgloader_gets(XP_GLINE_REASON9, cx, doc, 0);
+  cfg->gline.reason[10] = cfgloader_gets(XP_GLINE_REASON10, cx, doc, 0);
+  cfg->gline.reason[11] = cfgloader_gets(XP_GLINE_REASON11, cx, doc, 0);
+
+  for (i = 1; i < 12; i++)
     if (cfg->gline.reason[i] == NULL)
       cfg->gline.reason[7] = strdup(cfg->gline.reason[0]);
   
@@ -793,6 +802,14 @@ cfgloader_dump()
   printf("Gline:reason[1] = \"%s\"\n", cfg->gline.reason[1]);
   printf("Gline:reason[2] = \"%s\"\n", cfg->gline.reason[2]);
   printf("Gline:reason[3] = \"%s\"\n", cfg->gline.reason[3]);
+  printf("Gline:reason[4] = \"%s\"\n", cfg->gline.reason[4]);
+  printf("Gline:reason[5] = \"%s\"\n", cfg->gline.reason[5]);
+  printf("Gline:reason[6] = \"%s\"\n", cfg->gline.reason[6]);
+  printf("Gline:reason[7] = \"%s\"\n", cfg->gline.reason[7]);
+  printf("Gline:reason[8] = \"%s\"\n", cfg->gline.reason[8]);
+  printf("Gline:reason[9] = \"%s\"\n", cfg->gline.reason[9]);
+  printf("Gline:reason[10] = \"%s\"\n", cfg->gline.reason[10]);
+  printf("Gline:reason[11] = \"%s\"\n", cfg->gline.reason[11]);
   if (cfg->noticelist)
     printf("\n");
   for (notice = cfg->noticelist; notice; notice = notice->next)

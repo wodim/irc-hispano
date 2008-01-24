@@ -103,7 +103,7 @@ am_pxyscand_OBJECTS = pxyscand.$(OBJEXT) PXCore.$(OBJEXT) \
 	PXScanManager.$(OBJEXT) PXScanModule.$(OBJEXT) \
 	PXSession.$(OBJEXT) PXMCrazyBandit.$(OBJEXT) \
 	PXMHttpProxy.$(OBJEXT) PXMHttpGet.$(OBJEXT) PXMSocks.$(OBJEXT) PXMWingate.$(OBJEXT) \
-	PXM3Com812.$(OBJEXT) PXMBouncerHispano.$(OBJEXT) PXMTheOnionRoute$(OBJEXT) \
+	PXM3Com812.$(OBJEXT) PXMBouncerHispano.$(OBJEXT) PXMTheOnionRouter.$(OBJEXT) \
 	PXIPCacheT.$(OBJEXT) ipcache.$(OBJEXT) \
 	PXSecret.$(OBJEXT) sha256.$(OBJEXT)
 pxyscand_OBJECTS = $(am_pxyscand_OBJECTS)

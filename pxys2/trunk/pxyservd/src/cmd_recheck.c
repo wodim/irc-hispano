@@ -117,10 +117,15 @@ recheck_chan(struct Client *cptr, const char *dst, toktabptr ttab)
                          pack.noscan_cnt);
 #endif
       
+#ifdef IRC_HISPANO
+      send_to_console("[%s] %s RECHECK %s", gConfig->server.id,
+                      cptr->nick, c->chname);
+#else
       inet_ntop(cptr->flags & CLIENT_FLAG_IPV6 ? AF_INET6 : AF_INET,
                 &cptr->addr, ipbuf, sizeof(ipbuf));
       send_to_console("[%s] %s[%s] RECHECK %s", gConfig->server.id,
                       cptr->nick, ipbuf, c->chname);
+#endif
       }
     }
   else

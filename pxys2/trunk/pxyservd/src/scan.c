@@ -446,6 +446,18 @@ scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
     
     if (cached)
       {
+#ifdef SPANISH
+      log_write(LOGID_CURRENT, "*@%s [%ld] %s (%d) cacheado", ipbuf, cnt,
+                proxy_descr, proxy_port);
+
+      if (gConfig->client.show_cached)
+        send_msg_client_to_console("PG *@%s [%ld] %s en el puerto %u (cached)",
+                                   ipbuf, cnt, proxy_descr, proxy_port);
+
+      evreg_broadcast(EVREG_FLAG_CACHED,
+                      "[EV] PG *@%s [%ld] %s en el puerto %u (cached)",
+                      ipbuf, cnt, proxy_descr, proxy_port);
+#else
       log_write(LOGID_CURRENT, "*@%s [%ld] %s (%d) cached", ipbuf, cnt,
                 proxy_descr, proxy_port);
       
@@ -456,13 +468,24 @@ scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
       evreg_broadcast(EVREG_FLAG_CACHED,
                       "[EV] PG *@%s [%ld] %s at port %u (cached)",
                       ipbuf, cnt, proxy_descr, proxy_port);
+#endif
       }
     else
       {
       /* Logging */
       log_write(LOGID_CURRENT, "*@%s [%ld] %s (%d)", ipbuf, cnt,
                 proxy_descr, proxy_port);
-      
+
+#ifdef SPANISH
+      /* Console channel */
+      send_msg_client_to_console("PG *@%s [%ld] %s en el puerto %u (%ds)", ipbuf,
+                                 cnt, proxy_descr, proxy_port, scantime);
+
+      /* Private event notification */
+      evreg_broadcast(EVREG_FLAG_NEWPROXY,
+                      "[EV] PG *@%s [%ld] %s en el puerto %u (%ds)",
+                      ipbuf, cnt, proxy_descr, proxy_port, scantime);
+#else      
       /* Console channel */
       send_msg_client_to_console("PG *@%s [%ld] %s at port %u (%ds)", ipbuf,
                                  cnt, proxy_descr, proxy_port, scantime);
@@ -471,14 +494,22 @@ scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
       evreg_broadcast(EVREG_FLAG_NEWPROXY,
                       "[EV] PG *@%s [%ld] %s at port %u (%ds)",
                       ipbuf, cnt, proxy_descr, proxy_port, scantime);
+#endif
       }
     
-    if (proxy_type >= 0 && proxy_type < 8)
+    if (proxy_type >= 0 && proxy_type < 12)
       reason = gConfig->gline.reason[proxy_type];
     else
       reason = gConfig->gline.reason[0];
     
+#if 1 /* Temporal, puerto 23 Router ADSL abierto */
+    if (proxy_type != 10)
+      irc_gline_send(addrp, cnt, reason);
+    else
+      send_msg_client_to_console("ATENCION: La IP %s tiene el router ADSL abierto!", ipbuf);
+#else
     irc_gline_send(addrp, cnt, reason);
+#endif
     }
   }
 
