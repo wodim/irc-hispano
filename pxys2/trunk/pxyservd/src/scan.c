@@ -497,7 +497,7 @@ scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
 #endif
       }
     
-    if (proxy_type >= 0 && proxy_type < 12)
+    if (proxy_type >= 0 && proxy_type < 13)
       reason = gConfig->gline.reason[proxy_type];
     else
       reason = gConfig->gline.reason[0];

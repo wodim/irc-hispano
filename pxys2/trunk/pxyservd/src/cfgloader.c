@@ -100,6 +100,7 @@
 #define XP_GLINE_REASON9        "reason[@type=\"9\"]"
 #define XP_GLINE_REASON10       "reason[@type=\"10\"]"
 #define XP_GLINE_REASON11       "reason[@type=\"11\"]"
+#define XP_GLINE_REASON12       "reason[@type=\"12\"]"
 
 #define XP_NOTICE_LINE          "/pxyservd/notice/line"
 
@@ -540,8 +541,9 @@ cfgloader_doparse(Config *cfg, xmlXPathContextPtr cx, xmlDocPtr doc)
   cfg->gline.reason[9] = cfgloader_gets(XP_GLINE_REASON9, cx, doc, 0);
   cfg->gline.reason[10] = cfgloader_gets(XP_GLINE_REASON10, cx, doc, 0);
   cfg->gline.reason[11] = cfgloader_gets(XP_GLINE_REASON11, cx, doc, 0);
+  cfg->gline.reason[12] = cfgloader_gets(XP_GLINE_REASON12, cx, doc, 0);
 
-  for (i = 1; i < 12; i++)
+  for (i = 1; i < 13; i++)
     if (cfg->gline.reason[i] == NULL)
       cfg->gline.reason[7] = strdup(cfg->gline.reason[0]);
   
@@ -701,7 +703,16 @@ cfgloader_destroy(Config *cfg)
   xfree(cfg->gline.reason[1]);
   xfree(cfg->gline.reason[2]);
   xfree(cfg->gline.reason[3]);
-  
+  xfree(cfg->gline.reason[4]);
+  xfree(cfg->gline.reason[5]);
+  xfree(cfg->gline.reason[6]);
+  xfree(cfg->gline.reason[7]);
+  xfree(cfg->gline.reason[8]);
+  xfree(cfg->gline.reason[9]);
+  xfree(cfg->gline.reason[10]);
+  xfree(cfg->gline.reason[11]);
+  xfree(cfg->gline.reason[12]);  
+
   for (notice = cfg->noticelist; notice; notice = notice_next)
     {
     notice_next = notice->next;
@@ -810,6 +821,7 @@ cfgloader_dump()
   printf("Gline:reason[9] = \"%s\"\n", cfg->gline.reason[9]);
   printf("Gline:reason[10] = \"%s\"\n", cfg->gline.reason[10]);
   printf("Gline:reason[11] = \"%s\"\n", cfg->gline.reason[11]);
+  printf("Gline:reason[12] = \"%s\"\n", cfg->gline.reason[12]);
   if (cfg->noticelist)
     printf("\n");
   for (notice = cfg->noticelist; notice; notice = notice->next)

@@ -118,7 +118,7 @@ typedef struct CLog
 typedef struct CGline
   {
   int delay;
-  char *reason[12];
+  char *reason[13];
   } CGline;
 
 typedef struct CNoticeLink

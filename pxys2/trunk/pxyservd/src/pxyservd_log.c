@@ -108,8 +108,13 @@ log_timer_callback(peak_timer ti, void *context)
   int count = log_rotate_check();
   
   if (count >= 0)
+#ifdef SPANISH
+    send_to_console("[%s] Rotando archivos de log (%d total)", gConfig->server.id,
+                    count);
+#else
     send_to_console("[%s] Rotating log files (%d total)", gConfig->server.id,
                     count);
+#endif
   }
 
 static char *
