@@ -25,7 +25,6 @@
 
 #define THEONIONROUTER_SHORTNAME "TheOnionRouter"
 #define THEONIONROUTER_DESCR     "Insecure Socks server"
-#define THEONIONROUTER_PORT      9100     
 
 #include "PXMTheOnionRouter.h"
 
@@ -38,12 +37,19 @@
 using std::clog;
 using std::endl;
 
-uint32_t PXMTheOnionRouter::sConnCount = 0;
-uint32_t PXMTheOnionRouter::sTorCount = 0;
+map<uint16_t, uint32_t*> PXMTheOnionRouter::sConnCountMap;
+map<uint16_t, uint32_t*> PXMTheOnionRouter::sTorCountMap;
 
-PXMTheOnionRouter::PXMTheOnionRouter(PXScan *inScan)
-  : PXScanModule(inScan)
+PXMTheOnionRouter::PXMTheOnionRouter(PXScan *inScan, int inPort)
+  : PXScanModule(inScan), mPort(inPort)
   {
+  if (sConnCountMap.find(mPort) == sConnCountMap.end())
+    {
+    sConnCountMap[mPort] = new uint32_t;
+    *sConnCountMap[mPort] = 0;
+    sTorCountMap[mPort] = new uint32_t;
+    *sTorCountMap[mPort] = 0;
+    }
   }
 
 PXMTheOnionRouter::~PXMTheOnionRouter()
@@ -53,8 +59,7 @@ PXMTheOnionRouter::~PXMTheOnionRouter()
 void
 PXMTheOnionRouter::InitModule()
   {
-  RegisterPXM(THEONIONROUTER_SHORTNAME, THEONIONROUTER_PORT,
-              &sConnCount, &sTorCount); 
+  RegisterPXM(THEONIONROUTER_SHORTNAME, mPort, sConnCountMap[mPort], sTorCountMap[mPort]);
   }
 
 bool
@@ -66,7 +71,7 @@ PXMTheOnionRouter::StartScan()
   memset(&sin, 0, sizeof(struct sockaddr_in));
   sin.sin_family = AF_INET;
   sin.sin_addr = this->GetAddress();
-  sin.sin_port = htons((uint16_t)THEONIONROUTER_PORT);
+  sin.sin_port = htons((uint16_t)mPort);
   
   mStream = peak_stream_socket_create((struct sockaddr *)&sin, sizeof(sin),
                                       PEAK_STREAM_OPT_LINEMODE,
@@ -118,15 +123,14 @@ PXMTheOnionRouter::ProcessEvent(peak_stream s, int type)
   switch (type)
     {
     case PEAK_STREAM_EVT_OPEN:
-      sConnCount++;
+      (*sConnCountMap[mPort])++;
       break;
     case PEAK_STREAM_EVT_READ:
       line = peak_stream_get_line(s);
-      
-      sTorCount++;
+
+      (*sTorCountMap[mPort])++;      
       this->Cleanup();
-      this->ProxyFound(OPAS_PROXY_TYPE_TOR, THEONIONROUTER_PORT,
-                       THEONIONROUTER_DESCR);
+      this->ProxyFound(OPAS_PROXY_TYPE_TOR, mPort, THEONIONROUTER_DESCR);
       return; /* done! */
 
       /* fall through */

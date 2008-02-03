@@ -30,7 +30,7 @@
 class PXMTheOnionRouter : public PXScanModule
   {
 public:
-  PXMTheOnionRouter(PXScan *inScan);
+  PXMTheOnionRouter(PXScan *inScan, int inPort);
   virtual ~PXMTheOnionRouter();
   
   void InitModule();
@@ -42,9 +42,12 @@ protected:
   static void EventCallback(peak_stream s, int type, void *context);
   
   peak_stream mStream;
+  int mPort;
+  bool mIsTor;
+  PXMutex mLogMutex;
 
-  static uint32_t sConnCount;
-  static uint32_t sTorCount;
+  static map<uint16_t, uint32_t*> sConnCountMap;
+  static map<uint16_t, uint32_t*> sTorCountMap;
   };
 
 #endif // INCLUDED_PXMTHEONIONROUTER_H_
