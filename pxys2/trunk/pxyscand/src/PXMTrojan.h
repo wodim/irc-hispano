@@ -17,10 +17,10 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
-// $Id: PXMTheOnionRouter.h,v 1.1.1.1 2003/12/30 17:09:00 mbuna Exp $
+// $Id: PXMTrojan.h,v 1.1.1.1 2003/12/30 17:09:00 mbuna Exp $
 //
-#ifndef INCLUDED_PXMTHEONIONROUTER_H_
-#define INCLUDED_PXMTHEONIONROUTER_H_
+#ifndef INCLUDED_PXMTROJAN_H_
+#define INCLUDED_PXMTROJAN_H_
 
 #include <map>
 
@@ -31,11 +31,11 @@
 
 using std::map;
 
-class PXMTheOnionRouter : public PXScanModule
+class PXMTrojan : public PXScanModule
   {
 public:
-  PXMTheOnionRouter(PXScan *inScan, int inPort);
-  virtual ~PXMTheOnionRouter();
+  PXMTrojan(PXScan *inScan, int inPort);
+  virtual ~PXMTrojan();
   
   void InitModule();
   bool StartScan();
@@ -47,11 +47,11 @@ protected:
   
   peak_stream mStream;
   int mPort;
-  bool mIsTor;
+  bool mIsTrojan;
   PXMutex mLogMutex;
 
   static map<uint16_t, uint32_t*> sConnCountMap;
-  static map<uint16_t, uint32_t*> sTorCountMap;
+  static map<uint16_t, uint32_t*> sTrojanCountMap;
   };
 
-#endif // INCLUDED_PXMTHEONIONROUTER_H_
+#endif // INCLUDED_PXMTROJAN_H_
