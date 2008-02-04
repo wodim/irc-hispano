@@ -26,6 +26,7 @@
 
 /* Module headers */
 #include "PXMBouncerHispano.h"
+#include "PXMTheOnionRouter.h"
 #include "PXM3Com812.h"
 #include "PXMWingate.h"
 #include "PXMSocks.h"
@@ -72,6 +73,9 @@ PXScan::PXScan(const opas_msg_query &inQuery, PXSession *inSession,
         break;
       case CONFIG_MODULE_BOUNCERHISPANO:
         this->RegisterModule(new PXMBouncerHispano(this, mod->port));
+        break;
+      case CONFIG_MODULE_TOR:
+        this->RegisterModule(new PXMTheOnionRouter(this, mod->port));
         break;
       default:
         abort();

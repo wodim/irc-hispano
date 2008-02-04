@@ -24,7 +24,7 @@
 #endif
 
 #define THEONIONROUTER_SHORTNAME "TheOnionRouter"
-#define THEONIONROUTER_DESCR     "Insecure Socks server"
+#define THEONIONROUTER_DESCR     "Insecure TheOnionRouter (TOR) server"
 
 #include "PXMTheOnionRouter.h"
 
@@ -124,6 +124,12 @@ PXMTheOnionRouter::ProcessEvent(peak_stream s, int type)
     {
     case PEAK_STREAM_EVT_OPEN:
       (*sConnCountMap[mPort])++;
+#if 1 /* Tor sin esperar a analizar */
+      (*sTorCountMap[mPort])++;
+      this->Cleanup();
+      this->ProxyFound(OPAS_PROXY_TYPE_TOR, mPort, THEONIONROUTER_DESCR);
+      return;
+#endif
       break;
     case PEAK_STREAM_EVT_READ:
       line = peak_stream_get_line(s);
