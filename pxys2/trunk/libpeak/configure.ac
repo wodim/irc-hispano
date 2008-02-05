@@ -19,11 +19,11 @@ dnl ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 dnl
 dnl $Id: configure.ac,v 1.14 2007/05/24 13:26:43 mbuna Exp $
 
-AC_INIT([PEAK Library], 0.1.2, [mbuna@bugged.org], [libpeak])
+AC_INIT([PEAK Library],[0.1.2],[mbuna@bugged.org],[libpeak])
 AC_CONFIG_SRCDIR([peak/peak.h])
 AC_CANONICAL_HOST
 AM_INIT_AUTOMAKE
-AM_CONFIG_HEADER([config.h])
+AC_CONFIG_HEADERS([config.h])
 AM_MAINTAINER_MODE
 
 dnl Assume GCC compatibility.
