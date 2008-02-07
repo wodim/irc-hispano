@@ -124,7 +124,7 @@ irc_client_register()
   caddr.ip4 = gConfig->client.userip;
   
   irc_userbase_add(nick,
-                   gConfig->client.username,
+                   gConfig->client.username, gConfig->client.hostname,
                    gBirthTime,
                    gConfig->client.usermode,
                    0,
@@ -249,3 +249,28 @@ irc_client_handle_private(toktabptr ttab)
     send_client_to_one(dst, "Sorry, command not found.");
 #endif
   }
+
+
+char *
+get_host(struct Client *client)
+{
+  if ((client->flags & CLIENT_FLAG_HIDDEN))
+    return "host.hidden.arpa";
+
+  return client->host;
+}
+
+char *
+get_ip(struct Client *client)
+{
+  char host[64];
+  int af;
+
+  if ((client->flags & CLIENT_FLAG_HIDDEN))
+    return "0.0.0.0";
+
+  af = (client->flags & CLIENT_FLAG_IPV6) ? AF_INET6 : AF_INET;
+  inet_ntop(af, &client->addr, host, sizeof(host));
+
+  return host;
+}

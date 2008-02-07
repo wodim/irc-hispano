@@ -35,4 +35,7 @@ extern void irc_client_unregister();
 extern void irc_client_burst(void);
 extern void irc_client_handle_private(toktabptr ttab);
 
+extern char *get_host(struct Client *client);
+extern char *get_ip(struct Client *client);
+
 #endif /* INCLUDED_IRC_CLIENT_H */

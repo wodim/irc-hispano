@@ -33,7 +33,7 @@ extern size_t          irc_userbase_get_hash_table_size();
 extern int             irc_userbase_proxycount(const struct in_addr *addr);
 extern unsigned int    irc_userbase_count_channels(struct Client *cptr);
 
-extern void            irc_userbase_add(const char *nick, const char *user,
+extern void            irc_userbase_add(const char *nick, const char *user, const char *host,
                                         time_t firsttime,  const char *mode,
                                         unsigned int flags, ClientAddr addr,
                                         const char *numnick);

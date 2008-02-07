@@ -125,6 +125,7 @@ void
 irc_userbase_add(
   const char *nick,       /* Client nickname */
   const char *user,       /* Client username */
+  const char *host,       /* Client hostname */
   time_t firsttime,       /* Creation time */
   const char *mode,       /* Client mode; can be NULL */
   unsigned int flags,     /* Flags (reserved for IPv6) */
@@ -151,6 +152,9 @@ irc_userbase_add(
     }
   strncpy(cptr->user, user, USERLEN);
   cptr->user[USERLEN] = '\0';
+
+  strncpy(cptr->host, host, HOSTLEN);
+  cptr->host[HOSTLEN] = '\0';
   
   target_yxx = yxx_to_int(numnick);
   if (target_yxx.bogus)

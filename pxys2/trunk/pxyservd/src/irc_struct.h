@@ -54,7 +54,12 @@ enum
   CLIENT_FLAG_SCANNING  = 1 << 5, /* Client being scanned */
   CLIENT_FLAG_SCANFAIL  = 1 << 6, /* Client IP scan failed (eg. unreachable) */
   CLIENT_FLAG_COMMAND   = 1 << 7, /* Pending OPAS command for this client */
-  CLIENT_FLAG_GREM      = 1 << 8  /* Flag to distinguish GREM and RECHECK */
+  CLIENT_FLAG_GREM      = 1 << 8, /* Flag to distinguish GREM and RECHECK */
+  CLIENT_FLAG_HIDDEN    = 1 << 9  /* +x, host oculto */
+#ifdef HISPANO
+, CLIENT_FLAG_HELPER    = 1 << 10, /* +h Helper */
+  CLIENT_FLAG_HDDVIEWER = 1 << 11, /* +X Ve ips */
+#endif
   };
 
 enum
@@ -95,6 +100,7 @@ struct Client
   
   char nick[NICKLEN+1];
   char user[USERLEN+1];
+  char host[HOSTLEN+1];
   unsigned int nserv;
   unsigned int nnick;
   unsigned int flags;    /* operator? ident? ipv6?... */

@@ -273,7 +273,8 @@ parse_nick(toktabptr ttab)
     char *mode, *ip, *nn;
     time_t firsttime;
     ClientAddr addr;
-    
+    int flags;
+
     if (ttab->size < 10)
       RET_BOGUS;
     
@@ -282,24 +283,31 @@ parse_nick(toktabptr ttab)
     if (*ttab->tok[7] == '+')
       {
       /* Modes ! */
-#define ARG_MODES_NUM 2
-      const char arg_modes[ARG_MODES_NUM] =
+      for (t1 = ttab->tok[7]; *t1; t1++)
         {
-        'r' /* undernet; account username */,
-        'h' /* asuka; hostname */
-        };
-      char *p;
-      int i, k = 8;
-      
-      for (i = 0; i < ARG_MODES_NUM; i++)
-        for (p = ttab->tok[7]; *p; p++)
-          if (*p == arg_modes[i])
-            k++;
-      
-      if (k - 8 > ARG_MODES_NUM)
-        RET_BOGUS; /* doh; +rrhrhhrhrh ? */
-      
+        switch (*t1)
+          {
+          case 'o':
+            flags |= CLIENT_FLAG_OPER;
+            break;
+          case 'x':
+            flags |= CLIENT_FLAG_HIDDEN;
+            break;
+#ifdef HISPANO
+          case 'h':
+            flags |= CLIENT_FLAG_HELPER;
+            break;
+          case 'X':
+            flags |= CLIENT_FLAG_HDDVIEWER
+            break;
+#endif
+          default:
+            break;
+          }
+        }
+      }
       mode = ttab->tok[7];
+
 #if 1 /* P10-Hispano */
       ip = ttab->tok[8];      /* base64 IP */
       nn = ttab->tok[9];      /* base64 numnick */
@@ -311,6 +319,7 @@ parse_nick(toktabptr ttab)
     else
       {
       mode = NULL;
+      flags = 0;
       ip = ttab->tok[7];
       nn = ttab->tok[8];
       }
@@ -321,7 +330,7 @@ parse_nick(toktabptr ttab)
       RET_BOGUS;
     
     addr.ip4.s_addr = htonl(base64toint(ip));
-    irc_userbase_add(ttab->tok[2], ttab->tok[5], firsttime, mode, 0, addr, nn);
+    irc_userbase_add(ttab->tok[2], ttab->tok[5], ttab->tok[6], firsttime, mode, flags, addr, nn);
     }
   }
 
