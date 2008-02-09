@@ -53,8 +53,12 @@ cmd_showcmds(struct Client *cptr, toktabptr ttab)
   const char *cmds_buf[100];
   const char **cmds, *p;
   int i;
-  
+
+#if IRC_HISPANO
+  if (!((cptr->flags & CLIENT_FLAG_OPER) || (cptr->flags & CLIENT_FLAG_HELPER)))
+#else 
   if (!(cptr->flags & CLIENT_FLAG_OPER))
+#endif
     return; /* Non opers go play balls. */
   
   cnt = peak_dict_get_count(cmds_map);

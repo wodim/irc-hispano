@@ -270,7 +270,7 @@ parse_nick(toktabptr ttab)
     }
   else
     {
-    char *mode, *ip, *nn, *t1;
+    char *ip, *nn, *t1;
     time_t firsttime;
     ClientAddr addr;
     int flags = 0;
@@ -305,7 +305,6 @@ parse_nick(toktabptr ttab)
             break;
           }
         }
-      mode = ttab->tok[7];
 
 #if 1 /* P10-Hispano */
       ip = ttab->tok[8];      /* base64 IP */
@@ -317,7 +316,6 @@ parse_nick(toktabptr ttab)
       }
     else
       {
-      mode = NULL;
       ip = ttab->tok[7];
       nn = ttab->tok[8];
       }
@@ -328,7 +326,7 @@ parse_nick(toktabptr ttab)
       RET_BOGUS;
     
     addr.ip4.s_addr = htonl(base64toint(ip));
-    irc_userbase_add(ttab->tok[2], ttab->tok[5], ttab->tok[6], firsttime, mode, flags, addr, nn);
+    irc_userbase_add(ttab->tok[2], ttab->tok[5], ttab->tok[6], firsttime, flags, addr, nn);
     }
   }
 

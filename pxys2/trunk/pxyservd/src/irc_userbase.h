@@ -34,8 +34,7 @@ extern int             irc_userbase_proxycount(const struct in_addr *addr);
 extern unsigned int    irc_userbase_count_channels(struct Client *cptr);
 
 extern void            irc_userbase_add(const char *nick, const char *user, const char *host,
-                                        time_t firsttime,  const char *mode,
-                                        unsigned int flags, ClientAddr addr,
+                                        time_t firsttime, unsigned int flags, ClientAddr addr,
                                         const char *numnick);
 extern void            irc_userbase_nick_change(const char *numnick,
                                                 const char *new_nick);

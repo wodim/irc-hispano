@@ -127,7 +127,6 @@ irc_userbase_add(
   const char *user,       /* Client username */
   const char *host,       /* Client hostname */
   time_t firsttime,       /* Creation time */
-  const char *mode,       /* Client mode; can be NULL */
   unsigned int flags,     /* Flags (reserved for IPv6) */
   ClientAddr addr,        /* IP */
   const char *numnick)    /* Client base64 network numeric */
@@ -165,12 +164,6 @@ irc_userbase_add(
   cptr->flags = flags;
   if (*user == '~')
     cptr->flags |= CLIENT_FLAG_IDENT;
-#ifdef IRC_HISPANO
-  if (mode && strchr(mode, 'h'))
-#else
-  if (mode && strchr(mode, 'o'))
-#endif
-    cptr->flags |= CLIENT_FLAG_OPER;
   
   cptr->addr = addr;
   
