@@ -283,13 +283,13 @@ char *
 get_ip(struct Client *client, const char *yxx_dest)
 {
   struct Client *cptr;
-  char ip[64];
+  char host[64];
   char *ip_r = NULL;
   int af;
 
   af = (client->flags & CLIENT_FLAG_IPV6) ? AF_INET6 : AF_INET;
-  inet_ntop(af, &client->addr, ip, sizeof(ip));
-  ip_r = ip;
+  inet_ntop(af, &client->addr, host, sizeof(host));
+  ip_r = host;
 
   if (!(client->flags & CLIENT_FLAG_HIDDEN))
     return ip_r;
