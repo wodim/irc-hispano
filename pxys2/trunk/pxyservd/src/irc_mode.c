@@ -86,9 +86,9 @@ irc_mode_handle(const char *numnick, const char *mode_change)
           continue;
         case 'X':
           if (add)
-            cptr->flags |= CLIENT_FLAG_HELPER;
+            cptr->flags |= CLIENT_FLAG_HDDVIEWER;
           else
-            cptr->flags &= ~CLIENT_FLAG_HELPER;
+            cptr->flags &= ~CLIENT_FLAG_HDDVIEWER;
           continue;
 #endif
         default:

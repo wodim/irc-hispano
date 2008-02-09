@@ -284,13 +284,15 @@ get_ip(struct Client *client, const char *yxx_dest)
 {
   struct Client *cptr;
   char ip[64];
+  char *ip_r = NULL;
   int af;
 
   af = (client->flags & CLIENT_FLAG_IPV6) ? AF_INET6 : AF_INET;
   inet_ntop(af, &client->addr, ip, sizeof(ip));
+  ip_r = ip;
 
   if (!(client->flags & CLIENT_FLAG_HIDDEN))
-    return ip;
+    return ip_r;
 
   if (!yxx_dest)
     return "x";
@@ -303,7 +305,7 @@ get_ip(struct Client *client, const char *yxx_dest)
 #else
   if ((cptr == client) ||(cptr->flags & CLIENT_FLAG_OPER))
 #endif
-    return ip;
+    return ip_r;
 
   return "x";
 }

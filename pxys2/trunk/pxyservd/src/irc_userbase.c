@@ -49,7 +49,6 @@ struct addrcount
   {
   struct in_addr addr;
   int count;
-  char *nicks;
   };
 
 /* User hash table */
@@ -102,21 +101,6 @@ irc_userbase_proxycount(const struct in_addr *addr)
   return ac.count;
   }
 
-int
-irc_userbase_proxycount_nicks(const struct in_addr *addr, char *nicks)
-  {
-  struct addrcount ac;
-  ac.addr = *addr;
-  ac.count = 0;
-  ac.nicks = NULL;
-
-  irc_network_map_servers((irc_network_map_servers_callback)
-                          irc_userbase_proxycount_callback, &ac);
-
-  nicks = ac.nicks;
-  return ac.count;
-  }
-
 static void
 irc_userbase_proxycount_callback(struct Server *sptr, struct addrcount *ac)
   {
@@ -128,9 +112,6 @@ irc_userbase_proxycount_callback(struct Server *sptr, struct addrcount *ac)
       {
       ac->count++;
       sptr->proxy_count++;
-      if (ac->nicks)
-        strcat(ac->nicks, ", ");
-      strcat(ac->nicks, cptr->nick);
       }
   }
 
