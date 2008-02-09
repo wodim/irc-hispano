@@ -34,6 +34,7 @@ struct g_args
   struct in_addr addr;
   int hitcnt;
   const char *reason;
+  short port;
   };
 
 /* max_queue_elems is the max number of glines in the queue.

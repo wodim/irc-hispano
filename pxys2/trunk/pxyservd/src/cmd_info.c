@@ -212,7 +212,7 @@ info_nick(const char *dst, toktabptr ttab)
     send_client_to_one(dst, "%s tiene +X", u->nick);
 #else
   send_client_to_one(dst, "%s is %s@%s [%s]", u->nick, u->user,
-                     get_host(u, dst), get_up(u, dst));
+                     get_host(u, dst), get_ip(u, dst));
   if (u->flags & CLIENT_FLAG_OPER)
     send_client_to_one(dst, "%s is an IRC Operator", u->nick);
 #ifdef IRC_HISPANO

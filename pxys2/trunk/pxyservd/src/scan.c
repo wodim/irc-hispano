@@ -510,16 +510,16 @@ scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
       reason = gConfig->gline.reason[proxy_type];
     else
       reason = gConfig->gline.reason[0];
-    
+
 #if 1 /* Temporal, puerto 23 Router ADSL abierto */
     if (proxy_type != 10)
-      irc_gline_send(addrp, cnt, reason);
+      irc_gline_send(addrp, cnt, reason, proxy_port);
 /*
     else
       send_msg_client_to_console("ATENCION: La IP %s tiene el router ADSL abierto!", ipbuf);
 */
 #else
-    irc_gline_send(addrp, cnt, reason);
+    irc_gline_send(addrp, cnt, reason, proxy_port);
 #endif
     }
   }

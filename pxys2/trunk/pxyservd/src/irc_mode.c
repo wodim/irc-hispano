@@ -70,29 +70,29 @@ irc_mode_handle(const char *numnick, const char *mode_change)
             }
           else
             cptr->flags &= ~CLIENT_FLAG_OPER;
-          break;
+          continue;
         case 'x':
           if (add)
             cptr->flags |= CLIENT_FLAG_HIDDEN;
           else
             cptr->flags &= ~CLIENT_FLAG_HIDDEN;
-          break;
+          continue;
 #ifdef IRC_HISPANO
         case 'h':
           if (add)
             cptr->flags |= CLIENT_FLAG_HELPER;
           else
             cptr->flags &= ~CLIENT_FLAG_HELPER;
-          break;
+          continue;
         case 'X':
           if (add)
             cptr->flags |= CLIENT_FLAG_HELPER;
           else
             cptr->flags &= ~CLIENT_FLAG_HELPER;
-          break;
+          continue;
 #endif
         default:
-          break;
+          continue;
         }
     }
   }

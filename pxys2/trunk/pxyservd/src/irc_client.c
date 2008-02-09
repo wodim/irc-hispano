@@ -264,10 +264,10 @@ get_host(struct Client *client, const char *yxx_dest)
     return client->host;
 
   if (!yxx_dest)
-    return "host.hidden.arpa";
+    return "host.hidden";
 
   if (!(cptr = irc_network_find_client(yxx_to_int(yxx_dest))))
-    return "host.hidden.arpa";
+    return "host.hidden";
 
 #ifdef IRC_HISPANO
   if ((cptr == client) ||(cptr->flags & CLIENT_FLAG_HDDVIEWER))
@@ -276,36 +276,34 @@ get_host(struct Client *client, const char *yxx_dest)
 #endif
     return client->host;
 
-  return "host.hidden.arpa";
+  return "host.hidden";
 }
 
 char *
 get_ip(struct Client *client, const char *yxx_dest)
 {
   struct Client *cptr;
-  char *ip_r;
   char ip[64];
   int af;
 
   af = (client->flags & CLIENT_FLAG_IPV6) ? AF_INET6 : AF_INET;
   inet_ntop(af, &client->addr, ip, sizeof(ip));
-  ip_r = ip;
 
   if (!(client->flags & CLIENT_FLAG_HIDDEN))
-    return ip_r;
+    return ip;
 
   if (!yxx_dest)
-    return "0.0.0.0";
+    return "x";
 
   if (!(cptr = irc_network_find_client(yxx_to_int(yxx_dest))))
-    return "0.0.0.0";
+    return "x";
 
 #ifdef IRC_HISPANO
   if ((cptr == client) ||(cptr->flags & CLIENT_FLAG_HDDVIEWER))
 #else
   if ((cptr == client) ||(cptr->flags & CLIENT_FLAG_OPER))
 #endif
-    return ip_r;
+    return ip;
 
-  return "0.0.0.0";
+  return "x";
 }

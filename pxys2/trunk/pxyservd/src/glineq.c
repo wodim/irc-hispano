@@ -43,6 +43,7 @@ struct g_data
   struct in_addr addr;
   int hitcnt;
   char reason[248];
+  short port;
   };
 
 struct g_elem
@@ -121,6 +122,7 @@ glineq_first()
     args.addr   = ltail->data.addr;
     args.hitcnt = ltail->data.hitcnt;
     args.reason = ltail->data.reason;
+    args.port   = ltail->data.port;
     argsp = &args;
     }
 

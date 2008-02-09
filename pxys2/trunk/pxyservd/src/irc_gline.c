@@ -85,15 +85,20 @@ irc_gline_timer_callback(peak_timer ti, void *context)
               inet_ntoa(ap->addr), gConfig->gline.delay,
               ap->hitcnt, ap->reason);
     
-    send_gline(ap->addr, gConfig->gline.delay, GLINE_PREFIX "[%ld] %s",
-               ap->hitcnt, ap->reason);
+#ifdef SPANISH
+    send_gline(ap->addr, gConfig->gline.delay, GLINE_PREFIX "[%ld] (port %d) %s",
+               ap->hitcnt, ap->port, ap->reason);
+#else
+    send_gline(ap->addr, gConfig->gline.delay, GLINE_PREFIX "[%ld] (port %d) %s",
+               ap->hitcnt, ap->port, ap->reason);
+#endif
     
     glineq_pop();
     }
   }
 
 void
-irc_gline_send(const struct in_addr *addr, int hitcnt, const char *reason)
+irc_gline_send(const struct in_addr *addr, int hitcnt, const char *reason, short port)
   {
   struct g_args args;
   double ft;
@@ -101,6 +106,7 @@ irc_gline_send(const struct in_addr *addr, int hitcnt, const char *reason)
   args.addr = *addr;
   args.hitcnt = hitcnt;
   args.reason = reason;
+  args.port = port;
   
   ft = peak_timer_get_firetime(gti);
   
