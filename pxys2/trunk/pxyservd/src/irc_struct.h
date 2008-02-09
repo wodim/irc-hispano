@@ -56,7 +56,7 @@ enum
   CLIENT_FLAG_COMMAND   = 1 << 7, /* Pending OPAS command for this client */
   CLIENT_FLAG_GREM      = 1 << 8, /* Flag to distinguish GREM and RECHECK */
   CLIENT_FLAG_HIDDEN    = 1 << 9  /* +x, host oculto */
-#ifdef HISPANO
+#ifdef IRC_HISPANO
 , CLIENT_FLAG_HELPER    = 1 << 10, /* +h Helper */
   CLIENT_FLAG_HDDVIEWER = 1 << 11, /* +X Ve ips */
 #endif

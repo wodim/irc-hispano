@@ -1,3 +1,9 @@
+* 2008/02/09 zoltan@irc-dev.net                                   FEATURE
+-------------------------------------------------------------------------
+  Soporte de los modos +x, +X y +h de nicks.
+  Las IPs se muestran o se ocultan segun los modos del usuario, imitando
+  el funcionamiento del IRCD.
+
 * 2008/01/24 zoltan@irc-dev.net                                       FIX
 -------------------------------------------------------------------------
   Pequenias correcciones en fase de pruebas previa a la implementacion.

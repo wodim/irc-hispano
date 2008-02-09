@@ -270,10 +270,10 @@ parse_nick(toktabptr ttab)
     }
   else
     {
-    char *mode, *ip, *nn;
+    char *mode, *ip, *nn, *t1;
     time_t firsttime;
     ClientAddr addr;
-    int flags;
+    int flags = 0;
 
     if (ttab->size < 10)
       RET_BOGUS;
@@ -293,19 +293,18 @@ parse_nick(toktabptr ttab)
           case 'x':
             flags |= CLIENT_FLAG_HIDDEN;
             break;
-#ifdef HISPANO
+#ifdef IRC_HISPANO
           case 'h':
             flags |= CLIENT_FLAG_HELPER;
             break;
           case 'X':
-            flags |= CLIENT_FLAG_HDDVIEWER
+            flags |= CLIENT_FLAG_HDDVIEWER;
             break;
 #endif
           default:
             break;
           }
         }
-      }
       mode = ttab->tok[7];
 
 #if 1 /* P10-Hispano */
@@ -319,7 +318,6 @@ parse_nick(toktabptr ttab)
     else
       {
       mode = NULL;
-      flags = 0;
       ip = ttab->tok[7];
       nn = ttab->tok[8];
       }

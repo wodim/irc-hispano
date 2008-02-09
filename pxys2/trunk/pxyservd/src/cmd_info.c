@@ -55,14 +55,9 @@ info_chan_iter_cb(smat_table_t *table, smat_entry_t *e, void *extra)
   const char *dst = pack->dst;
   peak_tz tz = pack->tz;
   peak_time_date gdate;
-  char host[64], sbuf[128];
-  int af;
+  char sbuf[128];
   
   cptr = se_object(e, MEMBERSHIP_LOC_CLIENT);
-  
-  af = (cptr->flags & CLIENT_FLAG_IPV6) ? AF_INET6 : AF_INET;
-  
-  inet_ntop(af, &cptr->addr, host, sizeof(host));
   
   if (cptr == MYCLIENT_PTR)
     strcpy(sbuf, "myself!");
@@ -104,11 +99,8 @@ info_chan_iter_cb(smat_table_t *table, smat_entry_t *e, void *extra)
   else
     strcpy(sbuf, "NOSCAN");
   
-#ifdef IRC_HISPANO
-  send_client_to_one(dst, "%s %s host_hidden (%s)", cptr->nick, cptr->user, sbuf);
-#else
-  send_client_to_one(dst, "%s %s %s (%s)", cptr->nick, cptr->user, host, sbuf);
-#endif
+  send_client_to_one(dst, "%s %s@%s [%s] (%s)", cptr->nick, cptr->user, 
+                     get_host(cptr, dst), get_ip(cptr, dst), sbuf);
   
   return 0;
   }
@@ -179,8 +171,6 @@ info_nick(const char *dst, toktabptr ttab)
   struct Server *sptr;
   peak_tz tz;
   peak_time_date gdate;
-  char host[64];
-  int af;
   
   if (!(u = irc_userbase_get_by_nick(ttab->tok[4])))
     {
@@ -207,26 +197,28 @@ info_nick(const char *dst, toktabptr ttab)
     return;
     }
   
-  if (!(u->flags & CLIENT_FLAG_IPV6))
-    af = AF_INET;
-  else
-    af = AF_INET6;
-  
-  inet_ntop(af, &u->addr, host, sizeof(host));
 #ifdef SPANISH
+  send_client_to_one(dst, "%s es %s@%s [%s]", u->nick, u->user, 
+                     get_host(u, dst), get_ip(u, dst));
+  if (u->flags & CLIENT_FLAG_OPER)
+    send_client_to_one(dst, "%s es un IRCop de la Red", u->nick);
 #ifdef IRC_HISPANO
-  send_client_to_one(dst, "%s es %s@host_hidden", u->nick, u->user);
-  if (u->flags & CLIENT_FLAG_OPER)
+  if (u->flags & CLIENT_FLAG_HELPER)
     send_client_to_one(dst, "%s es un Operador de la Red", u->nick);
-#else
-  send_client_to_one(dst, "%s es %s@%s", u->nick, u->user, host);
-  if (u->flags & CLIENT_FLAG_OPER)
-    send_client_to_one(dst, "%s es un \"IRC Operator\"", u->nick);
 #endif
+  if (u->flags & CLIENT_FLAG_HIDDEN)
+    send_client_to_one(dst, "%s tiene +x", u->nick);
+  if (u->flags & CLIENT_FLAG_HDDVIEWER)
+    send_client_to_one(dst, "%s tiene +X", u->nick);
 #else
-  send_client_to_one(dst, "%s is %s@%s", u->nick, u->user, host);
+  send_client_to_one(dst, "%s is %s@%s [%s]", u->nick, u->user,
+                     get_host(u, dst), get_up(u, dst));
   if (u->flags & CLIENT_FLAG_OPER)
     send_client_to_one(dst, "%s is an IRC Operator", u->nick);
+#ifdef IRC_HISPANO
+  if (u->flags & CLIENT_FLAG_HELPER)
+    send_client_to_one(dst, "%s is an Services Operator", u->nick);
+#endif
 #endif
   
   sptr = irc_network_get_server(u->nserv);

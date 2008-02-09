@@ -211,8 +211,12 @@ irc_client_handle_private(toktabptr ttab)
   
   if ((cptr = irc_network_find_client(yxx_to_int(dst))) == NULL)
     return; /* doh */
-  
+
+#ifdef IRC_HISPANO
+  if (!((cptr->flags & CLIENT_FLAG_OPER) || (cptr->flags & CLIENT_FLAG_HELPER)))
+#else  
   if (!(cptr->flags & CLIENT_FLAG_OPER))
+#endif
     return; /* Non opers go play balls. */
   
   if (!inet_ntop(cptr->flags & CLIENT_FLAG_IPV6 ? AF_INET6 : AF_INET,
@@ -252,25 +256,56 @@ irc_client_handle_private(toktabptr ttab)
 
 
 char *
-get_host(struct Client *client)
+get_host(struct Client *client, const char *yxx_dest)
 {
-  if ((client->flags & CLIENT_FLAG_HIDDEN))
+  struct Client *cptr;
+
+  if (!(client->flags & CLIENT_FLAG_HIDDEN))
+    return client->host;
+
+  if (!yxx_dest)
     return "host.hidden.arpa";
 
-  return client->host;
+  if (!(cptr = irc_network_find_client(yxx_to_int(yxx_dest))))
+    return "host.hidden.arpa";
+
+#ifdef IRC_HISPANO
+  if ((cptr == client) ||(cptr->flags & CLIENT_FLAG_HDDVIEWER))
+#else
+  if ((cptr == client) ||(cptr->flags & CLIENT_FLAG_OPER))
+#endif
+    return client->host;
+
+  return "host.hidden.arpa";
 }
 
 char *
-get_ip(struct Client *client)
+get_ip(struct Client *client, const char *yxx_dest)
 {
-  char host[64];
+  struct Client *cptr;
+  char *ip_r;
+  char ip[64];
   int af;
 
-  if ((client->flags & CLIENT_FLAG_HIDDEN))
+  af = (client->flags & CLIENT_FLAG_IPV6) ? AF_INET6 : AF_INET;
+  inet_ntop(af, &client->addr, ip, sizeof(ip));
+  ip_r = ip;
+
+  if (!(client->flags & CLIENT_FLAG_HIDDEN))
+    return ip_r;
+
+  if (!yxx_dest)
     return "0.0.0.0";
 
-  af = (client->flags & CLIENT_FLAG_IPV6) ? AF_INET6 : AF_INET;
-  inet_ntop(af, &client->addr, host, sizeof(host));
+  if (!(cptr = irc_network_find_client(yxx_to_int(yxx_dest))))
+    return "0.0.0.0";
 
-  return host;
+#ifdef IRC_HISPANO
+  if ((cptr == client) ||(cptr->flags & CLIENT_FLAG_HDDVIEWER))
+#else
+  if ((cptr == client) ||(cptr->flags & CLIENT_FLAG_OPER))
+#endif
+    return ip_r;
+
+  return "0.0.0.0";
 }

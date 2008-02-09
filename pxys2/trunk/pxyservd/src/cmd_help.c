@@ -112,7 +112,7 @@ cmd_help_specific(const char *dst, const char *topic)
 void
 cmd_help(struct Client *cptr, toktabptr ttab)
   {
-  return;
+return;
   const char *dst = ttab->tok[0];
   
   if (ttab->size > 4)

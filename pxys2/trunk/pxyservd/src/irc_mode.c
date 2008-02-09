@@ -38,6 +38,66 @@
 #include "irc_struct.h"
 #include "irc_yxx.h"
 
+void
+irc_mode_handle(const char *numnick, const char *mode_change)
+  {
+  struct Client *cptr = irc_network_find_client(yxx_to_int(numnick));
+
+  if (cptr)
+    {
+    char ipbuf[32];
+    int add = 1;
+    int ch;
+
+    while((ch = *mode_change++))
+      switch(ch)
+        {
+        case '+':
+          add = 1;
+          continue;
+        case '-':
+          add = 0;
+          continue;
+        case 'o':
+          if (add)
+            {
+            cptr->flags |= CLIENT_FLAG_OPER;
+            if (inet_ntop(cptr->flags & CLIENT_FLAG_IPV6 ? AF_INET6 : AF_INET,
+                          &cptr->addr, ipbuf, sizeof(ipbuf)))
+              evreg_broadcast(EVREG_FLAG_OPER, "[EV] Oper %s!%s@%s on %s",
+                              cptr->nick, cptr->user, ipbuf,
+                              irc_network_get_server(cptr->nserv)->name);
+            }
+          else
+            cptr->flags &= ~CLIENT_FLAG_OPER;
+          break;
+        case 'x':
+          if (add)
+            cptr->flags |= CLIENT_FLAG_HIDDEN;
+          else
+            cptr->flags &= ~CLIENT_FLAG_HIDDEN;
+          break;
+#ifdef IRC_HISPANO
+        case 'h':
+          if (add)
+            cptr->flags |= CLIENT_FLAG_HELPER;
+          else
+            cptr->flags &= ~CLIENT_FLAG_HELPER;
+          break;
+        case 'X':
+          if (add)
+            cptr->flags |= CLIENT_FLAG_HELPER;
+          else
+            cptr->flags &= ~CLIENT_FLAG_HELPER;
+          break;
+#endif
+        default:
+          break;
+        }
+    }
+  }
+
+#if 0
 static void operchange(int * ioOper, const char * mode);
 
 void
@@ -93,3 +153,4 @@ operchange(int * ioOper, const char * mode)
         break;
       }
   }
+#endif

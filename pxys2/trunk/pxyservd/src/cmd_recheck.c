@@ -105,7 +105,9 @@ recheck_chan(struct Client *cptr, const char *dst, toktabptr ttab)
     err = sh_iter(&c->mhead, NULL, recheck_chan_iter_cb, &pack, 0);
     if (err == 0)
       {
+#ifndef IRC_HISPANO
       char ipbuf[64];
+#endif
       
 #ifdef SPANISH
       send_client_to_one(dst, "RECHECK: %s - %lu usuarios (%lu agregados a la cola de escaneos,"
@@ -144,7 +146,6 @@ recheck_nick(struct Client *cptr, const char *dst, toktabptr ttab)
   {
   struct Client *target;
   PXSRemove4 rem_request;
-  char ipbuf[16];
   
   if (!(target = irc_userbase_get_by_nick(ttab->tok[4])))
     {
@@ -169,16 +170,16 @@ recheck_nick(struct Client *cptr, const char *dst, toktabptr ttab)
   if (target->flags & CLIENT_FLAG_IPV6)
     return; /* not supported yet */
   
-  inet_ntop(AF_INET, &target->addr, ipbuf, sizeof(ipbuf));
-  
   if (target->flags & CLIENT_FLAG_SCANNING)
     {
 #ifdef SPANISH
-    send_client_to_one(dst, "El usuario %s (%s) está todavía en la cola de escaneos"
-                       " (esperando o empezando a escanear)", target->nick, ipbuf);
+    send_client_to_one(dst, "El usuario %s (%s [%s]) está todavía en la cola de escaneos"
+                       " (esperando o empezando a escanear)", target->nick, 
+                       get_host(target, dst), get_ip(target, dst));
 #else
-    send_client_to_one(dst, "User %s (%s) is already in ScanQ"
-                       " (waiting or being scanned)", target->nick, ipbuf);
+    send_client_to_one(dst, "User %s (%s [%s]) is already in ScanQ"
+                       " (waiting or being scanned)", target->nick,
+                       get_host(target, dst), get_ip(target, dst));
 #endif
     return;
     }
@@ -200,10 +201,12 @@ recheck_nick(struct Client *cptr, const char *dst, toktabptr ttab)
   scan_start(target); /* start scan */
 #ifdef SPANISH
   send_client_to_one(dst, "El usuario %s (%s) agregado a la cola de escaneos"
-                     " (sera escaneado ASAP)", target->nick, ipbuf);
+                     " (sera escaneado tan pronto como sea posible)", target->nick,
+                     get_host(target, dst), get_ip(target, dst));
 #else
   send_client_to_one(dst, "User %s (%s) added to ScanQ"
-                     " (will be scanned ASAP)", target->nick, ipbuf);
+                     " (will be scanned ASAP)", target->nick, ipbuf,
+                     get_host(target, dst), get_ip(target, dst));
 #endif
   }
 
