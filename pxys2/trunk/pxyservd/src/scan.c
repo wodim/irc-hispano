@@ -516,7 +516,11 @@ scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
       irc_gline_send(addrp, cnt, reason, proxy_port);
 /*
     else
-      send_to_one(ud"blabla");
+      {
+      send_raw("%s P %s :Tienes un router antiguo, como el 3com812, y debido a que las vulnerabilidades de ese modelo se aprovechan para usos maliciosos." CRLF, gMe.yy, ud);
+      send_raw("%s P %s :A partir del proximo dia 10/03/2008 no se permitira la entrada al iRC-Hispano a aquellos usuarios con dicho puerto abierto y debes cerrarlo para poder seguir utilizando los servicos de IRC Hispano." CRLF, gMe.yy);
+      send_raw("%s P %s :Lamentamos las molestias que esto pueda causar y te invitamos a consultar la web http://www.irc-hispano.es//" CRLF, gMe.yy);
+      }
 */
 #else
     irc_gline_send(addrp, cnt, reason, proxy_port);
