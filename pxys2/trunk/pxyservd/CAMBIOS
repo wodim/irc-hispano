@@ -4,6 +4,7 @@
   Las IPs se muestran o se ocultan segun los modos del usuario, imitando
   el funcionamiento del IRCD.
   Se muestra el puerto en la gline.
+  Comando SAY.
 
 * 2008/01/24 zoltan@irc-dev.net                                       FIX
 -------------------------------------------------------------------------

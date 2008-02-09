@@ -40,6 +40,7 @@ DEF_CMD(noscan);
 DEF_CMD(proxytop);
 DEF_CMD(pxstats);
 DEF_CMD(recheck);
+DEF_CMD(say);
 DEF_CMD(servers);
 DEF_CMD(showcmds);
 DEF_CMD(stats);

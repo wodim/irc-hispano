@@ -71,6 +71,7 @@ static const peak_dict_init_entry my_commands[] =
   { "proxytop", cmd_proxytop },
   { "pxstats", cmd_pxstats },
   { "recheck", cmd_recheck },
+  { "say", cmd_say },
   { "servers", cmd_servers },
   { "showcmds", cmd_showcmds },
   { "stats", cmd_stats },
@@ -124,9 +125,9 @@ irc_client_register()
   caddr.ip4 = gConfig->client.userip;
   
   irc_userbase_add(nick,
-                   gConfig->client.username, gConfig->client.hostname,
+                   gConfig->client.username,
+                   gConfig->client.hostname,
                    gBirthTime,
-                   gConfig->client.usermode,
                    0,
                    caddr,
                    my_netnum);
@@ -287,6 +288,7 @@ get_ip(struct Client *client, const char *yxx_dest)
   char *ip_r = NULL;
   int af;
 
+
   af = (client->flags & CLIENT_FLAG_IPV6) ? AF_INET6 : AF_INET;
   inet_ntop(af, &client->addr, host, sizeof(host));
   ip_r = host;
@@ -299,6 +301,10 @@ get_ip(struct Client *client, const char *yxx_dest)
 
   if (!(cptr = irc_network_find_client(yxx_to_int(yxx_dest))))
     return "x";
+
+  af = (client->flags & CLIENT_FLAG_IPV6) ? AF_INET6 : AF_INET;
+  inet_ntop(af, &client->addr, host, sizeof(host));
+  ip_r = host;
 
 #ifdef IRC_HISPANO
   if ((cptr == client) ||(cptr->flags & CLIENT_FLAG_HDDVIEWER))

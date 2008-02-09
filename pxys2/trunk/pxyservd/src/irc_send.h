@@ -42,4 +42,6 @@ extern void send_client_to_channel(struct Channel *channel,
 extern void send_client_to_console(const char *fmt, ...);
 extern void send_msg_client_to_console(const char *fmt, ...);
 
+extern void send_msg_client_to_channel(struct Channel *channel, const char *fmt, ...);
+
 #endif /* INCLUDED_SEND_H_ */
