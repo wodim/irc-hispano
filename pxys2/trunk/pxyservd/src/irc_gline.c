@@ -86,10 +86,10 @@ irc_gline_timer_callback(peak_timer ti, void *context)
               ap->hitcnt, ap->reason);
     
 #ifdef SPANISH
-    send_gline(ap->addr, gConfig->gline.delay, GLINE_PREFIX "[%ld] (port %d) %s",
+    send_gline(ap->addr, gConfig->gline.delay, GLINE_PREFIX "[%ld] (puerto %u) %s",
                ap->hitcnt, ap->port, ap->reason);
 #else
-    send_gline(ap->addr, gConfig->gline.delay, GLINE_PREFIX "[%ld] (port %d) %s",
+    send_gline(ap->addr, gConfig->gline.delay, GLINE_PREFIX "[%ld] (port %u) %s",
                ap->hitcnt, ap->port, ap->reason);
 #endif
     
@@ -98,7 +98,7 @@ irc_gline_timer_callback(peak_timer ti, void *context)
   }
 
 void
-irc_gline_send(const struct in_addr *addr, int hitcnt, const char *reason, short port)
+irc_gline_send(const struct in_addr *addr, int hitcnt, const char *reason, uint16_t port)
   {
   struct g_args args;
   double ft;

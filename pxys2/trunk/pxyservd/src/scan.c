@@ -429,6 +429,7 @@ scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
       && (cptr->flags & CLIENT_FLAG_SCANNING))
     {
     char ipbuf[16];
+    char *nicks;
     int cnt;
     time_t scantime;
     
@@ -442,7 +443,8 @@ scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
     /* /!\ O(n) count but everyone likes it...
      *     Used for proxytop's stats too.
      */
-    cnt = irc_userbase_proxycount(&cptr->addr.ip4);
+/*    cnt = irc_userbase_proxycount(&cptr->addr.ip4); */
+    cnt = irc_userbase_proxycount_nicks(&cptr->addr.ip4, &nicks);
     
     if (cached)
       {

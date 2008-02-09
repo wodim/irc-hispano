@@ -43,7 +43,7 @@ struct g_data
   struct in_addr addr;
   int hitcnt;
   char reason[248];
-  short port;
+  uint16_t port;
   };
 
 struct g_elem
