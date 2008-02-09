@@ -1,6 +1,6 @@
 * 2008/02/09 zoltan@irc-dev.net                                   FEATURE
 -------------------------------------------------------------------------
-  Soporte de los modos +x, +X y +h de nicks.
+  Soporte de los modos +r, +x, +X y +h de nicks.
   Las IPs se muestran o se ocultan segun los modos del usuario, imitando
   el funcionamiento del IRCD.
   Se muestra el puerto en la gline.
