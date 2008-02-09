@@ -96,6 +96,7 @@ glineq_push(const struct g_args *args)
     node->data.addr = args->addr;
     node->data.hitcnt = args->hitcnt;
     snprintf(node->data.reason, sizeof(node->data.reason), "%s", args->reason);
+    node->data.port = args->port;
 
     node->prev = NULL;
     node->next = lhead;
