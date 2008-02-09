@@ -454,14 +454,14 @@ scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
       {
         if (proxy_type != 10)
         send_msg_client_to_console("PG *@%s [%ld] %s en el puerto %u (cached). Nick%s%s: %s",
-                                   ipbuf, cnt, proxy_descr, proxy_port, cptr->nick,
+                                   ipbuf, cnt, proxy_descr, proxy_port, /* cptr->nick, */
                                    cptr->flags & CLIENT_FLAG_NICKREG ? " " : "",
-                                   cptr->flags & CLIENT_FLAG_NICKREG ? "Reg" : "");
+                                   cptr->flags & CLIENT_FLAG_NICKREG ? "Reg" : "", cptr->nick);
         else
         send_msg_client_to_console("ATENCION: [%ld] La IP %s tiene el router ADSL abierto en el puerto 23!. No se Glinea. (cached). Nick%s%s: %s",
-                                   cnt, ipbuf, cptr->nick,
+                                   cnt, ipbuf, /*cptr->nick,*/
                                    cptr->flags & CLIENT_FLAG_NICKREG ? " " : "",
-                                   cptr->flags & CLIENT_FLAG_NICKREG ? "Reg" : "");
+                                   cptr->flags & CLIENT_FLAG_NICKREG ? "Reg" : "", cptr->nick);
       }
 
       evreg_broadcast(EVREG_FLAG_CACHED,
@@ -490,14 +490,14 @@ scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
       /* Console channel */
       if (proxy_type != 10)
       send_msg_client_to_console("PG *@%s [%ld] %s en el puerto %u (%ds). Nick%s%s: %s", ipbuf,
-                                 cnt, proxy_descr, proxy_port, scantime, cptr->nick,
+                                 cnt, proxy_descr, proxy_port, scantime, /*cptr->nick,*/
                                  cptr->flags & CLIENT_FLAG_NICKREG ? " " : "",
-                                 cptr->flags & CLIENT_FLAG_NICKREG ? "Reg" : "");
+                                 cptr->flags & CLIENT_FLAG_NICKREG ? "Reg" : "", cptr->nick);
       else
       send_msg_client_to_console("ATENCION: [%ld] La IP %s tiene el router ADSL abierto en el puerto 23!. No se Glinea. (%ds). Nick%s%s %s",
-                                 cnt, ipbuf, scantime, cptr->nick,
+                                 cnt, ipbuf, scantime, /*cptr->nick,*/
                                  cptr->flags & CLIENT_FLAG_NICKREG ? " " : "",
-                                 cptr->flags & CLIENT_FLAG_NICKREG ? "Reg" : "");
+                                 cptr->flags & CLIENT_FLAG_NICKREG ? "Reg" : "", cptr->nick);
 
       /* Private event notification */
       evreg_broadcast(EVREG_FLAG_NEWPROXY,

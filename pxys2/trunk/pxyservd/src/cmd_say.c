@@ -40,7 +40,8 @@ cmd_say(struct Client *cptr, toktabptr ttab)
 #ifdef IRC_HISPANO
   if (!(cptr->flags & CLIENT_FLAG_HDDVIEWER))
     {
-    send_client_to_one(dst, "La curiosidad mató al gato ;)");
+/*    send_client_to_one(dst, "La curiosidad mató al gato ;)"); */
+      send_client_to_one(dst, "Tú eres muy listo..............");
     return;
     }
 #endif
