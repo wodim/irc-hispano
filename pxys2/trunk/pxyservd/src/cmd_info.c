@@ -200,19 +200,19 @@ info_nick(const char *dst, toktabptr ttab)
 #ifdef SPANISH
   send_client_to_one(dst, "%s es %s@%s [%s]", u->nick, u->user, 
                      get_host(u, dst), get_ip(u, dst));
+  if (u->flags & CLIENT_FLAG_NICKREG)
+    send_client_to_one(dst, "%s tiene el nick registrado y protegido", u->nick);
   if (u->flags & CLIENT_FLAG_OPER)
     send_client_to_one(dst, "%s es un IRCop de la Red", u->nick);
 #ifdef IRC_HISPANO
   if (u->flags & CLIENT_FLAG_HELPER)
     send_client_to_one(dst, "%s es un Operador de la Red", u->nick);
 #endif
-  if (u->flags & CLIENT_FLAG_HIDDEN)
-    send_client_to_one(dst, "%s tiene +x", u->nick);
-  if (u->flags & CLIENT_FLAG_HDDVIEWER)
-    send_client_to_one(dst, "%s tiene +X", u->nick);
 #else
   send_client_to_one(dst, "%s is %s@%s [%s]", u->nick, u->user,
                      get_host(u, dst), get_ip(u, dst));
+  if (u->flags & CLIENT_FLAG_NICKREG)
+    send_client_to_one(dst, "%s has the nick registered", u->nick);
   if (u->flags & CLIENT_FLAG_OPER)
     send_client_to_one(dst, "%s is an IRC Operator", u->nick);
 #ifdef IRC_HISPANO

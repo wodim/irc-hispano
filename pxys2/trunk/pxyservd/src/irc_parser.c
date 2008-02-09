@@ -290,6 +290,9 @@ parse_nick(toktabptr ttab)
           case 'o':
             flags |= CLIENT_FLAG_OPER;
             break;
+          case 'r':
+            flags |= CLIENT_FLAG_NICKREG;
+            break;
           case 'x':
             flags |= CLIENT_FLAG_HIDDEN;
             break;

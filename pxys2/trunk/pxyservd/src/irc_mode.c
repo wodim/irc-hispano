@@ -71,6 +71,12 @@ irc_mode_handle(const char *numnick, const char *mode_change)
           else
             cptr->flags &= ~CLIENT_FLAG_OPER;
           continue;
+        case 'r':
+          if (add)
+            cptr->flags |= CLIENT_FLAG_NICKREG;
+          else
+            cptr->flags &= ~CLIENT_FLAG_NICKREG;
+          continue;
         case 'x':
           if (add)
             cptr->flags |= CLIENT_FLAG_HIDDEN;

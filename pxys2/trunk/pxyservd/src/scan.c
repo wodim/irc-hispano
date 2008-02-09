@@ -453,11 +453,15 @@ scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
       if (gConfig->client.show_cached)
       {
         if (proxy_type != 10)
-        send_msg_client_to_console("PG *@%s [%ld] %s en el puerto %u (cached). Nick: %s",
-                                   ipbuf, cnt, proxy_descr, proxy_port, cptr->nick);
+        send_msg_client_to_console("PG *@%s [%ld] %s en el puerto %u (cached). Nick%s%s: %s",
+                                   ipbuf, cnt, proxy_descr, proxy_port, cptr->nick,
+                                   cptr->flags & CLIENT_FLAG_NICKREG ? " " : "",
+                                   cptr->flags & CLIENT_FLAG_NICKREG ? "Reg" : "");
         else
-        send_msg_client_to_console("ATENCION: [%ld] La IP %s tiene el router ADSL abierto en el puerto 23!. No se Glinea. (cached). Nick: %s", cnt, ipbuf, cptr->nick);
-
+        send_msg_client_to_console("ATENCION: [%ld] La IP %s tiene el router ADSL abierto en el puerto 23!. No se Glinea. (cached). Nick%s%s: %s",
+                                   cnt, ipbuf, cptr->nick,
+                                   cptr->flags & CLIENT_FLAG_NICKREG ? " " : "",
+                                   cptr->flags & CLIENT_FLAG_NICKREG ? "Reg" : "");
       }
 
       evreg_broadcast(EVREG_FLAG_CACHED,
@@ -485,10 +489,15 @@ scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
 #ifdef SPANISH
       /* Console channel */
       if (proxy_type != 10)
-      send_msg_client_to_console("PG *@%s [%ld] %s en el puerto %u (%ds). Nick: %s", ipbuf,
-                                 cnt, proxy_descr, proxy_port, scantime, cptr->nick);
+      send_msg_client_to_console("PG *@%s [%ld] %s en el puerto %u (%ds). Nick%s%s: %s", ipbuf,
+                                 cnt, proxy_descr, proxy_port, scantime, cptr->nick,
+                                 cptr->flags & CLIENT_FLAG_NICKREG ? " " : "",
+                                 cptr->flags & CLIENT_FLAG_NICKREG ? "Reg" : "");
       else
-      send_msg_client_to_console("ATENCION: [%ld] La IP %s tiene el router ADSL abierto en el puerto 23!. No se Glinea. (%ds). Nick %s", cnt, ipbuf, scantime, cptr->nick);
+      send_msg_client_to_console("ATENCION: [%ld] La IP %s tiene el router ADSL abierto en el puerto 23!. No se Glinea. (%ds). Nick%s%s %s",
+                                 cnt, ipbuf, scantime, cptr->nick,
+                                 cptr->flags & CLIENT_FLAG_NICKREG ? " " : "",
+                                 cptr->flags & CLIENT_FLAG_NICKREG ? "Reg" : "");
 
       /* Private event notification */
       evreg_broadcast(EVREG_FLAG_NEWPROXY,
@@ -512,6 +521,7 @@ scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
       reason = gConfig->gline.reason[0];
 
 #if 1 /* Temporal, puerto 23 Router ADSL abierto */
+/*    if ((proxy_type != 10) || (!(cptr->flags & CLIENT_FLAG_NICKREG))) */
     if (proxy_type != 10)
       irc_gline_send(addrp, cnt, reason, proxy_port);
 /*

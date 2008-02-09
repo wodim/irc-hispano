@@ -55,10 +55,11 @@ enum
   CLIENT_FLAG_SCANFAIL  = 1 << 6, /* Client IP scan failed (eg. unreachable) */
   CLIENT_FLAG_COMMAND   = 1 << 7, /* Pending OPAS command for this client */
   CLIENT_FLAG_GREM      = 1 << 8, /* Flag to distinguish GREM and RECHECK */
-  CLIENT_FLAG_HIDDEN    = 1 << 9  /* +x, host oculto */
+  CLIENT_FLAG_NICKREG   = 1 << 9, /* +r Nick Registrado/Account */
+  CLIENT_FLAG_HIDDEN    = 1 << 10 /* +x, host oculto */
 #ifdef IRC_HISPANO
-, CLIENT_FLAG_HELPER    = 1 << 10, /* +h Helper */
-  CLIENT_FLAG_HDDVIEWER = 1 << 11, /* +X Ve ips */
+, CLIENT_FLAG_HELPER    = 1 << 11, /* +h Helper */
+  CLIENT_FLAG_HDDVIEWER = 1 << 12, /* +X Ve ips */
 #endif
   };
 
