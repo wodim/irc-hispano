@@ -452,16 +452,14 @@ scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
 
       if (gConfig->client.show_cached)
       {
-        if (proxy_type != 10)
+        if ((proxy_type != 10) || (!(cptr->flags & CLIENT_FLAG_NICKREG)))
         send_msg_client_to_console("PG *@%s [%ld] %s en el puerto %u (cached). Nick%s%s: %s",
-                                   ipbuf, cnt, proxy_descr, proxy_port, /* cptr->nick, */
+                                   ipbuf, cnt, proxy_descr, proxy_port,
                                    cptr->flags & CLIENT_FLAG_NICKREG ? " " : "",
                                    cptr->flags & CLIENT_FLAG_NICKREG ? "Reg" : "", cptr->nick);
         else
-        send_msg_client_to_console("ATENCION: [%ld] La IP %s tiene el router ADSL abierto en el puerto 23!. No se Glinea. (cached). Nick%s%s: %s",
-                                   cnt, ipbuf, /*cptr->nick,*/
-                                   cptr->flags & CLIENT_FLAG_NICKREG ? " " : "",
-                                   cptr->flags & CLIENT_FLAG_NICKREG ? "Reg" : "", cptr->nick);
+        send_msg_client_to_console("ATENCION: [%ld] La IP %s tiene el router ADSL abierto en el puerto 23!. No se Glinea. (cached). Nick Ref: %s",
+                                   cnt, ipbuf, cptr->nick);
       }
 
       evreg_broadcast(EVREG_FLAG_CACHED,
@@ -488,16 +486,14 @@ scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
 
 #ifdef SPANISH
       /* Console channel */
-      if (proxy_type != 10)
+      if ((proxy_type != 10) || (!(cptr->flags & CLIENT_FLAG_NICKREG)))
       send_msg_client_to_console("PG *@%s [%ld] %s en el puerto %u (%ds). Nick%s%s: %s", ipbuf,
-                                 cnt, proxy_descr, proxy_port, scantime, /*cptr->nick,*/
+                                 cnt, proxy_descr, proxy_port, scantime,
                                  cptr->flags & CLIENT_FLAG_NICKREG ? " " : "",
                                  cptr->flags & CLIENT_FLAG_NICKREG ? "Reg" : "", cptr->nick);
       else
-      send_msg_client_to_console("ATENCION: [%ld] La IP %s tiene el router ADSL abierto en el puerto 23!. No se Glinea. (%ds). Nick%s%s %s",
-                                 cnt, ipbuf, scantime, /*cptr->nick,*/
-                                 cptr->flags & CLIENT_FLAG_NICKREG ? " " : "",
-                                 cptr->flags & CLIENT_FLAG_NICKREG ? "Reg" : "", cptr->nick);
+      send_msg_client_to_console("ATENCION: [%ld] La IP %s tiene el router ADSL abierto en el puerto 23!. No se Glinea. (%ds). Nick Reg %s",
+                                 cnt, ipbuf, scantime, cptr->nick);
 
       /* Private event notification */
       evreg_broadcast(EVREG_FLAG_NEWPROXY,
@@ -521,17 +517,14 @@ scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
       reason = gConfig->gline.reason[0];
 
 #if 1 /* Temporal, puerto 23 Router ADSL abierto */
-/*    if ((proxy_type != 10) || (!(cptr->flags & CLIENT_FLAG_NICKREG))) */
-    if (proxy_type != 10)
+    if ((proxy_type != 10) || (!(cptr->flags & CLIENT_FLAG_NICKREG)))
       irc_gline_send(addrp, cnt, reason, proxy_port);
-/*
     else
       {
       send_raw("%s P %s :Tienes un router antiguo, como el 3com812, y debido a que las vulnerabilidades de ese modelo se aprovechan para usos maliciosos." CRLF, gMe.yy, ud);
-      send_raw("%s P %s :A partir del proximo dia 10/03/2008 no se permitira la entrada al iRC-Hispano a aquellos usuarios con dicho puerto abierto y debes cerrarlo para poder seguir utilizando los servicos de IRC Hispano." CRLF, gMe.yy);
+      send_raw("%s P %s :A partir del próximo día 11/03/2008 no se permitirá la entrada al iRC-Hispano a aquellos usuarios con dicho puerto abierto y debes cerrarlo para poder seguir utilizando los servicios de IRC Hispano." CRLF, gMe.yy);
       send_raw("%s P %s :Lamentamos las molestias que esto pueda causar y te invitamos a consultar la web http://www.irc-hispano.es//" CRLF, gMe.yy);
       }
-*/
 #else
     irc_gline_send(addrp, cnt, reason, proxy_port);
 #endif
