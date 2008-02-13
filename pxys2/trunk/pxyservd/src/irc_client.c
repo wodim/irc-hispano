@@ -214,6 +214,10 @@ irc_client_handle_private(toktabptr ttab)
     return; /* doh */
 
 #ifdef IRC_HISPANO
+  /* Ignoramos privados de NiCK */
+  if (!strcmp("NiCK", cptr->nick))
+    return;
+
   if (!((cptr->flags & CLIENT_FLAG_OPER) || (cptr->flags & CLIENT_FLAG_HELPER)))
 #else  
   if (!(cptr->flags & CLIENT_FLAG_OPER))
