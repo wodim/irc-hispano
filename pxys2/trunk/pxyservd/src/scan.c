@@ -517,10 +517,11 @@ scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
       reason = gConfig->gline.reason[0];
 
 #if 1 /* Temporal, puerto 23 Router ADSL abierto */
-    if ((proxy_type != 10) || (!(cptr->flags & CLIENT_FLAG_NICKREG))) 
-/*    if ((proxy_type != 10)) */
+    if (proxy_type != 10)
       irc_gline_send(addrp, cnt, reason, proxy_port);
-    else
+    else if ((!(cptr->flags & CLIENT_FLAG_NICKREG)) && (!cached))
+      irc_gline_send(addrp, cnt, reason, proxy_port);
+    else if (cptr->flags & CLIENT_FLAG_NICKREG)
       {
       char dst_nn[6];
       inttobase64(dst_nn, cptr->nserv, 2);
@@ -531,6 +532,8 @@ scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
       send_raw("%s P %s :A partir del próximo día 11/03/2008 no se permitirá la entrada al iRC-Hispano a aquellos usuarios con dicho puerto abierto y debes cerrarlo para poder seguir utilizando los servicios de IRC Hispano." CRLF, gMe.yy, dst_nn);
       send_raw("%s P %s :Lamentamos las molestias que esto pueda causar y te invitamos a consultar la web http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/como-cerrar-el-puerto-23-en-el-router-3com-812.html" CRLF, gMe.yy, dst_nn);
       }
+    else
+      send_msg_client_to_console("No se glinea al estar en cache");
 #else
     irc_gline_send(addrp, cnt, reason, proxy_port);
 #endif
