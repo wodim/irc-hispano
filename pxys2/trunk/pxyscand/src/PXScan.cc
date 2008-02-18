@@ -25,14 +25,16 @@
 #include "PXSession.h"
 
 /* Module headers */
-#include "PXMBouncerHispano.h"
-#include "PXMTheOnionRouter.h"
-#include "PXM3Com812.h"
 #include "PXMWingate.h"
 #include "PXMSocks.h"
 #include "PXMHttpProxy.h"
 #include "PXMHttpGet.h"
 #include "PXMCrazyBandit.h"
+#include "PXM3Com812.h"
+#include "PXM3Com812Web.h"
+#include "PXMTrojan.h"
+#include "PXMTheOnionRouter.h"
+#include "PXMBouncerHispano.h"
 
 #include <algorithm>
 #include <cassert>
@@ -71,11 +73,19 @@ PXScan::PXScan(const opas_msg_query &inQuery, PXSession *inSession,
       case CONFIG_MODULE_3COM812:
         this->RegisterModule(new PXM3Com812(this));
         break;
-      case CONFIG_MODULE_BOUNCERHISPANO:
-        this->RegisterModule(new PXMBouncerHispano(this, mod->port));
+      case CONFIG_MODULE_3COM812WEB:
+        this->RegisterModule(new PXM3Com812Web(this));
         break;
+#if 0
+      case CONFIG_MODULE_TROJAN:
+        this->RegisterModule(new PXMTrojan(this, mod->port));
+        break;
+#endif
       case CONFIG_MODULE_TOR:
         this->RegisterModule(new PXMTheOnionRouter(this, mod->port));
+        break;
+      case CONFIG_MODULE_BOUNCERHISPANO:
+        this->RegisterModule(new PXMBouncerHispano(this, mod->port));
         break;
       default:
         abort();

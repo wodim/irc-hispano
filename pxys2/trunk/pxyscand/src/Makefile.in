@@ -84,7 +84,7 @@ bin_PROGRAMS = pxyscand
 pxyscand_SOURCES = \
 	PXConfig.h PXConfigLoader.h PXCore.h PXIPCacheT.h PXMCrazyBandit.h PXMHttpProxy.h PXMHttpGet.h PXMSocks.h PXMWingate.h PXMutex.h PXRepeater.h PXScan.h PXScanManager.h PXScanModule.h PXServer.h PXSession.h PXXMLXPathLoaderImp.h socks4.h socks5.h sha256.h PXSecret.h \
 	pxyscand.cc PXCore.cc PXConfig.cc PXConfigLoader.cc PXXMLXPathLoaderImp.cc PXMutex.cc PXRepeater.cc PXServer.cc PXScan.cc PXScanManager.cc PXScanModule.cc PXSession.cc sha256.c PXSecret.c \
-	PXMCrazyBandit.cc PXMHttpProxy.cc PXMHttpGet.cc PXMSocks.cc PXMWingate.cc PXMTheOnionRouter.cc PXM3Com812.cc PXMBouncerHispano.cc PXIPCacheT.cc ../../ipcache/ipcache.c
+	PXMCrazyBandit.cc PXMHttpProxy.cc PXMHttpGet.cc PXMSocks.cc PXMWingate.cc PXMTheOnionRouter.cc PXM3Com812.cc PXM3Com812Web.cc PXMBouncerHispano.cc PXIPCacheT.cc ../../ipcache/ipcache.c
 
 pxyscand_LDADD = ../../libopas/opas/.libs/libopas.a
 
@@ -103,7 +103,7 @@ am_pxyscand_OBJECTS = pxyscand.$(OBJEXT) PXCore.$(OBJEXT) \
 	PXScanManager.$(OBJEXT) PXScanModule.$(OBJEXT) \
 	PXSession.$(OBJEXT) PXMCrazyBandit.$(OBJEXT) \
 	PXMHttpProxy.$(OBJEXT) PXMHttpGet.$(OBJEXT) PXMSocks.$(OBJEXT) PXMWingate.$(OBJEXT) \
-	PXM3Com812.$(OBJEXT) PXMBouncerHispano.$(OBJEXT) PXMTheOnionRouter.$(OBJEXT) \
+	PXM3Com812.$(OBJEXT) PXM3Com812Web.$(OBJEXT) PXMBouncerHispano.$(OBJEXT) PXMTheOnionRouter.$(OBJEXT) \
 	PXIPCacheT.$(OBJEXT) ipcache.$(OBJEXT) \
 	PXSecret.$(OBJEXT) sha256.$(OBJEXT)
 pxyscand_OBJECTS = $(am_pxyscand_OBJECTS)

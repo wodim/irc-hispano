@@ -269,16 +269,26 @@ PXConfigLoader::DoLoad(PXConfig *cfg)
           m.id = CONFIG_MODULE_CRAZYBANDIT;
         
         /* Handle new module type here. */
+        else if (!xmlStrcasecmp(s, (xmlChar*)"3com812"))
+          m.id = CONFIG_MODULE_3COM812;
+        else if (!xmlStrcasecmp(s, (xmlChar*)"3com812web"))
+          m.id = CONFIG_MODULE_3COM812WEB;
+        else if (!xmlStrcasecmp(s, (xmlChar*)"trojan"))
+          {
+          m.id = CONFIG_MODULE_TROJAN;
+          m.port = this->GetInteger(XP_SCANNER_MODULE, i, 65536);
+          // Note: port 0 not allowed for convenience.
+          if (m.port <= 0 || m.port >= 65536)
+            PXXMLException::Throw("Bad trojan port number", "scanner/module");
+          }
         else if (!xmlStrcasecmp(s, (xmlChar*)"tor"))
           {
           m.id = CONFIG_MODULE_TOR;
           m.port = this->GetInteger(XP_SCANNER_MODULE, i, 65536);
           // Note: port 0 not allowed for convenience.
           if (m.port <= 0 || m.port >= 65536)
-            PXXMLException::Throw("Bad bouncer port number", "scanner/module");
+            PXXMLException::Throw("Bad tor port number", "scanner/module");
           }
-        else if (!xmlStrcasecmp(s, (xmlChar*)"3com812"))
-          m.id = CONFIG_MODULE_3COM812;        
         else if (!xmlStrcmp(s, (xmlChar*)"bouncerhispano"))
           {
           m.id = CONFIG_MODULE_BOUNCERHISPANO;
