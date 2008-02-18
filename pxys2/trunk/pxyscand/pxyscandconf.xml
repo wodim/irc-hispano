@@ -51,6 +51,13 @@
     <log-agent>agent.log</log-agent>
     <timeout>30</timeout>
   </scanner>
+
+  <dnsbl>
+    <domain>zen.spamhaus.org</domain>
+    <nodnsbl>
+      <country>ES</country>
+    </nodnsbl>
+  </dnsbl>
   
   <cache>
     <directory>ipcache</directory>
