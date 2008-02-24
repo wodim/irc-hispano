@@ -2,7 +2,7 @@
 <pxyservd>
 
   <server>
-    <name>ceres.irc-hispano.org</name>
+    <name>proxyscanner.irc-hispano.org</name>
     <id>P1</id>
     <numeric>4032</numeric>
     <maxclients>1</maxclients>
@@ -10,21 +10,20 @@
     <sendq>1000000</sendq>
   </server>
   
-  <!-- MODIFICAR ESTO -->
   <hub>
-    <address>172.16.0.1</address>
+    <address>127.0.0.1</address>
     <port>4400</port>
     <bind-address></bind-address>
     <password>duck</password>
   </hub>
   
   <client>
-    <nickname>pxyh-ceres</nickname>
+    <nickname>pxysh</nickname>
     <nick-change-delay></nick-change-delay>
     <username>proxyscan</username>
     <hostname>bots.irc-hispano.org</hostname>
     <realname>IRC-Hispano Proxy Scanner</realname>
-    <userip>0.0.0.0</userip>
+    <userip>127.0.0.1</userip>
     <usermode>+idkoBrh</usermode>
     <channel>#proxy_info</channel>
     <channel-mode>+tnis</channel-mode>
@@ -36,9 +35,8 @@
     <server>sol.irc-hispano.org</server>
     <server>deep.space</server>
     <server>soyuz.irc-hispano.org</server>
-    <server>vulcan.irc-hispano.org</server>
-    <server>viento.irc-hispano.org</server>
-    <server>viento2.irc-hispano.org</server>
+    <server>services.irc-hispano.org</server>
+    <!-- AGREGAR HUBS y IRCD's DE WEBCHAT -->
     <userip>127.0.0.1</userip>
     <userip>255.255.255.255</userip>
     <userip>0/8</userip>
@@ -48,9 +46,8 @@
     <!-- AGREGAR IPS de bots, admins,... -->
   </noscan>
   
-  <!-- MODIFICAR ESTO -->
   <scanner>
-    <address>172.16.0.5</address>
+    <address>127.0.0.1</address>
     <port>9601</port>
     <bind-address></bind-address>
   </scanner>
@@ -68,25 +65,48 @@
   
   <gline>
     <delay>900</delay>
+    <!-- Tipos 
+         OPAS types of open proxy
+            O. Unknown/generic type
+            1. WinGate proxy
+            2. Socks v.4
+            3. Socks v.5
+            4. HTTP proxy (using the "CONNECT" method)
+            5. HTTP "POST"
+            6. Insecure Cisco router
+            7. Insecure IRC bouncer
+            8. HTTP "GET" (no implementado)
+            9. TheOnionRouter (TOR) (Desarrollo de IRC-Hispano)
+           10. 3Com812 (Desarrollo de IRC-Hispano)
+           11. Bouncer por Router ADSL Hackeado (Desarrollo de IRC-Hispano)
+           12. Troyano (Desarrollo de IRC-Hispano)
+    -->
     <!-- type constants taken from the OPAS library -->
-    <reason type="1">Misconfigured Wingate. Please visit http://www.undernet.org/proxyscan.php </reason><!-- space at the end for mIRC users -->
-    <reason type="2">Misconfigured Socks Server. Please visit http://www.undernet.org/proxyscan.php </reason>
-    <reason type="3">Misconfigured Socks Server. Please visit http://www.undernet.org/proxyscan.php </reason>
-    <reason type="4">Misconfigured Proxy Server. Please visit http://www.undernet.org/proxyscan.php </reason>
-    <reason type="0">Misconfigured Proxy Server. Please visit http://www.undernet.org/proxyscan.php </reason>
+    <reason type="0">Servidor Proxy mal configurado, por favor visita http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/seguridad.html </reason>
+    <reason type="1">Wingate mal configurado, por favor visita http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/seguridad.html </reason><!-- space at the end for mIRC users -->
+    <reason type="2">Servidor Socks4 mal configurado, por favor visita http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/seguridad.html </reason>
+    <reason type="3">Servidor Socks5 mal configurado, por favor visita http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/seguridad.html </reason>
+    <reason type="4">Servidor Proxy HTTP mal configurado, por favor visita http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/seguridad.html </reason>
+    <reason type="5">Servidor Proxy HTTP mal configurado, por favor visita http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/seguridad.html </reason>
+    <reason type="6">Router Cisco mal configurado, por favor visita http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/seguridad.html </reason>
+    <reason type="7">Bouncer de IRC mal configurado, por favor visita http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/seguridad.html </reason>
+    <reason type="8">Servidor Proxy HTTP mal configurado, por favor visita http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/seguridad.html </reason>
+    <reason type="9">Acceso desde TOR no permitido, por favor visita http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/seguridad.html </reason>
+    <reason type="10">Router ADSL mal configurado, por favor visita http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/seguridad.html </reason>
+    <reason type="11">Router Hackeado, avise inmediatamente a su proveedor, mas informacion en http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/como-cerrar-el-puerto-23-en-el-router-3com-812.html </reason>
+    <reason type="12">Troyano en su equipo, por favor visitahttp://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/seguridad.html </reason>
   </gline>
   
   <notice>
-    <line>Esta red tiene en funcionamiento un detector que comprueba</line>
-    <line>proxies abiertos, socks/wingates abiertos y troyanos abiertos.</line>
-    <line>Si te aparece una conexion desde scan.irc-hispano.org/194.149.73.250</line>
-    <line>por favor no la tenga en cuenta, ya que es el detector en accion y NO es un intento hostil.</line>
+    <line>Esta red tiene en funcionamiento un detector que comprueba proxies abiertos, socks/wingates abiertos y troyanos abiertos.</line>
+    <line>Si le aparece una alerta de conexion entrante al mismo tiempo que esta entrando en el IRC, por favor no la tenga en cuenta, es el detector en accion y NO es un intento hostil.</line>
+    <line>Para mas informacion visita http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/seguridad.html</line>
   </notice>
   
   <help-menu>
 IRC-Hispano Proxy Scanner Service Help Menu
 ===========================================
-  Comandos (Solo OPERadores de la red)
+  Comandos (Solo IRCOPS y OPERadores de la red)
   ------------------------------------
     INV             - Te invita al canal de consola
     SERVERS [...]   - Muestra estadisticas de servidores

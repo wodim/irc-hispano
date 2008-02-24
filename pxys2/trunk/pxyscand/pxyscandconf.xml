@@ -3,9 +3,9 @@
   
   <opas>
     <port>9601</port>
-    <bind-address>172.16.0.5</bind-address>
+    <bind-address>127.0.0.1</bind-address>
     <protocol>tcp</protocol>
-    <allow>172.16.0.5</allow>
+    <allow>127.0.0.1</allow>
     <limit>0</limit><!-- requests per minute, 0=unlimited -->
   </opas>
   
