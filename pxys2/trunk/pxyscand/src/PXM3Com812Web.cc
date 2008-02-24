@@ -19,9 +19,9 @@
 //
 #define RCSID "$Id: PXM3Com812Web.cc,v 1.4 2006/09/10 22:16:39 spale Exp $"
 
-#define R3COM812_SHORTNAME "3Com812"
+#define R3COM812WEB_SHORTNAME "3Com812"
 
-#define R3COM812_DESCR    "Insecure 3Com 812 ADSL router"
+#define R3COM812WEB_DESCR    "Insecure 3Com 812 ADSL router"
 
 #define R3COM812WEB_PORT  80
 
@@ -57,7 +57,7 @@ PXM3Com812Web::~PXM3Com812Web()
 void
 PXM3Com812Web::InitModule()
   {
-  RegisterPXM(R3COM812_SHORTNAME, R3COM812WEB_PORT, &sConnCount, &sProxyCount);
+  RegisterPXM(R3COM812WEB_SHORTNAME, R3COM812WEB_PORT, &sConnCount, &sProxyCount);
   }
 
 bool
@@ -126,20 +126,23 @@ PXM3Com812Web::ProcessEvent(peak_stream s, int type)
     case PEAK_STREAM_EVT_OPEN:
       sConnCount++;
       peak_stream_set_buffered(s, 1, 64, 64*2, NULL);
-      peak_stream_msgbuf_make(s, "GET / HTTP1.1" CRLF);
+
+//      peak_stream_msgbuf_make(s, "GET /adsl_reset HTTP1.1" CRLF);
+      peak_stream_msgbuf_make(s, "GET / HTTP1.1" CRLF CRLF);
       break;
 
     case PEAK_STREAM_EVT_READ:
       line = peak_stream_get_line(s);
-#if 0
+#if 1
       clog << "PXM3Com812Web:: line: " << line << endl;
 #endif
+//      if (!strncmp(line, "HTTP/1.0 200 OK", 15))
       if (!strncmp(line, "OCR-812", 7))
         {
         sProxyCount++;
         this->Cleanup();
         this->ProxyFound(OPAS_PROXY_TYPE_3COM812, R3COM812WEB_PORT,
-                         R3COM812_DESCR);
+                         R3COM812WEB_DESCR);
         return; /* we are done */
         }
       else if (mLinesTry++ < MAX_LINES_TRY)
