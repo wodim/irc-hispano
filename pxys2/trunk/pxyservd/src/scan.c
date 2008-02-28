@@ -541,6 +541,22 @@ scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
   }
 
 void
+scan_reply_dnsbl(const struct in_addr *addrp, uint32_t ud, int cached,
+                 int dnsbl_type, const char *dnsl_descr)
+  {
+  /*const char *reason; */
+  struct Client *cptr = irc_network_find_client(yxx_unpack(ud));
+
+  /* Verify that, if a client still exists for this numeric, he has the same
+   * IP that we've just scanned.
+   */
+  if (cptr && cptr->addr.ip4.s_addr == addrp->s_addr
+      && (cptr->flags & CLIENT_FLAG_SCANNING))
+    {
+    }
+  }
+
+void
 scan_reply_error(const struct in_addr *addrp, uint32_t ud, uint32_t error)
   {
   /* Ok, can't scan this IP.. no luck ! */
@@ -572,6 +588,13 @@ scan_reply6_noproxy(const struct in6_addr *addrp, uint32_t ud, int cached)
 void
 scan_reply6_proxy(const struct in6_addr *addrp, uint32_t ud, int cached,
                   int proxy_type, uint16_t proxy_port, const char *proxy_descr)
+  {
+  /* Unused for now */
+  }
+
+void
+scan_reply6_dnsbl(const struct in6_addr *addrp, uint32_t ud, int cached,
+                  int dnsbl_type, const char *dnsbl_descr)
   {
   /* Unused for now */
   }
