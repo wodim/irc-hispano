@@ -45,10 +45,12 @@ PXSession::PXSession(PXServer *inServer, peak_stream inStream)
     OPASQuery,
     OPASReplyNoProxy,
     OPASReplyProxy,
+    OPASReplyDNSBL,
     NULL,
     OPASQuery6,
     OPASReply6NoProxy,
     OPASReply6Proxy,
+    OPASReply6DNSBL,
     NULL,
     OPASMsgUser
     };
@@ -342,6 +344,12 @@ PXSession::OPASReplyProxy(struct opas_msg_reply_proxy *replyp, void *context)
   }
 
 void
+PXSession::OPASReplyDNSBL(struct opas_msg_reply_dnsbl *replyp, void *context)
+  {
+  clog << "PXSession::OPASReplyDNSBL" << endl;
+  }
+
+void
 PXSession::OPASQuery6(struct opas_msg_query6 *queryp, void *context)
   {
   clog << "PXSession::OPASQuery6" << endl;
@@ -357,6 +365,12 @@ void
 PXSession::OPASReply6Proxy(struct opas_msg_reply6_proxy *replyp, void *context)
   {
   clog << "PXSession::OPASReply6Proxy" << endl;
+  }
+
+void
+PXSession::OPASReply6DNSBL(struct opas_msg_reply6_dnsbl *replyp, void *context)
+  {
+  clog << "PXSession::OPASReply6DNSBL" << endl;
   }
 
 void
