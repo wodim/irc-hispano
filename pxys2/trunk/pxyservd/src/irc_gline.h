@@ -32,6 +32,6 @@ extern void irc_gline_finalize(void);
  *  0 : OK
  */
 extern void irc_gline_send(const struct in_addr *addr, int hitcnt,
-                           const char *reason, uint16_t port);
+                           const char *reason);
 
 #endif /* INCLUDED_IRC_MODE_H */

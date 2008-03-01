@@ -43,7 +43,6 @@ struct g_data
   struct in_addr addr;
   int hitcnt;
   char reason[248];
-  uint16_t port;
   };
 
 struct g_elem
@@ -96,7 +95,6 @@ glineq_push(const struct g_args *args)
     node->data.addr = args->addr;
     node->data.hitcnt = args->hitcnt;
     snprintf(node->data.reason, sizeof(node->data.reason), "%s", args->reason);
-    node->data.port = args->port;
 
     node->prev = NULL;
     node->next = lhead;
@@ -123,7 +121,6 @@ glineq_first()
     args.addr   = ltail->data.addr;
     args.hitcnt = ltail->data.hitcnt;
     args.reason = ltail->data.reason;
-    args.port   = ltail->data.port;
     argsp = &args;
     }
 

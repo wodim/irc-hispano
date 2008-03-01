@@ -419,7 +419,8 @@ void
 scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
                  int proxy_type, uint16_t proxy_port, const char *proxy_descr)
   {
-  const char *reason;
+  char reason[256];
+  char *reason2;
   struct Client *cptr = irc_network_find_client(yxx_unpack(ud));
   
   /* Verify that, if a client still exists for this numeric, he has the same
@@ -512,15 +513,17 @@ scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
       }
     
     if (proxy_type >= 0 && proxy_type < 13)
-      reason = gConfig->gline.reason[proxy_type];
+      reason2 = gConfig->gline.reason[proxy_type];
     else
-      reason = gConfig->gline.reason[0];
+      reason2 = gConfig->gline.reason[0];
+
+    snprintf(reason, sizeof(reason), "(puerto %u) %s", proxy_port, reason2);
 
 #if 1 /* Temporal, puerto 23 Router ADSL abierto */
     if (proxy_type != 10)
-      irc_gline_send(addrp, cnt, reason, proxy_port);
+      irc_gline_send(addrp, cnt, reason);
     else if ((!(cptr->flags & CLIENT_FLAG_NICKREG)) && (!cached))
-      irc_gline_send(addrp, cnt, reason, proxy_port);
+      irc_gline_send(addrp, cnt, reason);
     else if (cptr->flags & CLIENT_FLAG_NICKREG)
       {
       char dst_nn[6];
@@ -535,7 +538,7 @@ scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
     else
       send_msg_client_to_console("No se glinea al estar en cache");
 #else
-    irc_gline_send(addrp, cnt, reason, proxy_port);
+    irc_gline_send(addrp, cnt, reason);
 #endif
     }
   }
@@ -629,7 +632,7 @@ scan_reply_dnsbl(const struct in_addr *addrp, uint32_t ud, int cached,
 
     reason = gConfig->gline.dnsblreason;
 
-    irc_gline_send(addrp, cnt, reason, 0);
+    irc_gline_send(addrp, cnt, reason);
     }
   }
 
