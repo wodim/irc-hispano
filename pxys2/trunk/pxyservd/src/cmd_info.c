@@ -29,6 +29,7 @@
 #include "irc_client.h"
 #include "irc_userbase.h"
 #include "scan.h" /* scan_check_noscan() */
+#include "irc_numnicks.h" /* PROVISIONAL */
 
 #include <peak/peak.h>
 
@@ -200,6 +201,24 @@ info_nick(const char *dst, toktabptr ttab)
 #ifdef SPANISH
   send_client_to_one(dst, "%s es %s@%s [%s]", u->nick, u->user, 
                      get_host(u, dst), get_ip(u, dst));
+
+#if 1 /* Provisional, cuando haya GMSiS, quitarlo */
+  {
+    struct Client *dst_ptr = irc_network_find_client(yxx_to_int(dst));
+
+    if (dst_ptr && (dst_ptr->flags & CLIENT_FLAG_HDDVIEWER))
+    {
+      char dst_nn[6];
+      inttobase64(dst_nn, u->nserv, 2);
+      inttobase64(dst_nn + 2, u->nnick, 3);
+      dst_nn[5] = '\0';
+
+      send_client_to_one(dst, "El numerico es %s", dst_nn);
+    }
+
+  }
+#endif
+
   if (u->flags & CLIENT_FLAG_NICKREG)
     send_client_to_one(dst, "%s tiene el nick registrado y protegido", u->nick);
   if (u->flags & CLIENT_FLAG_OPER)
