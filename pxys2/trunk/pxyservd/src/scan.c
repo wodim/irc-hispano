@@ -542,9 +542,9 @@ scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
 
 void
 scan_reply_dnsbl(const struct in_addr *addrp, uint32_t ud, int cached,
-                 int dnsbl_type, const char *dnsl_descr)
+                 int dnsbl_type, const char *dnsbl_descr)
   {
-  /*const char *reason; */
+  const char *reason;
   struct Client *cptr = irc_network_find_client(yxx_unpack(ud));
 
   /* Verify that, if a client still exists for this numeric, he has the same
@@ -553,6 +553,83 @@ scan_reply_dnsbl(const struct in_addr *addrp, uint32_t ud, int cached,
   if (cptr && cptr->addr.ip4.s_addr == addrp->s_addr
       && (cptr->flags & CLIENT_FLAG_SCANNING))
     {
+    char ipbuf[16];
+    int cnt;
+    time_t scantime;
+
+    scan_client_remove(cptr);
+
+    scantime = peak_time() - cptr->scan_timestamp;
+
+    if (!inet_ntop(AF_INET, &cptr->addr.ip4, ipbuf, sizeof(ipbuf)))
+      return;
+
+    /* /!\ O(n) count but everyone likes it...
+     *     Used for proxytop's stats too.
+     */
+    cnt = irc_userbase_proxycount(&cptr->addr.ip4);
+
+    if (cached)
+      {
+#ifdef SPANISH
+      log_write(LOGID_CURRENT, "*@%s [%ld] %s (DNSBL) cacheado", ipbuf, cnt,
+                dnsbl_descr);
+
+      if (gConfig->client.show_cached)
+        send_msg_client_to_console("PG *@%s [%ld] %s (DNSBL cached). Nick%s%s: %s",
+                                   ipbuf, cnt, dnsbl_descr,
+                                   cptr->flags & CLIENT_FLAG_NICKREG ? " " : "",
+                                   cptr->flags & CLIENT_FLAG_NICKREG ? "Reg" : "", cptr->nick);
+
+      evreg_broadcast(EVREG_FLAG_CACHED,
+                      "[EV] PG *@%s [%ld] %s (DNSBL cached)",
+                      ipbuf, cnt, dnsbl_descr);
+
+#else
+      log_write(LOGID_CURRENT, "*@%s [%ld] %s (DNSBL) cached", ipbuf, cnt,
+                dnsbl_descr);
+
+      if (gConfig->client.show_cached)
+        send_msg_client_to_console("PG *@%s [%ld] %s (DNSBL cached)",
+                                   ipbuf, cnt, dnsbl_descr);
+
+      evreg_broadcast(EVREG_FLAG_CACHED,
+                      "[EV] PG *@%s [%ld] %s (DNSBL cached)",
+                      ipbuf, cnt, dnsbl_descr);
+#endif
+      }
+    else
+      {
+      /* Logging */
+      log_write(LOGID_CURRENT, "*@%s [%ld] %s (DNSBL)", ipbuf, cnt,
+                dnsbl_descr);
+
+#ifdef SPANISH
+      /* Console channel */
+      send_msg_client_to_console("PG *@%s [%ld] %s (DNSBL %ds). Nick%s%s: %s", ipbuf,
+                                 cnt, dnsbl_descr, scantime,
+                                 cptr->flags & CLIENT_FLAG_NICKREG ? " " : "",
+                                 cptr->flags & CLIENT_FLAG_NICKREG ? "Reg" : "", cptr->nick);
+
+      /* Private event notification */
+      evreg_broadcast(EVREG_FLAG_NEWPROXY,
+                      "[EV] PG *@%s [%ld] %s (DNSBL %ds)",
+                      ipbuf, cnt, dnsbl_descr, scantime);
+#else
+      /* Console channel */
+      send_msg_client_to_console("PG *@%s [%ld] %s (DNSBL %ds)", ipbuf,
+                                 cnt, dnsbl_descr, scantime);
+
+      /* Private event notification */
+      evreg_broadcast(EVREG_FLAG_NEWPROXY,
+                      "[EV] PG *@%s [%ld] %s (DNSBL %ds)",
+                      ipbuf, cnt, dnsbl_descr, scantime);
+#endif
+      }
+
+    reason = gConfig->gline.dnsblreason;
+
+    irc_gline_send(addrp, cnt, reason, 0);
     }
   }
 

@@ -101,6 +101,7 @@
 #define XP_GLINE_REASON10       "reason[@type=\"10\"]"
 #define XP_GLINE_REASON11       "reason[@type=\"11\"]"
 #define XP_GLINE_REASON12       "reason[@type=\"12\"]"
+#define XP_GLINE_DNSBL          "dnsblreason"
 
 #define XP_NOTICE_LINE          "/pxyservd/notice/line"
 
@@ -542,6 +543,7 @@ cfgloader_doparse(Config *cfg, xmlXPathContextPtr cx, xmlDocPtr doc)
   cfg->gline.reason[10] = cfgloader_gets(XP_GLINE_REASON10, cx, doc, 0);
   cfg->gline.reason[11] = cfgloader_gets(XP_GLINE_REASON11, cx, doc, 0);
   cfg->gline.reason[12] = cfgloader_gets(XP_GLINE_REASON12, cx, doc, 0);
+  cfg->gline.dnsblreason = cfgloader_gets(XP_GLINE_DNSBL, cx, doc, 1);
 
   for (i = 1; i < 13; i++)
     if (cfg->gline.reason[i] == NULL)
@@ -712,6 +714,7 @@ cfgloader_destroy(Config *cfg)
   xfree(cfg->gline.reason[10]);
   xfree(cfg->gline.reason[11]);
   xfree(cfg->gline.reason[12]);  
+  xfree(cfg->gline.dnsblreason);
 
   for (notice = cfg->noticelist; notice; notice = notice_next)
     {
@@ -822,6 +825,7 @@ cfgloader_dump()
   printf("Gline:reason[10] = \"%s\"\n", cfg->gline.reason[10]);
   printf("Gline:reason[11] = \"%s\"\n", cfg->gline.reason[11]);
   printf("Gline:reason[12] = \"%s\"\n", cfg->gline.reason[12]);
+  printf("Gline:dnsblreason = \"%s\"\n", cfg->gline.dnsblreason);
   if (cfg->noticelist)
     printf("\n");
   for (notice = cfg->noticelist; notice; notice = notice->next)

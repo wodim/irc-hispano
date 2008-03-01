@@ -119,6 +119,7 @@ typedef struct CGline
   {
   int delay;
   char *reason[13];
+  char *dnsblreason;
   } CGline;
 
 typedef struct CNoticeLink
