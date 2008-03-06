@@ -53,7 +53,18 @@
   </scanner>
 
   <dnsbl>
-    <domain>zen.spamhaus.org</domain>
+    <server>
+      <name>Spamhaus</name>
+      <domain>zen.spamhaus.org</domain>
+    </server>
+    <server>
+      <name>Ahbl</name>
+      <domain>.dnsbl.ahbl.org</domain>
+    </server>
+    <server>
+      <name>Sorbs</name>
+      <domaino>dnsbl.sorbs.net</domain>
+    </server>
     <nodnsbl>
       <country>ES</country>
     </nodnsbl>
