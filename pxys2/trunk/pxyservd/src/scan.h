@@ -54,7 +54,8 @@ extern void scan_reply_proxy(const struct in_addr *addrp, uint32_t ud,
                              int cached, int proxy_type, uint16_t proxy_port,
                               const char *proxy_descr);
 extern void scan_reply_dnsbl(const struct in_addr *addrp, uint32_t ud,
-                             int cached, int dnsbl_type, const char *dnsbl_descr);
+                             int cached, int dnsbl_type, const char *server,
+                             const char *dnsbl_descr);
 extern void scan_reply_error(const struct in_addr *addrp, uint32_t ud,
                              uint32_t error);
 extern void scan_reply6_noproxy(const struct in6_addr *addrp, uint32_t ud,
@@ -63,7 +64,8 @@ extern void scan_reply6_proxy(const struct in6_addr *addrp, uint32_t ud,
                               int cached, int proxy_type, uint16_t proxy_port,
                               const char *proxy_descr);
 extern void scan_reply6_dnsbl(const struct in6_addr *addrp, uint32_t ud,
-                              int cached, int dnsbl_type, const char *dnsbl_descr);
+                              int cached, int dnsbl_type, const char *server,
+                              const char *dnsbl_descr);
 extern void scan_reply6_error(const struct in6_addr *addrp, uint32_t ud,
                               uint32_t error);
 extern void scan_reply_command(void *data, size_t length, uint32_t ud);

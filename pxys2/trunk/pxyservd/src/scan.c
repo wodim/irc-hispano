@@ -545,7 +545,7 @@ scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
 
 void
 scan_reply_dnsbl(const struct in_addr *addrp, uint32_t ud, int cached,
-                 int dnsbl_type, const char *dnsbl_descr)
+                 int dnsbl_type, const char *server, const char *dnsbl_descr)
   {
   const char *reason;
   struct Client *cptr = irc_network_find_client(yxx_unpack(ud));
@@ -575,58 +575,58 @@ scan_reply_dnsbl(const struct in_addr *addrp, uint32_t ud, int cached,
     if (cached)
       {
 #ifdef SPANISH
-      log_write(LOGID_CURRENT, "*@%s [%ld] %s (DNSBL) cacheado", ipbuf, cnt,
-                dnsbl_descr);
+      log_write(LOGID_CURRENT, "*@%s [%ld] %s (%s DNSBL) cacheado", ipbuf, cnt,
+                dnsbl_descr, server);
 
       if (gConfig->client.show_cached)
-        send_msg_client_to_console("PG *@%s [%ld] %s (DNSBL cached). Nick%s%s: %s",
-                                   ipbuf, cnt, dnsbl_descr,
+        send_msg_client_to_console("PG *@%s [%ld] %s (%s DNSBL cached). Nick%s%s: %s",
+                                   ipbuf, cnt, dnsbl_descr, server,
                                    cptr->flags & CLIENT_FLAG_NICKREG ? " " : "",
                                    cptr->flags & CLIENT_FLAG_NICKREG ? "Reg" : "", cptr->nick);
 
       evreg_broadcast(EVREG_FLAG_CACHED,
-                      "[EV] PG *@%s [%ld] %s (DNSBL cached)",
-                      ipbuf, cnt, dnsbl_descr);
+                      "[EV] PG *@%s [%ld] %s (%s DNSBL cached)",
+                      ipbuf, cnt, dnsbl_descr, server);
 
 #else
-      log_write(LOGID_CURRENT, "*@%s [%ld] %s (DNSBL) cached", ipbuf, cnt,
-                dnsbl_descr);
+      log_write(LOGID_CURRENT, "*@%s [%ld] %s (%s DNSBL) cached", ipbuf, cnt,
+                dnsbl_descr, server);
 
       if (gConfig->client.show_cached)
-        send_msg_client_to_console("PG *@%s [%ld] %s (DNSBL cached)",
-                                   ipbuf, cnt, dnsbl_descr);
+        send_msg_client_to_console("PG *@%s [%ld] %s (%s DNSBL cached)",
+                                   ipbuf, cnt, dnsbl_descr, server);
 
       evreg_broadcast(EVREG_FLAG_CACHED,
-                      "[EV] PG *@%s [%ld] %s (DNSBL cached)",
-                      ipbuf, cnt, dnsbl_descr);
+                      "[EV] PG *@%s [%ld] %s (%s DNSBL cached)",
+                      ipbuf, cnt, dnsbl_descr, server);
 #endif
       }
     else
       {
       /* Logging */
-      log_write(LOGID_CURRENT, "*@%s [%ld] %s (DNSBL)", ipbuf, cnt,
-                dnsbl_descr);
+      log_write(LOGID_CURRENT, "*@%s [%ld] %s (%s DNSBL)", ipbuf, cnt,
+                dnsbl_descr, server);
 
 #ifdef SPANISH
       /* Console channel */
-      send_msg_client_to_console("PG *@%s [%ld] %s (DNSBL %ds). Nick%s%s: %s", ipbuf,
-                                 cnt, dnsbl_descr, scantime,
+      send_msg_client_to_console("PG *@%s [%ld] %s (%s DNSBL %ds). Nick%s%s: %s", ipbuf,
+                                 cnt, dnsbl_descr, server, scantime,
                                  cptr->flags & CLIENT_FLAG_NICKREG ? " " : "",
                                  cptr->flags & CLIENT_FLAG_NICKREG ? "Reg" : "", cptr->nick);
 
       /* Private event notification */
       evreg_broadcast(EVREG_FLAG_NEWPROXY,
-                      "[EV] PG *@%s [%ld] %s (DNSBL %ds)",
-                      ipbuf, cnt, dnsbl_descr, scantime);
+                      "[EV] PG *@%s [%ld] %s (%s DNSBL %ds)",
+                      ipbuf, cnt, dnsbl_descr, server, scantime);
 #else
       /* Console channel */
-      send_msg_client_to_console("PG *@%s [%ld] %s (DNSBL %ds)", ipbuf,
-                                 cnt, dnsbl_descr, scantime);
+      send_msg_client_to_console("PG *@%s [%ld] %s (%s DNSBL %ds)", ipbuf,
+                                 cnt, dnsbl_descr, server, scantime);
 
       /* Private event notification */
       evreg_broadcast(EVREG_FLAG_NEWPROXY,
-                      "[EV] PG *@%s [%ld] %s (DNSBL %ds)",
-                      ipbuf, cnt, dnsbl_descr, scantime);
+                      "[EV] PG *@%s [%ld] %s (%s DNSBL %ds)",
+                      ipbuf, cnt, dnsbl_descr, server, scantime);
 #endif
       }
 
@@ -674,7 +674,7 @@ scan_reply6_proxy(const struct in6_addr *addrp, uint32_t ud, int cached,
 
 void
 scan_reply6_dnsbl(const struct in6_addr *addrp, uint32_t ud, int cached,
-                  int dnsbl_type, const char *dnsbl_descr)
+                  int dnsbl_type, const char *server, const char *dnsbl_descr)
   {
   /* Unused for now */
   }
