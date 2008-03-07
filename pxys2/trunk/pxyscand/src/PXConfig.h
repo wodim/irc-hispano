@@ -81,6 +81,36 @@ struct PXConfigScanner
   time_t timeout;
   };
 
+struct Country
+  {
+  char *country;
+  };
+  
+struct PXConfigNoDNSBL
+  {
+  vector<Country> country;
+  vector<NetworkNetmask> address;
+  };
+  
+struct TypesDNSBL
+  {
+  int id;
+  char *reason;;
+  };
+  
+struct PXConfigDNSBLServer
+  {
+  char *server;
+  char *domain;
+  vector<TypesDNSBL> types;
+  };
+  
+struct PXConfigDNSBL
+  {
+  vector<PXConfigDNSBLServer> servers;
+  vector<PXConfigNoDNSBL> nocheck;
+  };
+
 struct PXConfigCache
   {
   char *dir;
