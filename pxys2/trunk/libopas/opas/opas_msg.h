@@ -94,6 +94,7 @@ struct opas_msg_reply_dnsbl
   struct in_addr addr;
   uint32_t timestamp;
   uint16_t dnsbl_type;
+  char server[1];
   char dnsbl_descr[1];
   };
 
@@ -104,6 +105,7 @@ struct opas_msg_reply6_dnsbl
   struct in6_addr addr;
   uint32_t timestamp;
   uint16_t dnsbl_type;
+  char server[1];
   char dnsbl_descr[1];
   };
 

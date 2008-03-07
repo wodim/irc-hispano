@@ -101,13 +101,13 @@ struct opas_callbacks
   opas_query_callback query_fun;
   opas_reply_noproxy_callback reply_noproxy_fun;
   opas_reply_proxy_callback reply_proxy_fun;
-  opas_reply_error_callback reply_error_fun;
   opas_reply_dnsbl_callback reply_dnsbl_fun;
+  opas_reply_error_callback reply_error_fun;
   opas_query6_callback query6_fun;
   opas_reply6_noproxy_callback reply6_noproxy_fun;
   opas_reply6_proxy_callback reply6_proxy_fun;
-  opas_reply6_error_callback reply6_error_fun;
   opas_reply6_dnsbl_callback reply6_dnsbl_fun;
+  opas_reply6_error_callback reply6_error_fun;
   opas_msg_user_callback msg_user_fun;
   };
 
@@ -162,11 +162,13 @@ extern void opas_reply6_error(opas_session_t session,
 
 extern void opas_reply_dnsbl(opas_session_t session,
                              struct opas_msg_query *queryp, int from_cache,
-                             time_t ts, uint16_t type, const char *descr);
+                             time_t ts, uint16_t type, const char *server,
+                             const char *descr);
 
 extern void opas_reply6_dnsbl(opas_session_t session,
                               struct opas_msg_query6 *queryp, int from_cache,
-                              time_t ts, uint16_t type, const char *descr);
+                              time_t ts, uint16_t type, const char *server,
+                              const char *descr);
 
 extern void opas_send_msg_user(opas_session_t session, const void *data,
                                uint32_t data_length, int reply,

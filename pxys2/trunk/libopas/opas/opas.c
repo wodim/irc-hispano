@@ -603,7 +603,8 @@ opas_reply6_proxy(opas_session_t session, struct opas_msg_query6 *queryp,
 
 void
 opas_reply_dnsbl(opas_session_t session, struct opas_msg_query *queryp,
-                 int from_cache, time_t ts, uint16_t type, const char *descr)
+                 int from_cache, time_t ts, uint16_t type, const char *server,
+                 const char *descr)
   {
   struct opas_msg_reply_dnsbl *replydns;
   size_t len = sizeof(struct opas_msg_reply_dnsbl) + strlen(descr);
@@ -619,6 +620,7 @@ opas_reply_dnsbl(opas_session_t session, struct opas_msg_query *queryp,
   replydns->addr = queryp->addr;
   replydns->timestamp = ts;
   replydns->dnsbl_type = type;
+  strcpy(replydns->server, server);
   strcpy(replydns->dnsbl_descr, descr);
   OPAS_HEADER_SETSIZE(replydns->head, len - 4);
   OPAS_REPLY_DNSBL_HTON(replydns);
@@ -631,7 +633,8 @@ opas_reply_dnsbl(opas_session_t session, struct opas_msg_query *queryp,
 
 void
 opas_reply6_dnsbl(opas_session_t session, struct opas_msg_query6 *queryp,
-                  int from_cache, time_t ts, uint16_t type, const char *descr)
+                  int from_cache, time_t ts, uint16_t type, const char *server,
+                  const char *descr)
   {
   struct opas_msg_reply6_dnsbl *replydns;
   size_t len = sizeof(struct opas_msg_reply6_dnsbl) + strlen(descr);
@@ -647,6 +650,7 @@ opas_reply6_dnsbl(opas_session_t session, struct opas_msg_query6 *queryp,
   replydns->addr = queryp->addr;
   replydns->timestamp = ts;
   replydns->dnsbl_type = type;
+  strcpy(replydns->server, server);
   strcpy(replydns->dnsbl_descr, descr);
   OPAS_HEADER_SETSIZE(replydns->head, len - 4);
   OPAS_REPLY_DNSBL_HTON(replydns);
