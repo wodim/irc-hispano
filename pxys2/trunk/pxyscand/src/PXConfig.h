@@ -114,7 +114,7 @@ struct PXConfigDNSBLServer
 struct PXConfigDNSBL
   {
   vector<PXConfigDNSBLServer> servers;
-  vector<PXConfigNoDNSBL> nocheck;
+  PXConfigNoDNSBL nocheck;
   };
 
 struct PXConfigCache

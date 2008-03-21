@@ -55,6 +55,16 @@
 #define XP_SCANNER_LOG_AGENT           "log-agent"
 #define XP_SCANNER_TIMEOUT             "timeout"
 
+#define XP_DNSBL                       "/pxyscand/dnsbl"
+#define XP_DNSBL_SERVER                "server"
+#define XP_DNSBL_SERVER_NAME           "name"
+#define XP_DNSBL_SERVER_DOMAIN         "domain"
+#define XP_DNSBL_SERVER_REASON_ATTR    "reason/@type"
+#define XP_DNSBL_SERVER_REASON         "reason[@type]"
+#define XP_DNSBL_NODNSBL               "nodnsbl"
+#define XP_DNSBL_NODNSBL_COUNTRY       "country"
+#define XP_DNSBL_NODNSBL_ADDRESS       "address"
+
 #define XP_CACHE                       "/pxyscand/cache"
 #define XP_CACHE_DIRECTORY             "directory"
 #define XP_CACHE_EXPIRE                "expire"
@@ -245,18 +255,21 @@ PXConfigLoader::DoLoad(PXConfig *cfg)
         if (!xmlStrcasecmp(s, (xmlChar*)"wingate"))
           m.id = CONFIG_MODULE_WINGATE;
         else if (!xmlStrcasecmp(s, (xmlChar*)"socks"))
-	{
+	        {
           m.id = CONFIG_MODULE_SOCKS;
-	  try {
-	    m.port = this->GetInteger(XP_SCANNER_MODULE, i, 65536);
-	  } catch (PXXMLException &e) {
-	    clog << "Please note that socks ports are now mandatory and must be specified in the config file" << endl;
-	    throw;
-	  }
-	  // Note: port 0 not allowed for convenience.
-	  if (m.port <= 0 || m.port >= 65536)
-	    PXXMLException::Throw("Bad socks port number", "scanner/module");
-	}
+	        try 
+	          {
+	          m.port = this->GetInteger(XP_SCANNER_MODULE, i, 65536);
+	          }
+	        catch (PXXMLException &e)
+	          {
+	          clog << "Please note that socks ports are now mandatory and must be specified in the config file" << endl;
+      	    throw;
+	          }
+	        // Note: port 0 not allowed for convenience.
+	        if (m.port <= 0 || m.port >= 65536)
+	          PXXMLException::Throw("Bad socks port number", "scanner/module");
+	        }
         else if (!xmlStrcmp(s, (xmlChar*)"http"))
           {
           m.id = CONFIG_MODULE_HTTP;
@@ -373,6 +386,94 @@ PXConfigLoader::DoLoad(PXConfig *cfg)
     xmlXPathFreeObject(o);
     }
 
+  if ((o = this->EvalUnique(XP_DNSBL)))
+    {
+    StPXXPathContextNode cxNode(&mCx->node, o->nodesetval->nodeTab[0]);
+    
+    if (!(o2 = this->Eval(XP_DNSBL_SERVER)))
+      PXXMLException::Throw("Missing parameter", "dnsbl/server");
+          
+    cfg->dnsbl.servers.reserve(o2->nodesetval->nodeNr);
+    for (int i = 0; i < o2->nodesetval->nodeNr; i++)
+      {
+      StPXXPathContextNode cxNodeTarget(&mCx->node,
+                                        o2->nodesetval->nodeTab[i]);
+      xmlXPathObjectPtr o3;
+      PXConfigDNSBLServer server;
+      
+      server.name = (char*)CopyString(XP_DNSBL_SERVER_NAME, 0, 1);
+      server.domain = (char*)CopyString(XP_DNSBL_SERVER_DOMAIN, 0, 1);
+
+      if (!(o3 = this->Eval(XP_DNSBL_SERVER_REASON_ATTR)))
+        PXXMLException::Throw("Missing parameter", "dnsbl/reason");
+      else
+        {
+
+/*       
+        cfg->dnsbl.servers[i].types.reserve(o3->nodesetval->nodeNr);
+        for (int j = 0; j < o3->nodesetval->nodeNr; j++)
+          {
+          TypesDNSBL t;
+          xmlChar *s; 
+          xmlNodePtr n = o3->nodesetval->nodeTab[j]->xmlChildrenNode;
+          }
+  */        
+       xmlXPathFreeObject(o3);
+       }
+      cfg->dnsbl.servers.push_back(server);
+      }
+    xmlXPathFreeObject(o2);
+
+    if ((o2 = this->EvalUnique(XP_DNSBL_NODNSBL)))
+      {
+      xmlXPathObjectPtr o3;
+      
+      StPXXPathContextNode cxNode(&mCx->node, o->nodesetval->nodeTab[0]);
+
+      o3 = this->Eval(XP_DNSBL_NODNSBL_COUNTRY);
+      if (o3)
+        {
+        cfg->dnsbl.nocheck.country.reserve(o3->nodesetval->nodeNr);
+        for (int i = 0; i < o3->nodesetval->nodeNr; i++)
+          {
+          StPXXPathContextNode cxNodeTarget(&mCx->node,
+                                            o3->nodesetval->nodeTab[i]);
+          Country cnty;
+          
+          cnty.country = (char*)CopyString(XP_DNSBL_NODNSBL_COUNTRY, 0, 1);
+          cfg->dnsbl.nocheck.country.push_back(cnty);
+          }
+        xmlXPathFreeObject(o3);
+        }
+
+      o3 = this->Eval(XP_DNSBL_NODNSBL_ADDRESS);      
+      if (o3)
+        {
+        cfg->dnsbl.nocheck.address.reserve(o3->nodesetval->nodeNr);
+        for (int i = 0; i < o3->nodesetval->nodeNr; i++)
+          {
+          xmlChar *s;
+          xmlNodePtr n;
+          n = o3->nodesetval->nodeTab[i]->xmlChildrenNode;
+          if (!(s = xmlNodeListGetString(mDoc, n, 1)))
+            PXXMLException::Throw("Empty allow field", "dnsbl/nodnsbl/address");
+                                                                            
+          NetworkNetmask nwnm;
+          bool res = StringToNetworkNetmask((char *)s, nwnm.network,
+                                            nwnm.netmask);
+          xmlFree(s);
+          if (!res)
+            PXXMLException::Throw("Invalid address", "dnsbl/nodnsbl/address");
+          cfg->dnsbl.nocheck.address.push_back(nwnm);
+          }
+        xmlXPathFreeObject(o3);
+        }
+      xmlXPathFreeObject(o2);
+      }
+    xmlXPathFreeObject(o);      
+    }
+      
+    
   if ((o = this->EvalUnique(XP_CACHE)))
     {
     StPXXPathContextNode cxNode(&mCx->node, o->nodesetval->nodeTab[0]);
@@ -422,7 +523,7 @@ PXConfigLoader::DoLoad(PXConfig *cfg)
 void
 PXConfigLoader::Dump(PXConfig *cfg)
   {
-  size_t i;
+  size_t i, j;
   
   cout << "OPAS config" << endl;
   cout << "port: " << cfg->opas.port << endl;
@@ -493,6 +594,33 @@ PXConfigLoader::Dump(PXConfig *cfg)
     cout << endl;
     }
   cout << "target_check: " << cfg->scanner.target_check << endl;
+  cout << endl;
+  
+  cout << "DNSBL config:" << endl;
+  cout << "Servers (" << cfg->dnsbl.servers.size() << "):" << endl;
+  for (i = 0; i < cfg->dnsbl.servers.size(); i++)
+    {
+    cout << "    Server: " << cfg->dnsbl.servers[i].name << " (" << cfg->dnsbl.servers[i].domain << ")" << endl; 
+    for (j = 0; j < cfg->dnsbl.servers[i].types.size(); j++)
+      {
+      cout << "        127.0.0." << cfg->dnsbl.servers[i].types[j].id << ": " << cfg->dnsbl.servers[i].types[j].reason <<  endl;
+      }
+    }
+
+  cout << "NoCheck DNSBL Country(" << cfg->dnsbl.nocheck.country.size() << "):" << endl;
+  for (i = 0; i < cfg->dnsbl.nocheck.country.size(); i++)
+    {
+    cout << "    Country: " << cfg->dnsbl.nocheck.country[i].country << endl;
+    }          
+  cout << endl;
+
+  cout << "NoCheck DNSBL Address (" << cfg->dnsbl.nocheck.address.size() << "):" << endl;
+  for (i = 0; i < cfg->dnsbl.nocheck.address.size(); i++)
+    {
+    cout << "    Address: " << inet_ntoa(cfg->dnsbl.nocheck.address[i].network);
+    cout << "/" << inet_ntoa(cfg->dnsbl.nocheck.address[i].netmask) << endl;
+    }
+  cout << endl;
 
   cout << "CACHE config:" << endl;
   cout << "expire: " << cfg->cache.expire << " (seconds)" << endl;
