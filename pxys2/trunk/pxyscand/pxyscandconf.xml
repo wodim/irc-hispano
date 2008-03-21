@@ -14,6 +14,7 @@
     <!-- built-in module types: wingate,socks,crazybandit,http -->
     <!-- Solo wingate o 3com812 ya que usan el mismo puerto -->
     <module type="wingate" />
+<!--
     <module type="3com812" />
     <module type="socks">1080</module>
     <module type="crazybandit" />
@@ -25,6 +26,7 @@
     <module type="http">8000</module>
     <module type="bouncerhispano">6667</module>
     <module type="tor" />
+    -->
 <!--
     <source-pool>
       <address>172.16.0.51</address>
@@ -52,6 +54,7 @@
     <timeout>30</timeout>
   </scanner>
 
+<!-- NO SOPORTADO TODAVIA
   <dnsbl>
     <server>
       <name>Spamhaus</name>
@@ -157,7 +160,9 @@
       <country>ES</country>
     </nodnsbl>
   </dnsbl>
-  
+-->
+
+
   <cache>
     <directory>ipcache</directory>
     <expire>86400</expire><!-- seconds -->
