@@ -386,6 +386,7 @@ PXConfigLoader::DoLoad(PXConfig *cfg)
     xmlXPathFreeObject(o);
     }
 
+#if 0 /* DESACTIVADO */
   if ((o = this->EvalUnique(XP_DNSBL)))
     {
     StPXXPathContextNode cxNode(&mCx->node, o->nodesetval->nodeTab[0]);
@@ -472,6 +473,7 @@ PXConfigLoader::DoLoad(PXConfig *cfg)
       }
     xmlXPathFreeObject(o);      
     }
+#endif
       
     
   if ((o = this->EvalUnique(XP_CACHE)))
@@ -595,7 +597,8 @@ PXConfigLoader::Dump(PXConfig *cfg)
     }
   cout << "target_check: " << cfg->scanner.target_check << endl;
   cout << endl;
-  
+
+#if 0 /* DESACTIVADO */  
   cout << "DNSBL config:" << endl;
   cout << "Servers (" << cfg->dnsbl.servers.size() << "):" << endl;
   for (i = 0; i < cfg->dnsbl.servers.size(); i++)
@@ -621,6 +624,7 @@ PXConfigLoader::Dump(PXConfig *cfg)
     cout << "/" << inet_ntoa(cfg->dnsbl.nocheck.address[i].netmask) << endl;
     }
   cout << endl;
+#endif
 
   cout << "CACHE config:" << endl;
   cout << "expire: " << cfg->cache.expire << " (seconds)" << endl;

@@ -87,6 +87,7 @@ struct NetworkNetmask
   in_addr netmask;
   };
 
+#if 0
 struct Country
   {
   char *country;
@@ -116,6 +117,7 @@ struct PXConfigDNSBL
   vector<PXConfigDNSBLServer> servers;
   PXConfigNoDNSBL nocheck;
   };
+#endif
 
 struct PXConfigCache
   {
@@ -142,7 +144,7 @@ struct PXConfig
   
   PXConfigOPAS opas;
   PXConfigScanner scanner;
-  PXConfigDNSBL dnsbl;
+//  PXConfigDNSBL dnsbl;
   PXConfigCache cache;
   PXConfigNoScan noscan;
 protected:
