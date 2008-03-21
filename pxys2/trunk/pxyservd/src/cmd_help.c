@@ -84,6 +84,7 @@ cmd_help_dump(const char *dst, const char *text, int length)
 static void
 cmd_help_general(const char *dst)
   {
+  return;
   cmd_help_dump(dst, gConfig->helplist->topic.content,
                 gConfig->helplist->topic.content_length);
   

@@ -413,6 +413,7 @@ opas_support_reply_dnsbl_cb(struct opas_msg_reply_dnsbl *replyp, void *context)
   scan_reply_dnsbl(&replyp->addr, replyp->user_data,
                    replyp->head & OPAS_FLAG_CACH,
                    replyp->dnsbl_type,
+                   replyp->server,
                    replyp->dnsbl_descr);
   }
 
@@ -423,6 +424,7 @@ opas_support_reply6_dnsbl_cb(struct opas_msg_reply6_dnsbl *replyp,
   scan_reply6_dnsbl(&replyp->addr, replyp->user_data,
                     replyp->head & OPAS_FLAG_CACH,
                     replyp->dnsbl_type,
+                    replyp->server,
                     replyp->dnsbl_descr);
   }
 
