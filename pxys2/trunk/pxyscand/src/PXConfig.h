@@ -80,18 +80,24 @@ struct PXConfigScanner
   char *log_agent;
   time_t timeout;
   };
+  
+struct NetworkNetmask
+  {
+  in_addr network;
+  in_addr netmask;
+  };
 
 struct Country
   {
   char *country;
   };
-  
+    
 struct PXConfigNoDNSBL
   {
   vector<Country> country;
   vector<NetworkNetmask> address;
   };
-  
+         
 struct TypesDNSBL
   {
   int id;
@@ -100,7 +106,7 @@ struct TypesDNSBL
   
 struct PXConfigDNSBLServer
   {
-  char *server;
+  char *name;
   char *domain;
   vector<TypesDNSBL> types;
   };
@@ -117,12 +123,6 @@ struct PXConfigCache
   int expire;
   int proxy_expire;
   int maxips;
-  };
-
-struct NetworkNetmask
-  {
-  in_addr network;
-  in_addr netmask;
   };
 
 struct PXConfigNoScan
@@ -142,6 +142,7 @@ struct PXConfig
   
   PXConfigOPAS opas;
   PXConfigScanner scanner;
+  PXConfigDNSBL dnsbl;
   PXConfigCache cache;
   PXConfigNoScan noscan;
 protected:
