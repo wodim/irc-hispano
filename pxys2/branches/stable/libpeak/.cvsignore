@@ -1,0 +1,13 @@
+.deps
+.libs
+Makefile
+autom4te.cache
+config.cache
+config.log
+config.status
+configure
+libpeak.la
+libtool
+conftest*
+*.lo
+*.tar.gz

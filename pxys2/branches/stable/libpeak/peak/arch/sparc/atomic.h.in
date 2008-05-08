@@ -1,0 +1,47 @@
+/* PEAK Library
+ * @configure_input@
+ *
+ * Sun sparc32 atomic operations
+ *
+ * $Id: atomic.h.in,v 1.1 2007/05/24 12:54:10 mbuna Exp $
+ */
+#ifndef INCLUDED_PEAK_ATOMIC_H_
+#define INCLUDED_PEAK_ATOMIC_H_
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
+typedef struct { volatile int counter; } peak_atomic_t;
+
+#define PEAK_ATOMIC_INIT(i)     { (i) }
+
+#define peak_atomic_read(v)     ((v)->counter)
+#define peak_atomic_set(v,i)    (((v)->counter) = (i))
+
+static void
+__attribute__ ((unused))
+peak_atomic_add(int a, peak_atomic_t *v)
+{
+  static unsigned char lock;
+  int tmp;
+
+  __asm__ __volatile__("1:	ldstub	[%1], %0\n\t"
+		       "	cmp	%0, 0\n\t"
+		       "	bne	1b\n\t"
+		       "	 nop"
+		       : "=&r" (tmp)
+		       : "r" (&lock)
+		       : "memory");
+  v->counter += a;
+  __asm__ __volatile__("stb	%%g0, [%0]"
+		       : /* no outputs */
+		       : "r" (&lock)
+		       : "memory");
+}
+
+#define peak_atomic_sub(a, v) peak_atomic_add(-a, v)
+#define peak_atomic_inc(v) peak_atomic_add(1, v)
+#define peak_atomic_dec(v) peak_atomic_add(-1, v)
+
+#endif /* INCLUDED_PEAK_ATOMIC_H_ */

@@ -1,0 +1,21 @@
+$Id: TODO,v 1.2 2004/01/18 19:41:44 mbuna Exp $
+
+Highest priority:
+- Write example programs
+- Handle system clock change
+- Improve thread safety where it's not finished, in some peak objects, like
+  in timers.
+
+Lower priority:
+- Fix prebinding on Mac OS X (for more efficient mach-o dynamic library)
+- Fix shared library build on cygwin (if possible?)
+
+General:
+- Add more architecture dependent code ( see peak/arch/ )
+- Create more peak/db lightweight containers (idea: array, set, tree, ...)
+
+Socket streams:
+- Add SSL support for realtime encryption
+- Add zlib support for realtime compression
+
+Send suggestions to mbuna@bugged.org, thanks!

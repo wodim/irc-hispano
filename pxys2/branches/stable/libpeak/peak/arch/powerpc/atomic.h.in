@@ -1,0 +1,124 @@
+/* PEAK Library
+ * @configure_input@
+ *
+ * PowerPC atomic operations
+ *
+ * $Id: atomic.h.in,v 1.1 2007/05/24 12:54:10 mbuna Exp $
+ */
+#ifndef INCLUDED_PEAK_ATOMIC_H_
+#define INCLUDED_PEAK_ATOMIC_H_
+
+#ifdef _AIX
+typedef struct { int counter; } peak_atomic_t;
+#else
+typedef struct { volatile int counter; } peak_atomic_t;
+#endif
+
+#define PEAK_ATOMIC_INIT(i)     { (i) }
+
+#define peak_atomic_read(v)     ((v)->counter)
+#define peak_atomic_set(v,i)    (((v)->counter) = (i))
+
+/* Erratum #77 on the 405 means we need a sync or dcbt before every stwcx.
+ * The old ATOMIC_SYNC_FIX covered some but not all of this.
+ */
+#ifdef CONFIG_IBM405_ERR77
+#define PPC405_ERR77(ra,rb)	"dcbt " #ra "," #rb ";"
+#else
+#define PPC405_ERR77(ra,rb)
+#endif
+
+static __inline__ void peak_atomic_add(int a, peak_atomic_t *v)
+{
+#ifdef _AIX
+ 
+        /* I wonder why proprietary OS are always better... */
+        fetch_and_add(&v->counter, a);
+
+#else
+
+	int t;
+
+	__asm__ __volatile__(
+"1:	lwarx	%0,0,%3\n\
+	add	%0,%2,%0\n"
+	PPC405_ERR77(0,%3)
+"	stwcx.	%0,0,%3 \n\
+	bne-	1b"
+	: "=&r" (t), "=m" (v->counter)
+	: "r" (a), "r" (&v->counter), "m" (v->counter)
+	: "cc");
+
+#endif
+}
+
+static __inline__ void peak_atomic_sub(int a, peak_atomic_t *v)
+{
+#ifdef _AIX
+
+        fetch_and_add(&v->counter, -a);
+
+#else 
+
+	int t;
+
+	__asm__ __volatile__(
+"1:	lwarx	%0,0,%3\n\
+	subf	%0,%2,%0\n"
+	PPC405_ERR77(0,%3)
+"	stwcx.	%0,0,%3 \n\
+	bne-	1b"
+	: "=&r" (t), "=m" (v->counter)
+	: "r" (a), "r" (&v->counter), "m" (v->counter)
+	: "cc");
+
+#endif
+}
+
+static __inline__ void peak_atomic_inc(peak_atomic_t *v)
+{
+#ifdef _AIX
+
+        fetch_and_add(&v->counter, 1);
+
+#else
+
+	int t;
+
+	__asm__ __volatile__(
+"1:	lwarx	%0,0,%2\n\
+	addic	%0,%0,1\n"
+	PPC405_ERR77(0,%2)
+"	stwcx.	%0,0,%2 \n\
+	bne-	1b"
+	: "=&r" (t), "=m" (v->counter)
+	: "r" (&v->counter), "m" (v->counter)
+	: "cc");
+
+#endif
+}
+
+static __inline__ void peak_atomic_dec(peak_atomic_t *v)
+{
+#ifdef _AIX
+
+        fetch_and_add(&v->counter, -1);
+
+#else
+
+        int t;
+
+	__asm__ __volatile__(
+"1:	lwarx	%0,0,%2\n\
+	addic	%0,%0,-1\n"
+	PPC405_ERR77(0,%2)\
+"	stwcx.	%0,0,%2\n\
+	bne-	1b"
+	: "=&r" (t), "=m" (v->counter)
+	: "r" (&v->counter), "m" (v->counter)
+	: "cc");
+
+#endif
+}
+
+#endif /* INCLUDED_PEAK_ATOMIC_H_ */

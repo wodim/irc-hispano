@@ -1,0 +1,81 @@
+\hypertarget{struct__smat__table__s}{
+\section{\_\-smat\_\-table\_\-s Struct Reference}
+\label{struct__smat__table__s}\index{_smat_table_s@{\_\-smat\_\-table\_\-s}}
+}
+{\tt \#include $<$dbprim.h$>$}
+
+Collaboration diagram for \_\-smat\_\-table\_\-s:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=140pt]{struct__smat__table__s__coll__graph}
+\end{center}
+\end{figure}
+
+
+\subsection{Detailed Description}
+\begin{Desc}
+\item[For internal use only.]
+This is the implementation of the \hyperlink{group__dbprim__smat_ga0}{smat\_\-table\_\-t} type.\end{Desc}
+
+
+
+
+Definition at line 1664 of file dbprim.h.\subsection*{Data Fields}
+\begin{CompactItemize}
+\item 
+unsigned long \hyperlink{struct__smat__table__s_o0}{st\_\-magic}
+\item 
+\hyperlink{group__dbprim__smat_ga3}{smat\_\-resize\_\-t} \hyperlink{struct__smat__table__s_o1}{st\_\-resize}
+\item 
+void $\ast$ \hyperlink{struct__smat__table__s_o2}{st\_\-extra}
+\item 
+\hyperlink{struct__hash__table__s}{hash\_\-table\_\-t} \hyperlink{struct__smat__table__s_o3}{st\_\-table}
+\end{CompactItemize}
+
+
+\subsection{Field Documentation}
+\hypertarget{struct__smat__table__s_o2}{
+\index{_smat_table_s@{\_\-smat\_\-table\_\-s}!st_extra@{st\_\-extra}}
+\index{st_extra@{st\_\-extra}!_smat_table_s@{\_\-smat\_\-table\_\-s}}
+\subsubsection[st\_\-extra]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ \hyperlink{struct__smat__table__s_o2}{\_\-smat\_\-table\_\-s::st\_\-extra}}}
+\label{struct__smat__table__s_o2}
+
+
+Extra data pointer. 
+
+Definition at line 1667 of file dbprim.h.
+
+Referenced by st\_\-init().\hypertarget{struct__smat__table__s_o0}{
+\index{_smat_table_s@{\_\-smat\_\-table\_\-s}!st_magic@{st\_\-magic}}
+\index{st_magic@{st\_\-magic}!_smat_table_s@{\_\-smat\_\-table\_\-s}}
+\subsubsection[st\_\-magic]{\setlength{\rightskip}{0pt plus 5cm}unsigned long \hyperlink{struct__smat__table__s_o0}{\_\-smat\_\-table\_\-s::st\_\-magic}}}
+\label{struct__smat__table__s_o0}
+
+
+Magic number. 
+
+Definition at line 1665 of file dbprim.h.
+
+Referenced by st\_\-init().\hypertarget{struct__smat__table__s_o1}{
+\index{_smat_table_s@{\_\-smat\_\-table\_\-s}!st_resize@{st\_\-resize}}
+\index{st_resize@{st\_\-resize}!_smat_table_s@{\_\-smat\_\-table\_\-s}}
+\subsubsection[st\_\-resize]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{group__dbprim__smat_ga3}{smat\_\-resize\_\-t} \hyperlink{struct__smat__table__s_o1}{\_\-smat\_\-table\_\-s::st\_\-resize}}}
+\label{struct__smat__table__s_o1}
+
+
+Function pointer for resize callback. 
+
+Definition at line 1666 of file dbprim.h.
+
+Referenced by \_\-smat\_\-resize(), and st\_\-init().\hypertarget{struct__smat__table__s_o3}{
+\index{_smat_table_s@{\_\-smat\_\-table\_\-s}!st_table@{st\_\-table}}
+\index{st_table@{st\_\-table}!_smat_table_s@{\_\-smat\_\-table\_\-s}}
+\subsubsection[st\_\-table]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{struct__hash__table__s}{hash\_\-table\_\-t} \hyperlink{struct__smat__table__s_o3}{\_\-smat\_\-table\_\-s::st\_\-table}}}
+\label{struct__smat__table__s_o3}
+
+
+Hash table. 
+
+Definition at line 1668 of file dbprim.h.
+
+Referenced by \_\-st\_\-remove(), st\_\-add(), st\_\-find(), st\_\-flush(), st\_\-free(), st\_\-init(), st\_\-iter(), and st\_\-resize().

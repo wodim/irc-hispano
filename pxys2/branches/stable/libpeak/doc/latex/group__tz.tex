@@ -1,0 +1,129 @@
+\hypertarget{group__tz}{
+\section{Time zone}
+\label{group__tz}\index{Time zone@{Time zone}}
+}
+
+
+\subsection{Detailed Description}
+Although it might look a bit off-topic, in order to provide a minimal but good time/date interface, the peak library is able to handle time zone conversion. Thanks to its design, time/date operations are efficient and a lack of time zone support would add unnecessary overhead in application's code. 
+
+\subsection*{Typedefs}
+\begin{CompactItemize}
+\item 
+\hypertarget{group__tz_ga0}{
+typedef \_\-\_\-peak\_\-tz $\ast$ \hyperlink{group__tz_ga0}{peak\_\-tz}}
+\label{group__tz_ga0}
+
+\begin{CompactList}\small\item\em Opaque time zone pointer type. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+\hyperlink{group__tz_ga0}{peak\_\-tz} \hyperlink{group__tz_ga1}{peak\_\-tz\_\-create} (const char $\ast$tz\_\-name)
+\begin{CompactList}\small\item\em Create a time zone object with a name. \item\end{CompactList}\item 
+\hyperlink{group__tz_ga0}{peak\_\-tz} \hyperlink{group__tz_ga2}{peak\_\-tz\_\-create\_\-system} (void)
+\begin{CompactList}\small\item\em Create a time zone object with current system settings. \item\end{CompactList}\item 
+const char $\ast$ \hyperlink{group__tz_ga3}{peak\_\-tz\_\-get\_\-name} (\hyperlink{group__tz_ga0}{peak\_\-tz} tz)
+\begin{CompactList}\small\item\em Get time zone's name. \item\end{CompactList}\item 
+const char $\ast$ \hyperlink{group__tz_ga4}{peak\_\-tz\_\-get\_\-abbreviation} (\hyperlink{group__tz_ga0}{peak\_\-tz} tz, time\_\-t t)
+\begin{CompactList}\small\item\em Get time zone's abbreviation at the specified date. \item\end{CompactList}\item 
+time\_\-t \hyperlink{group__tz_ga5}{peak\_\-tz\_\-get\_\-gmt\_\-offset} (\hyperlink{group__tz_ga0}{peak\_\-tz} tz, time\_\-t t)
+\begin{CompactList}\small\item\em Get time zone's GMT offset at a specified date. \item\end{CompactList}\item 
+int \hyperlink{group__tz_ga6}{peak\_\-tz\_\-is\_\-dst} (\hyperlink{group__tz_ga0}{peak\_\-tz} tz, time\_\-t t)
+\begin{CompactList}\small\item\em Returns whether or not a time zone is in daylight savings time at a specified date. \item\end{CompactList}\end{CompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{group__tz_ga1}{
+\index{tz@{tz}!peak_tz_create@{peak\_\-tz\_\-create}}
+\index{peak_tz_create@{peak\_\-tz\_\-create}!tz@{tz}}
+\subsubsection[peak\_\-tz\_\-create]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{group__tz_ga0}{peak\_\-tz} peak\_\-tz\_\-create (const char $\ast$ {\em tz\_\-name})}}
+\label{group__tz_ga1}
+
+
+Create a time zone object with a name. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em tz\_\-name}]Pathname of a tzfile(5)-format file from which to read the conversion information. If the first character of the pathname is a slash (`/') it is used as an absolute pathname; otherwise, it is used as a pathname relative to the system time conversion information directory (often {\tt /usr/share/zoneinfo}).\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]New time zone reference (use \hyperlink{group__alloc_ga7}{peak\_\-release()} when you don't need it anymore) or {\tt NULL} if the time zone file cannot be found or another misc issue is encountered. \end{Desc}
+\hypertarget{group__tz_ga2}{
+\index{tz@{tz}!peak_tz_create_system@{peak\_\-tz\_\-create\_\-system}}
+\index{peak_tz_create_system@{peak\_\-tz\_\-create\_\-system}!tz@{tz}}
+\subsubsection[peak\_\-tz\_\-create\_\-system]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{group__tz_ga0}{peak\_\-tz} peak\_\-tz\_\-create\_\-system (void)}}
+\label{group__tz_ga2}
+
+
+Create a time zone object with current system settings. 
+
+\begin{Desc}
+\item[Returns:]The system's time zone reference, possibly a reference to the UTC time zone if the library doesn't understand the system's configuration or if a system's misconfiguration is encountered. Finally returns {\tt NULL} if both attempts failed. \end{Desc}
+\hypertarget{group__tz_ga4}{
+\index{tz@{tz}!peak_tz_get_abbreviation@{peak\_\-tz\_\-get\_\-abbreviation}}
+\index{peak_tz_get_abbreviation@{peak\_\-tz\_\-get\_\-abbreviation}!tz@{tz}}
+\subsubsection[peak\_\-tz\_\-get\_\-abbreviation]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ peak\_\-tz\_\-get\_\-abbreviation (\hyperlink{group__tz_ga0}{peak\_\-tz} {\em tz}, time\_\-t {\em t})}}
+\label{group__tz_ga4}
+
+
+Get time zone's abbreviation at the specified date. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em tz}]The time zone reference. \item[{\em t}]Unix time. It is required as the abbreviation may be different at different dates (eg. EDT/EST, NZDT/NZST, etc.). Use \hyperlink{group__time_ga6}{peak\_\-time()} if you want the current abbreviation.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]A pointer to a constant string of the abbreviation of the time zone {\em tz\/}. The string is owned by the library so don't release it and copy it if you need it for a long time. \end{Desc}
+\hypertarget{group__tz_ga5}{
+\index{tz@{tz}!peak_tz_get_gmt_offset@{peak\_\-tz\_\-get\_\-gmt\_\-offset}}
+\index{peak_tz_get_gmt_offset@{peak\_\-tz\_\-get\_\-gmt\_\-offset}!tz@{tz}}
+\subsubsection[peak\_\-tz\_\-get\_\-gmt\_\-offset]{\setlength{\rightskip}{0pt plus 5cm}time\_\-t peak\_\-tz\_\-get\_\-gmt\_\-offset (\hyperlink{group__tz_ga0}{peak\_\-tz} {\em tz}, time\_\-t {\em t})}}
+\label{group__tz_ga5}
+
+
+Get time zone's GMT offset at a specified date. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em tz}]The time zone reference. \item[{\em t}]Unix time. It is required as the offset may be different at different dates. Use \hyperlink{group__time_ga6}{peak\_\-time()} if you want the current seconds from GMT.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]The time interval from GMT in second. \end{Desc}
+\hypertarget{group__tz_ga3}{
+\index{tz@{tz}!peak_tz_get_name@{peak\_\-tz\_\-get\_\-name}}
+\index{peak_tz_get_name@{peak\_\-tz\_\-get\_\-name}!tz@{tz}}
+\subsubsection[peak\_\-tz\_\-get\_\-name]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ peak\_\-tz\_\-get\_\-name (\hyperlink{group__tz_ga0}{peak\_\-tz} {\em tz})}}
+\label{group__tz_ga3}
+
+
+Get time zone's name. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em tz}]The time zone reference.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]A pointer to a constant string of the name of the time zone {\em tz\/}. The string is owned by the library so don't release it and copy it if you need it for a long time. \end{Desc}
+\hypertarget{group__tz_ga6}{
+\index{tz@{tz}!peak_tz_is_dst@{peak\_\-tz\_\-is\_\-dst}}
+\index{peak_tz_is_dst@{peak\_\-tz\_\-is\_\-dst}!tz@{tz}}
+\subsubsection[peak\_\-tz\_\-is\_\-dst]{\setlength{\rightskip}{0pt plus 5cm}int peak\_\-tz\_\-is\_\-dst (\hyperlink{group__tz_ga0}{peak\_\-tz} {\em tz}, time\_\-t {\em t})}}
+\label{group__tz_ga6}
+
+
+Returns whether or not a time zone is in daylight savings time at a specified date. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em tz}]The time zone reference. \item[{\em t}]Unix time's date for which you want to know if the time zone is in daylight savings time.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Return values:]
+\begin{description}
+\item[{\em 0}]Normal period. \item[{\em 1}]Daylight Savings Time (DST) period. \end{description}
+\end{Desc}

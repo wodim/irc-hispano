@@ -1,0 +1,58 @@
+\hypertarget{group__version}{
+\section{Version}
+\label{group__version}\index{Version@{Version}}
+}
+
+
+\subsection{Detailed Description}
+Stuffs to access peak's info and version in your application. 
+
+\subsection*{Defines}
+\begin{CompactItemize}
+\item 
+\#define \hyperlink{group__version_ga2}{PEAK\_\-VERSION\_\-NUMBER}\ 0x0010000f\-L
+\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+long \hyperlink{group__version_ga0}{peak\_\-version\_\-get\_\-number} ()
+\begin{CompactList}\small\item\em Get peak's version number. \item\end{CompactList}\item 
+const char $\ast$ \hyperlink{group__version_ga1}{peak\_\-version\_\-get\_\-string} ()
+\begin{CompactList}\small\item\em Get peak's version as a string. \item\end{CompactList}\end{CompactItemize}
+
+
+\subsection{Define Documentation}
+\hypertarget{group__version_ga2}{
+\index{version@{version}!PEAK_VERSION_NUMBER@{PEAK\_\-VERSION\_\-NUMBER}}
+\index{PEAK_VERSION_NUMBER@{PEAK\_\-VERSION\_\-NUMBER}!version@{version}}
+\subsubsection[PEAK\_\-VERSION\_\-NUMBER]{\setlength{\rightskip}{0pt plus 5cm}\#define PEAK\_\-VERSION\_\-NUMBER\ 0x0010000f\-L}}
+\label{group__version_ga2}
+
+
+MNNFFPPS: major minor fix patch status 
+
+\subsection{Function Documentation}
+\hypertarget{group__version_ga0}{
+\index{version@{version}!peak_version_get_number@{peak\_\-version\_\-get\_\-number}}
+\index{peak_version_get_number@{peak\_\-version\_\-get\_\-number}!version@{version}}
+\subsubsection[peak\_\-version\_\-get\_\-number]{\setlength{\rightskip}{0pt plus 5cm}long peak\_\-version\_\-get\_\-number ()}}
+\label{group__version_ga0}
+
+
+Get peak's version number. 
+
+Useful for even more precise compatibility check.
+
+\begin{Desc}
+\item[Returns:]A number identifying libpeak's version. \end{Desc}
+\hypertarget{group__version_ga1}{
+\index{version@{version}!peak_version_get_string@{peak\_\-version\_\-get\_\-string}}
+\index{peak_version_get_string@{peak\_\-version\_\-get\_\-string}!version@{version}}
+\subsubsection[peak\_\-version\_\-get\_\-string]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ peak\_\-version\_\-get\_\-string ()}}
+\label{group__version_ga1}
+
+
+Get peak's version as a string. 
+
+\begin{Desc}
+\item[Returns:]A pointer to a string of the version of peak. You don't have to free it as it's still owned by the library. \end{Desc}

@@ -1,0 +1,312 @@
+<?xml version="1.0"?>
+<pxyservd>
+  
+  <server>
+    <name>proxyscan.ircaide.org</name><!-- match a C:line on the hub -->
+    <id>P1</id>
+    <numeric>99</numeric>
+    <maxclients>1</maxclients>
+    <info>All your proxies are belong to us</info>
+    <sendq>1000000</sendq>
+  </server>
+  
+  <hub>
+    <address>172.16.0.1</address>
+    <port>4400</port>
+    <bind-address></bind-address>
+    <password>duck</password>
+  </hub>
+  
+  <client>
+    <nickname>prox</nickname>
+    <nick-change-delay>7200</nick-change-delay>
+    <username>proxyscan</username>
+    <hostname>undernet.org</hostname>
+    <realname>Undernet Proxy Scanner</realname>
+    <userip>0.0.0.0</userip>
+    <usermode>+idko</usermode>
+    <channel>#proxy_info</channel>
+    <channel-mode>+tn</channel-mode>
+    <channel-timestamp>1004078035</channel-timestamp>
+    <show-cached>1</show-cached>
+  </client>
+  
+  <noscan>
+    <server>uworld.undernet.org</server>
+    <server>uworld.eu.undernet.org</server>
+    <userip>127.0.0.1</userip>
+    <userip>255.255.255.255</userip>
+    <userip>0/8</userip>
+    <userip>10/8</userip>
+    <userip>172.16/12</userip>
+    <userip>192.168/16</userip>
+  </noscan>
+  
+  <scanner>
+    <address>172.16.0.5</address>
+    <port>9601</port>
+    <bind-address></bind-address>
+  </scanner>
+  
+  <log>
+    <file type="current">logs/proxy-current.log</file>
+    <file type="daily">logs/proxy-yesterday.log</file>
+    <file type="system">logs/system.log</file>
+    <file type="glines">logs/glines.log</file>
+    <file type="opercmds">logs/opercmds.log</file>
+    <file type="proxytop">logs/proxytop.db</file>
+    <history-dirpath>logs/history</history-dirpath>
+    <timezone>GMT</timezone>
+  </log>
+  
+  <gline>
+    <delay>900</delay>
+    <!-- type constants taken from the OPAS library -->
+    <reason type="1">Misconfigured Wingate. Please visit http://www.undernet.org/proxyscan.php </reason><!-- space at the end for mIRC users -->
+    <reason type="2">Misconfigured Socks Server. Please visit http://www.undernet.org/proxyscan.php </reason>
+    <reason type="3">Misconfigured Socks Server. Please visit http://www.undernet.org/proxyscan.php </reason>
+    <reason type="4">Misconfigured Proxy Server. Please visit http://www.undernet.org/proxyscan.php </reason>
+    <reason type="0">Misconfigured Proxy Server. Please visit http://www.undernet.org/proxyscan.php </reason>
+  </gline>
+  
+  <notice>
+    <line>This network is running an open proxy/open socks/wingate</line>
+    <line>detection monitor. If you see a connection from</line>
+    <line>proxscan.network.tld/12.34.56.78 please disregard it, as it is</line>
+    <line>the detector in action and -not- a hostile attempt.</line>
+  </notice>
+  
+  <help-menu>
+Undernet Proxy Scanner Service Help Menu
+========================================
+  Commands (global opers only)
+  ----------------------------
+    INV             - Get an invite to my console channel
+    SERVERS [...]   - Show network servers and noscan status
+    STATUS [...]    - Status of server and scanner daemon
+    NOSCAN          - Print current noscan configuration list
+    PROXYTOP        - Proxies found per server
+    STATS           - Technical statistics
+    PXSTATS         - Statistics from the scanner daemon
+    GREM &lt;GLINE&gt;    - Remove a gline set by me
+    INFO [...]      - Show channel or user info
+    RECHECK [...]   - Recheck an user or a whole channel
+    HELP CREDITS    - Credits info
+    HELP &lt;COMMAND&gt;  - More help for &lt;COMMAND&gt;
+  </help-menu>
+  
+  <help topic="inv">
+INV
+===
+  This command gives any global IRC operator an invite on my
+  current console channel.
+  </help>
+  
+  <help topic="servers">
+SERVERS [-info] [-noscan]
+==============================================
+Show IRC network tree with optional info:
+  -info : Display user count
+  -scan : Show scanned servers in bold
+  </help>
+  
+  <help topic="status">
+STATUS [-serv|-scan]                     (1/3)
+==============================================
+General and probably the more interesting command provided by
+pxyservd. Call it how often you want to quickly check how pxys
+is working.
+ 
+IRC server status
+-----------------
+A first part displays the IRC server status: number of servers
+on the network, number of clients and channels, classical.
+pxyservd retrieves the IPs of the network's clients and sends
+them to pxyscand, the associated scanner daemon process, for
+proxy scanning. "Scan ClientQ" is the number of clients that
+haven't been confirmed yet, pxyservd is waiting for a positive
+or negative reply from the scanner daemon. Take a look at this
+value as it shouldn't grow too much in normal conditions, and
+drop as soon as possible otherwise. Note it's normal to always
+have some clients in the scan queue... the scanner daemon can't
+always reply quickly.
+"Unscannable clients" shows the current number of *connected*
+clients concerned by a failed scan. A failed scan occurs when
+the host or network of this client is unreachable from the proxy
+scanner daemon. It is followed by the server's uptime (pxyservd
+uptime).
+ 
+Please consult HELP STATUS 2 for detailed description of the
+scanner status part.
+  </help>
+
+  <help topic="status 2">
+STATUS [-serv|-scan]                     (2/3)
+==============================================
+Scanner status
+--------------
+First, you need to know that the scanner daemon (pxyscand) is
+now separated from the IRC(u) service server (pxyservd).
+However, they are able to communicate: first to request proxy
+scanning, but for status/stats purposes too. So you may notice
+a delay before receiving the scanner status reply if the scanner
+daemon is not running locally, for example.
+The first lines display status info about the connection between
+the server and the scanner daemon. If they are not connected
+(eg. the scanner daemon is down), you will see a warning there.
+"Scanning activity" is a good indicator about the load of the
+scanner daemon. 100%% means all socket slots are taken and it's
+doing its best to scan them. Lower values means the scanner
+could handle more clients at this time. This percentage is
+followed by more precise values: the number of unique IPs
+currently being scanned, and the number of scans being performed
+at this time. Usually, you have several scans for one IP. The
+number of scan is in fact the number of sockets needed to
+perform the scans for these IPs (although it's not exactly the
+number of open sockets, but more, as some of them might not be
+created yet or already closed).
+"IP scans completed" is a simple real IP scan counter for the
+current session (all sessions in parenthesis). To consult the
+scanner's cache hits counter, please use the PXSTATS command.
+An average value of scan performed is given too.
+ 
+Please use HELP STATUS 3 for next page.
+  </help>
+  
+  <help topic="status 3">
+STATUS [-serv|-scan]                     (3/3)
+==============================================
+When "ScanQ size" is not zero, the current scanning activity
+should be 100%% (the maximum) and you know the scanner can't
+process all IPs at the same time: it then adds the IP scan
+requests in a queue for later processing. This number should
+drop until 0, otherwise you have a little problem.
+"Target" is the current selected needed target IP for some
+scans (as for Socks 4 discovery). It should be set to an IP of
+one of your network's stable IRC server.
+"Scan connect() timeout" indicates the number of seconds to
+wait before a scan bails out.
+ 
+Following the total number of proxy found, you will find there
+the uptime of the scanner daemon. The last part of the STATUS
+command shows a detailed table with proxy found counters since
+the scanner daemon is launched. For information, additional
+"open" counters are provided that count established connections.
+ 
+Options:
+        -serv : only displays IRC server status
+        -scan : only displays proxy scanner daemon status
+  </help>
+
+  <help topic="noscan">
+NOSCAN
+==============================================
+Show pxyservd's "noscan" rules. pxyservd, the IRC(u) service
+server part of pxys v2, is configured with a list of IP blocks
+that are ignored. Clients using one of these IPs are tagged as
+"scanning disabled". Additonally, a list of remote server names
+can be provided: clients using these servers are ignored too,
+thus useful for services, hubs, or IRC operator only servers.
+  </help>
+
+  <help topic="proxytop">
+PROXYTOP
+==============================================
+This command shows the top list of servers where proxy were
+found on them (and then G-lined!). It might help you to find
+very-open servers with possibly bad I/K-lines rules, or servers
+floodbots like... Don't forget to relativize using the provided
+MAXUSERS indicator, as big servers obviously have more chance to
+host proxied clients.
+  </help>
+  
+  <help topic="stats">
+STATS
+==============================================
+Display statistics about sockets, internal structures and
+memory's consumption.
+  </help>
+
+  <help topic="pxstats">
+PXSTATS
+==============================================
+Query the proxy scanner daemon for internal statistics. Only
+available when pxyscand is connected. Along other obscure
+values, it shows the IP cache hits count of already scanned
+users. This cache allows the scanner to work in very hard
+conditions, avoiding the re-scan of recently checked IPs.
+  </help>
+
+  <help topic="grem">
+GREM &lt;IP|GLINE&gt;
+==============================================
+G-line removal method (only for proxyscan G-lines). Please
+provide the IP or the banned user@host mask, ie. *@&lt;IP&gt;.
+After the remgline, the IP is not ignored, it will be re-scanned
+if seen again.
+  </help>
+
+  <help topic="info">
+INFO &lt;NICK|CHANNEL&gt;
+==============================================
+Info command about a client or a channel. Its purpose is to give
+some proxyscan-related info about a client or channel's clients.
+ 
+Examples:
+        INFO bot-42
+        INFO #floodland
+  </help>
+  
+  <help topic="recheck">
+RECHECK &lt;NICK|CHANNEL&gt;
+==============================================
+Like GREM, this command performs an action and its purpose is
+not only informative, please use with care.
+The RECHECK command allows a global IRC operator to ask for a
+recheck of a specified user or all users on a given channel.
+ 
+Please note, however, that users matching NOSCAN rules are never
+proxy-checked. Also, if the user has not be scanned yet (eg.
+he's just connected), this command does nothing. Don't hesitate
+to use previously the INFO command on the user or channel if
+needed.
+ 
+Note that a notice is sent to my console channel for recheck of
+a whole channel.
+ 
+Examples:
+        RECHECK bot-42
+        RECHECK #floodland
+  </help>
+  
+  <help topic="evreg">
+EVREG &lt;MODES&gt;
+=============
+  This command allows global IRC operators to register for specific
+  events. Several modes are provided, each character identifying an
+  event. Opers who have event X enabled will be notified by the
+  proxyscanner's virtual client (me) when event X occurs.
+  
+  MODES
+  -----
+    'p' : new insecure proxy found, show it
+    'c' : show proxy-cache hits
+    'o' : show global IRC operators using /oper
+    'x' : pxyscand connection related events
+  
+  For example, an oper who want to be notified when a new proxy has
+  been found and for /oper's would type: /msg &lt;me&gt; evreg +po
+  
+  To disable /oper's notifications only: /msg &lt;me&gt; evreg -o
+  
+  NOTE: Your modes remain until you disconnect or a split between
+        you and the proxyscanner occurs.
+  </help>
+  
+  <help topic="credits">
+pxyservd v2 - part of pxys v2 software suite
+============================================
+See: http://pxys.sf.net
+  </help>
+  
+</pxyservd>

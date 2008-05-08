@@ -1,0 +1,53 @@
+\hypertarget{struct__sh__find__s}{
+\section{\_\-sh\_\-find\_\-s Struct Reference}
+\label{struct__sh__find__s}\index{_sh_find_s@{\_\-sh\_\-find\_\-s}}
+}
+Collaboration diagram for \_\-sh\_\-find\_\-s:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=55pt]{struct__sh__find__s__coll__graph}
+\end{center}
+\end{figure}
+
+
+\subsection{Detailed Description}
+\begin{Desc}
+\item[For internal use only.]
+This structure is used by \hyperlink{group__dbprim__smat_ga20}{sh\_\-find()} in its call to \hyperlink{group__dbprim__link_ga9}{ll\_\-find()}. The structure contains state that \hyperlink{group__dbprim__link_ga9}{ll\_\-find()} cannot directly pass to \hyperlink{group__dbprim__smat_ga27}{\_\-sh\_\-find\_\-comp()}.\end{Desc}
+
+
+
+
+Definition at line 41 of file sh\_\-find.c.\subsection*{Data Fields}
+\begin{CompactItemize}
+\item 
+\hyperlink{group__dbprim__smat_ga5}{smat\_\-comp\_\-t} \hyperlink{struct__sh__find__s_o0}{sf\_\-comp}
+\item 
+\hyperlink{struct__db__key__s}{db\_\-key\_\-t} $\ast$ \hyperlink{struct__sh__find__s_o1}{sf\_\-key}
+\end{CompactItemize}
+
+
+\subsection{Field Documentation}
+\hypertarget{struct__sh__find__s_o0}{
+\index{_sh_find_s@{\_\-sh\_\-find\_\-s}!sf_comp@{sf\_\-comp}}
+\index{sf_comp@{sf\_\-comp}!_sh_find_s@{\_\-sh\_\-find\_\-s}}
+\subsubsection[sf\_\-comp]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{group__dbprim__smat_ga5}{smat\_\-comp\_\-t} \hyperlink{struct__sh__find__s_o0}{\_\-sh\_\-find\_\-s::sf\_\-comp}}}
+\label{struct__sh__find__s_o0}
+
+
+Comparison function. 
+
+Definition at line 42 of file sh\_\-find.c.
+
+Referenced by \_\-sh\_\-find\_\-comp(), and sh\_\-find().\hypertarget{struct__sh__find__s_o1}{
+\index{_sh_find_s@{\_\-sh\_\-find\_\-s}!sf_key@{sf\_\-key}}
+\index{sf_key@{sf\_\-key}!_sh_find_s@{\_\-sh\_\-find\_\-s}}
+\subsubsection[sf\_\-key]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{struct__db__key__s}{db\_\-key\_\-t}$\ast$ \hyperlink{struct__sh__find__s_o1}{\_\-sh\_\-find\_\-s::sf\_\-key}}}
+\label{struct__sh__find__s_o1}
+
+
+Original key. 
+
+Definition at line 43 of file sh\_\-find.c.
+
+Referenced by \_\-sh\_\-find\_\-comp(), and sh\_\-find().

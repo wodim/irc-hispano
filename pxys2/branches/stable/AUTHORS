@@ -1,0 +1,37 @@
+$Id: AUTHORS,v 1.2 2004/01/02 12:26:00 mbuna Exp $
+
+* Conceived and written for the Undernet Coder-Com by:
+
+  Stephane Thiell (mbuna) <mbuna@undernet.org>
+    Student in Computer Science at the University of Bordeaux I, France.
+    My speciality is "distribued systems, parallelism and networking". You
+    know, I play with Myrinet clusters, other parallel machines, MPI,
+    Java RMI, Corba and stuffs. :)
+    Note the pxys project is not related to my studies. I might have other
+    open source projects, please check http://www.bugged.org.
+    Pxys v2 along with libpeak are developed on Mac OS X 10.3 / Darwin 7
+    (which have kqueue) and FreeBSD 5.1. I mainly use GNU emacs running on
+    Apple's x11 (all source files should fit well on a 80 columns width frame).
+
+* Ideas and advices
+
+  Perry (Isomer) <isomer@undernet.org>
+  Philippe Bourcier (Mr_RIP) <rip@undernet.org>
+
+* Technical support very appreciated
+
+  Thanks go to nighty <nighty@undernet.org> and Sabri.
+
+* Others acknowledgements
+
+  Thanks to Jeb <jeb@jeb.com.fr> for his efficient beta testing, ideas and his cool
+  userload/channels simulators written in perl!
+
+  Thanks to Kev for his great dbprim library, something not very entertaining
+  to write but so useful after in programs.
+
+  Some extracts of ircu have been used here. Thanks to Nemesi, Run, Isomer,
+  Jeekay, netski, pomac and all Undernet's coder-com for some parts (match.c,
+  numnick.c...).
+  See ircu's Authors file for more info (http://coder-com.undernet.org).
+

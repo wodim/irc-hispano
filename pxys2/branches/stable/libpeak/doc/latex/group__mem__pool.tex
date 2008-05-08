@@ -1,0 +1,141 @@
+\hypertarget{group__mem__pool}{
+\section{Memory pool}
+\label{group__mem__pool}\index{Memory pool@{Memory pool}}
+}
+
+
+\subsection{Detailed Description}
+\begin{Desc}
+\item[]Memory pool allocator for objects of same size. This interface offers an allocator \hyperlink{group__mem__pool_ga9}{peak\_\-mem\_\-pool\_\-new()} which is O(1) except in some rare cases when the pool is growing (at worst log2({\tt n}) times for {\tt n} allocations). However, if you know its size in advance, you can precise it in the {\tt peak\_\-mem\_\-pool} creation method \hyperlink{group__mem__pool_ga7}{peak\_\-mem\_\-pool\_\-create()}. You can create as many memory pools you want as interface and implementation are object oriented (like most of peak stuffs). \end{Desc}
+
+
+\subsection*{Typedefs}
+\begin{CompactItemize}
+\item 
+\hypertarget{group__mem__pool_ga0}{
+typedef \_\-\_\-peak\_\-mem\_\-pool $\ast$ \hyperlink{group__mem__pool_ga0}{peak\_\-mem\_\-pool}}
+\label{group__mem__pool_ga0}
+
+\begin{CompactList}\small\item\em Opaque mem\_\-pool pointer type. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+\hyperlink{group__mem__pool_ga0}{peak\_\-mem\_\-pool} \hyperlink{group__mem__pool_ga1}{peak\_\-mem\_\-pool\_\-create} (int object\_\-size, int log\_\-size)
+\begin{CompactList}\small\item\em Create a mem\_\-pool object. \item\end{CompactList}\item 
+void $\ast$ \hyperlink{group__mem__pool_ga2}{peak\_\-mem\_\-pool\_\-new} (\hyperlink{group__mem__pool_ga0}{peak\_\-mem\_\-pool} pool)
+\begin{CompactList}\small\item\em Allocate an object in constant time. \item\end{CompactList}\item 
+void \hyperlink{group__mem__pool_ga3}{peak\_\-mem\_\-pool\_\-delete} (\hyperlink{group__mem__pool_ga0}{peak\_\-mem\_\-pool} pool, void $\ast$ptr)
+\begin{CompactList}\small\item\em Deallocate an object in constant time. \item\end{CompactList}\item 
+int \hyperlink{group__mem__pool_ga4}{peak\_\-mem\_\-pool\_\-get\_\-used\_\-count} (\hyperlink{group__mem__pool_ga0}{peak\_\-mem\_\-pool} pool)
+\begin{CompactList}\small\item\em Statistics: get used pointers count. \item\end{CompactList}\item 
+int \hyperlink{group__mem__pool_ga5}{peak\_\-mem\_\-pool\_\-get\_\-free\_\-count} (\hyperlink{group__mem__pool_ga0}{peak\_\-mem\_\-pool} pool)
+\begin{CompactList}\small\item\em Statistics: get free pointers count. \item\end{CompactList}\item 
+int \hyperlink{group__mem__pool_ga6}{peak\_\-mem\_\-pool\_\-get\_\-size} (\hyperlink{group__mem__pool_ga0}{peak\_\-mem\_\-pool} pool)
+\begin{CompactList}\small\item\em Statistics: get total pointers count. \item\end{CompactList}\end{CompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{group__mem__pool_ga1}{
+\index{mem_pool@{mem\_\-pool}!peak_mem_pool_create@{peak\_\-mem\_\-pool\_\-create}}
+\index{peak_mem_pool_create@{peak\_\-mem\_\-pool\_\-create}!mem_pool@{mem\_\-pool}}
+\subsubsection[peak\_\-mem\_\-pool\_\-create]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{group__mem__pool_ga0}{peak\_\-mem\_\-pool} peak\_\-mem\_\-pool\_\-create (int {\em object\_\-size}, int {\em log\_\-size})}}
+\label{group__mem__pool_ga1}
+
+
+Create a mem\_\-pool object. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em object\_\-size}]Size of each object in the memory pool. This cannot be changed later. It's commonly {\tt sizeof}(struct your\_\-object\_\-structure). \item[{\em log\_\-size}]Log base 2 of the initial size of memory pool. Use 0 if you don't know, it will use the minimum.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]A new allocated {\tt peak\_\-mem\_\-pool} reference or {\tt NULL} if the operation failed. \end{Desc}
+\hypertarget{group__mem__pool_ga3}{
+\index{mem_pool@{mem\_\-pool}!peak_mem_pool_delete@{peak\_\-mem\_\-pool\_\-delete}}
+\index{peak_mem_pool_delete@{peak\_\-mem\_\-pool\_\-delete}!mem_pool@{mem\_\-pool}}
+\subsubsection[peak\_\-mem\_\-pool\_\-delete]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-mem\_\-pool\_\-delete (\hyperlink{group__mem__pool_ga0}{peak\_\-mem\_\-pool} {\em pool}, void $\ast$ {\em ptr})}}
+\label{group__mem__pool_ga3}
+
+
+Deallocate an object in constant time. 
+
+This method is guaranted O(1) but in rare case it might free a chunk of memory.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em pool}]The memory pool reference. \item[{\em ptr}]The pointer to a memory space to deallocate. This pointer must have been previously provided by \hyperlink{group__mem__pool_ga9}{peak\_\-mem\_\-pool\_\-new()}. \end{description}
+\end{Desc}
+\hypertarget{group__mem__pool_ga5}{
+\index{mem_pool@{mem\_\-pool}!peak_mem_pool_get_free_count@{peak\_\-mem\_\-pool\_\-get\_\-free\_\-count}}
+\index{peak_mem_pool_get_free_count@{peak\_\-mem\_\-pool\_\-get\_\-free\_\-count}!mem_pool@{mem\_\-pool}}
+\subsubsection[peak\_\-mem\_\-pool\_\-get\_\-free\_\-count]{\setlength{\rightskip}{0pt plus 5cm}int peak\_\-mem\_\-pool\_\-get\_\-free\_\-count (\hyperlink{group__mem__pool_ga0}{peak\_\-mem\_\-pool} {\em pool})}}
+\label{group__mem__pool_ga5}
+
+
+Statistics: get free pointers count. 
+
+This method is guaranted O(1).
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em pool}]The memory pool reference.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]Number of pointer currently unused (free for allocation). \end{Desc}
+\hypertarget{group__mem__pool_ga6}{
+\index{mem_pool@{mem\_\-pool}!peak_mem_pool_get_size@{peak\_\-mem\_\-pool\_\-get\_\-size}}
+\index{peak_mem_pool_get_size@{peak\_\-mem\_\-pool\_\-get\_\-size}!mem_pool@{mem\_\-pool}}
+\subsubsection[peak\_\-mem\_\-pool\_\-get\_\-size]{\setlength{\rightskip}{0pt plus 5cm}int peak\_\-mem\_\-pool\_\-get\_\-size (\hyperlink{group__mem__pool_ga0}{peak\_\-mem\_\-pool} {\em pool})}}
+\label{group__mem__pool_ga6}
+
+
+Statistics: get total pointers count. 
+
+This method is guaranted O(1).
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em pool}]The memory pool reference.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]Size of all pointers really allocated by the memory pool. It grows automatically when no more free pointers are available, and also might eventually decrease if needed. \end{Desc}
+\hypertarget{group__mem__pool_ga4}{
+\index{mem_pool@{mem\_\-pool}!peak_mem_pool_get_used_count@{peak\_\-mem\_\-pool\_\-get\_\-used\_\-count}}
+\index{peak_mem_pool_get_used_count@{peak\_\-mem\_\-pool\_\-get\_\-used\_\-count}!mem_pool@{mem\_\-pool}}
+\subsubsection[peak\_\-mem\_\-pool\_\-get\_\-used\_\-count]{\setlength{\rightskip}{0pt plus 5cm}int peak\_\-mem\_\-pool\_\-get\_\-used\_\-count (\hyperlink{group__mem__pool_ga0}{peak\_\-mem\_\-pool} {\em pool})}}
+\label{group__mem__pool_ga4}
+
+
+Statistics: get used pointers count. 
+
+This method is guaranted O(1).
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em pool}]The memory pool reference.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]Number of pointer currently in use (allocated). \end{Desc}
+\hypertarget{group__mem__pool_ga2}{
+\index{mem_pool@{mem\_\-pool}!peak_mem_pool_new@{peak\_\-mem\_\-pool\_\-new}}
+\index{peak_mem_pool_new@{peak\_\-mem\_\-pool\_\-new}!mem_pool@{mem\_\-pool}}
+\subsubsection[peak\_\-mem\_\-pool\_\-new]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ peak\_\-mem\_\-pool\_\-new (\hyperlink{group__mem__pool_ga0}{peak\_\-mem\_\-pool} {\em pool})}}
+\label{group__mem__pool_ga2}
+
+
+Allocate an object in constant time. 
+
+This method is guaranted O(1) almost all the time, but in rare case it might allocate a chunk of memory to let the memory pool grow.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em pool}]The memory pool reference.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]A pointer to {\em object\_\-size\/} bytes of memory. The allocated space is suitably aligned for storage of any common type of object. Please consult libpeak's compile time options to enable storage of special object like Altivec's vector (which needs 16-bytes align). Also please note the returned memory is NOT normally initialized to zero bytes. \end{Desc}

@@ -1,0 +1,359 @@
+<?xml version="1.0"?>
+<pxyservd>
+
+  <server>
+    <name>proxyscanner.irc-hispano.org</name>
+    <id>P1</id>
+    <numeric>4032</numeric>
+    <maxclients>1</maxclients>
+    <info>IRC-Hispano Proxy Scanner</info>
+    <sendq>1000000</sendq>
+  </server>
+  
+  <hub>
+    <address>127.0.0.1</address>
+    <port>4400</port>
+    <bind-address></bind-address>
+    <password>duck</password>
+  </hub>
+  
+  <client>
+    <nickname>pxysh</nickname>
+    <nick-change-delay></nick-change-delay>
+    <username>proxyscan</username>
+    <hostname>bots.irc-hispano.org</hostname>
+    <realname>IRC-Hispano Proxy Scanner</realname>
+    <userip>127.0.0.1</userip>
+    <usermode>+idkoBrh</usermode>
+    <channel>#proxy_info</channel>
+    <channel-mode>+tnis</channel-mode>
+    <channel-timestamp>1004078035</channel-timestamp>
+    <show-cached>1</show-cached>
+  </client>
+  
+  <noscan>
+    <server>sol.irc-hispano.org</server>
+    <server>deep.space</server>
+    <server>soyuz.irc-hispano.org</server>
+    <server>services.irc-hispano.org</server>
+    <!-- AGREGAR HUBS y IRCD's DE WEBCHAT -->
+    <userip>127.0.0.1</userip>
+    <userip>255.255.255.255</userip>
+    <userip>0/8</userip>
+    <userip>10/8</userip>
+    <userip>172.16/12</userip>
+    <userip>192.168/16</userip>
+    <!-- AGREGAR IPS de bots, admins,... -->
+  </noscan>
+  
+  <scanner>
+    <address>127.0.0.1</address>
+    <port>9601</port>
+    <bind-address></bind-address>
+  </scanner>
+  
+  <log>
+    <file type="current">logs/proxy-current.log</file>
+    <file type="daily">logs/proxy-yesterday.log</file>
+    <file type="system">logs/system.log</file>
+    <file type="glines">logs/glines.log</file>
+    <file type="opercmds">logs/opercmds.log</file>
+    <file type="proxytop">logs/proxytop.db</file>
+    <history-dirpath>logs/history</history-dirpath>
+    <timezone>GMT</timezone>
+  </log>
+  
+  <gline>
+    <delay>900</delay>
+    <!-- Tipos 
+         OPAS types of open proxy
+            O. Unknown/generic type
+            1. WinGate proxy
+            2. Socks v.4
+            3. Socks v.5
+            4. HTTP proxy (using the "CONNECT" method)
+            5. HTTP "POST"
+            6. Insecure Cisco router
+            7. Insecure IRC bouncer
+            8. HTTP "GET" (no implementado)
+            9. TheOnionRouter (TOR) (Desarrollo de IRC-Hispano)
+           10. 3Com812 (Desarrollo de IRC-Hispano)
+           11. Bouncer por Router ADSL Hackeado (Desarrollo de IRC-Hispano)
+           12. Troyano (Desarrollo de IRC-Hispano)
+    -->
+    <!-- type constants taken from the OPAS library -->
+    <reason type="0">Servidor Proxy mal configurado, por favor visita http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/seguridad.html </reason>
+    <reason type="1">Wingate mal configurado, por favor visita http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/seguridad.html </reason><!-- space at the end for mIRC users -->
+    <reason type="2">Servidor Socks4 mal configurado, por favor visita http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/seguridad.html </reason>
+    <reason type="3">Servidor Socks5 mal configurado, por favor visita http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/seguridad.html </reason>
+    <reason type="4">Servidor Proxy HTTP mal configurado, por favor visita http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/seguridad.html </reason>
+    <reason type="5">Servidor Proxy HTTP mal configurado, por favor visita http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/seguridad.html </reason>
+    <reason type="6">Router Cisco mal configurado, por favor visita http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/seguridad.html </reason>
+    <reason type="7">Bouncer de IRC mal configurado, por favor visita http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/seguridad.html </reason>
+    <reason type="8">Servidor Proxy HTTP mal configurado, por favor visita http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/seguridad.html </reason>
+    <reason type="9">Acceso desde TOR no permitido, por favor visita http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/seguridad.html </reason>
+    <reason type="10">Router ADSL mal configurado, por favor visita http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/seguridad.html </reason>
+    <reason type="11">Router Hackeado, avise inmediatamente a su proveedor, mas informacion en http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/como-cerrar-el-puerto-23-en-el-router-3com-812.html </reason>
+    <reason type="12">Troyano en su equipo, por favor visitahttp://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/seguridad.html </reason>
+  </gline>
+  
+  <notice>
+    <line>Esta red tiene en funcionamiento un detector que comprueba proxies abiertos, socks/wingates abiertos y troyanos abiertos.</line>
+    <line>Si le aparece una alerta de conexion entrante al mismo tiempo que esta entrando en el IRC, por favor no la tenga en cuenta, es el detector en accion y NO es un intento hostil.</line>
+    <line>Para mas informacion visita http://www.irc-hispano.es/documentos-de-ayuda-al-usuario-de-irc/seguridad.html</line>
+  </notice>
+  
+  <help-menu>
+IRC-Hispano Proxy Scanner Service Help Menu
+===========================================
+  Comandos (Solo IRCOPS y OPERadores de la red)
+  ------------------------------------
+    INV             - Te invita al canal de consola
+    SERVERS [...]   - Muestra estadisticas de servidores
+    STATUS [...]    - Estadisticas del servidor y del demonio de Escaneo
+    NOSCAN          - Visualiza la configuracion de NOSCAN
+    PROXYTOP        - Proxies encontrados por servidor
+    STATS           - Estadisticas Tecnicas
+    PXSTATS         - Estadisticas del demonio de Escaneo
+    GREM &lt;GLINE&gt;    - Elimina una Gline puesta por mi
+    INFO &lt;nick&gt;     - Muestra informacion del usuario
+    INFO &lt;canal&gt;    - Muestra informacion de todos los usuarios del canal
+    RECHECK &lt;nick&gt;  - Reescanea a un usuario
+    RECHECK &lt;canal&gt; - Reescanea a todos los usuarios de un canal
+    HELP CREDITS    - Creditos del bot
+    HELP &lt;COMMAND&gt;  - Mas ayuda para el comando &lt;COMMAND&gt;
+  </help-menu>
+  
+  <help topic="inv">
+INV
+===
+  Este comando invita a cualquier Operador global a mi canal de consola.
+  </help>
+  
+  <help topic="servers">
+SERVERS [-info] [-noscan]
+==============================================
+Muestra un arbol de Red de IRC con info opcional:
+  -info : Muestra numero de usuarios
+  -scan : Muestra en negrita los servidores escaneados
+  </help>
+  
+  <help topic="status">
+STATUS [-serv|-scan]                     (1/3)
+==============================================
+Seguramente es el comando mas interesante de pxydserv. Utizalo
+cuantas veces quieras para ver rapidamente como esta funcionando pxys.
+ 
+Estado de servidores de IRC
+---------------------------
+Una primera parte visualiza el estado del servidor: numero de
+servidores en la Red, numero de clientes y canales, lo tipico.
+pxyservd obtiene las IPs de los clientes de la Red, y las manda
+a pxyscand, el proceso asociado del demonio de escaneo, para
+buscar proxys. "Scan ClientQ" es el numero de clientes que no
+han sido comprobados todavia; pxyservd esta esperando una
+respuesta positiva o negativa del demonio de escaneo. Hay que
+controlar este valor  ya que no deberia crecer mucho en
+condiciones normales y si lo hace, deberia reducirse rapidamente.
+Es normal tener siempre algunos clientes en la cola de escaneo...
+el demonio de scaneo no siempre puede responder rapidamente.
+"Unscannable clients" muestra el numero actual de clientes 
+*conectados* cuyo escaneo fue fallido. Un escaneo fallido ocurre
+cuando el host o la red de ese cliente es inalcanzable desde el
+demonio de escaneo de proxys. Le sigue el tiempo en activo del 
+servidor (tiempo en activo de pxyservd).
+ 
+Por favor consulte HELP STATUS 2 para una descripcion detallada
+de la parte del estado del escaner.
+  </help>
+
+  <help topic="status 2">
+STATUS [-serv|-scan]                     (2/3)
+==============================================
+Estado del escaner
+------------------
+Primero, debes saber que el demonio de escaneo (pxyscand) ahora 
+esta separado del servidor de servicios de IRC(u) (pxyservd).
+Sin embargo, se pueden comunicar: primero para solicitar escaneo
+de proxys, pero tambien para obtener estados/estadisticas. Asi
+que se puede notar un retardo antes de recibir la respuesta
+de estado del scanner si el demonio de escaneo no esta ejecutandose
+localmente, por ejemplo.
+Las primeras lineas muestran info del estado de la conexion entre
+el servidor y el demonio de escaneo. Si no estan conectados
+(ej. el demonio de escaneo esta caido), veras un aviso ahi.
+"Scanning activity" es un buen indicador de la carga del demonio
+de escaneo. 100%% significa que todos los sockets estan ocupados
+y esta haciendo lo posible para escanearlos. Valores menores
+significan que el scanner podria manejar mis clientes en ese
+momento. Ese porcentaje va seguido por valores mas precisos: el
+numero de IPs unicas que estan siendo escaneadas en el momento, y
+el numero de escaneos que estan siendo ejecutados en ese momento.
+Normalmente, tienes varios escaneos por una IP. El numero de
+escaneos es de hecho el numero de sockets necesarios para
+ejecutar los escaneos de esas IPs (aunque no es exactamente el
+numero de sockets abiertos, y lo que es mas, algunos de ellos
+podrian no estar aun creados o estar ya cerrados).
+"IP scans completed" es simplemente un contador de IPs reales
+escaneadas en la sesion actual (total de todas las sesiones entre
+parentesis). Para consultar el scanner's cache hits contador, usa
+el comando PXSTATS.
+Tambien se muestra una media de escaneos ejecutados.
+ 
+Por favor use HELP STATUS 3 para ver la siguiente pagina.
+  </help>
+  
+  <help topic="status 3">
+STATUS [-serv|-scan]                     (3/3)
+==============================================
+Cuando "ScanQ size" no es cero, la actividad actual de escaneo
+deberia estar en 100%% (el maximo) y sabiendo que el scanner no
+puede procesar todas las IPs al mismo tiempo: el proceso aniade
+las peticiones de escaneo de IP a una cola para procesarlas mas
+tarde. Ese numero deberia bajar hasta 0, si no, es que tienes un
+pequenio problema.
+"Target" es la IP actual necesaria para algunos escaneos (como
+para descubrir Socks 4). Se debe configurar con la IP de uno de
+los servidores estables de tu red.
+"Scan connect() timeout" indica el numero de segundos a
+esperar antes de que un escaneo desista.
+ 
+A continuacion del numero total de proxy encontrados, veras el
+tiempo de conexion del demonio de escaneo. La ultima parte del
+comando STATUS muestra una tabla detallada con contadores de
+proxys encontrados desde que el demonio de escaneo se arranco.
+Como dato, se muestran contadores "open" adicionales de
+conexiones establecidas.
+ 
+Opciones:
+        -serv : solo visualiza el estado de servidores IRC
+        -scan : solo visualiza el estado del demonio de escaneo
+				de proxys
+  </help>
+
+  <help topic="noscan">
+NOSCAN
+==============================================
+Muestra  las reglas "noscan" de pxyservd. pxyservd, el
+servicio servidor de IRC(u) parte de pxys v2, se configura con
+una lista de bloques de IPs que se ignoran. Los clientes
+conectados desde estas ips se catalogan como "scanning disabled".
+Ademas se puede aniadir una lista de servidores remotos: los
+clientes que usen estos servidores tambien se ignoran, de manera
+que es util para services, hubs, o servidores reservados a IRCops.
+  </help>
+
+  <help topic="proxytop">
+PROXYTOP
+==============================================
+Este comando muestra los servidores donde mas proxys se
+encontraron (y que fueron glineados). Puede ayudar a encontrar
+servidores 'muy abiertos' con lineas I/K posiblemente mal puestas,
+o servidores preferidos de los bots de flood... Dale el justo
+valor al indicador de MAXUSERS, ya que los servidores grandes
+tienen mas posibilidades de albergar clientes con proxy.
+  </help>
+  
+  <help topic="stats">
+STATS
+==============================================
+Muestra estadisticas soble sockets, estructuras internas y 
+consumo de memoria.
+  </help>
+
+  <help topic="pxstats">
+PXSTATS
+==============================================
+Obtiene estadisticas internas del demonio de escaneo de proxys.
+Solo disponibles cuando pxyscand esta conectado. Entre otros
+valores extraidos, muestra la cuenta de IPs en cache de usuarios
+ya escaneados. Esta cache permite al escaner trabajar en
+condiciones extremas, evitando volver a escanear IPs comprobadas
+recientemente.
+  </help>
+
+  <help topic="grem">
+GREM &lt;IP|GLINE&gt;
+==============================================
+Metodo de eliminar las G-Lines de proxyscan. Hay que dar la IP
+o la mascara user@host baneados, por ej.: *@&lt;IP&gt;.
+Despues de borrar la g-line, la IP no es ignorada, y se escanearia
+de nuevo si se vuelve a ver.
+  </help>
+
+  <help topic="info">
+INFO &lt;NICK|CANAL&gt;
+==============================================
+Comando que da inforamcion sobre clientes o canales. Proporciona
+algo de informacion sobre los clientes o canales relacionada con
+el escaneo de proxys.
+ 
+Ejemplos:
+        INFO bot-42
+        INFO #floodland
+  </help>
+  
+  <help topic="recheck">
+RECHECK &lt;NICK|CANAL&gt;
+==============================================
+Al igual que GREM, este comando ejecuta una accion y su proposito
+no es solo informativo. Usalo con cuidado.
+El comando RECHECK permite a un operador global del IRC solicitar
+la recomprobacion de un usuario concreto o de todos los usuarios
+de un canal especificado.
+
+No obstante, tenga en cuenta que los usuarios afectados por
+reglas NOSCAN nunca se comprueban. Ademas, si el usuario no ha
+sido escaneado antes (por ej.: si acaba de conectar), el comando
+no hace nada. No dude en usar previamente el comando INFO sobre
+el canal o el usuario si es necesario.
+ 
+Recuerda que se envia un aviso a mi canal de consola si se hace
+RECHECK de un canal entero.
+ 
+Ejemplos:
+        RECHECK bot-42
+        RECHECK #floodland
+  </help>
+  
+  <help topic="evreg">
+EVREG &lt;MODOS&gt;
+=============
+  Este comando permite a operadores globales de IRC recibir
+  notificaciones de sucesos concretos. Existen varios modos, 
+  con un caracter diferente para cada uno. Los operadores con
+  el modo X activado recibiran notificaciones del cliente virtual
+  del escaner de proxys (yo) cuando el evento X se produzca.
+  
+  MODOS
+  -----
+    'p' : encontrado un nuevo proxy inseguro, lo muestra
+    'c' : muestra las coincidencias con proxys en cache
+    'o' : muestra IRCops que usan /oper
+    'x' : eventos relacionados con conexiones de pxyscand
+
+  Por ejemplo, un operador que quiere ser avisado cuando se detecte
+  un nuevo proxy y cuando se use /oper tendria que escribir:
+  /msg &lt;me&gt; evreg +po  
+
+  Para desactivar solo las notificaciones de uso de /oper:
+  /msg &lt;me&gt; evreg -o
+  
+  NOTA: Estos modos permanecen hasta que desconectas o se produce
+        un split entre tu y el escaner de proxys.
+  </help>
+  
+  <help topic="credits">
+pxyservd v2 - parte del software pxys v2
+========================================
+Visita: http://pxys.sf.net
+
+Adaptado para IRC-Hispano por
+  Toni Garcia   zoltan    &lt;zoltan@irc-dev.net&gt;
+
+Traducido al castellano por
+  Toni Garcia   zoltan    &lt;zoltan@irc-dev.net&gt;
+  E.G.A         Ruharen   &lt;ruharen@gmail.net&gt;
+  </help>
+  
+</pxyservd>

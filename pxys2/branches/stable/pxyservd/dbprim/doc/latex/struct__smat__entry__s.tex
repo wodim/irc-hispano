@@ -1,0 +1,94 @@
+\hypertarget{struct__smat__entry__s}{
+\section{\_\-smat\_\-entry\_\-s Struct Reference}
+\label{struct__smat__entry__s}\index{_smat_entry_s@{\_\-smat\_\-entry\_\-s}}
+}
+{\tt \#include $<$dbprim.h$>$}
+
+Collaboration diagram for \_\-smat\_\-entry\_\-s:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=186pt]{struct__smat__entry__s__coll__graph}
+\end{center}
+\end{figure}
+
+
+\subsection{Detailed Description}
+\begin{Desc}
+\item[For internal use only.]
+This is the implementation of the \hyperlink{group__dbprim__smat_ga2}{smat\_\-entry\_\-t} type.\end{Desc}
+
+
+
+
+Definition at line 2327 of file dbprim.h.\subsection*{Data Fields}
+\begin{CompactItemize}
+\item 
+unsigned long \hyperlink{struct__smat__entry__s_o0}{se\_\-magic}
+\item 
+\hyperlink{struct__smat__table__s}{smat\_\-table\_\-t} $\ast$ \hyperlink{struct__smat__entry__s_o1}{se\_\-table}
+\item 
+\hyperlink{struct__hash__entry__s}{hash\_\-entry\_\-t} \hyperlink{struct__smat__entry__s_o2}{se\_\-hash}
+\item 
+\hyperlink{struct__link__elem__s}{link\_\-elem\_\-t} \hyperlink{struct__smat__entry__s_o3}{se\_\-link} \mbox{[}2\mbox{]}
+\item 
+void $\ast$ \hyperlink{struct__smat__entry__s_o4}{se\_\-object} \mbox{[}2\mbox{]}
+\end{CompactItemize}
+
+
+\subsection{Field Documentation}
+\hypertarget{struct__smat__entry__s_o2}{
+\index{_smat_entry_s@{\_\-smat\_\-entry\_\-s}!se_hash@{se\_\-hash}}
+\index{se_hash@{se\_\-hash}!_smat_entry_s@{\_\-smat\_\-entry\_\-s}}
+\subsubsection[se\_\-hash]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{struct__hash__entry__s}{hash\_\-entry\_\-t} \hyperlink{struct__smat__entry__s_o2}{\_\-smat\_\-entry\_\-s::se\_\-hash}}}
+\label{struct__smat__entry__s_o2}
+
+
+Hash table entry. 
+
+Definition at line 2330 of file dbprim.h.
+
+Referenced by \_\-smat\_\-alloc(), \_\-st\_\-remove(), and st\_\-add().\hypertarget{struct__smat__entry__s_o3}{
+\index{_smat_entry_s@{\_\-smat\_\-entry\_\-s}!se_link@{se\_\-link}}
+\index{se_link@{se\_\-link}!_smat_entry_s@{\_\-smat\_\-entry\_\-s}}
+\subsubsection[se\_\-link]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{struct__link__elem__s}{link\_\-elem\_\-t} \hyperlink{struct__smat__entry__s_o3}{\_\-smat\_\-entry\_\-s::se\_\-link}\mbox{[}2\mbox{]}}}
+\label{struct__smat__entry__s_o3}
+
+
+Linked list elements. 
+
+Definition at line 2331 of file dbprim.h.
+
+Referenced by \_\-smat\_\-alloc(), \_\-st\_\-remove(), sh\_\-find(), sh\_\-iter(), sh\_\-move(), and st\_\-add().\hypertarget{struct__smat__entry__s_o0}{
+\index{_smat_entry_s@{\_\-smat\_\-entry\_\-s}!se_magic@{se\_\-magic}}
+\index{se_magic@{se\_\-magic}!_smat_entry_s@{\_\-smat\_\-entry\_\-s}}
+\subsubsection[se\_\-magic]{\setlength{\rightskip}{0pt plus 5cm}unsigned long \hyperlink{struct__smat__entry__s_o0}{\_\-smat\_\-entry\_\-s::se\_\-magic}}}
+\label{struct__smat__entry__s_o0}
+
+
+Magic number. 
+
+Definition at line 2328 of file dbprim.h.
+
+Referenced by \_\-smat\_\-alloc(), and \_\-smat\_\-free().\hypertarget{struct__smat__entry__s_o4}{
+\index{_smat_entry_s@{\_\-smat\_\-entry\_\-s}!se_object@{se\_\-object}}
+\index{se_object@{se\_\-object}!_smat_entry_s@{\_\-smat\_\-entry\_\-s}}
+\subsubsection[se\_\-object]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ \hyperlink{struct__smat__entry__s_o4}{\_\-smat\_\-entry\_\-s::se\_\-object}\mbox{[}2\mbox{]}}}
+\label{struct__smat__entry__s_o4}
+
+
+Objects. 
+
+Definition at line 2332 of file dbprim.h.
+
+Referenced by \_\-smat\_\-alloc(), and st\_\-add().\hypertarget{struct__smat__entry__s_o1}{
+\index{_smat_entry_s@{\_\-smat\_\-entry\_\-s}!se_table@{se\_\-table}}
+\index{se_table@{se\_\-table}!_smat_entry_s@{\_\-smat\_\-entry\_\-s}}
+\subsubsection[se\_\-table]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{struct__smat__table__s}{smat\_\-table\_\-t}$\ast$ \hyperlink{struct__smat__entry__s_o1}{\_\-smat\_\-entry\_\-s::se\_\-table}}}
+\label{struct__smat__entry__s_o1}
+
+
+Sparse matrix table. 
+
+Definition at line 2329 of file dbprim.h.
+
+Referenced by \_\-smat\_\-alloc(), st\_\-add(), and st\_\-remove().

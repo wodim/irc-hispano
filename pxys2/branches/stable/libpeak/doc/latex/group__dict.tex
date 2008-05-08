@@ -1,0 +1,460 @@
+\hypertarget{group__dict}{
+\section{Dictionary}
+\label{group__dict}\index{Dictionary@{Dictionary}}
+}
+
+
+\subsection{Detailed Description}
+\begin{Desc}
+\item[]Generic object-oriented dictionary support. It implements a container which pairs pointer-sized keys with pointer-sized values. Values are accessed via arbitrary user-defined keys. \end{Desc}
+
+
+\subsection*{Data Structures}
+\begin{CompactItemize}
+\item 
+struct \hyperlink{structpeak__dict__init__entry}{peak\_\-dict\_\-init\_\-entry}
+\begin{CompactList}\small\item\em Structure containing a key and value pair to be used at the creation of the dictionary. \item\end{CompactList}\item 
+struct \hyperlink{structpeak__dict__key__ops__s}{peak\_\-dict\_\-key\_\-ops\_\-s}
+\begin{CompactList}\small\item\em Structure containing the callbacks for keys of a dictionary. \item\end{CompactList}\item 
+struct \hyperlink{structpeak__dict__value__ops__s}{peak\_\-dict\_\-value\_\-ops\_\-s}
+\begin{CompactList}\small\item\em Structure containing the callbacks for values of a dictionary. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Typedefs}
+\begin{CompactItemize}
+\item 
+\hypertarget{group__dict_ga0}{
+typedef \_\-\_\-peak\_\-dict $\ast$ \hyperlink{group__dict_ga0}{peak\_\-dict}}
+\label{group__dict_ga0}
+
+\begin{CompactList}\small\item\em Opaque dictionary pointer type. \item\end{CompactList}\item 
+\hypertarget{group__dict_ga1}{
+typedef void $\ast$($\ast$ \hyperlink{group__dict_ga1}{peak\_\-dict\_\-retain\_\-callback} )(const void $\ast$value)}
+\label{group__dict_ga1}
+
+\begin{CompactList}\small\item\em Dictionary's key or value retain callback. \item\end{CompactList}\item 
+\hypertarget{group__dict_ga2}{
+typedef void($\ast$ \hyperlink{group__dict_ga2}{peak\_\-dict\_\-release\_\-callback} )(const void $\ast$value)}
+\label{group__dict_ga2}
+
+\begin{CompactList}\small\item\em Dictionary's key or value release callback. \item\end{CompactList}\item 
+typedef int($\ast$ \hyperlink{group__dict_ga3}{peak\_\-dict\_\-equal\_\-callback} )(const void $\ast$val1, const void $\ast$val2)
+\begin{CompactList}\small\item\em Dictionary's key equal callback. \item\end{CompactList}\item 
+typedef uint32\_\-t($\ast$ \hyperlink{group__dict_ga4}{peak\_\-dict\_\-hash\_\-callback} )(const void $\ast$value)
+\begin{CompactList}\small\item\em Dictionary's key callback. \item\end{CompactList}\item 
+\hypertarget{group__dict_ga21}{
+typedef void($\ast$ \hyperlink{group__dict_ga21}{peak\_\-dict\_\-apply\_\-func} )(const void $\ast$key, const void $\ast$value, void $\ast$context)}
+\label{group__dict_ga21}
+
+\begin{CompactList}\small\item\em Apply function pointer type. See \hyperlink{group__dict_ga28}{peak\_\-dict\_\-apply()}. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+\hyperlink{group__dict_ga0}{peak\_\-dict} \hyperlink{group__dict_ga22}{peak\_\-dict\_\-create} (const \hyperlink{structpeak__dict__key__ops__s}{peak\_\-dict\_\-key\_\-ops\_\-s} $\ast$key\_\-ops, const \hyperlink{structpeak__dict__value__ops__s}{peak\_\-dict\_\-value\_\-ops\_\-s} $\ast$value\_\-ops, const \hyperlink{structpeak__dict__init__entry}{peak\_\-dict\_\-init\_\-entry} $\ast$init\_\-values, int num\_\-values)
+\begin{CompactList}\small\item\em Create a new dictionary. \item\end{CompactList}\item 
+int \hyperlink{group__dict_ga23}{peak\_\-dict\_\-get\_\-count} (\hyperlink{group__dict_ga0}{peak\_\-dict} dict)
+\begin{CompactList}\small\item\em Returns the number of values currently in the dictionary. \item\end{CompactList}\item 
+const void $\ast$ \hyperlink{group__dict_ga24}{peak\_\-dict\_\-get\_\-value} (\hyperlink{group__dict_ga0}{peak\_\-dict} dict, const void $\ast$key)
+\begin{CompactList}\small\item\em Retrieves the value associated with the given key. \item\end{CompactList}\item 
+void \hyperlink{group__dict_ga25}{peak\_\-dict\_\-get\_\-all} (\hyperlink{group__dict_ga0}{peak\_\-dict} dict, const void $\ast$$\ast$keys, const void $\ast$$\ast$values)
+\begin{CompactList}\small\item\em Retrieves all key and value pairs. \item\end{CompactList}\item 
+void \hyperlink{group__dict_ga26}{peak\_\-dict\_\-apply} (\hyperlink{group__dict_ga0}{peak\_\-dict} dict, \hyperlink{group__dict_ga21}{peak\_\-dict\_\-apply\_\-func} applier, void $\ast$context)
+\begin{CompactList}\small\item\em Call a function once for each value in the dictionary. \item\end{CompactList}\item 
+void \hyperlink{group__dict_ga27}{peak\_\-dict\_\-add} (\hyperlink{group__dict_ga0}{peak\_\-dict} dict, const void $\ast$key, const void $\ast$value)
+\begin{CompactList}\small\item\em \char`\"{}Add if absent\char`\"{} a key and value pair to the dictionary. \item\end{CompactList}\item 
+void \hyperlink{group__dict_ga28}{peak\_\-dict\_\-set} (\hyperlink{group__dict_ga0}{peak\_\-dict} dict, const void $\ast$key, const void $\ast$value)
+\begin{CompactList}\small\item\em \char`\"{}Add if absent, replace is present\char`\"{} a key and value pair. \item\end{CompactList}\item 
+void \hyperlink{group__dict_ga29}{peak\_\-dict\_\-replace} (\hyperlink{group__dict_ga0}{peak\_\-dict} dict, const void $\ast$key, const void $\ast$value)
+\begin{CompactList}\small\item\em \char`\"{}Replace if present\char`\"{} a key and value pair. \item\end{CompactList}\item 
+void \hyperlink{group__dict_ga30}{peak\_\-dict\_\-remove} (\hyperlink{group__dict_ga0}{peak\_\-dict} dict, const void $\ast$key)
+\begin{CompactList}\small\item\em Remove a key and value pair from the dictionary. \item\end{CompactList}\item 
+void \hyperlink{group__dict_ga31}{peak\_\-dict\_\-clear} (\hyperlink{group__dict_ga0}{peak\_\-dict} dict)
+\begin{CompactList}\small\item\em Remove all values from the dictionary. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Variables}
+\begin{CompactItemize}
+\item 
+const \hyperlink{structpeak__dict__key__ops__s}{peak\_\-dict\_\-key\_\-ops\_\-s} \hyperlink{group__dict_ga5}{peak\_\-dict\_\-null\_\-key\_\-ops}
+\item 
+const \hyperlink{structpeak__dict__key__ops__s}{peak\_\-dict\_\-key\_\-ops\_\-s} \hyperlink{group__dict_ga6}{peak\_\-dict\_\-null\_\-key\_\-ops}
+\item 
+const \hyperlink{structpeak__dict__key__ops__s}{peak\_\-dict\_\-key\_\-ops\_\-s} \hyperlink{group__dict_ga7}{peak\_\-dict\_\-string\_\-key\_\-ops}
+\item 
+const \hyperlink{structpeak__dict__key__ops__s}{peak\_\-dict\_\-key\_\-ops\_\-s} \hyperlink{group__dict_ga8}{peak\_\-dict\_\-string\_\-key\_\-ops}
+\item 
+const \hyperlink{structpeak__dict__key__ops__s}{peak\_\-dict\_\-key\_\-ops\_\-s} \hyperlink{group__dict_ga9}{peak\_\-dict\_\-string\_\-copy\_\-key\_\-ops}
+\item 
+const \hyperlink{structpeak__dict__key__ops__s}{peak\_\-dict\_\-key\_\-ops\_\-s} \hyperlink{group__dict_ga10}{peak\_\-dict\_\-string\_\-copy\_\-key\_\-ops}
+\item 
+const \hyperlink{structpeak__dict__key__ops__s}{peak\_\-dict\_\-key\_\-ops\_\-s} \hyperlink{group__dict_ga11}{peak\_\-dict\_\-stringcase\_\-key\_\-ops}
+\item 
+const \hyperlink{structpeak__dict__key__ops__s}{peak\_\-dict\_\-key\_\-ops\_\-s} \hyperlink{group__dict_ga12}{peak\_\-dict\_\-stringcase\_\-key\_\-ops}
+\item 
+const \hyperlink{structpeak__dict__key__ops__s}{peak\_\-dict\_\-key\_\-ops\_\-s} \hyperlink{group__dict_ga13}{peak\_\-dict\_\-stringcase\_\-copy\_\-key\_\-ops}
+\item 
+const \hyperlink{structpeak__dict__key__ops__s}{peak\_\-dict\_\-key\_\-ops\_\-s} \hyperlink{group__dict_ga14}{peak\_\-dict\_\-stringcase\_\-copy\_\-key\_\-ops}
+\item 
+const \hyperlink{structpeak__dict__value__ops__s}{peak\_\-dict\_\-value\_\-ops\_\-s} \hyperlink{group__dict_ga15}{peak\_\-dict\_\-null\_\-value\_\-ops}
+\item 
+const \hyperlink{structpeak__dict__value__ops__s}{peak\_\-dict\_\-value\_\-ops\_\-s} \hyperlink{group__dict_ga16}{peak\_\-dict\_\-null\_\-value\_\-ops}
+\item 
+const \hyperlink{structpeak__dict__value__ops__s}{peak\_\-dict\_\-value\_\-ops\_\-s} \hyperlink{group__dict_ga17}{peak\_\-dict\_\-string\_\-value\_\-ops}
+\item 
+const \hyperlink{structpeak__dict__value__ops__s}{peak\_\-dict\_\-value\_\-ops\_\-s} \hyperlink{group__dict_ga18}{peak\_\-dict\_\-string\_\-value\_\-ops}
+\item 
+const \hyperlink{structpeak__dict__value__ops__s}{peak\_\-dict\_\-value\_\-ops\_\-s} \hyperlink{group__dict_ga19}{peak\_\-dict\_\-string\_\-copy\_\-value\_\-ops}
+\item 
+const \hyperlink{structpeak__dict__value__ops__s}{peak\_\-dict\_\-value\_\-ops\_\-s} \hyperlink{group__dict_ga20}{peak\_\-dict\_\-string\_\-copy\_\-value\_\-ops}
+\end{CompactItemize}
+
+
+\subsection{Typedef Documentation}
+\hypertarget{group__dict_ga3}{
+\index{dict@{dict}!peak_dict_equal_callback@{peak\_\-dict\_\-equal\_\-callback}}
+\index{peak_dict_equal_callback@{peak\_\-dict\_\-equal\_\-callback}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-equal\_\-callback]{\setlength{\rightskip}{0pt plus 5cm}typedef int($\ast$ \hyperlink{group__dict_ga3}{peak\_\-dict\_\-equal\_\-callback})(const void $\ast$val1, const void $\ast$val2)}}
+\label{group__dict_ga3}
+
+
+Dictionary's key equal callback. 
+
+Should return 0 if the objects match or another value otherwise (eg. 1). \hypertarget{group__dict_ga4}{
+\index{dict@{dict}!peak_dict_hash_callback@{peak\_\-dict\_\-hash\_\-callback}}
+\index{peak_dict_hash_callback@{peak\_\-dict\_\-hash\_\-callback}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-hash\_\-callback]{\setlength{\rightskip}{0pt plus 5cm}typedef uint32\_\-t($\ast$ \hyperlink{group__dict_ga4}{peak\_\-dict\_\-hash\_\-callback})(const void $\ast$value)}}
+\label{group__dict_ga4}
+
+
+Dictionary's key callback. 
+
+Should return a good 32-bits hash value. 
+
+\subsection{Function Documentation}
+\hypertarget{group__dict_ga27}{
+\index{dict@{dict}!peak_dict_add@{peak\_\-dict\_\-add}}
+\index{peak_dict_add@{peak\_\-dict\_\-add}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-add]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-dict\_\-add (\hyperlink{group__dict_ga0}{peak\_\-dict} {\em dict}, const void $\ast$ {\em key}, const void $\ast$ {\em value})}}
+\label{group__dict_ga27}
+
+
+\char`\"{}Add if absent\char`\"{} a key and value pair to the dictionary. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em dict}]The dictionary reference. \item[{\em key}]The key to add. It's retained by the dictionary using the retain callback provided when the dictionary was created. \item[{\em value}]The value to add, associated with the previous {\em key\/}. It's retained by the dictionary using the retain callback provided when the dictionary was created. \end{description}
+\end{Desc}
+\hypertarget{group__dict_ga26}{
+\index{dict@{dict}!peak_dict_apply@{peak\_\-dict\_\-apply}}
+\index{peak_dict_apply@{peak\_\-dict\_\-apply}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-apply]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-dict\_\-apply (\hyperlink{group__dict_ga0}{peak\_\-dict} {\em dict}, \hyperlink{group__dict_ga21}{peak\_\-dict\_\-apply\_\-func} {\em applier}, void $\ast$ {\em context})}}
+\label{group__dict_ga26}
+
+
+Call a function once for each value in the dictionary. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em dict}]The dictionary reference. \item[{\em applier}]The callback function. \item[{\em context}]A pointer-sized user-defined value, which is passed to the applier function. This parameter is not used by the library itself otherwise. \end{description}
+\end{Desc}
+\hypertarget{group__dict_ga31}{
+\index{dict@{dict}!peak_dict_clear@{peak\_\-dict\_\-clear}}
+\index{peak_dict_clear@{peak\_\-dict\_\-clear}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-clear]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-dict\_\-clear (\hyperlink{group__dict_ga0}{peak\_\-dict} {\em dict})}}
+\label{group__dict_ga31}
+
+
+Remove all values from the dictionary. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em dict}]The dictionary reference. \end{description}
+\end{Desc}
+\hypertarget{group__dict_ga22}{
+\index{dict@{dict}!peak_dict_create@{peak\_\-dict\_\-create}}
+\index{peak_dict_create@{peak\_\-dict\_\-create}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-create]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{group__dict_ga0}{peak\_\-dict} peak\_\-dict\_\-create (const \hyperlink{structpeak__dict__key__ops__s}{peak\_\-dict\_\-key\_\-ops\_\-s} $\ast$ {\em key\_\-ops}, const \hyperlink{structpeak__dict__value__ops__s}{peak\_\-dict\_\-value\_\-ops\_\-s} $\ast$ {\em value\_\-ops}, const \hyperlink{structpeak__dict__init__entry}{peak\_\-dict\_\-init\_\-entry} $\ast$ {\em init\_\-values}, int {\em num\_\-values})}}
+\label{group__dict_ga22}
+
+
+Create a new dictionary. 
+
+All peak's dictionary are created mutable, you can always add or remove elements. Immutable dictionary might be added in the future.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em key\_\-ops}]A pointer to an user-defined operations structure \hyperlink{structpeak__dict__key__ops__s}{peak\_\-dict\_\-key\_\-ops\_\-s} on keys. A copy of the pointed structure is made, so you can reuse or deallocate the structure after this call. \item[{\em value\_\-ops}]A pointer to an user-defined operations structure \hyperlink{structpeak__dict__value__ops__s}{peak\_\-dict\_\-value\_\-ops\_\-s} on values. A copy of the pointed structure is made, so you can reuse or deallocate the structure after this call. \item[{\em init\_\-values}]A C array of \hyperlink{structpeak__dict__init__entry}{peak\_\-dict\_\-init\_\-entry} to be immediately added in the dictionary or {\tt NULL} if you want to create an empty dictionary. The array can be freed after the call. The key's retain callback, if any, is called for each item. Same thing for each value. \item[{\em num\_\-values}]Number of \hyperlink{structpeak__dict__init__entry}{peak\_\-dict\_\-init\_\-entry} structures in the {\em init\_\-values\/} C array. Use 0 if you want an empty dictionary.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]A pointer to a new allocated dictionary or {\tt NULL} if the operation failed. Use \hyperlink{group__alloc_ga7}{peak\_\-release()} when you want to dispose it. \end{Desc}
+\hypertarget{group__dict_ga25}{
+\index{dict@{dict}!peak_dict_get_all@{peak\_\-dict\_\-get\_\-all}}
+\index{peak_dict_get_all@{peak\_\-dict\_\-get\_\-all}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-get\_\-all]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-dict\_\-get\_\-all (\hyperlink{group__dict_ga0}{peak\_\-dict} {\em dict}, const void $\ast$$\ast$ {\em keys}, const void $\ast$$\ast$ {\em values})}}
+\label{group__dict_ga25}
+
+
+Retrieves all key and value pairs. 
+
+This method fills the two buffers with the keys and values from the dictionary. The keys and values C arrays are parallel to each other but the order or the pairs is not defined.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em dict}]The dictionary reference. \item[{\em keys}]A buffer large enough to hold all pointer-sized keys or {\tt NULL}. \item[{\em values}]A buffer large enough to hold all pointer-sized values or {\tt NULL}. \end{description}
+\end{Desc}
+\hypertarget{group__dict_ga23}{
+\index{dict@{dict}!peak_dict_get_count@{peak\_\-dict\_\-get\_\-count}}
+\index{peak_dict_get_count@{peak\_\-dict\_\-get\_\-count}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-get\_\-count]{\setlength{\rightskip}{0pt plus 5cm}int peak\_\-dict\_\-get\_\-count (\hyperlink{group__dict_ga0}{peak\_\-dict} {\em dict})}}
+\label{group__dict_ga23}
+
+
+Returns the number of values currently in the dictionary. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em dict}]The dictionary reference.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]Number of values currently in the dictionary. \end{Desc}
+\hypertarget{group__dict_ga24}{
+\index{dict@{dict}!peak_dict_get_value@{peak\_\-dict\_\-get\_\-value}}
+\index{peak_dict_get_value@{peak\_\-dict\_\-get\_\-value}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-get\_\-value]{\setlength{\rightskip}{0pt plus 5cm}const void$\ast$ peak\_\-dict\_\-get\_\-value (\hyperlink{group__dict_ga0}{peak\_\-dict} {\em dict}, const void $\ast$ {\em key})}}
+\label{group__dict_ga24}
+
+
+Retrieves the value associated with the given key. 
+
+This method will use the hash and equal key callbacks provided when the dictionary was created.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em dict}]The dictionary reference. \item[{\em key}]The key for which to find a match in the dictionary.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]Number of values currently in the dictionary. \end{Desc}
+\hypertarget{group__dict_ga30}{
+\index{dict@{dict}!peak_dict_remove@{peak\_\-dict\_\-remove}}
+\index{peak_dict_remove@{peak\_\-dict\_\-remove}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-remove]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-dict\_\-remove (\hyperlink{group__dict_ga0}{peak\_\-dict} {\em dict}, const void $\ast$ {\em key})}}
+\label{group__dict_ga30}
+
+
+Remove a key and value pair from the dictionary. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em dict}]The dictionary reference. \item[{\em key}]The key of the value to remove in the dictionary. They are released by the dictionary using the release callbacks provided when the dictionary was created, if any. \end{description}
+\end{Desc}
+\hypertarget{group__dict_ga29}{
+\index{dict@{dict}!peak_dict_replace@{peak\_\-dict\_\-replace}}
+\index{peak_dict_replace@{peak\_\-dict\_\-replace}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-replace]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-dict\_\-replace (\hyperlink{group__dict_ga0}{peak\_\-dict} {\em dict}, const void $\ast$ {\em key}, const void $\ast$ {\em value})}}
+\label{group__dict_ga29}
+
+
+\char`\"{}Replace if present\char`\"{} a key and value pair. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em dict}]The dictionary reference. \item[{\em key}]The key of the value to replace in the dictionary. \item[{\em value}]The value to replace, associated with the previous {\em key\/}. The old one is released by the dictionary using the release callback and the new one is retained using the retain callback, both provided when the dictionary was created. \end{description}
+\end{Desc}
+\hypertarget{group__dict_ga28}{
+\index{dict@{dict}!peak_dict_set@{peak\_\-dict\_\-set}}
+\index{peak_dict_set@{peak\_\-dict\_\-set}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-set]{\setlength{\rightskip}{0pt plus 5cm}void peak\_\-dict\_\-set (\hyperlink{group__dict_ga0}{peak\_\-dict} {\em dict}, const void $\ast$ {\em key}, const void $\ast$ {\em value})}}
+\label{group__dict_ga28}
+
+
+\char`\"{}Add if absent, replace is present\char`\"{} a key and value pair. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em dict}]The dictionary reference. \item[{\em key}]The key to set. If the key isn't already in the dictionary, it's retained using the retain callback provided when the dictionary was created. \item[{\em value}]The value to set, associated with the previous {\em key\/}. It's retained by the dictionary using the retain callback provided when the dictionary was created. \end{description}
+\end{Desc}
+
+
+\subsection{Variable Documentation}
+\hypertarget{group__dict_ga6}{
+\index{dict@{dict}!peak_dict_null_key_ops@{peak\_\-dict\_\-null\_\-key\_\-ops}}
+\index{peak_dict_null_key_ops@{peak\_\-dict\_\-null\_\-key\_\-ops}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-null\_\-key\_\-ops]{\setlength{\rightskip}{0pt plus 5cm}const \hyperlink{structpeak__dict__key__ops__s}{peak\_\-dict\_\-key\_\-ops\_\-s} \hyperlink{group__dict_ga6}{peak\_\-dict\_\-null\_\-key\_\-ops}}}
+\label{group__dict_ga6}
+
+
+Predefined callbacks structure appropriate for use when keys of a dictionary are unknown objects and you want nothing to be performed as retain/release, and you can't provide better equality or hashing function than pointer-related ones. \hypertarget{group__dict_ga5}{
+\index{dict@{dict}!peak_dict_null_key_ops@{peak\_\-dict\_\-null\_\-key\_\-ops}}
+\index{peak_dict_null_key_ops@{peak\_\-dict\_\-null\_\-key\_\-ops}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-null\_\-key\_\-ops]{\setlength{\rightskip}{0pt plus 5cm}const \hyperlink{structpeak__dict__key__ops__s}{peak\_\-dict\_\-key\_\-ops\_\-s} \hyperlink{group__dict_ga6}{peak\_\-dict\_\-null\_\-key\_\-ops}}}
+\label{group__dict_ga5}
+
+
+{\bf Initial value:}
+
+\footnotesize\begin{verbatim}
+  {
+  NULL, NULL, __peak_dict_ptr_equal, __peak_dict_ptr_hash
+  }
+\end{verbatim}\normalsize 
+Predefined callbacks structure appropriate for use when keys of a dictionary are unknown objects and you want nothing to be performed as retain/release, and you can't provide better equality or hashing function than pointer-related ones. \hypertarget{group__dict_ga16}{
+\index{dict@{dict}!peak_dict_null_value_ops@{peak\_\-dict\_\-null\_\-value\_\-ops}}
+\index{peak_dict_null_value_ops@{peak\_\-dict\_\-null\_\-value\_\-ops}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-null\_\-value\_\-ops]{\setlength{\rightskip}{0pt plus 5cm}const \hyperlink{structpeak__dict__value__ops__s}{peak\_\-dict\_\-value\_\-ops\_\-s} \hyperlink{group__dict_ga16}{peak\_\-dict\_\-null\_\-value\_\-ops}}}
+\label{group__dict_ga16}
+
+
+Predefined callbacks structure appropriate for use when values of a dictionary are unknown objects. \hypertarget{group__dict_ga15}{
+\index{dict@{dict}!peak_dict_null_value_ops@{peak\_\-dict\_\-null\_\-value\_\-ops}}
+\index{peak_dict_null_value_ops@{peak\_\-dict\_\-null\_\-value\_\-ops}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-null\_\-value\_\-ops]{\setlength{\rightskip}{0pt plus 5cm}const \hyperlink{structpeak__dict__value__ops__s}{peak\_\-dict\_\-value\_\-ops\_\-s} \hyperlink{group__dict_ga16}{peak\_\-dict\_\-null\_\-value\_\-ops}}}
+\label{group__dict_ga15}
+
+
+{\bf Initial value:}
+
+\footnotesize\begin{verbatim}
+  {
+  NULL, NULL
+  }
+\end{verbatim}\normalsize 
+Predefined callbacks structure appropriate for use when values of a dictionary are unknown objects. \hypertarget{group__dict_ga10}{
+\index{dict@{dict}!peak_dict_string_copy_key_ops@{peak\_\-dict\_\-string\_\-copy\_\-key\_\-ops}}
+\index{peak_dict_string_copy_key_ops@{peak\_\-dict\_\-string\_\-copy\_\-key\_\-ops}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-string\_\-copy\_\-key\_\-ops]{\setlength{\rightskip}{0pt plus 5cm}const \hyperlink{structpeak__dict__key__ops__s}{peak\_\-dict\_\-key\_\-ops\_\-s} \hyperlink{group__dict_ga10}{peak\_\-dict\_\-string\_\-copy\_\-key\_\-ops}}}
+\label{group__dict_ga10}
+
+
+Predefined callbacks structure appropriate for use when keys of a dictionary are strings to be copied by the dictionary. \hypertarget{group__dict_ga9}{
+\index{dict@{dict}!peak_dict_string_copy_key_ops@{peak\_\-dict\_\-string\_\-copy\_\-key\_\-ops}}
+\index{peak_dict_string_copy_key_ops@{peak\_\-dict\_\-string\_\-copy\_\-key\_\-ops}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-string\_\-copy\_\-key\_\-ops]{\setlength{\rightskip}{0pt plus 5cm}const \hyperlink{structpeak__dict__key__ops__s}{peak\_\-dict\_\-key\_\-ops\_\-s} \hyperlink{group__dict_ga10}{peak\_\-dict\_\-string\_\-copy\_\-key\_\-ops}}}
+\label{group__dict_ga9}
+
+
+{\bf Initial value:}
+
+\footnotesize\begin{verbatim}
+  {
+  (peak_dict_retain_callback)peak_strdup,
+  (peak_dict_release_callback)peak_deallocate,
+  __peak_dict_string_equal,
+  __peak_dict_string_hash
+  }
+\end{verbatim}\normalsize 
+Predefined callbacks structure appropriate for use when keys of a dictionary are strings to be copied by the dictionary. \hypertarget{group__dict_ga20}{
+\index{dict@{dict}!peak_dict_string_copy_value_ops@{peak\_\-dict\_\-string\_\-copy\_\-value\_\-ops}}
+\index{peak_dict_string_copy_value_ops@{peak\_\-dict\_\-string\_\-copy\_\-value\_\-ops}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-string\_\-copy\_\-value\_\-ops]{\setlength{\rightskip}{0pt plus 5cm}const \hyperlink{structpeak__dict__value__ops__s}{peak\_\-dict\_\-value\_\-ops\_\-s} \hyperlink{group__dict_ga20}{peak\_\-dict\_\-string\_\-copy\_\-value\_\-ops}}}
+\label{group__dict_ga20}
+
+
+Predefined callbacks structure appropriate for use when values of a dictionary are strings to be copied by the dictionary. \hypertarget{group__dict_ga19}{
+\index{dict@{dict}!peak_dict_string_copy_value_ops@{peak\_\-dict\_\-string\_\-copy\_\-value\_\-ops}}
+\index{peak_dict_string_copy_value_ops@{peak\_\-dict\_\-string\_\-copy\_\-value\_\-ops}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-string\_\-copy\_\-value\_\-ops]{\setlength{\rightskip}{0pt plus 5cm}const \hyperlink{structpeak__dict__value__ops__s}{peak\_\-dict\_\-value\_\-ops\_\-s} \hyperlink{group__dict_ga20}{peak\_\-dict\_\-string\_\-copy\_\-value\_\-ops}}}
+\label{group__dict_ga19}
+
+
+{\bf Initial value:}
+
+\footnotesize\begin{verbatim}
+  {
+  (peak_dict_retain_callback)peak_strdup,
+  (peak_dict_release_callback)peak_deallocate
+  }
+\end{verbatim}\normalsize 
+Predefined callbacks structure appropriate for use when values of a dictionary are strings to be copied by the dictionary. \hypertarget{group__dict_ga8}{
+\index{dict@{dict}!peak_dict_string_key_ops@{peak\_\-dict\_\-string\_\-key\_\-ops}}
+\index{peak_dict_string_key_ops@{peak\_\-dict\_\-string\_\-key\_\-ops}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-string\_\-key\_\-ops]{\setlength{\rightskip}{0pt plus 5cm}const \hyperlink{structpeak__dict__key__ops__s}{peak\_\-dict\_\-key\_\-ops\_\-s} \hyperlink{group__dict_ga8}{peak\_\-dict\_\-string\_\-key\_\-ops}}}
+\label{group__dict_ga8}
+
+
+Predefined callbacks structure appropriate for use when keys of a dictionary are constant strings. \hypertarget{group__dict_ga7}{
+\index{dict@{dict}!peak_dict_string_key_ops@{peak\_\-dict\_\-string\_\-key\_\-ops}}
+\index{peak_dict_string_key_ops@{peak\_\-dict\_\-string\_\-key\_\-ops}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-string\_\-key\_\-ops]{\setlength{\rightskip}{0pt plus 5cm}const \hyperlink{structpeak__dict__key__ops__s}{peak\_\-dict\_\-key\_\-ops\_\-s} \hyperlink{group__dict_ga8}{peak\_\-dict\_\-string\_\-key\_\-ops}}}
+\label{group__dict_ga7}
+
+
+{\bf Initial value:}
+
+\footnotesize\begin{verbatim}
+  {
+  NULL, NULL, __peak_dict_string_equal, __peak_dict_string_hash
+  }
+\end{verbatim}\normalsize 
+Predefined callbacks structure appropriate for use when keys of a dictionary are constant strings. \hypertarget{group__dict_ga18}{
+\index{dict@{dict}!peak_dict_string_value_ops@{peak\_\-dict\_\-string\_\-value\_\-ops}}
+\index{peak_dict_string_value_ops@{peak\_\-dict\_\-string\_\-value\_\-ops}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-string\_\-value\_\-ops]{\setlength{\rightskip}{0pt plus 5cm}const \hyperlink{structpeak__dict__value__ops__s}{peak\_\-dict\_\-value\_\-ops\_\-s} \hyperlink{group__dict_ga18}{peak\_\-dict\_\-string\_\-value\_\-ops}}}
+\label{group__dict_ga18}
+
+
+Predefined callbacks structure appropriate for use when values of a dictionary are constant strings. \hypertarget{group__dict_ga17}{
+\index{dict@{dict}!peak_dict_string_value_ops@{peak\_\-dict\_\-string\_\-value\_\-ops}}
+\index{peak_dict_string_value_ops@{peak\_\-dict\_\-string\_\-value\_\-ops}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-string\_\-value\_\-ops]{\setlength{\rightskip}{0pt plus 5cm}const \hyperlink{structpeak__dict__value__ops__s}{peak\_\-dict\_\-value\_\-ops\_\-s} \hyperlink{group__dict_ga18}{peak\_\-dict\_\-string\_\-value\_\-ops}}}
+\label{group__dict_ga17}
+
+
+{\bf Initial value:}
+
+\footnotesize\begin{verbatim}
+  {
+  NULL, NULL
+  }
+\end{verbatim}\normalsize 
+Predefined callbacks structure appropriate for use when values of a dictionary are constant strings. \hypertarget{group__dict_ga14}{
+\index{dict@{dict}!peak_dict_stringcase_copy_key_ops@{peak\_\-dict\_\-stringcase\_\-copy\_\-key\_\-ops}}
+\index{peak_dict_stringcase_copy_key_ops@{peak\_\-dict\_\-stringcase\_\-copy\_\-key\_\-ops}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-stringcase\_\-copy\_\-key\_\-ops]{\setlength{\rightskip}{0pt plus 5cm}const \hyperlink{structpeak__dict__key__ops__s}{peak\_\-dict\_\-key\_\-ops\_\-s} \hyperlink{group__dict_ga14}{peak\_\-dict\_\-stringcase\_\-copy\_\-key\_\-ops}}}
+\label{group__dict_ga14}
+
+
+Predefined callbacks structure appropriate for use when keys of a dictionary are strings ignoring case to be copied by the dictionary. \hypertarget{group__dict_ga13}{
+\index{dict@{dict}!peak_dict_stringcase_copy_key_ops@{peak\_\-dict\_\-stringcase\_\-copy\_\-key\_\-ops}}
+\index{peak_dict_stringcase_copy_key_ops@{peak\_\-dict\_\-stringcase\_\-copy\_\-key\_\-ops}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-stringcase\_\-copy\_\-key\_\-ops]{\setlength{\rightskip}{0pt plus 5cm}const \hyperlink{structpeak__dict__key__ops__s}{peak\_\-dict\_\-key\_\-ops\_\-s} \hyperlink{group__dict_ga14}{peak\_\-dict\_\-stringcase\_\-copy\_\-key\_\-ops}}}
+\label{group__dict_ga13}
+
+
+{\bf Initial value:}
+
+\footnotesize\begin{verbatim}
+  {
+  (peak_dict_retain_callback)peak_strdup,
+  (peak_dict_release_callback)peak_deallocate,
+  __peak_dict_stringcase_equal,
+  __peak_dict_stringcase_hash
+  }
+\end{verbatim}\normalsize 
+Predefined callbacks structure appropriate for use when keys of a dictionary are strings ignoring case to be copied by the dictionary. \hypertarget{group__dict_ga12}{
+\index{dict@{dict}!peak_dict_stringcase_key_ops@{peak\_\-dict\_\-stringcase\_\-key\_\-ops}}
+\index{peak_dict_stringcase_key_ops@{peak\_\-dict\_\-stringcase\_\-key\_\-ops}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-stringcase\_\-key\_\-ops]{\setlength{\rightskip}{0pt plus 5cm}const \hyperlink{structpeak__dict__key__ops__s}{peak\_\-dict\_\-key\_\-ops\_\-s} \hyperlink{group__dict_ga12}{peak\_\-dict\_\-stringcase\_\-key\_\-ops}}}
+\label{group__dict_ga12}
+
+
+Predefined callbacks structure appropriate for use when keys of a dictionary are constant strings ignoring case. \hypertarget{group__dict_ga11}{
+\index{dict@{dict}!peak_dict_stringcase_key_ops@{peak\_\-dict\_\-stringcase\_\-key\_\-ops}}
+\index{peak_dict_stringcase_key_ops@{peak\_\-dict\_\-stringcase\_\-key\_\-ops}!dict@{dict}}
+\subsubsection[peak\_\-dict\_\-stringcase\_\-key\_\-ops]{\setlength{\rightskip}{0pt plus 5cm}const \hyperlink{structpeak__dict__key__ops__s}{peak\_\-dict\_\-key\_\-ops\_\-s} \hyperlink{group__dict_ga12}{peak\_\-dict\_\-stringcase\_\-key\_\-ops}}}
+\label{group__dict_ga11}
+
+
+{\bf Initial value:}
+
+\footnotesize\begin{verbatim}
+  {
+  NULL, NULL, __peak_dict_stringcase_equal, __peak_dict_stringcase_hash
+  }
+\end{verbatim}\normalsize 
+Predefined callbacks structure appropriate for use when keys of a dictionary are constant strings ignoring case. 

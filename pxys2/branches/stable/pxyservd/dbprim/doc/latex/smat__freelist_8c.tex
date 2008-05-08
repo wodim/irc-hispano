@@ -1,0 +1,42 @@
+\hypertarget{smat__freelist_8c}{
+\section{smat\_\-freelist.c File Reference}
+\label{smat__freelist_8c}\index{smat_freelist.c@{smat\_\-freelist.c}}
+}
+
+
+\subsection{Detailed Description}
+\begin{Desc}
+\item[For internal use only.]
+This file contains the implementation of the sparse matrix freelist and its support functions. The freelist is intended to avoid memory fragmentation due to the large number of hash entry structures that must be allocated by the sparse matrix system.\end{Desc}
+
+
+Definition in file \hyperlink{smat__freelist_8c-source}{smat\_\-freelist.c}.
+
+{\tt \#include $<$stdlib.h$>$}\par
+{\tt \#include $<$string.h$>$}\par
+{\tt \#include \char`\"{}dbprim.h\char`\"{}}\par
+{\tt \#include \char`\"{}dbprim\_\-int.h\char`\"{}}\par
+
+
+Include dependency graph for smat\_\-freelist.c:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=198pt]{smat__freelist_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+\hyperlink{struct__smat__entry__s}{smat\_\-entry\_\-t} $\ast$ \hyperlink{group__dbprim__smat_ga24}{\_\-smat\_\-alloc} (void)
+\begin{CompactList}\small\item\em Allocate a sparse matrix entry. \item\end{CompactList}\item 
+void \hyperlink{group__dbprim__smat_ga25}{\_\-smat\_\-free} (\hyperlink{struct__smat__entry__s}{smat\_\-entry\_\-t} $\ast$entry)
+\begin{CompactList}\small\item\em Release a sparse matrix entry. \item\end{CompactList}\item 
+unsigned long \hyperlink{group__dbprim__smat_ga8}{smat\_\-cleanup} (void)
+\begin{CompactList}\small\item\em Clean up the smat free list. \item\end{CompactList}\item 
+unsigned long \hyperlink{group__dbprim__smat_ga9}{smat\_\-freemem} (void)
+\begin{CompactList}\small\item\em Report how much memory is used by the free list. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Variables}
+\begin{CompactItemize}
+\item 
+static \hyperlink{struct__link__head__s}{link\_\-head\_\-t} \hyperlink{group__dbprim__smat_ga7}{\_\-smat\_\-freelist}
+\begin{CompactList}\small\item\em Sparse matrix freelist. \item\end{CompactList}\end{CompactItemize}

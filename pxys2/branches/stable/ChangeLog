@@ -1,0 +1,26 @@
+2004-01-22  Stephane Thiell  <mbuna@bugged.org>
+
+	* "Technology release" 2.0.0.
+
+2004-01-17  Stephane Thiell  <mbuna@bugged.org>
+
+	* Added AM_MAINTAINER_MODE where it's missing.
+
+2004-01-15  Stephane Thiell  <mbuna@bugged.org>
+
+	* Imported and merged updated OPAS Library (1.0.1, fix a bug).
+
+2004-01-02  Stephane Thiell  <mbuna@bugged.org>
+
+	* Fixed a bug in ipcache_swapin/out.
+
+2004-01-01  Stephane Thiell  <mbuna@bugged.org>
+
+	* Added pxyscand and pxyservd specific ChangeLog files.
+	* Fixed a few bugs discovered after running pxyscand and pxyservd
+	  in production conditions on the Undernet IRC network.
+
+2003-12-30  Stephane Thiell  <mbuna@bugged.org>
+
+	* Sourceforge.net import of pxys v2. See NEWS file for more details.
+

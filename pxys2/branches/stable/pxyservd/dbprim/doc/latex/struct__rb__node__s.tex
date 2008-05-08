@@ -1,0 +1,133 @@
+\hypertarget{struct__rb__node__s}{
+\section{\_\-rb\_\-node\_\-s Struct Reference}
+\label{struct__rb__node__s}\index{_rb_node_s@{\_\-rb\_\-node\_\-s}}
+}
+{\tt \#include $<$dbprim.h$>$}
+
+Collaboration diagram for \_\-rb\_\-node\_\-s:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=92pt]{struct__rb__node__s__coll__graph}
+\end{center}
+\end{figure}
+
+
+\subsection{Detailed Description}
+\begin{Desc}
+\item[For internal use only.]
+This is the implementation of the \hyperlink{group__dbprim__rbtree_ga1}{rb\_\-node\_\-t} type.\end{Desc}
+
+
+
+
+Definition at line 2891 of file dbprim.h.\subsection*{Data Fields}
+\begin{CompactItemize}
+\item 
+unsigned long \hyperlink{struct__rb__node__s_o0}{rn\_\-magic}
+\item 
+\hyperlink{group__dbprim__rbtree_ga4}{rb\_\-color\_\-t} \hyperlink{struct__rb__node__s_o1}{rn\_\-color}
+\item 
+\hyperlink{struct__rb__tree__s}{rb\_\-tree\_\-t} $\ast$ \hyperlink{struct__rb__node__s_o2}{rn\_\-tree}
+\item 
+\hyperlink{struct__rb__node__s}{rb\_\-node\_\-t} $\ast$ \hyperlink{struct__rb__node__s_o3}{rn\_\-parent}
+\item 
+\hyperlink{struct__rb__node__s}{rb\_\-node\_\-t} $\ast$ \hyperlink{struct__rb__node__s_o4}{rn\_\-left}
+\item 
+\hyperlink{struct__rb__node__s}{rb\_\-node\_\-t} $\ast$ \hyperlink{struct__rb__node__s_o5}{rn\_\-right}
+\item 
+\hyperlink{struct__db__key__s}{db\_\-key\_\-t} \hyperlink{struct__rb__node__s_o6}{rn\_\-key}
+\item 
+void $\ast$ \hyperlink{struct__rb__node__s_o7}{rn\_\-value}
+\end{CompactItemize}
+
+
+\subsection{Field Documentation}
+\hypertarget{struct__rb__node__s_o1}{
+\index{_rb_node_s@{\_\-rb\_\-node\_\-s}!rn_color@{rn\_\-color}}
+\index{rn_color@{rn\_\-color}!_rb_node_s@{\_\-rb\_\-node\_\-s}}
+\subsubsection[rn\_\-color]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{group__dbprim__rbtree_ga4}{rb\_\-color\_\-t} \hyperlink{struct__rb__node__s_o1}{\_\-rb\_\-node\_\-s::rn\_\-color}}}
+\label{struct__rb__node__s_o1}
+
+
+Node's color. 
+
+Definition at line 2893 of file dbprim.h.
+
+Referenced by \_\-rb\_\-locate(), rn\_\-init(), rt\_\-add(), and rt\_\-remove().\hypertarget{struct__rb__node__s_o6}{
+\index{_rb_node_s@{\_\-rb\_\-node\_\-s}!rn_key@{rn\_\-key}}
+\index{rn_key@{rn\_\-key}!_rb_node_s@{\_\-rb\_\-node\_\-s}}
+\subsubsection[rn\_\-key]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{struct__db__key__s}{db\_\-key\_\-t} \hyperlink{struct__rb__node__s_o6}{\_\-rb\_\-node\_\-s::rn\_\-key}}}
+\label{struct__rb__node__s_o6}
+
+
+Node's key. 
+
+Definition at line 2898 of file dbprim.h.
+
+Referenced by \_\-rb\_\-locate(), and rn\_\-init().\hypertarget{struct__rb__node__s_o4}{
+\index{_rb_node_s@{\_\-rb\_\-node\_\-s}!rn_left@{rn\_\-left}}
+\index{rn_left@{rn\_\-left}!_rb_node_s@{\_\-rb\_\-node\_\-s}}
+\subsubsection[rn\_\-left]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{struct__rb__node__s}{rb\_\-node\_\-t}$\ast$ \hyperlink{struct__rb__node__s_o4}{\_\-rb\_\-node\_\-s::rn\_\-left}}}
+\label{struct__rb__node__s_o4}
+
+
+Left child of this node. 
+
+Definition at line 2896 of file dbprim.h.
+
+Referenced by \_\-rb\_\-locate(), \_\-rb\_\-rotate(), rn\_\-init(), rt\_\-next(), and rt\_\-remove().\hypertarget{struct__rb__node__s_o0}{
+\index{_rb_node_s@{\_\-rb\_\-node\_\-s}!rn_magic@{rn\_\-magic}}
+\index{rn_magic@{rn\_\-magic}!_rb_node_s@{\_\-rb\_\-node\_\-s}}
+\subsubsection[rn\_\-magic]{\setlength{\rightskip}{0pt plus 5cm}unsigned long \hyperlink{struct__rb__node__s_o0}{\_\-rb\_\-node\_\-s::rn\_\-magic}}}
+\label{struct__rb__node__s_o0}
+
+
+Magic number. 
+
+Definition at line 2892 of file dbprim.h.
+
+Referenced by rn\_\-init().\hypertarget{struct__rb__node__s_o3}{
+\index{_rb_node_s@{\_\-rb\_\-node\_\-s}!rn_parent@{rn\_\-parent}}
+\index{rn_parent@{rn\_\-parent}!_rb_node_s@{\_\-rb\_\-node\_\-s}}
+\subsubsection[rn\_\-parent]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{struct__rb__node__s}{rb\_\-node\_\-t}$\ast$ \hyperlink{struct__rb__node__s_o3}{\_\-rb\_\-node\_\-s::rn\_\-parent}}}
+\label{struct__rb__node__s_o3}
+
+
+Parent of this node. 
+
+Definition at line 2895 of file dbprim.h.
+
+Referenced by \_\-rb\_\-locate(), \_\-rb\_\-rotate(), rn\_\-init(), rt\_\-add(), rt\_\-next(), and rt\_\-remove().\hypertarget{struct__rb__node__s_o5}{
+\index{_rb_node_s@{\_\-rb\_\-node\_\-s}!rn_right@{rn\_\-right}}
+\index{rn_right@{rn\_\-right}!_rb_node_s@{\_\-rb\_\-node\_\-s}}
+\subsubsection[rn\_\-right]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{struct__rb__node__s}{rb\_\-node\_\-t}$\ast$ \hyperlink{struct__rb__node__s_o5}{\_\-rb\_\-node\_\-s::rn\_\-right}}}
+\label{struct__rb__node__s_o5}
+
+
+Right child of this node. 
+
+Definition at line 2897 of file dbprim.h.
+
+Referenced by \_\-rb\_\-locate(), \_\-rb\_\-rotate(), rn\_\-init(), rt\_\-next(), and rt\_\-remove().\hypertarget{struct__rb__node__s_o2}{
+\index{_rb_node_s@{\_\-rb\_\-node\_\-s}!rn_tree@{rn\_\-tree}}
+\index{rn_tree@{rn\_\-tree}!_rb_node_s@{\_\-rb\_\-node\_\-s}}
+\subsubsection[rn\_\-tree]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{struct__rb__tree__s}{rb\_\-tree\_\-t}$\ast$ \hyperlink{struct__rb__node__s_o2}{\_\-rb\_\-node\_\-s::rn\_\-tree}}}
+\label{struct__rb__node__s_o2}
+
+
+Tree node is in. 
+
+Definition at line 2894 of file dbprim.h.
+
+Referenced by \_\-rb\_\-locate(), rn\_\-init(), rt\_\-add(), rt\_\-iter(), rt\_\-move(), rt\_\-next(), and rt\_\-remove().\hypertarget{struct__rb__node__s_o7}{
+\index{_rb_node_s@{\_\-rb\_\-node\_\-s}!rn_value@{rn\_\-value}}
+\index{rn_value@{rn\_\-value}!_rb_node_s@{\_\-rb\_\-node\_\-s}}
+\subsubsection[rn\_\-value]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ \hyperlink{struct__rb__node__s_o7}{\_\-rb\_\-node\_\-s::rn\_\-value}}}
+\label{struct__rb__node__s_o7}
+
+
+Node's value. 
+
+Definition at line 2899 of file dbprim.h.
+
+Referenced by rn\_\-init().

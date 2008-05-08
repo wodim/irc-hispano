@@ -1,0 +1,50 @@
+$Id: README,v 1.2 2004/01/18 19:41:44 mbuna Exp $
+      ----------------------------------------------------------------
+      PEAK Library :: Parallel Events and Asynchronous tasKing Library
+      ----------------------------------------------------------------
+
+Note: As it's not my natural language, english might not be perfect here or
+in the API documentation. Please, feel free to send me your fix if needed, so
+I can remove this notice :p
+
+Warning: The PEAK Library is an experimental C library in alpha stage.
+
+INTRODUCTION
+============
+I started to write the peak library for the Undernet IRC proxy scanner, but
+not only to provide a support similar to existing libevents. Although already
+very efficients they are not taking the advantage of multiple CPUs.
+The peak library can process events in parallel with the help of a threads
+pool. For example, imagine 2 connected sockets receive an high amount of data
+to proceed, the master thread distributes the work to do in queues and launch
+them in parallel. It starts to be profitable if you have something to process
+by the CPU. In some ideal examples, I already have up to 50% speedup on a dual
+G4 for the same I/O events processed (dec 2003).
+Ok, but performances are not all. libpeak should be used, so it provides an
+objected-oriented API, although written in C. For that, it has its own very
+light runtime system, with retain/release support of objects, like in the
+objective-C language. A wrapper in C++ is easily doable and it's a project for
+the future. Like another libevent library, the peak library needs an I/O
+multiplexing engine to work, so it needs at least select() (which is standard),
+but supports poll(), epoll(), solaris /dev/poll and kqueue(), the three last
+being a lot more efficients! Today, the peak library is almost a framework now,
+as it provides a memory allocation convenience API, signals handling, and even
+a dictionary for peak's objects or simple things like strings.
+
+One current restriction of the peak library can be the architectures supported.
+As it uses some assembly code for processor's atomic and spinlock operations,
+only powerpc, sparc and x86 are at the moment supported. Addition of other CPUs
+is only a question of time (it should be easy).
+
+REQUIREMENTS
+============
+See the README.platforms file in the distribution to see if your system
+is supported before trying to install.
+
+INSTALLATION
+============
+See the INSTALL file in the distribution.
+
+MORE INFO
+=========
+Please visit http://peak.sourceforge.net for more info about libpeak.

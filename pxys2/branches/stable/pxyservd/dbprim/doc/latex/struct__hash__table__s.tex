@@ -1,0 +1,172 @@
+\hypertarget{struct__hash__table__s}{
+\section{\_\-hash\_\-table\_\-s Struct Reference}
+\label{struct__hash__table__s}\index{_hash_table_s@{\_\-hash\_\-table\_\-s}}
+}
+{\tt \#include $<$dbprim.h$>$}
+
+Collaboration diagram for \_\-hash\_\-table\_\-s:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=140pt]{struct__hash__table__s__coll__graph}
+\end{center}
+\end{figure}
+
+
+\subsection{Detailed Description}
+\begin{Desc}
+\item[For internal use only.]
+This is the implementation of the \hyperlink{group__dbprim__hash_ga1}{hash\_\-table\_\-t} type.\end{Desc}
+
+
+
+
+Definition at line 1071 of file dbprim.h.\subsection*{Data Fields}
+\begin{CompactItemize}
+\item 
+unsigned long \hyperlink{struct__hash__table__s_o0}{ht\_\-magic}
+\item 
+unsigned long \hyperlink{struct__hash__table__s_o1}{ht\_\-flags}
+\item 
+unsigned long \hyperlink{struct__hash__table__s_o2}{ht\_\-modulus}
+\item 
+unsigned long \hyperlink{struct__hash__table__s_o3}{ht\_\-count}
+\item 
+unsigned long \hyperlink{struct__hash__table__s_o4}{ht\_\-rollover}
+\item 
+unsigned long \hyperlink{struct__hash__table__s_o5}{ht\_\-rollunder}
+\item 
+\hyperlink{struct__link__head__s}{link\_\-head\_\-t} $\ast$ \hyperlink{struct__hash__table__s_o6}{ht\_\-table}
+\item 
+\hyperlink{group__dbprim__hash_ga4}{hash\_\-func\_\-t} \hyperlink{struct__hash__table__s_o7}{ht\_\-func}
+\item 
+\hyperlink{group__dbprim__hash_ga5}{hash\_\-comp\_\-t} \hyperlink{struct__hash__table__s_o8}{ht\_\-comp}
+\item 
+\hyperlink{group__dbprim__hash_ga6}{hash\_\-resize\_\-t} \hyperlink{struct__hash__table__s_o9}{ht\_\-resize}
+\item 
+void $\ast$ \hyperlink{struct__hash__table__s_o10}{ht\_\-extra}
+\end{CompactItemize}
+
+
+\subsection{Field Documentation}
+\hypertarget{struct__hash__table__s_o8}{
+\index{_hash_table_s@{\_\-hash\_\-table\_\-s}!ht_comp@{ht\_\-comp}}
+\index{ht_comp@{ht\_\-comp}!_hash_table_s@{\_\-hash\_\-table\_\-s}}
+\subsubsection[ht\_\-comp]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{group__dbprim__hash_ga5}{hash\_\-comp\_\-t} \hyperlink{struct__hash__table__s_o8}{\_\-hash\_\-table\_\-s::ht\_\-comp}}}
+\label{struct__hash__table__s_o8}
+
+
+Function for comparing hash keys. 
+
+Definition at line 1081 of file dbprim.h.
+
+Referenced by ht\_\-find(), and ht\_\-init().\hypertarget{struct__hash__table__s_o3}{
+\index{_hash_table_s@{\_\-hash\_\-table\_\-s}!ht_count@{ht\_\-count}}
+\index{ht_count@{ht\_\-count}!_hash_table_s@{\_\-hash\_\-table\_\-s}}
+\subsubsection[ht\_\-count]{\setlength{\rightskip}{0pt plus 5cm}unsigned long \hyperlink{struct__hash__table__s_o3}{\_\-hash\_\-table\_\-s::ht\_\-count}}}
+\label{struct__hash__table__s_o3}
+
+
+Number of elements in the table. 
+
+Definition at line 1076 of file dbprim.h.
+
+Referenced by ht\_\-add(), ht\_\-find(), ht\_\-flush(), ht\_\-free(), ht\_\-init(), ht\_\-move(), ht\_\-remove(), and ht\_\-resize().\hypertarget{struct__hash__table__s_o10}{
+\index{_hash_table_s@{\_\-hash\_\-table\_\-s}!ht_extra@{ht\_\-extra}}
+\index{ht_extra@{ht\_\-extra}!_hash_table_s@{\_\-hash\_\-table\_\-s}}
+\subsubsection[ht\_\-extra]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ \hyperlink{struct__hash__table__s_o10}{\_\-hash\_\-table\_\-s::ht\_\-extra}}}
+\label{struct__hash__table__s_o10}
+
+
+Extra data associated with the table. 
+
+Definition at line 1083 of file dbprim.h.
+
+Referenced by ht\_\-init().\hypertarget{struct__hash__table__s_o1}{
+\index{_hash_table_s@{\_\-hash\_\-table\_\-s}!ht_flags@{ht\_\-flags}}
+\index{ht_flags@{ht\_\-flags}!_hash_table_s@{\_\-hash\_\-table\_\-s}}
+\subsubsection[ht\_\-flags]{\setlength{\rightskip}{0pt plus 5cm}unsigned long \hyperlink{struct__hash__table__s_o1}{\_\-hash\_\-table\_\-s::ht\_\-flags}}}
+\label{struct__hash__table__s_o1}
+
+
+Flags associated with the table. 
+
+Definition at line 1073 of file dbprim.h.
+
+Referenced by ht\_\-add(), ht\_\-flush(), ht\_\-free(), ht\_\-init(), ht\_\-iter(), ht\_\-move(), ht\_\-remove(), and ht\_\-resize().\hypertarget{struct__hash__table__s_o7}{
+\index{_hash_table_s@{\_\-hash\_\-table\_\-s}!ht_func@{ht\_\-func}}
+\index{ht_func@{ht\_\-func}!_hash_table_s@{\_\-hash\_\-table\_\-s}}
+\subsubsection[ht\_\-func]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{group__dbprim__hash_ga4}{hash\_\-func\_\-t} \hyperlink{struct__hash__table__s_o7}{\_\-hash\_\-table\_\-s::ht\_\-func}}}
+\label{struct__hash__table__s_o7}
+
+
+Function for computing the hash. 
+
+Definition at line 1080 of file dbprim.h.
+
+Referenced by ht\_\-add(), ht\_\-find(), ht\_\-init(), ht\_\-move(), and ht\_\-resize().\hypertarget{struct__hash__table__s_o0}{
+\index{_hash_table_s@{\_\-hash\_\-table\_\-s}!ht_magic@{ht\_\-magic}}
+\index{ht_magic@{ht\_\-magic}!_hash_table_s@{\_\-hash\_\-table\_\-s}}
+\subsubsection[ht\_\-magic]{\setlength{\rightskip}{0pt plus 5cm}unsigned long \hyperlink{struct__hash__table__s_o0}{\_\-hash\_\-table\_\-s::ht\_\-magic}}}
+\label{struct__hash__table__s_o0}
+
+
+Magic number. 
+
+Definition at line 1072 of file dbprim.h.
+
+Referenced by ht\_\-init().\hypertarget{struct__hash__table__s_o2}{
+\index{_hash_table_s@{\_\-hash\_\-table\_\-s}!ht_modulus@{ht\_\-modulus}}
+\index{ht_modulus@{ht\_\-modulus}!_hash_table_s@{\_\-hash\_\-table\_\-s}}
+\subsubsection[ht\_\-modulus]{\setlength{\rightskip}{0pt plus 5cm}unsigned long \hyperlink{struct__hash__table__s_o2}{\_\-hash\_\-table\_\-s::ht\_\-modulus}}}
+\label{struct__hash__table__s_o2}
+
+
+Size (modulus) of the hash table--must be prime. 
+
+Definition at line 1074 of file dbprim.h.
+
+Referenced by ht\_\-add(), ht\_\-find(), ht\_\-free(), ht\_\-init(), ht\_\-move(), and ht\_\-resize().\hypertarget{struct__hash__table__s_o9}{
+\index{_hash_table_s@{\_\-hash\_\-table\_\-s}!ht_resize@{ht\_\-resize}}
+\index{ht_resize@{ht\_\-resize}!_hash_table_s@{\_\-hash\_\-table\_\-s}}
+\subsubsection[ht\_\-resize]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{group__dbprim__hash_ga6}{hash\_\-resize\_\-t} \hyperlink{struct__hash__table__s_o9}{\_\-hash\_\-table\_\-s::ht\_\-resize}}}
+\label{struct__hash__table__s_o9}
+
+
+Function for resize notify/inhibit. 
+
+Definition at line 1082 of file dbprim.h.
+
+Referenced by ht\_\-init(), and ht\_\-resize().\hypertarget{struct__hash__table__s_o4}{
+\index{_hash_table_s@{\_\-hash\_\-table\_\-s}!ht_rollover@{ht\_\-rollover}}
+\index{ht_rollover@{ht\_\-rollover}!_hash_table_s@{\_\-hash\_\-table\_\-s}}
+\subsubsection[ht\_\-rollover]{\setlength{\rightskip}{0pt plus 5cm}unsigned long \hyperlink{struct__hash__table__s_o4}{\_\-hash\_\-table\_\-s::ht\_\-rollover}}}
+\label{struct__hash__table__s_o4}
+
+
+Size at which the table grows. 
+
+Definition at line 1077 of file dbprim.h.
+
+Referenced by ht\_\-add(), ht\_\-free(), ht\_\-init(), and ht\_\-resize().\hypertarget{struct__hash__table__s_o5}{
+\index{_hash_table_s@{\_\-hash\_\-table\_\-s}!ht_rollunder@{ht\_\-rollunder}}
+\index{ht_rollunder@{ht\_\-rollunder}!_hash_table_s@{\_\-hash\_\-table\_\-s}}
+\subsubsection[ht\_\-rollunder]{\setlength{\rightskip}{0pt plus 5cm}unsigned long \hyperlink{struct__hash__table__s_o5}{\_\-hash\_\-table\_\-s::ht\_\-rollunder}}}
+\label{struct__hash__table__s_o5}
+
+
+Size at which the table shrinks. 
+
+Definition at line 1078 of file dbprim.h.
+
+Referenced by ht\_\-free(), ht\_\-init(), ht\_\-remove(), and ht\_\-resize().\hypertarget{struct__hash__table__s_o6}{
+\index{_hash_table_s@{\_\-hash\_\-table\_\-s}!ht_table@{ht\_\-table}}
+\index{ht_table@{ht\_\-table}!_hash_table_s@{\_\-hash\_\-table\_\-s}}
+\subsubsection[ht\_\-table]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{struct__link__head__s}{link\_\-head\_\-t}$\ast$ \hyperlink{struct__hash__table__s_o6}{\_\-hash\_\-table\_\-s::ht\_\-table}}}
+\label{struct__hash__table__s_o6}
+
+
+Actual table entries. 
+
+Definition at line 1079 of file dbprim.h.
+
+Referenced by ht\_\-add(), ht\_\-find(), ht\_\-flush(), ht\_\-free(), ht\_\-init(), ht\_\-iter(), ht\_\-move(), ht\_\-remove(), and ht\_\-resize().

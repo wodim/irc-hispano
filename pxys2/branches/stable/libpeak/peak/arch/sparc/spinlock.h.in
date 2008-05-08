@@ -1,0 +1,90 @@
+/*
+ * Sun sparc32 spinlock operations
+ * 
+ * Some codes from the PM2 (Parallel Multithreaded Machine) software suite.
+ * 
+ * $Id: spinlock.h.in,v 1.1 2007/05/24 12:54:10 mbuna Exp $
+ */
+#ifndef INCLUDED_PEAK_SPINLOCK_H_
+#define INCLUDED_PEAK_SPINLOCK_H_
+
+#define PEAK_SPINLOCK_ITERATIONS 1000
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+#include <pthread.h>
+#include <unistd.h>
+#ifdef HAVE_SCHED_H
+#include <sched.h>
+#endif
+
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
+/* PEAK INTERNAL SPIN LOCK
+ * 
+ * _peak_spinlock_lock(lockp)
+ * _peak_spinlock_lock_try(lockp) - returns 0 (busy) or 1 (got the lock)
+ * _peak_spinlock_unlock(lockp)
+ * 
+ */
+
+extern int _peak_is_threaded;
+
+typedef volatile unsigned peak_spinlock_t;
+#define PEAK_SPINLOCK_INITIALIZER (0)
+
+static __inline__ unsigned __peak_spinlock_testandset(peak_spinlock_t *lockp)
+{
+  char ret = 0;
+
+  __asm__ __volatile__("ldstub [%0], %1"
+	: "=r"(lockp), "=r"(ret)
+	: "0"(lockp), "1" (ret) : "memory");
+
+  return (unsigned)ret;
+}
+
+static inline void
+_peak_spinlock_lock(peak_spinlock_t *lockp)
+  {
+  unsigned int tries = PEAK_SPINLOCK_ITERATIONS;
+  
+  if (!_peak_is_threaded) /* set only if peak uses several threads */
+    return;
+  
+  while (__peak_spinlock_testandset(lockp))
+    {
+    if (--tries > 0)
+      {
+      sched_yield();
+      tries = PEAK_SPINLOCK_ITERATIONS;
+      }
+    }
+  }
+
+static inline int
+_peak_spinlock_lock_try(peak_spinlock_t *lockp)
+  {
+  if (!_peak_is_threaded) /* set only if peak uses several threads */
+    return 1; /* always succeed */
+  
+  return !__peak_spinlock_testandset(lockp);
+  }
+
+static inline void
+_peak_spinlock_unlock(peak_spinlock_t *lockp)
+  {
+  if (!_peak_is_threaded) /* set only if peak uses several threads */
+    return;
+  
+  __asm__ __volatile__("stbar\n\tstb %1,%0" : "=m"(*lockp) : "r"(0));
+  }
+
+#if defined(__cplusplus)
+}
+#endif
+
+#endif /* INCLUDED_PEAK_SPINLOCK_H_ */

@@ -1,0 +1,66 @@
+\hypertarget{struct__st__flush__s}{
+\section{\_\-st\_\-flush\_\-s Struct Reference}
+\label{struct__st__flush__s}\index{_st_flush_s@{\_\-st\_\-flush\_\-s}}
+}
+Collaboration diagram for \_\-st\_\-flush\_\-s:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=140pt]{struct__st__flush__s__coll__graph}
+\end{center}
+\end{figure}
+
+
+\subsection{Detailed Description}
+\begin{Desc}
+\item[For internal use only.]
+This structure is used by \hyperlink{group__dbprim__smat_ga15}{st\_\-flush()} in its call to \hyperlink{group__dbprim__hash_ga16}{ht\_\-flush()}. The structure contains state that \hyperlink{group__dbprim__hash_ga16}{ht\_\-flush()} cannot directly pass to \hyperlink{group__dbprim__smat_ga30}{\_\-st\_\-flush\_\-iter()}.\end{Desc}
+
+
+
+
+Definition at line 41 of file st\_\-flush.c.\subsection*{Data Fields}
+\begin{CompactItemize}
+\item 
+\hyperlink{struct__smat__table__s}{smat\_\-table\_\-t} $\ast$ \hyperlink{struct__st__flush__s_o0}{sf\_\-table}
+\item 
+\hyperlink{group__dbprim__smat_ga4}{smat\_\-iter\_\-t} \hyperlink{struct__st__flush__s_o1}{sf\_\-flush}
+\item 
+void $\ast$ \hyperlink{struct__st__flush__s_o2}{sf\_\-extra}
+\end{CompactItemize}
+
+
+\subsection{Field Documentation}
+\hypertarget{struct__st__flush__s_o2}{
+\index{_st_flush_s@{\_\-st\_\-flush\_\-s}!sf_extra@{sf\_\-extra}}
+\index{sf_extra@{sf\_\-extra}!_st_flush_s@{\_\-st\_\-flush\_\-s}}
+\subsubsection[sf\_\-extra]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ \hyperlink{struct__st__flush__s_o2}{\_\-st\_\-flush\_\-s::sf\_\-extra}}}
+\label{struct__st__flush__s_o2}
+
+
+Extra data. 
+
+Definition at line 44 of file st\_\-flush.c.
+
+Referenced by \_\-st\_\-flush\_\-iter(), and st\_\-flush().\hypertarget{struct__st__flush__s_o1}{
+\index{_st_flush_s@{\_\-st\_\-flush\_\-s}!sf_flush@{sf\_\-flush}}
+\index{sf_flush@{sf\_\-flush}!_st_flush_s@{\_\-st\_\-flush\_\-s}}
+\subsubsection[sf\_\-flush]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{group__dbprim__smat_ga4}{smat\_\-iter\_\-t} \hyperlink{struct__st__flush__s_o1}{\_\-st\_\-flush\_\-s::sf\_\-flush}}}
+\label{struct__st__flush__s_o1}
+
+
+Flush function. 
+
+Definition at line 43 of file st\_\-flush.c.
+
+Referenced by \_\-st\_\-flush\_\-iter(), and st\_\-flush().\hypertarget{struct__st__flush__s_o0}{
+\index{_st_flush_s@{\_\-st\_\-flush\_\-s}!sf_table@{sf\_\-table}}
+\index{sf_table@{sf\_\-table}!_st_flush_s@{\_\-st\_\-flush\_\-s}}
+\subsubsection[sf\_\-table]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{struct__smat__table__s}{smat\_\-table\_\-t}$\ast$ \hyperlink{struct__st__flush__s_o0}{\_\-st\_\-flush\_\-s::sf\_\-table}}}
+\label{struct__st__flush__s_o0}
+
+
+Pointer to the smat table. 
+
+Definition at line 42 of file st\_\-flush.c.
+
+Referenced by \_\-st\_\-flush\_\-iter(), and st\_\-flush().

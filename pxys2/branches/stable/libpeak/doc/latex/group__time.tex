@@ -1,0 +1,64 @@
+\hypertarget{group__time}{
+\section{Time}
+\label{group__time}\index{Time@{Time}}
+}
+
+
+\subsection{Detailed Description}
+This little Time module has been added in order to provide optimized simple time related methods. Systems provide similar features but you are invited to use PEAK's ones instead. 
+
+\subsection*{Data Structures}
+\begin{CompactItemize}
+\item 
+struct \hyperlink{structpeak__time__date}{peak\_\-time\_\-date}
+\begin{CompactList}\small\item\em Gregorian date structure. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+time\_\-t \hyperlink{group__time_ga0}{peak\_\-time} (void)
+\begin{CompactList}\small\item\em Get current time. \item\end{CompactList}\item 
+double \hyperlink{group__time_ga1}{peak\_\-time\_\-float} (void)
+\begin{CompactList}\small\item\em Get current time with precision. \item\end{CompactList}\item 
+\hyperlink{structpeak__time__date}{peak\_\-time\_\-date} \hyperlink{group__time_ga2}{peak\_\-time\_\-get\_\-date} (double t, \hyperlink{group__tz_ga0}{peak\_\-tz} tz)
+\begin{CompactList}\small\item\em Converts an Unix time value into a Gregorian date. \item\end{CompactList}\end{CompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{group__time_ga0}{
+\index{time@{time}!peak_time@{peak\_\-time}}
+\index{peak_time@{peak\_\-time}!time@{time}}
+\subsubsection[peak\_\-time]{\setlength{\rightskip}{0pt plus 5cm}time\_\-t peak\_\-time (void)}}
+\label{group__time_ga0}
+
+
+Get current time. 
+
+\begin{Desc}
+\item[Returns:]The \hyperlink{group__time_ga6}{peak\_\-time()} function returns the value of time in seconds since 0 hours, 0 minutes, 0 seconds, January 1, 1970, Coordinated Universal Time (the \char`\"{}epoch\char`\"{}). \end{Desc}
+\hypertarget{group__time_ga1}{
+\index{time@{time}!peak_time_float@{peak\_\-time\_\-float}}
+\index{peak_time_float@{peak\_\-time\_\-float}!time@{time}}
+\subsubsection[peak\_\-time\_\-float]{\setlength{\rightskip}{0pt plus 5cm}double peak\_\-time\_\-float (void)}}
+\label{group__time_ga1}
+
+
+Get current time with precision. 
+
+\begin{Desc}
+\item[Returns:]The \hyperlink{group__time_ga7}{peak\_\-time\_\-float()} function returns the value of time in seconds since 0 hours, 0 minutes, 0 seconds, January 1, 1970, Coordinated Universal Time (the \char`\"{}epoch\char`\"{}). \end{Desc}
+\hypertarget{group__time_ga2}{
+\index{time@{time}!peak_time_get_date@{peak\_\-time\_\-get\_\-date}}
+\index{peak_time_get_date@{peak\_\-time\_\-get\_\-date}!time@{time}}
+\subsubsection[peak\_\-time\_\-get\_\-date]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{structpeak__time__date}{peak\_\-time\_\-date} peak\_\-time\_\-get\_\-date (double {\em t}, \hyperlink{group__tz_ga0}{peak\_\-tz} {\em tz})}}
+\label{group__time_ga2}
+
+
+Converts an Unix time value into a Gregorian date. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em t}]Unix time value in second. Pass the result of \hyperlink{group__time_ga7}{peak\_\-time\_\-float()} to get current date. \item[{\em tz}]Optional Time Zone reference. See \hyperlink{group__tz_ga12}{peak\_\-tz\_\-create()}. If provided, necessary time zone's conversions will be performed.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]The Gregorian date equivalent for the specified time value since 0 hours, 0 minutes, 0 seconds, January 1, 1970, Coordinated Universal Time (the \char`\"{}epoch\char`\"{}). \end{Desc}

@@ -1,0 +1,64 @@
+$Id: README.platforms,v 1.2 2007/05/24 13:13:28 mbuna Exp $
+
+At this time, libpeak supports x86, m68k, powerpc (PowerPC 32/64
+bits and POWER), sparc and IA-64 processors.
+
+List of platforms where libpeak is known to have compiled and passed
+the test suite at least once (sometimes with warnings):
+
+i386-unknown-freebsd4.5 (kqueue, gcc 2.95.3)
+i386-unknown-freebsd4.9 (kqueue, gcc 2.95.4)
+i386-unknown-freebsd5.1 (kqueue, gcc 3.2.2)
+i386-unknown-netbsdelf1.6 (poll, gcc 2.95.3)
+i386-unknown-netbsdelf1.6.1 (poll, gcc 2.95.3)
+i386-unknown-netbsdelf1.6ZH (kqueue, gcc 3.3.2)
+i686-pc-cygwin (poll, gcc 3.2, static lib only)
+i686-pc-linux-gnu (poll, Linux 2.4.24-smp, Debian, gcc 2.95.4)
+i686-pc-linux-gnu (epoll, Linux 2.6.1, Debian, gcc 3.3.3)
+m68k-unknown-netbsdelf1.6ZC (kqueue, gcc 2.95.3
+powerpc-apple-darwin6.8 (select, gcc 3.1)
+powerpc-apple-darwin7.2.0 (kqueue, gcc 3.3)
+powerpc-apple-darwin8.9.0 (kqueue, gcc 4.0.0) [2007/05/24]
+powerpc-ibm-aix5.1.0.0 (poll, cc_r, static lib only)
+sparc-sun-solaris2.6 (poll, gcc egcs-2.91.66)
+sparc-sun-solaris2.8 (devpoll, gcc egcs-2.91.66)
+sparc-sun-solaris2.9 (devpoll, gcc 3.2)
+ia64-unknown-linux-gnu (epoll, gcc 3.4.3) [2007/05/24]
+
+Report other platforms by sending your config.log to mbuna@bugged.org.
+
+Please note that libpeak should be particularly efficient on:
+
+Darwin 7.0+ (Mac OS X 10.3+)
+- kqueue engine
+- mach semaphores and good multi-threading support
+
+FreeBSD 4.9, 5.1+
+- kqueue engine
+- good multi-threading support
+
+Linux 2.6+
+- epoll engine (be careful to have a recent glib)
+- good multi-threading support only with a few threads, which is OK
+for libpeak
+
+The epoll engine is probably as good as kqueue except maybe for safe
+signals handling. Current epoll implementation in libpeak behaves as
+Level Triggered, but I plan to write later an Egde Triggered version
+to compare them. Other comparative stats should be available online on
+PEAK's web site one of these days. 
+
+Performance with Solaris
+------------------------
+If you're using Solaris 8 or more, you should use the alternate LWP
+threads library implementation (one-level model), which should be more
+efficient with libpeak than the default two-level threads model. The
+configure script doesn't enable them automatically for now, but you
+can enable them easily by setting:
+
+export LD_LIBRARY_PATH=/usr/lib/lwp
+
+before launching the program that uses libpeak (see man pthreads).
+
+
+Please visit http://peak.sourceforge.net for more info about libpeak.

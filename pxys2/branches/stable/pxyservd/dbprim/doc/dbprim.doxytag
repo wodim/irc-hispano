@@ -1,0 +1,4418 @@
+<?xml version='1.0' encoding='ISO-8859-1' standalone='yes' ?>
+<tagfile>
+  <compound kind="page">
+    <name>index</name>
+    <title>Database Primitives Library</title>
+    <filename>index</filename>
+  </compound>
+  <compound kind="file">
+    <name>_hash_prime.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>__hash__prime_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="define">
+      <type>#define</type>
+      <name>MAX_PRIME</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga21</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>_hash_prime</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga20</anchor>
+      <arglist>(unsigned long start)</arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static unsigned long</type>
+      <name>primes</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga0</anchor>
+      <arglist>[]</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>_rb_locate.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>__rb__locate_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>rb_node_t *</type>
+      <name>_rb_locate</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga15</anchor>
+      <arglist>(rb_tree_t *tree, rb_node_t *node, db_key_t *key)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>_rb_rotate.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>__rb__rotate_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>void</type>
+      <name>_rb_rotate</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga16</anchor>
+      <arglist>(rb_tree_t *tree, rb_node_t *child)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>_smat_resize.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>__smat__resize_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>_smat_resize</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga26</anchor>
+      <arglist>(hash_table_t *table, unsigned long new_mod)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>dbprim.h</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>dbprim_8h</filename>
+    <class kind="struct">_db_key_s</class>
+    <class kind="struct">_link_head_s</class>
+    <class kind="struct">_link_elem_s</class>
+    <class kind="struct">_hash_table_s</class>
+    <class kind="struct">_hash_entry_s</class>
+    <class kind="struct">_smat_table_s</class>
+    <class kind="struct">_smat_head_s</class>
+    <class kind="struct">_smat_entry_s</class>
+    <class kind="struct">_rb_tree_s</class>
+    <class kind="struct">_rb_node_s</class>
+    <member kind="define">
+      <type>#define</type>
+      <name>DBPRIM_BEGIN_C_DECLS</name>
+      <anchorfile>dbprim_8h.html</anchorfile>
+      <anchor>a0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>DBPRIM_END_C_DECLS</name>
+      <anchorfile>dbprim_8h.html</anchorfile>
+      <anchor>a1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>DB_KEY_INIT</name>
+      <anchorfile>group__dbprim.html</anchorfile>
+      <anchor>ga1</anchor>
+      <arglist>(key, size)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>dk_key</name>
+      <anchorfile>group__dbprim.html</anchorfile>
+      <anchor>ga2</anchor>
+      <arglist>(key)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>dk_len</name>
+      <anchorfile>group__dbprim.html</anchorfile>
+      <anchor>ga3</anchor>
+      <arglist>(key)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>DB_FLAG_REVERSE</name>
+      <anchorfile>group__dbprim.html</anchorfile>
+      <anchor>ga4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>LINK_HEAD_MAGIC</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga13</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>LINK_HEAD_INIT</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga14</anchor>
+      <arglist>(extra)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ll_verify</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga15</anchor>
+      <arglist>(list)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ll_count</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga16</anchor>
+      <arglist>(list)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ll_first</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga17</anchor>
+      <arglist>(list)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ll_last</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga18</anchor>
+      <arglist>(list)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ll_extra</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga19</anchor>
+      <arglist>(list)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>LINK_ELEM_MAGIC</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga20</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>LINK_ELEM_INIT</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga21</anchor>
+      <arglist>(obj)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>le_verify</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga22</anchor>
+      <arglist>(element)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>le_next</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga23</anchor>
+      <arglist>(elem)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>le_prev</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga24</anchor>
+      <arglist>(elem)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>le_object</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga25</anchor>
+      <arglist>(elem)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>le_head</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga26</anchor>
+      <arglist>(elem)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>le_flags</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga27</anchor>
+      <arglist>(elem)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>HASH_TABLE_MAGIC</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga22</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>HASH_FLAG_AUTOGROW</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga23</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>HASH_FLAG_AUTOSHRINK</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga24</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>HASH_FLAG_MASK</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga25</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>HASH_FLAG_FREEZE</name>
+      <anchorfile>dbprim_8h.html</anchorfile>
+      <anchor>a25</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>HASH_TABLE_INIT</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga26</anchor>
+      <arglist>(flags, func, comp, resize, extra)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ht_verify</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga27</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ht_flags</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga28</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ht_frozen</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga29</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ht_modulus</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga30</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ht_count</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga31</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ht_func</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga32</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ht_comp</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga33</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ht_rsize</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga34</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ht_extra</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga35</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ht_size</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga36</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>HASH_ENTRY_MAGIC</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga37</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>HASH_ENTRY_INIT</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga38</anchor>
+      <arglist>(value)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>he_verify</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga39</anchor>
+      <arglist>(entry)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>he_link</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga40</anchor>
+      <arglist>(entry)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>he_flags</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga41</anchor>
+      <arglist>(entry)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>he_table</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga42</anchor>
+      <arglist>(entry)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>he_hash</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga43</anchor>
+      <arglist>(entry)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>he_key</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga44</anchor>
+      <arglist>(entry)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>he_value</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga45</anchor>
+      <arglist>(entry)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>_smat_ent</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga32</anchor>
+      <arglist>(ent)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>SMAT_TABLE_MAGIC</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga33</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>st_verify</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga34</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>st_flags</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga35</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>st_frozen</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga36</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>st_modulus</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga37</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>st_count</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga38</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>st_rsize</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga46</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>st_extra</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga39</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>st_size</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga40</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>SMAT_HEAD_MAGIC</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga41</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>SMAT_HEAD_INIT</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga42</anchor>
+      <arglist>(elem, object)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>sh_verify</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga43</anchor>
+      <arglist>(head)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>sh_elem</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga44</anchor>
+      <arglist>(head)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>sh_table</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga45</anchor>
+      <arglist>(head)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>sh_frozen</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga46</anchor>
+      <arglist>(head)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>sh_count</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga47</anchor>
+      <arglist>(head)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>_sh_first</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga48</anchor>
+      <arglist>(head)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>sh_first</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga49</anchor>
+      <arglist>(head)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>_sh_last</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga50</anchor>
+      <arglist>(head)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>sh_last</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga51</anchor>
+      <arglist>(head)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>sh_object</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga52</anchor>
+      <arglist>(head)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>sh_size</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga53</anchor>
+      <arglist>(head)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>SMAT_ENTRY_MAGIC</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga54</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>se_verify</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga55</anchor>
+      <arglist>(entry)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>se_table</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga56</anchor>
+      <arglist>(entry)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>_se_link</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga57</anchor>
+      <arglist>(entry)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>se_flags</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga58</anchor>
+      <arglist>(entry)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>se_hash</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga59</anchor>
+      <arglist>(entry)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>_se_next</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga60</anchor>
+      <arglist>(entry, n)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>se_next</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga61</anchor>
+      <arglist>(entry, n)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>_se_prev</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga62</anchor>
+      <arglist>(entry, n)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>se_prev</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga63</anchor>
+      <arglist>(entry, n)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>se_lflags</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga64</anchor>
+      <arglist>(entry, n)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>se_object</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga65</anchor>
+      <arglist>(entry, n)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>RB_TREE_MAGIC</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga17</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>RBT_FLAG_FREEZE</name>
+      <anchorfile>dbprim_8h.html</anchorfile>
+      <anchor>a82</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>RB_TREE_INIT</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga18</anchor>
+      <arglist>(comp, extra)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rt_verify</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga19</anchor>
+      <arglist>(tree)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rt_frozen</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga20</anchor>
+      <arglist>(tree)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rt_count</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga21</anchor>
+      <arglist>(tree)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rt_root</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga22</anchor>
+      <arglist>(tree)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rt_comp</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga23</anchor>
+      <arglist>(tree)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rt_extra</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga24</anchor>
+      <arglist>(tree)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>RBT_ORDER_PRE</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga25</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>RBT_ORDER_IN</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga26</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>RBT_ORDER_POST</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga27</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>RBT_ORDER_MASK</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga28</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rt_prev</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga29</anchor>
+      <arglist>(tree, node_io, flags)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>RB_NODE_MAGIC</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga30</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>RB_NODE_INIT</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga31</anchor>
+      <arglist>(value)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rn_verify</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga32</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rn_color</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga33</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rn_tree</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga34</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rn_parent</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga35</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rn_left</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga36</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rn_right</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga37</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rn_key</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga38</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rn_value</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga39</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rn_isblack</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga40</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rn_isred</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga41</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rn_isleft</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga42</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rn_isright</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga43</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="typedef">
+      <type>_db_key_s</type>
+      <name>db_key_t</name>
+      <anchorfile>group__dbprim.html</anchorfile>
+      <anchor>ga0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>_link_head_s</type>
+      <name>link_head_t</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>_link_elem_s</type>
+      <name>link_elem_t</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>_hash_table_s</type>
+      <name>hash_table_t</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>_hash_entry_s</type>
+      <name>hash_entry_t</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>_smat_table_s</type>
+      <name>smat_table_t</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>_smat_head_s</type>
+      <name>smat_head_t</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>_smat_entry_s</type>
+      <name>smat_entry_t</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>_rb_tree_s</type>
+      <name>rb_tree_t</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>_rb_node_s</type>
+      <name>rb_node_t</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>unsigned long(*</type>
+      <name>link_iter_t</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga2</anchor>
+      <arglist>)(link_head_t *list, link_elem_t *elem, void *extra)</arglist>
+    </member>
+    <member kind="typedef">
+      <type>unsigned long(*</type>
+      <name>link_comp_t</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga3</anchor>
+      <arglist>)(db_key_t *key, void *obj)</arglist>
+    </member>
+    <member kind="typedef">
+      <type>unsigned long(*</type>
+      <name>hash_iter_t</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga3</anchor>
+      <arglist>)(hash_table_t *table, hash_entry_t *ent, void *extra)</arglist>
+    </member>
+    <member kind="typedef">
+      <type>unsigned long(*</type>
+      <name>hash_func_t</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga4</anchor>
+      <arglist>)(hash_table_t *table, db_key_t *key)</arglist>
+    </member>
+    <member kind="typedef">
+      <type>unsigned long(*</type>
+      <name>hash_comp_t</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga5</anchor>
+      <arglist>)(hash_table_t *table, db_key_t *key1, db_key_t *key2)</arglist>
+    </member>
+    <member kind="typedef">
+      <type>unsigned long(*</type>
+      <name>hash_resize_t</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga6</anchor>
+      <arglist>)(hash_table_t *table, unsigned long new_mod)</arglist>
+    </member>
+    <member kind="typedef">
+      <type>unsigned long(*</type>
+      <name>smat_resize_t</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga3</anchor>
+      <arglist>)(smat_table_t *table, unsigned long new_mod)</arglist>
+    </member>
+    <member kind="typedef">
+      <type>unsigned long(*</type>
+      <name>smat_iter_t</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga4</anchor>
+      <arglist>)(smat_table_t *table, smat_entry_t *ent, void *extra)</arglist>
+    </member>
+    <member kind="typedef">
+      <type>unsigned long(*</type>
+      <name>smat_comp_t</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga5</anchor>
+      <arglist>)(db_key_t *key, smat_entry_t *ent)</arglist>
+    </member>
+    <member kind="typedef">
+      <type>unsigned long(*</type>
+      <name>rb_iter_t</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga2</anchor>
+      <arglist>)(rb_tree_t *tree, rb_node_t *node, void *extra)</arglist>
+    </member>
+    <member kind="typedef">
+      <type>long(*</type>
+      <name>rb_comp_t</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga3</anchor>
+      <arglist>)(rb_tree_t *tree, db_key_t *key1, db_key_t *key2)</arglist>
+    </member>
+    <member kind="typedef">
+      <type>enum _link_loc_e</type>
+      <name>link_loc_t</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>enum _smat_loc_e</type>
+      <name>smat_loc_t</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>enum _rb_color_e</type>
+      <name>rb_color_t</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>_link_loc_e</name>
+      <anchor>ga28</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>LINK_LOC_HEAD</name>
+      <anchor>gga28a133</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>LINK_LOC_TAIL</name>
+      <anchor>gga28a134</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>LINK_LOC_BEFORE</name>
+      <anchor>gga28a135</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>LINK_LOC_AFTER</name>
+      <anchor>gga28a136</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>_smat_loc_e</name>
+      <anchor>ga70</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SMAT_LOC_FIRST</name>
+      <anchor>gga70a137</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SMAT_LOC_SECOND</name>
+      <anchor>gga70a138</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>_rb_color_e</name>
+      <anchor>ga53</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>RB_COLOR_NONE</name>
+      <anchor>gga53a139</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>RB_COLOR_RED</name>
+      <anchor>gga53a140</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>RB_COLOR_BLACK</name>
+      <anchor>gga53a141</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ll_init</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga5</anchor>
+      <arglist>(link_head_t *list, void *extra)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ll_add</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga6</anchor>
+      <arglist>(link_head_t *list, link_elem_t *new, link_loc_t loc, link_elem_t *elem)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ll_move</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga7</anchor>
+      <arglist>(link_head_t *list, link_elem_t *elem, link_loc_t loc, link_elem_t *elem2)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ll_remove</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga8</anchor>
+      <arglist>(link_head_t *list, link_elem_t *elem)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ll_find</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga9</anchor>
+      <arglist>(link_head_t *list, link_elem_t **elem_p, link_comp_t comp_func, link_elem_t *start, db_key_t *key)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ll_iter</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga10</anchor>
+      <arglist>(link_head_t *list, link_elem_t *start, link_iter_t iter_func, void *extra, unsigned long flags)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ll_flush</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga11</anchor>
+      <arglist>(link_head_t *list, link_iter_t flush_func, void *extra)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>le_init</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga12</anchor>
+      <arglist>(link_elem_t *elem, void *object)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>hash_fnv1</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga7</anchor>
+      <arglist>(hash_table_t *table, db_key_t *key)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>hash_fnv1a</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga8</anchor>
+      <arglist>(hash_table_t *table, db_key_t *key)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>hash_comp</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga9</anchor>
+      <arglist>(hash_table_t *table, db_key_t *key1, db_key_t *key2)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_init</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga10</anchor>
+      <arglist>(hash_table_t *table, unsigned long flags, hash_func_t func, hash_comp_t comp, hash_resize_t resize, void *extra, unsigned long init_mod)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_add</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga11</anchor>
+      <arglist>(hash_table_t *table, hash_entry_t *entry, db_key_t *key)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_move</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga12</anchor>
+      <arglist>(hash_table_t *table, hash_entry_t *entry, db_key_t *key)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_remove</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga13</anchor>
+      <arglist>(hash_table_t *table, hash_entry_t *entry)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_find</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga14</anchor>
+      <arglist>(hash_table_t *table, hash_entry_t **entry_p, db_key_t *key)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_iter</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga15</anchor>
+      <arglist>(hash_table_t *table, hash_iter_t iter_func, void *extra)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_flush</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga16</anchor>
+      <arglist>(hash_table_t *table, hash_iter_t flush_func, void *extra)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_resize</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga17</anchor>
+      <arglist>(hash_table_t *table, unsigned long new_size)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_free</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga18</anchor>
+      <arglist>(hash_table_t *table)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>he_init</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga19</anchor>
+      <arglist>(hash_entry_t *entry, void *value)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>smat_cleanup</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga8</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>smat_freemem</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga9</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>st_init</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga10</anchor>
+      <arglist>(smat_table_t *table, unsigned long flags, smat_resize_t resize, void *extra, unsigned long init_mod)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>st_add</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga11</anchor>
+      <arglist>(smat_table_t *table, smat_entry_t **entry_p, smat_head_t *head1, link_loc_t loc1, smat_entry_t *ent1, smat_head_t *head2, link_loc_t loc2, smat_entry_t *ent2)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>st_remove</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga12</anchor>
+      <arglist>(smat_table_t *table, smat_entry_t *entry)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>st_find</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga13</anchor>
+      <arglist>(smat_table_t *table, smat_entry_t **entry_p, smat_head_t *head1, smat_head_t *head2)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>st_iter</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga14</anchor>
+      <arglist>(smat_table_t *table, smat_iter_t iter_func, void *extra)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>st_flush</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga15</anchor>
+      <arglist>(smat_table_t *table, smat_iter_t flush_func, void *extra)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>st_resize</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga16</anchor>
+      <arglist>(smat_table_t *table, unsigned long new_size)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>st_free</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga17</anchor>
+      <arglist>(smat_table_t *table)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>sh_init</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga18</anchor>
+      <arglist>(smat_head_t *head, smat_loc_t elem, void *object)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>sh_move</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga19</anchor>
+      <arglist>(smat_head_t *head, smat_entry_t *elem, link_loc_t loc, smat_entry_t *elem2)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>sh_find</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga20</anchor>
+      <arglist>(smat_head_t *head, smat_entry_t **elem_p, smat_comp_t comp_func, smat_entry_t *start, db_key_t *key)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>sh_iter</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga21</anchor>
+      <arglist>(smat_head_t *head, smat_entry_t *start, smat_iter_t iter_func, void *extra, unsigned long flags)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>sh_flush</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga22</anchor>
+      <arglist>(smat_head_t *head, smat_iter_t flush_func, void *extra)</arglist>
+    </member>
+    <member kind="function">
+      <type>long</type>
+      <name>rbtree_comp</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga5</anchor>
+      <arglist>(rb_tree_t *tree, db_key_t *key1, db_key_t *key2)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rt_init</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga6</anchor>
+      <arglist>(rb_tree_t *tree, rb_comp_t comp, void *extra)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rt_add</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga7</anchor>
+      <arglist>(rb_tree_t *tree, rb_node_t *node, db_key_t *key)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rt_move</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga8</anchor>
+      <arglist>(rb_tree_t *tree, rb_node_t *node, db_key_t *key)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rt_remove</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga9</anchor>
+      <arglist>(rb_tree_t *tree, rb_node_t *node)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rt_find</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga10</anchor>
+      <arglist>(rb_tree_t *tree, rb_node_t **node_p, db_key_t *key)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rt_next</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga11</anchor>
+      <arglist>(rb_tree_t *tree, rb_node_t **node_io, unsigned long flags)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rt_iter</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga12</anchor>
+      <arglist>(rb_tree_t *tree, rb_node_t *start, rb_iter_t iter_func, void *extra, unsigned long flags)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rt_flush</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga13</anchor>
+      <arglist>(rb_tree_t *tree, rb_iter_t flush_func, void *extra)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rn_init</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga14</anchor>
+      <arglist>(rb_node_t *node, void *value)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>dbprim_int.h</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>dbprim__int_8h</filename>
+    <member kind="define">
+      <type>#define</type>
+      <name>RCSTAG</name>
+      <anchorfile>dbprim__int_8h.html</anchorfile>
+      <anchor>a0</anchor>
+      <arglist>(tag)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>_hash_rollover</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga47</anchor>
+      <arglist>(mod)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>_hash_rollunder</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga48</anchor>
+      <arglist>(mod)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>_hash_fuzz</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga49</anchor>
+      <arglist>(mod)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>HASH_FNV_OFFSET</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga50</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>HASH_FNV_PRIME</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga51</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ST_REM_FIRST</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga66</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ST_REM_SECOND</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga67</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ST_REM_HASH</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga68</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ST_REM_FREE</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga69</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>_hash_prime</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga20</anchor>
+      <arglist>(unsigned long start)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>_st_remove</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga23</anchor>
+      <arglist>(smat_table_t *table, smat_entry_t *entry, unsigned int remflag)</arglist>
+    </member>
+    <member kind="function">
+      <type>smat_entry_t *</type>
+      <name>_smat_alloc</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga24</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>_smat_free</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga25</anchor>
+      <arglist>(smat_entry_t *entry)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>_smat_resize</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga26</anchor>
+      <arglist>(hash_table_t *table, unsigned long new_mod)</arglist>
+    </member>
+    <member kind="function">
+      <type>rb_node_t *</type>
+      <name>_rb_locate</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga15</anchor>
+      <arglist>(rb_tree_t *tree, rb_node_t *node, db_key_t *key)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>_rb_rotate</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga16</anchor>
+      <arglist>(rb_tree_t *tree, rb_node_t *child)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>hash_comp.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>hash__comp_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>hash_comp</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga9</anchor>
+      <arglist>(hash_table_t *table, db_key_t *key1, db_key_t *key2)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>hash_fnv1.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>hash__fnv1_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>hash_fnv1</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga7</anchor>
+      <arglist>(hash_table_t *table, db_key_t *key)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>hash_fnv1a.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>hash__fnv1a_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>hash_fnv1a</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga8</anchor>
+      <arglist>(hash_table_t *table, db_key_t *key)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>he_init.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>he__init_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>he_init</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga19</anchor>
+      <arglist>(hash_entry_t *entry, void *value)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>ht_add.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>ht__add_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_add</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga11</anchor>
+      <arglist>(hash_table_t *table, hash_entry_t *entry, db_key_t *key)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>ht_find.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>ht__find_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_find</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga14</anchor>
+      <arglist>(hash_table_t *table, hash_entry_t **entry_p, db_key_t *key)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>ht_flush.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>ht__flush_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_flush</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga16</anchor>
+      <arglist>(hash_table_t *table, hash_iter_t flush_func, void *extra)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>ht_free.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>ht__free_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_free</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga18</anchor>
+      <arglist>(hash_table_t *table)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>ht_init.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>ht__init_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_init</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga10</anchor>
+      <arglist>(hash_table_t *table, unsigned long flags, hash_func_t func, hash_comp_t comp, hash_resize_t resize, void *extra, unsigned long init_mod)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>ht_iter.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>ht__iter_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_iter</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga15</anchor>
+      <arglist>(hash_table_t *table, hash_iter_t iter_func, void *extra)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>ht_move.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>ht__move_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_move</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga12</anchor>
+      <arglist>(hash_table_t *table, hash_entry_t *entry, db_key_t *key)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>ht_remove.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>ht__remove_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_remove</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga13</anchor>
+      <arglist>(hash_table_t *table, hash_entry_t *entry)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>ht_resize.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>ht__resize_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_resize</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga17</anchor>
+      <arglist>(hash_table_t *table, unsigned long new_size)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>le_init.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>le__init_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>le_init</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga12</anchor>
+      <arglist>(link_elem_t *elem, void *object)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>ll_add.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>ll__add_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ll_add</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga6</anchor>
+      <arglist>(link_head_t *list, link_elem_t *new, link_loc_t loc, link_elem_t *elem)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>ll_find.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>ll__find_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ll_find</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga9</anchor>
+      <arglist>(link_head_t *list, link_elem_t **elem_p, link_comp_t comp_func, link_elem_t *start, db_key_t *key)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>ll_flush.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>ll__flush_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ll_flush</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga11</anchor>
+      <arglist>(link_head_t *list, link_iter_t flush_func, void *extra)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>ll_init.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>ll__init_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ll_init</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga5</anchor>
+      <arglist>(link_head_t *list, void *extra)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>ll_iter.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>ll__iter_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ll_iter</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga10</anchor>
+      <arglist>(link_head_t *list, link_elem_t *start, link_iter_t iter_func, void *extra, unsigned long flags)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>ll_move.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>ll__move_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ll_move</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga7</anchor>
+      <arglist>(link_head_t *list, link_elem_t *new, link_loc_t loc, link_elem_t *elem)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>ll_remove.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>ll__remove_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ll_remove</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga8</anchor>
+      <arglist>(link_head_t *list, link_elem_t *elem)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>rbtree_comp.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>rbtree__comp_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>long</type>
+      <name>rbtree_comp</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga5</anchor>
+      <arglist>(rb_tree_t *tree, db_key_t *key1, db_key_t *key2)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>rn_init.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>rn__init_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rn_init</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga14</anchor>
+      <arglist>(rb_node_t *node, void *value)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>rt_add.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>rt__add_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="define">
+      <type>#define</type>
+      <name>uncle</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga44</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>flip</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga45</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rt_add</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga7</anchor>
+      <arglist>(rb_tree_t *tree, rb_node_t *node, db_key_t *key)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>rt_find.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>rt__find_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rt_find</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga10</anchor>
+      <arglist>(rb_tree_t *tree, rb_node_t **node_p, db_key_t *key)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>rt_flush.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>rt__flush_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rt_flush</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga13</anchor>
+      <arglist>(rb_tree_t *tree, rb_iter_t flush_func, void *extra)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>rt_init.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>rt__init_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rt_init</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga6</anchor>
+      <arglist>(rb_tree_t *tree, rb_comp_t comp, void *extra)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>rt_iter.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>rt__iter_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rt_iter</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga12</anchor>
+      <arglist>(rb_tree_t *tree, rb_node_t *start, rb_iter_t iter_func, void *extra, unsigned long flags)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>rt_move.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>rt__move_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rt_move</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga8</anchor>
+      <arglist>(rb_tree_t *tree, rb_node_t *node, db_key_t *key)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>rt_next.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>rt__next_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rt_next</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga11</anchor>
+      <arglist>(rb_tree_t *tree, rb_node_t **node_io, unsigned long flags)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>rt_remove.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>rt__remove_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="define">
+      <type>#define</type>
+      <name>_rn_clear</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga46</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>_rt_update_parent</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga47</anchor>
+      <arglist>(tree, node, new)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>isleft</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga48</anchor>
+      <arglist>(par, n)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>sel_lr</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga49</anchor>
+      <arglist>(t, n)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>sibling</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga50</anchor>
+      <arglist>(par, n)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>l_neph</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga51</anchor>
+      <arglist>(par, n)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>r_neph</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga52</anchor>
+      <arglist>(par, n)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rt_remove</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga9</anchor>
+      <arglist>(rb_tree_t *tree, rb_node_t *node)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>sh_find.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>sh__find_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <class kind="struct">_sh_find_s</class>
+    <member kind="function" static="yes">
+      <type>static unsigned long</type>
+      <name>_sh_find_comp</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga27</anchor>
+      <arglist>(db_key_t *key, void *data)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>sh_find</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga20</anchor>
+      <arglist>(smat_head_t *head, smat_entry_t **elem_p, smat_comp_t comp_func, smat_entry_t *start, db_key_t *key)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>sh_flush.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>sh__flush_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <class kind="struct">_sh_flush_s</class>
+    <member kind="function" static="yes">
+      <type>static unsigned long</type>
+      <name>_sh_flush_iter</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga28</anchor>
+      <arglist>(link_head_t *head, link_elem_t *elem, void *extra)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>sh_flush</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga22</anchor>
+      <arglist>(smat_head_t *head, smat_iter_t flush_func, void *extra)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>sh_init.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>sh__init_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>sh_init</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga18</anchor>
+      <arglist>(smat_head_t *head, smat_loc_t elem, void *object)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>sh_iter.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>sh__iter_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <class kind="struct">_sh_iter_s</class>
+    <member kind="function" static="yes">
+      <type>static unsigned long</type>
+      <name>_sh_iter_iter</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga29</anchor>
+      <arglist>(link_head_t *head, link_elem_t *elem, void *extra)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>sh_iter</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga21</anchor>
+      <arglist>(smat_head_t *head, smat_entry_t *start, smat_iter_t iter_func, void *extra, unsigned long flags)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>sh_move.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>sh__move_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>sh_move</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga19</anchor>
+      <arglist>(smat_head_t *head, smat_entry_t *elem, link_loc_t loc, smat_entry_t *elem2)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>smat_freelist.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>smat__freelist_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>smat_entry_t *</type>
+      <name>_smat_alloc</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga24</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>_smat_free</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga25</anchor>
+      <arglist>(smat_entry_t *entry)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>smat_cleanup</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga8</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>smat_freemem</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga9</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static link_head_t</type>
+      <name>_smat_freelist</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga7</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>st_add.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>st__add_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>st_add</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga11</anchor>
+      <arglist>(smat_table_t *table, smat_entry_t **entry_p, smat_head_t *head1, link_loc_t loc1, smat_entry_t *ent1, smat_head_t *head2, link_loc_t loc2, smat_entry_t *ent2)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>st_find.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>st__find_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>st_find</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga13</anchor>
+      <arglist>(smat_table_t *table, smat_entry_t **entry_p, smat_head_t *head1, smat_head_t *head2)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>st_flush.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>st__flush_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <class kind="struct">_st_flush_s</class>
+    <member kind="function" static="yes">
+      <type>static unsigned long</type>
+      <name>_st_flush_iter</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga30</anchor>
+      <arglist>(hash_table_t *table, hash_entry_t *ent, void *extra)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>st_flush</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga15</anchor>
+      <arglist>(smat_table_t *table, smat_iter_t flush_func, void *extra)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>st_free.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>st__free_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>st_free</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga17</anchor>
+      <arglist>(smat_table_t *table)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>st_init.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>st__init_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>st_init</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga10</anchor>
+      <arglist>(smat_table_t *table, unsigned long flags, smat_resize_t resize, void *extra, unsigned long init_mod)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>st_iter.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>st__iter_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <class kind="struct">_st_iter_s</class>
+    <member kind="function" static="yes">
+      <type>static unsigned long</type>
+      <name>_st_iter_iter</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga31</anchor>
+      <arglist>(hash_table_t *table, hash_entry_t *ent, void *extra)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>st_iter</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga14</anchor>
+      <arglist>(smat_table_t *table, smat_iter_t iter_func, void *extra)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>st_remove.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>st__remove_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>_st_remove</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga23</anchor>
+      <arglist>(smat_table_t *table, smat_entry_t *entry, unsigned int remflag)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>st_remove</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga12</anchor>
+      <arglist>(smat_table_t *table, smat_entry_t *entry)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>st_resize.c</name>
+    <path>/home/klmitch/devel/src/dbprim/</path>
+    <filename>st__resize_8c</filename>
+    <includes id="dbprim_8h" name="dbprim.h" local="yes" imported="no">dbprim.h</includes>
+    <includes id="dbprim__int_8h" name="dbprim_int.h" local="yes" imported="no">dbprim_int.h</includes>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>st_resize</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga16</anchor>
+      <arglist>(smat_table_t *table, unsigned long new_size)</arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>_db_key_s</name>
+    <filename>struct__db__key__s.html</filename>
+    <member kind="variable">
+      <type>void *</type>
+      <name>dk_key</name>
+      <anchorfile>struct__db__key__s.html</anchorfile>
+      <anchor>o0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>int</type>
+      <name>dk_len</name>
+      <anchorfile>struct__db__key__s.html</anchorfile>
+      <anchor>o1</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>_hash_entry_s</name>
+    <filename>struct__hash__entry__s.html</filename>
+    <member kind="variable">
+      <type>unsigned long</type>
+      <name>he_magic</name>
+      <anchorfile>struct__hash__entry__s.html</anchorfile>
+      <anchor>o0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>link_elem_t</type>
+      <name>he_elem</name>
+      <anchorfile>struct__hash__entry__s.html</anchorfile>
+      <anchor>o1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>hash_table_t *</type>
+      <name>he_table</name>
+      <anchorfile>struct__hash__entry__s.html</anchorfile>
+      <anchor>o2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>unsigned long</type>
+      <name>he_hash</name>
+      <anchorfile>struct__hash__entry__s.html</anchorfile>
+      <anchor>o3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>db_key_t</type>
+      <name>he_key</name>
+      <anchorfile>struct__hash__entry__s.html</anchorfile>
+      <anchor>o4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>void *</type>
+      <name>he_value</name>
+      <anchorfile>struct__hash__entry__s.html</anchorfile>
+      <anchor>o5</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>_hash_table_s</name>
+    <filename>struct__hash__table__s.html</filename>
+    <member kind="variable">
+      <type>unsigned long</type>
+      <name>ht_magic</name>
+      <anchorfile>struct__hash__table__s.html</anchorfile>
+      <anchor>o0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>unsigned long</type>
+      <name>ht_flags</name>
+      <anchorfile>struct__hash__table__s.html</anchorfile>
+      <anchor>o1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>unsigned long</type>
+      <name>ht_modulus</name>
+      <anchorfile>struct__hash__table__s.html</anchorfile>
+      <anchor>o2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>unsigned long</type>
+      <name>ht_count</name>
+      <anchorfile>struct__hash__table__s.html</anchorfile>
+      <anchor>o3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>unsigned long</type>
+      <name>ht_rollover</name>
+      <anchorfile>struct__hash__table__s.html</anchorfile>
+      <anchor>o4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>unsigned long</type>
+      <name>ht_rollunder</name>
+      <anchorfile>struct__hash__table__s.html</anchorfile>
+      <anchor>o5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>link_head_t *</type>
+      <name>ht_table</name>
+      <anchorfile>struct__hash__table__s.html</anchorfile>
+      <anchor>o6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>hash_func_t</type>
+      <name>ht_func</name>
+      <anchorfile>struct__hash__table__s.html</anchorfile>
+      <anchor>o7</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>hash_comp_t</type>
+      <name>ht_comp</name>
+      <anchorfile>struct__hash__table__s.html</anchorfile>
+      <anchor>o8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>hash_resize_t</type>
+      <name>ht_resize</name>
+      <anchorfile>struct__hash__table__s.html</anchorfile>
+      <anchor>o9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>void *</type>
+      <name>ht_extra</name>
+      <anchorfile>struct__hash__table__s.html</anchorfile>
+      <anchor>o10</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>_link_elem_s</name>
+    <filename>struct__link__elem__s.html</filename>
+    <member kind="variable">
+      <type>unsigned long</type>
+      <name>le_magic</name>
+      <anchorfile>struct__link__elem__s.html</anchorfile>
+      <anchor>o0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>link_elem_t *</type>
+      <name>le_next</name>
+      <anchorfile>struct__link__elem__s.html</anchorfile>
+      <anchor>o1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>link_elem_t *</type>
+      <name>le_prev</name>
+      <anchorfile>struct__link__elem__s.html</anchorfile>
+      <anchor>o2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>void *</type>
+      <name>le_object</name>
+      <anchorfile>struct__link__elem__s.html</anchorfile>
+      <anchor>o3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>link_head_t *</type>
+      <name>le_head</name>
+      <anchorfile>struct__link__elem__s.html</anchorfile>
+      <anchor>o4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>unsigned long</type>
+      <name>le_flags</name>
+      <anchorfile>struct__link__elem__s.html</anchorfile>
+      <anchor>o5</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>_link_head_s</name>
+    <filename>struct__link__head__s.html</filename>
+    <member kind="variable">
+      <type>unsigned long</type>
+      <name>lh_magic</name>
+      <anchorfile>struct__link__head__s.html</anchorfile>
+      <anchor>o0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>unsigned long</type>
+      <name>lh_count</name>
+      <anchorfile>struct__link__head__s.html</anchorfile>
+      <anchor>o1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>link_elem_t *</type>
+      <name>lh_first</name>
+      <anchorfile>struct__link__head__s.html</anchorfile>
+      <anchor>o2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>link_elem_t *</type>
+      <name>lh_last</name>
+      <anchorfile>struct__link__head__s.html</anchorfile>
+      <anchor>o3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>void *</type>
+      <name>lh_extra</name>
+      <anchorfile>struct__link__head__s.html</anchorfile>
+      <anchor>o4</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>_rb_node_s</name>
+    <filename>struct__rb__node__s.html</filename>
+    <member kind="variable">
+      <type>unsigned long</type>
+      <name>rn_magic</name>
+      <anchorfile>struct__rb__node__s.html</anchorfile>
+      <anchor>o0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>rb_color_t</type>
+      <name>rn_color</name>
+      <anchorfile>struct__rb__node__s.html</anchorfile>
+      <anchor>o1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>rb_tree_t *</type>
+      <name>rn_tree</name>
+      <anchorfile>struct__rb__node__s.html</anchorfile>
+      <anchor>o2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>rb_node_t *</type>
+      <name>rn_parent</name>
+      <anchorfile>struct__rb__node__s.html</anchorfile>
+      <anchor>o3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>rb_node_t *</type>
+      <name>rn_left</name>
+      <anchorfile>struct__rb__node__s.html</anchorfile>
+      <anchor>o4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>rb_node_t *</type>
+      <name>rn_right</name>
+      <anchorfile>struct__rb__node__s.html</anchorfile>
+      <anchor>o5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>db_key_t</type>
+      <name>rn_key</name>
+      <anchorfile>struct__rb__node__s.html</anchorfile>
+      <anchor>o6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>void *</type>
+      <name>rn_value</name>
+      <anchorfile>struct__rb__node__s.html</anchorfile>
+      <anchor>o7</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>_rb_tree_s</name>
+    <filename>struct__rb__tree__s.html</filename>
+    <member kind="variable">
+      <type>unsigned long</type>
+      <name>rt_magic</name>
+      <anchorfile>struct__rb__tree__s.html</anchorfile>
+      <anchor>o0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>unsigned long</type>
+      <name>rt_flags</name>
+      <anchorfile>struct__rb__tree__s.html</anchorfile>
+      <anchor>o1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>unsigned long</type>
+      <name>rt_count</name>
+      <anchorfile>struct__rb__tree__s.html</anchorfile>
+      <anchor>o2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>rb_node_t *</type>
+      <name>rt_root</name>
+      <anchorfile>struct__rb__tree__s.html</anchorfile>
+      <anchor>o3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>rb_comp_t</type>
+      <name>rt_comp</name>
+      <anchorfile>struct__rb__tree__s.html</anchorfile>
+      <anchor>o4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>void *</type>
+      <name>rt_extra</name>
+      <anchorfile>struct__rb__tree__s.html</anchorfile>
+      <anchor>o5</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>_sh_find_s</name>
+    <filename>struct__sh__find__s.html</filename>
+    <member kind="variable">
+      <type>smat_comp_t</type>
+      <name>sf_comp</name>
+      <anchorfile>struct__sh__find__s.html</anchorfile>
+      <anchor>o0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>db_key_t *</type>
+      <name>sf_key</name>
+      <anchorfile>struct__sh__find__s.html</anchorfile>
+      <anchor>o1</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>_sh_flush_s</name>
+    <filename>struct__sh__flush__s.html</filename>
+    <member kind="variable">
+      <type>smat_table_t *</type>
+      <name>sf_table</name>
+      <anchorfile>struct__sh__flush__s.html</anchorfile>
+      <anchor>o0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>smat_loc_t</type>
+      <name>sf_elem</name>
+      <anchorfile>struct__sh__flush__s.html</anchorfile>
+      <anchor>o1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>smat_iter_t</type>
+      <name>sf_flush</name>
+      <anchorfile>struct__sh__flush__s.html</anchorfile>
+      <anchor>o2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>void *</type>
+      <name>sf_extra</name>
+      <anchorfile>struct__sh__flush__s.html</anchorfile>
+      <anchor>o3</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>_sh_iter_s</name>
+    <filename>struct__sh__iter__s.html</filename>
+    <member kind="variable">
+      <type>smat_table_t *</type>
+      <name>si_table</name>
+      <anchorfile>struct__sh__iter__s.html</anchorfile>
+      <anchor>o0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>smat_iter_t</type>
+      <name>si_iter</name>
+      <anchorfile>struct__sh__iter__s.html</anchorfile>
+      <anchor>o1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>void *</type>
+      <name>si_extra</name>
+      <anchorfile>struct__sh__iter__s.html</anchorfile>
+      <anchor>o2</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>_smat_entry_s</name>
+    <filename>struct__smat__entry__s.html</filename>
+    <member kind="variable">
+      <type>unsigned long</type>
+      <name>se_magic</name>
+      <anchorfile>struct__smat__entry__s.html</anchorfile>
+      <anchor>o0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>smat_table_t *</type>
+      <name>se_table</name>
+      <anchorfile>struct__smat__entry__s.html</anchorfile>
+      <anchor>o1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>hash_entry_t</type>
+      <name>se_hash</name>
+      <anchorfile>struct__smat__entry__s.html</anchorfile>
+      <anchor>o2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>link_elem_t</type>
+      <name>se_link</name>
+      <anchorfile>struct__smat__entry__s.html</anchorfile>
+      <anchor>o3</anchor>
+      <arglist>[2]</arglist>
+    </member>
+    <member kind="variable">
+      <type>void *</type>
+      <name>se_object</name>
+      <anchorfile>struct__smat__entry__s.html</anchorfile>
+      <anchor>o4</anchor>
+      <arglist>[2]</arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>_smat_head_s</name>
+    <filename>struct__smat__head__s.html</filename>
+    <member kind="variable">
+      <type>unsigned long</type>
+      <name>sh_magic</name>
+      <anchorfile>struct__smat__head__s.html</anchorfile>
+      <anchor>o0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>smat_loc_t</type>
+      <name>sh_elem</name>
+      <anchorfile>struct__smat__head__s.html</anchorfile>
+      <anchor>o1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>smat_table_t *</type>
+      <name>sh_table</name>
+      <anchorfile>struct__smat__head__s.html</anchorfile>
+      <anchor>o2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>link_head_t</type>
+      <name>sh_head</name>
+      <anchorfile>struct__smat__head__s.html</anchorfile>
+      <anchor>o3</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>_smat_table_s</name>
+    <filename>struct__smat__table__s.html</filename>
+    <member kind="variable">
+      <type>unsigned long</type>
+      <name>st_magic</name>
+      <anchorfile>struct__smat__table__s.html</anchorfile>
+      <anchor>o0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>smat_resize_t</type>
+      <name>st_resize</name>
+      <anchorfile>struct__smat__table__s.html</anchorfile>
+      <anchor>o1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>void *</type>
+      <name>st_extra</name>
+      <anchorfile>struct__smat__table__s.html</anchorfile>
+      <anchor>o2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>hash_table_t</type>
+      <name>st_table</name>
+      <anchorfile>struct__smat__table__s.html</anchorfile>
+      <anchor>o3</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>_st_flush_s</name>
+    <filename>struct__st__flush__s.html</filename>
+    <member kind="variable">
+      <type>smat_table_t *</type>
+      <name>sf_table</name>
+      <anchorfile>struct__st__flush__s.html</anchorfile>
+      <anchor>o0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>smat_iter_t</type>
+      <name>sf_flush</name>
+      <anchorfile>struct__st__flush__s.html</anchorfile>
+      <anchor>o1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>void *</type>
+      <name>sf_extra</name>
+      <anchorfile>struct__st__flush__s.html</anchorfile>
+      <anchor>o2</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>_st_iter_s</name>
+    <filename>struct__st__iter__s.html</filename>
+    <member kind="variable">
+      <type>smat_table_t *</type>
+      <name>si_table</name>
+      <anchorfile>struct__st__iter__s.html</anchorfile>
+      <anchor>o0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>smat_iter_t</type>
+      <name>si_iter</name>
+      <anchorfile>struct__st__iter__s.html</anchorfile>
+      <anchor>o1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>void *</type>
+      <name>si_extra</name>
+      <anchorfile>struct__st__iter__s.html</anchorfile>
+      <anchor>o2</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="group">
+    <name>dbprim</name>
+    <title>Database Primitives</title>
+    <filename>group__dbprim.html</filename>
+    <class kind="struct">_db_key_s</class>
+    <member kind="define">
+      <type>#define</type>
+      <name>DB_KEY_INIT</name>
+      <anchorfile>group__dbprim.html</anchorfile>
+      <anchor>ga1</anchor>
+      <arglist>(key, size)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>dk_key</name>
+      <anchorfile>group__dbprim.html</anchorfile>
+      <anchor>ga2</anchor>
+      <arglist>(key)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>dk_len</name>
+      <anchorfile>group__dbprim.html</anchorfile>
+      <anchor>ga3</anchor>
+      <arglist>(key)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>DB_FLAG_REVERSE</name>
+      <anchorfile>group__dbprim.html</anchorfile>
+      <anchor>ga4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>_db_key_s</type>
+      <name>db_key_t</name>
+      <anchorfile>group__dbprim.html</anchorfile>
+      <anchor>ga0</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="group">
+    <name>dbprim_link</name>
+    <title>Linked lists</title>
+    <filename>group__dbprim__link.html</filename>
+    <class kind="struct">_link_head_s</class>
+    <class kind="struct">_link_elem_s</class>
+    <member kind="define">
+      <type>#define</type>
+      <name>LINK_HEAD_MAGIC</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga13</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>LINK_HEAD_INIT</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga14</anchor>
+      <arglist>(extra)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ll_verify</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga15</anchor>
+      <arglist>(list)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ll_count</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga16</anchor>
+      <arglist>(list)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ll_first</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga17</anchor>
+      <arglist>(list)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ll_last</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga18</anchor>
+      <arglist>(list)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ll_extra</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga19</anchor>
+      <arglist>(list)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>LINK_ELEM_MAGIC</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga20</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>LINK_ELEM_INIT</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga21</anchor>
+      <arglist>(obj)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>le_verify</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga22</anchor>
+      <arglist>(element)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>le_next</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga23</anchor>
+      <arglist>(elem)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>le_prev</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga24</anchor>
+      <arglist>(elem)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>le_object</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga25</anchor>
+      <arglist>(elem)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>le_head</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga26</anchor>
+      <arglist>(elem)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>le_flags</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga27</anchor>
+      <arglist>(elem)</arglist>
+    </member>
+    <member kind="typedef">
+      <type>_link_head_s</type>
+      <name>link_head_t</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>_link_elem_s</type>
+      <name>link_elem_t</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>unsigned long(*</type>
+      <name>link_iter_t</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga2</anchor>
+      <arglist>)(link_head_t *list, link_elem_t *elem, void *extra)</arglist>
+    </member>
+    <member kind="typedef">
+      <type>unsigned long(*</type>
+      <name>link_comp_t</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga3</anchor>
+      <arglist>)(db_key_t *key, void *obj)</arglist>
+    </member>
+    <member kind="typedef">
+      <type>enum _link_loc_e</type>
+      <name>link_loc_t</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>_link_loc_e</name>
+      <anchor>ga28</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>LINK_LOC_HEAD</name>
+      <anchor>gga28a133</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>LINK_LOC_TAIL</name>
+      <anchor>gga28a134</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>LINK_LOC_BEFORE</name>
+      <anchor>gga28a135</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>LINK_LOC_AFTER</name>
+      <anchor>gga28a136</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ll_init</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga5</anchor>
+      <arglist>(link_head_t *list, void *extra)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ll_add</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga6</anchor>
+      <arglist>(link_head_t *list, link_elem_t *new, link_loc_t loc, link_elem_t *elem)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ll_move</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga7</anchor>
+      <arglist>(link_head_t *list, link_elem_t *elem, link_loc_t loc, link_elem_t *elem2)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ll_remove</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga8</anchor>
+      <arglist>(link_head_t *list, link_elem_t *elem)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ll_find</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga9</anchor>
+      <arglist>(link_head_t *list, link_elem_t **elem_p, link_comp_t comp_func, link_elem_t *start, db_key_t *key)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ll_iter</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga10</anchor>
+      <arglist>(link_head_t *list, link_elem_t *start, link_iter_t iter_func, void *extra, unsigned long flags)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ll_flush</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga11</anchor>
+      <arglist>(link_head_t *list, link_iter_t flush_func, void *extra)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>le_init</name>
+      <anchorfile>group__dbprim__link.html</anchorfile>
+      <anchor>ga12</anchor>
+      <arglist>(link_elem_t *elem, void *object)</arglist>
+    </member>
+  </compound>
+  <compound kind="group">
+    <name>dbprim_hash</name>
+    <title>Hash tables</title>
+    <filename>group__dbprim__hash.html</filename>
+    <class kind="struct">_hash_table_s</class>
+    <class kind="struct">_hash_entry_s</class>
+    <member kind="define">
+      <type>#define</type>
+      <name>MAX_PRIME</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga21</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>HASH_TABLE_MAGIC</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga22</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>HASH_FLAG_AUTOGROW</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga23</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>HASH_FLAG_AUTOSHRINK</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga24</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>HASH_FLAG_MASK</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga25</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>HASH_TABLE_INIT</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga26</anchor>
+      <arglist>(flags, func, comp, resize, extra)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ht_verify</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga27</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ht_flags</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga28</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ht_frozen</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga29</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ht_modulus</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga30</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ht_count</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga31</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ht_func</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga32</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ht_comp</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga33</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ht_rsize</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga34</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ht_extra</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga35</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ht_size</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga36</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>HASH_ENTRY_MAGIC</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga37</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>HASH_ENTRY_INIT</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga38</anchor>
+      <arglist>(value)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>he_verify</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga39</anchor>
+      <arglist>(entry)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>he_link</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga40</anchor>
+      <arglist>(entry)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>he_flags</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga41</anchor>
+      <arglist>(entry)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>he_table</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga42</anchor>
+      <arglist>(entry)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>he_hash</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga43</anchor>
+      <arglist>(entry)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>he_key</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga44</anchor>
+      <arglist>(entry)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>he_value</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga45</anchor>
+      <arglist>(entry)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>st_rsize</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga46</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>_hash_rollover</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga47</anchor>
+      <arglist>(mod)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>_hash_rollunder</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga48</anchor>
+      <arglist>(mod)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>_hash_fuzz</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga49</anchor>
+      <arglist>(mod)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>HASH_FNV_OFFSET</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga50</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>HASH_FNV_PRIME</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga51</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>_hash_table_s</type>
+      <name>hash_table_t</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>_hash_entry_s</type>
+      <name>hash_entry_t</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>unsigned long(*</type>
+      <name>hash_iter_t</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga3</anchor>
+      <arglist>)(hash_table_t *table, hash_entry_t *ent, void *extra)</arglist>
+    </member>
+    <member kind="typedef">
+      <type>unsigned long(*</type>
+      <name>hash_func_t</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga4</anchor>
+      <arglist>)(hash_table_t *table, db_key_t *key)</arglist>
+    </member>
+    <member kind="typedef">
+      <type>unsigned long(*</type>
+      <name>hash_comp_t</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga5</anchor>
+      <arglist>)(hash_table_t *table, db_key_t *key1, db_key_t *key2)</arglist>
+    </member>
+    <member kind="typedef">
+      <type>unsigned long(*</type>
+      <name>hash_resize_t</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga6</anchor>
+      <arglist>)(hash_table_t *table, unsigned long new_mod)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>hash_fnv1</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga7</anchor>
+      <arglist>(hash_table_t *table, db_key_t *key)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>hash_fnv1a</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga8</anchor>
+      <arglist>(hash_table_t *table, db_key_t *key)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>hash_comp</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga9</anchor>
+      <arglist>(hash_table_t *table, db_key_t *key1, db_key_t *key2)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_init</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga10</anchor>
+      <arglist>(hash_table_t *table, unsigned long flags, hash_func_t func, hash_comp_t comp, hash_resize_t resize, void *extra, unsigned long init_mod)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_add</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga11</anchor>
+      <arglist>(hash_table_t *table, hash_entry_t *entry, db_key_t *key)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_move</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga12</anchor>
+      <arglist>(hash_table_t *table, hash_entry_t *entry, db_key_t *key)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_remove</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga13</anchor>
+      <arglist>(hash_table_t *table, hash_entry_t *entry)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_find</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga14</anchor>
+      <arglist>(hash_table_t *table, hash_entry_t **entry_p, db_key_t *key)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_iter</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga15</anchor>
+      <arglist>(hash_table_t *table, hash_iter_t iter_func, void *extra)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_flush</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga16</anchor>
+      <arglist>(hash_table_t *table, hash_iter_t flush_func, void *extra)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_resize</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga17</anchor>
+      <arglist>(hash_table_t *table, unsigned long new_size)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>ht_free</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga18</anchor>
+      <arglist>(hash_table_t *table)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>he_init</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga19</anchor>
+      <arglist>(hash_entry_t *entry, void *value)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>_hash_prime</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga20</anchor>
+      <arglist>(unsigned long start)</arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static unsigned long</type>
+      <name>primes</name>
+      <anchorfile>group__dbprim__hash.html</anchorfile>
+      <anchor>ga0</anchor>
+      <arglist>[]</arglist>
+    </member>
+  </compound>
+  <compound kind="group">
+    <name>dbprim_smat</name>
+    <title>Sparse matrices</title>
+    <filename>group__dbprim__smat.html</filename>
+    <class kind="struct">_smat_table_s</class>
+    <class kind="struct">_smat_head_s</class>
+    <class kind="struct">_smat_entry_s</class>
+    <class kind="struct">_sh_find_s</class>
+    <class kind="struct">_sh_flush_s</class>
+    <class kind="struct">_sh_iter_s</class>
+    <class kind="struct">_st_flush_s</class>
+    <class kind="struct">_st_iter_s</class>
+    <member kind="define">
+      <type>#define</type>
+      <name>_smat_ent</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga32</anchor>
+      <arglist>(ent)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>SMAT_TABLE_MAGIC</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga33</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>st_verify</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga34</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>st_flags</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga35</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>st_frozen</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga36</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>st_modulus</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga37</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>st_count</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga38</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>st_extra</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga39</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>st_size</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga40</anchor>
+      <arglist>(table)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>SMAT_HEAD_MAGIC</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga41</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>SMAT_HEAD_INIT</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga42</anchor>
+      <arglist>(elem, object)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>sh_verify</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga43</anchor>
+      <arglist>(head)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>sh_elem</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga44</anchor>
+      <arglist>(head)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>sh_table</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga45</anchor>
+      <arglist>(head)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>sh_frozen</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga46</anchor>
+      <arglist>(head)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>sh_count</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga47</anchor>
+      <arglist>(head)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>_sh_first</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga48</anchor>
+      <arglist>(head)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>sh_first</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga49</anchor>
+      <arglist>(head)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>_sh_last</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga50</anchor>
+      <arglist>(head)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>sh_last</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga51</anchor>
+      <arglist>(head)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>sh_object</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga52</anchor>
+      <arglist>(head)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>sh_size</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga53</anchor>
+      <arglist>(head)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>SMAT_ENTRY_MAGIC</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga54</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>se_verify</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga55</anchor>
+      <arglist>(entry)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>se_table</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga56</anchor>
+      <arglist>(entry)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>_se_link</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga57</anchor>
+      <arglist>(entry)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>se_flags</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga58</anchor>
+      <arglist>(entry)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>se_hash</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga59</anchor>
+      <arglist>(entry)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>_se_next</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga60</anchor>
+      <arglist>(entry, n)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>se_next</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga61</anchor>
+      <arglist>(entry, n)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>_se_prev</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga62</anchor>
+      <arglist>(entry, n)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>se_prev</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga63</anchor>
+      <arglist>(entry, n)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>se_lflags</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga64</anchor>
+      <arglist>(entry, n)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>se_object</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga65</anchor>
+      <arglist>(entry, n)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ST_REM_FIRST</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga66</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ST_REM_SECOND</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga67</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ST_REM_HASH</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga68</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>ST_REM_FREE</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga69</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>_smat_table_s</type>
+      <name>smat_table_t</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>_smat_head_s</type>
+      <name>smat_head_t</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>_smat_entry_s</type>
+      <name>smat_entry_t</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>unsigned long(*</type>
+      <name>smat_resize_t</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga3</anchor>
+      <arglist>)(smat_table_t *table, unsigned long new_mod)</arglist>
+    </member>
+    <member kind="typedef">
+      <type>unsigned long(*</type>
+      <name>smat_iter_t</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga4</anchor>
+      <arglist>)(smat_table_t *table, smat_entry_t *ent, void *extra)</arglist>
+    </member>
+    <member kind="typedef">
+      <type>unsigned long(*</type>
+      <name>smat_comp_t</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga5</anchor>
+      <arglist>)(db_key_t *key, smat_entry_t *ent)</arglist>
+    </member>
+    <member kind="typedef">
+      <type>enum _smat_loc_e</type>
+      <name>smat_loc_t</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>_smat_loc_e</name>
+      <anchor>ga70</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SMAT_LOC_FIRST</name>
+      <anchor>gga70a137</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>SMAT_LOC_SECOND</name>
+      <anchor>gga70a138</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>smat_cleanup</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga8</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>smat_freemem</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga9</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>st_init</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga10</anchor>
+      <arglist>(smat_table_t *table, unsigned long flags, smat_resize_t resize, void *extra, unsigned long init_mod)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>st_add</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga11</anchor>
+      <arglist>(smat_table_t *table, smat_entry_t **entry_p, smat_head_t *head1, link_loc_t loc1, smat_entry_t *ent1, smat_head_t *head2, link_loc_t loc2, smat_entry_t *ent2)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>st_remove</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga12</anchor>
+      <arglist>(smat_table_t *table, smat_entry_t *entry)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>st_find</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga13</anchor>
+      <arglist>(smat_table_t *table, smat_entry_t **entry_p, smat_head_t *head1, smat_head_t *head2)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>st_iter</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga14</anchor>
+      <arglist>(smat_table_t *table, smat_iter_t iter_func, void *extra)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>st_flush</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga15</anchor>
+      <arglist>(smat_table_t *table, smat_iter_t flush_func, void *extra)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>st_resize</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga16</anchor>
+      <arglist>(smat_table_t *table, unsigned long new_size)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>st_free</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga17</anchor>
+      <arglist>(smat_table_t *table)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>sh_init</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga18</anchor>
+      <arglist>(smat_head_t *head, smat_loc_t elem, void *object)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>sh_move</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga19</anchor>
+      <arglist>(smat_head_t *head, smat_entry_t *elem, link_loc_t loc, smat_entry_t *elem2)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>sh_find</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga20</anchor>
+      <arglist>(smat_head_t *head, smat_entry_t **elem_p, smat_comp_t comp_func, smat_entry_t *start, db_key_t *key)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>sh_iter</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga21</anchor>
+      <arglist>(smat_head_t *head, smat_entry_t *start, smat_iter_t iter_func, void *extra, unsigned long flags)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>sh_flush</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga22</anchor>
+      <arglist>(smat_head_t *head, smat_iter_t flush_func, void *extra)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>_st_remove</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga23</anchor>
+      <arglist>(smat_table_t *table, smat_entry_t *entry, unsigned int remflag)</arglist>
+    </member>
+    <member kind="function">
+      <type>smat_entry_t *</type>
+      <name>_smat_alloc</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga24</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>_smat_free</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga25</anchor>
+      <arglist>(smat_entry_t *entry)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>_smat_resize</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga26</anchor>
+      <arglist>(hash_table_t *table, unsigned long new_mod)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static unsigned long</type>
+      <name>_sh_find_comp</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga27</anchor>
+      <arglist>(db_key_t *key, void *data)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static unsigned long</type>
+      <name>_sh_flush_iter</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga28</anchor>
+      <arglist>(link_head_t *head, link_elem_t *elem, void *extra)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static unsigned long</type>
+      <name>_sh_iter_iter</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga29</anchor>
+      <arglist>(link_head_t *head, link_elem_t *elem, void *extra)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static unsigned long</type>
+      <name>_st_flush_iter</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga30</anchor>
+      <arglist>(hash_table_t *table, hash_entry_t *ent, void *extra)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static unsigned long</type>
+      <name>_st_iter_iter</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga31</anchor>
+      <arglist>(hash_table_t *table, hash_entry_t *ent, void *extra)</arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static link_head_t</type>
+      <name>_smat_freelist</name>
+      <anchorfile>group__dbprim__smat.html</anchorfile>
+      <anchor>ga7</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="group">
+    <name>dbprim_rbtree</name>
+    <title>Red-black trees</title>
+    <filename>group__dbprim__rbtree.html</filename>
+    <class kind="struct">_rb_tree_s</class>
+    <class kind="struct">_rb_node_s</class>
+    <member kind="define">
+      <type>#define</type>
+      <name>RB_TREE_MAGIC</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga17</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>RB_TREE_INIT</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga18</anchor>
+      <arglist>(comp, extra)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rt_verify</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga19</anchor>
+      <arglist>(tree)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rt_frozen</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga20</anchor>
+      <arglist>(tree)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rt_count</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga21</anchor>
+      <arglist>(tree)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rt_root</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga22</anchor>
+      <arglist>(tree)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rt_comp</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga23</anchor>
+      <arglist>(tree)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rt_extra</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga24</anchor>
+      <arglist>(tree)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>RBT_ORDER_PRE</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga25</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>RBT_ORDER_IN</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga26</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>RBT_ORDER_POST</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga27</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>RBT_ORDER_MASK</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga28</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rt_prev</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga29</anchor>
+      <arglist>(tree, node_io, flags)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>RB_NODE_MAGIC</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga30</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>RB_NODE_INIT</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga31</anchor>
+      <arglist>(value)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rn_verify</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga32</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rn_color</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga33</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rn_tree</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga34</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rn_parent</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga35</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rn_left</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga36</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rn_right</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga37</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rn_key</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga38</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rn_value</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga39</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rn_isblack</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga40</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rn_isred</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga41</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rn_isleft</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga42</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>rn_isright</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga43</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>uncle</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga44</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>flip</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga45</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>_rn_clear</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga46</anchor>
+      <arglist>(node)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>_rt_update_parent</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga47</anchor>
+      <arglist>(tree, node, new)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>isleft</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga48</anchor>
+      <arglist>(par, n)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>sel_lr</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga49</anchor>
+      <arglist>(t, n)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>sibling</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga50</anchor>
+      <arglist>(par, n)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>l_neph</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga51</anchor>
+      <arglist>(par, n)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>r_neph</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga52</anchor>
+      <arglist>(par, n)</arglist>
+    </member>
+    <member kind="typedef">
+      <type>_rb_tree_s</type>
+      <name>rb_tree_t</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>_rb_node_s</type>
+      <name>rb_node_t</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>unsigned long(*</type>
+      <name>rb_iter_t</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga2</anchor>
+      <arglist>)(rb_tree_t *tree, rb_node_t *node, void *extra)</arglist>
+    </member>
+    <member kind="typedef">
+      <type>long(*</type>
+      <name>rb_comp_t</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga3</anchor>
+      <arglist>)(rb_tree_t *tree, db_key_t *key1, db_key_t *key2)</arglist>
+    </member>
+    <member kind="typedef">
+      <type>enum _rb_color_e</type>
+      <name>rb_color_t</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumeration">
+      <name>_rb_color_e</name>
+      <anchor>ga53</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>RB_COLOR_NONE</name>
+      <anchor>gga53a139</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>RB_COLOR_RED</name>
+      <anchor>gga53a140</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>RB_COLOR_BLACK</name>
+      <anchor>gga53a141</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function">
+      <type>long</type>
+      <name>rbtree_comp</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga5</anchor>
+      <arglist>(rb_tree_t *tree, db_key_t *key1, db_key_t *key2)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rt_init</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga6</anchor>
+      <arglist>(rb_tree_t *tree, rb_comp_t comp, void *extra)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rt_add</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga7</anchor>
+      <arglist>(rb_tree_t *tree, rb_node_t *node, db_key_t *key)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rt_move</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga8</anchor>
+      <arglist>(rb_tree_t *tree, rb_node_t *node, db_key_t *key)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rt_remove</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga9</anchor>
+      <arglist>(rb_tree_t *tree, rb_node_t *node)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rt_find</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga10</anchor>
+      <arglist>(rb_tree_t *tree, rb_node_t **node_p, db_key_t *key)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rt_next</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga11</anchor>
+      <arglist>(rb_tree_t *tree, rb_node_t **node_io, unsigned long flags)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rt_iter</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga12</anchor>
+      <arglist>(rb_tree_t *tree, rb_node_t *start, rb_iter_t iter_func, void *extra, unsigned long flags)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rt_flush</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga13</anchor>
+      <arglist>(rb_tree_t *tree, rb_iter_t flush_func, void *extra)</arglist>
+    </member>
+    <member kind="function">
+      <type>unsigned long</type>
+      <name>rn_init</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga14</anchor>
+      <arglist>(rb_node_t *node, void *value)</arglist>
+    </member>
+    <member kind="function">
+      <type>rb_node_t *</type>
+      <name>_rb_locate</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga15</anchor>
+      <arglist>(rb_tree_t *tree, rb_node_t *node, db_key_t *key)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>_rb_rotate</name>
+      <anchorfile>group__dbprim__rbtree.html</anchorfile>
+      <anchor>ga16</anchor>
+      <arglist>(rb_tree_t *tree, rb_node_t *child)</arglist>
+    </member>
+  </compound>
+</tagfile>

@@ -1,0 +1,7 @@
+.deps
+.libs
+Makefile
+t_linklists
+test-harness
+test-harness.log
+*.o

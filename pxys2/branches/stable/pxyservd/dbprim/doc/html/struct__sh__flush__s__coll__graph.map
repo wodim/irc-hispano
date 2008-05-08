@@ -1,0 +1,5 @@
+base referer
+rect $struct__smat__table__s.html 6,204 115,228
+rect $struct__hash__table__s.html 6,112 115,136
+rect $struct__link__head__s.html 88,7 190,31
+rect $struct__link__elem__s.html 152,112 254,136

@@ -1,0 +1,60 @@
+/* PEAK Library
+ * @configure_input@
+ *
+ * Intel IA-64 atomic operations for GCC
+ * 32 bit version only (enough for libpeak)
+ *
+ * $Id: atomic.h.in,v 1.1 2007/05/24 12:46:41 mbuna Exp $
+ */
+#ifndef INCLUDED_PEAK_ATOMIC_H_
+#define INCLUDED_PEAK_ATOMIC_H_
+
+typedef __signed__ int __s32;
+typedef unsigned int __u32;
+
+typedef __signed__ long __s64;
+typedef unsigned long __u64;
+
+typedef struct { volatile __s32 counter; } peak_atomic_t;
+
+#define PEAK_ATOMIC_INIT(i)     ((peak_atomic_t) { (i) })
+
+#define peak_atomic_read(v)     ((v)->counter)
+#define peak_atomic_set(v,i)    (((v)->counter) = (i))
+
+#define ia64_cmpxchg4_acq(ptr, new, old)                                                \
+({                                                                                      \
+        __u64 ia64_intri_res;                                                           \
+        asm volatile ("mov ar.ccv=%0;;" :: "rO"(old));                                  \
+        asm volatile ("cmpxchg4.acq %0=[%1],%2,ar.ccv":                                 \
+                              "=r"(ia64_intri_res) : "r"(ptr), "r"(new) : "memory");    \
+        ia64_intri_res;                                                                 \
+})
+
+
+/* PEAK calls */
+
+static __inline__ void peak_atomic_add(int a, peak_atomic_t *v)
+{
+        __s32 old, new;
+
+        do {
+                old = peak_atomic_read(v);
+                new = old + a;
+        } while ((__s32)ia64_cmpxchg4_acq((__u32 *) (v), new, (__u32) (long) (old)) != old);
+}
+
+static __inline__ void peak_atomic_sub(int a, peak_atomic_t *v)
+{
+        __s32 old, new;
+
+        do {
+                old = peak_atomic_read(v);
+                new = old - a;
+        } while ((__s32)ia64_cmpxchg4_acq((__u32 *) (v), new, (__u32) (long) (old)) != old);
+}
+
+#define peak_atomic_inc(v)	peak_atomic_add(1, (v))
+#define peak_atomic_dec(v)	peak_atomic_sub(1, (v))
+
+#endif /* INCLUDED_PEAK_ATOMIC_H_ */

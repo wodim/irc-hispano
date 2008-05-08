@@ -1,0 +1,22 @@
+
+* 2007/11/09 zoltan@irc-dev.net                                   FEATURE
+-------------------------------------------------------------------------
+  Se agrega modulo de comprobacion llamado "TheOnionRouter" que comprueba
+  si el host tiene el puerto abierto para conectar bajo redes TOR para
+  conectar de forma anonima.
+
+* 2007/11/18 zoltan@irc-dev.net                                   FEATURE
+-------------------------------------------------------------------------
+  Se agrega modulo de comprobacion llamado "bouncerhispano" que comprueba
+  si, hay un bouncer mapeado directamente a IRC-Hispano, pueden ser
+  troyanos o routers ADSL hackeados y que tienen los puertos redirigidos 
+  a IRC-Hispano. Esta basado en un parche de la version Pxys 1.x para la
+  red IRC-Hispano.
+
+* 2007/11/18 zoltan@irc-dev.net                                   FEATURE
+-------------------------------------------------------------------------
+  Se agrega modulo de comprobacion llamado "3com812" que comprueba si,
+  dichos routers ADSL tienen el 23 abierto, es un grave fallo de seguridad.
+  El modulo es el mismo que el de WinGate+Cisco ya que van por el mismo
+  puerto, por lo tanto no se pone los 2 en el .xml. El nuevo modulo hace
+  las 3 comprobaciones: WinGate+Cisco+3com812.

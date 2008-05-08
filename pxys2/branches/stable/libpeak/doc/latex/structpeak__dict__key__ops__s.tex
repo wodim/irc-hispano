@@ -1,0 +1,66 @@
+\hypertarget{structpeak__dict__key__ops__s}{
+\section{peak\_\-dict\_\-key\_\-ops\_\-s Struct Reference}
+\label{structpeak__dict__key__ops__s}\index{peak_dict_key_ops_s@{peak\_\-dict\_\-key\_\-ops\_\-s}}
+}
+{\tt \#include $<$dict.h$>$}
+
+
+
+\subsection{Detailed Description}
+Structure containing the callbacks for keys of a dictionary. 
+
+\subsection*{Data Fields}
+\begin{CompactItemize}
+\item 
+\hyperlink{group__dict_ga1}{peak\_\-dict\_\-retain\_\-callback} \hyperlink{structpeak__dict__key__ops__s_o0}{retain}
+\begin{CompactList}\small\item\em Retain callback. \item\end{CompactList}\item 
+\hyperlink{group__dict_ga2}{peak\_\-dict\_\-release\_\-callback} \hyperlink{structpeak__dict__key__ops__s_o1}{release}
+\begin{CompactList}\small\item\em Release callback. \item\end{CompactList}\item 
+\hyperlink{group__dict_ga3}{peak\_\-dict\_\-equal\_\-callback} \hyperlink{structpeak__dict__key__ops__s_o2}{equal}
+\begin{CompactList}\small\item\em Equal callback. \item\end{CompactList}\item 
+\hyperlink{group__dict_ga4}{peak\_\-dict\_\-hash\_\-callback} \hyperlink{structpeak__dict__key__ops__s_o3}{hash}
+\begin{CompactList}\small\item\em Hash callback. \item\end{CompactList}\end{CompactItemize}
+
+
+\subsection{Field Documentation}
+\hypertarget{structpeak__dict__key__ops__s_o2}{
+\index{peak_dict_key_ops_s@{peak\_\-dict\_\-key\_\-ops\_\-s}!equal@{equal}}
+\index{equal@{equal}!peak_dict_key_ops_s@{peak\_\-dict\_\-key\_\-ops\_\-s}}
+\subsubsection[equal]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{group__dict_ga3}{peak\_\-dict\_\-equal\_\-callback} \hyperlink{structpeak__dict__key__ops__s_o2}{peak\_\-dict\_\-key\_\-ops\_\-s::equal}}}
+\label{structpeak__dict__key__ops__s_o2}
+
+
+Equal callback. 
+
+It's used to compare keys when accessing a value. If {\tt NULL}, pointer equality is used. \hypertarget{structpeak__dict__key__ops__s_o3}{
+\index{peak_dict_key_ops_s@{peak\_\-dict\_\-key\_\-ops\_\-s}!hash@{hash}}
+\index{hash@{hash}!peak_dict_key_ops_s@{peak\_\-dict\_\-key\_\-ops\_\-s}}
+\subsubsection[hash]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{group__dict_ga4}{peak\_\-dict\_\-hash\_\-callback} \hyperlink{structpeak__dict__key__ops__s_o3}{peak\_\-dict\_\-key\_\-ops\_\-s::hash}}}
+\label{structpeak__dict__key__ops__s_o3}
+
+
+Hash callback. 
+
+It's used to hash keys when adding an entry. If {\tt NULL}, pointer hashing is used. \hypertarget{structpeak__dict__key__ops__s_o1}{
+\index{peak_dict_key_ops_s@{peak\_\-dict\_\-key\_\-ops\_\-s}!release@{release}}
+\index{release@{release}!peak_dict_key_ops_s@{peak\_\-dict\_\-key\_\-ops\_\-s}}
+\subsubsection[release]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{group__dict_ga2}{peak\_\-dict\_\-release\_\-callback} \hyperlink{structpeak__dict__key__ops__s_o1}{peak\_\-dict\_\-key\_\-ops\_\-s::release}}}
+\label{structpeak__dict__key__ops__s_o1}
+
+
+Release callback. 
+
+If not {\tt NULL}, it's called with the key as argument when an entry is removed from the dictionary. \hypertarget{structpeak__dict__key__ops__s_o0}{
+\index{peak_dict_key_ops_s@{peak\_\-dict\_\-key\_\-ops\_\-s}!retain@{retain}}
+\index{retain@{retain}!peak_dict_key_ops_s@{peak\_\-dict\_\-key\_\-ops\_\-s}}
+\subsubsection[retain]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{group__dict_ga1}{peak\_\-dict\_\-retain\_\-callback} \hyperlink{structpeak__dict__key__ops__s_o0}{peak\_\-dict\_\-key\_\-ops\_\-s::retain}}}
+\label{structpeak__dict__key__ops__s_o0}
+
+
+Retain callback. 
+
+If not {\tt NULL}, it's called with the key as argument when an entry is added in the dictionary. 
+
+The documentation for this struct was generated from the following file:\begin{CompactItemize}
+\item 
+dict.h\end{CompactItemize}

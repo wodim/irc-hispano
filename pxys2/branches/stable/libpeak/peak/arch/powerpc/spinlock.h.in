@@ -1,0 +1,213 @@
+/*
+ * PowerPC spinlock operations.
+ * With the help of various source: Darwin, Linux kernel...
+ *
+ * $Id: spinlock.h.in,v 1.1 2007/05/24 12:54:10 mbuna Exp $
+ */
+#ifndef INCLUDED_PEAK_SPINLOCK_H_
+#define INCLUDED_PEAK_SPINLOCK_H_
+
+#define PEAK_SPINLOCK_ITERATIONS 1000
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+#include <sys/types.h>
+#include <sys/time.h>
+#include <sys/signal.h>
+#include <pthread.h>
+#include <unistd.h>
+#ifdef HAVE_SCHED_H
+#include <sched.h>
+#endif
+#ifdef HAVE_ATOMIC_OP_H
+#include <sys/atomic_op.h> /* AIX */
+#endif
+
+#include <peak/stdint.h>
+
+/* Erratum #77 on the 405 means we need a sync or dcbt before every stwcx.
+ * The old ATOMIC_SYNC_FIX covered some but not all of this.
+ */
+#ifdef CONFIG_IBM405_ERR77
+#define PPC405_ERR77(ra,rb)	"dcbt " #ra "," #rb ";"
+#else
+#define PPC405_ERR77(ra,rb)
+#endif
+
+/* PEAK defaults to SMP
+ */
+#ifdef PEAK_CONFIG_UNIPROCESSOR
+#define SMP_WMB
+#define SMP_MB
+#else
+#define SMP_WMB "eieio\n"
+#define SMP_MB "\nsync"
+#endif /* PEAK_CONFIG_UNIPROCESSOR */
+
+
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
+/* PEAK INTERNAL SPIN LOCK
+ * 
+ * _peak_spinlock_lock(lockp)
+ * _peak_spinlock_lock_try(lockp) - returns 0 (busy) or 1 (got the lock)
+ * _peak_spinlock_unlock(lockp)
+ * 
+ */
+
+extern int _peak_is_threaded;
+
+#if defined(HAVE__SPIN_LOCK) && defined(HAVE__SPIN_LOCK_TRY) && defined(HAVE__SPIN_UNLOCK)
+#define USE_DARWIN_SPINLOCK 1
+#else
+#define USE_DARWIN_SPINLOCK 0
+#endif
+
+/* Type and initializer for this architecture.
+ */
+#if USE_DARWIN_SPINLOCK
+typedef volatile long peak_spinlock_t;
+#define PEAK_SPINLOCK_INITIALIZER (0)
+#elif defined(__GNUC__)
+typedef struct { volatile unsigned long lock; } peak_spinlock_t;
+#define PEAK_SPINLOCK_INITIALIZER ((peak_spinlock_t){ (0) })
+#elif defined(_AIX)
+typedef int peak_spinlock_t; /* AIX: typedef int     *atomic_p; */
+#define PEAK_SPINLOCK_INITIALIZER (0)
+#endif
+
+#if USE_DARWIN_SPINLOCK
+extern void _spin_lock(peak_spinlock_t *lockp);
+extern int  _spin_lock_try(peak_spinlock_t *lockp);
+extern void _spin_unlock(peak_spinlock_t *lockp);
+#endif
+
+static inline void
+_peak_spinlock_lock(peak_spinlock_t *lockp)
+  {
+#if USE_DARWIN_SPINLOCK
+  
+  if (!_peak_is_threaded) /* set only if peak uses several threads */
+    return;
+  
+  _spin_lock(lockp);   /* Lucky, we have a system function for that.
+                        * I checked on Darwin 7.0 and it deals properly
+                        * with 32 or 64 bit, UP (always depress) or
+                        * MP (1000 spin tries before relinquish).
+                        * On Darwin 6.x, however, the kernel use generic
+                        * PPC MP code, but well.                 --mbuna
+                        */
+  
+#elif defined(__GNUC__)
+  
+  unsigned long tmp;
+  
+  if (!_peak_is_threaded) /* set only if peak uses several threads */
+    return;
+  
+  __asm__ __volatile__(
+        "b	1f		# spin_lock\n\
+2:	lwzx	%0,0,%1\n\
+	cmpwi	0,%0,0\n\
+	bne+	2b\n\
+1:	lwarx	%0,0,%1\n\
+	cmpwi	0,%0,0\n\
+	bne-	2b\n"
+	PPC405_ERR77(0,%1)
+"	stwcx.	%2,0,%1\n\
+	bne-	2b\n\
+	isync"
+	: "=&r"(tmp)
+	: "r"(&lockp->lock), "r"(1)
+	: "cr0", "memory");
+
+#elif defined(_AIX)
+  
+  unsigned int tries = PEAK_SPINLOCK_ITERATIONS;
+  
+  if (!_peak_is_threaded) /* set only if peak uses several threads */
+    return;
+  
+  while (!_check_lock(lockp, 0, 1))
+    {
+    if (--tries > 0)
+      {
+      sched_yield();
+      tries = PEAK_SPINLOCK_ITERATIONS;
+      }
+    }
+  
+#else
+#error _peak_spinlock_lock not supported
+#endif /* USE_DARWIN_SPINLOCK */
+  }
+
+static inline int
+_peak_spinlock_lock_try(peak_spinlock_t *lockp)
+  {
+#if USE_DARWIN_SPINLOCK
+  if (!_peak_is_threaded) /* set only if peak uses several threads */
+    return 1; /* always succeed */
+  
+  return _spin_lock_try(lockp);
+#elif defined(__GNUC__)
+  unsigned int old, t;
+  unsigned int mask = 1;
+  volatile unsigned int *p = ((volatile unsigned int *)lockp->lock);
+  
+  if (!_peak_is_threaded) /* set only if peak uses several threads */
+    return 1; /* always succeed */
+  
+  __asm__ __volatile__(SMP_WMB "\n\
+1:      lwarx   %0,0,%4 \n\
+        or      %1,%0,%3 \n"
+        PPC405_ERR77(0,%4)
+"       stwcx.  %1,0,%4 \n\
+        bne     1b"
+        SMP_MB
+        : "=&r" (old), "=&r" (t), "=m" (*p)
+        : "r" (mask), "r" (p), "m" (*p)
+        : "cc", "memory");
+  
+  return (old & mask) == 0;
+#elif defined(_AIX)
+  return !_check_lock(lockp, 0, 1);
+#else
+#error _peak_spinlock_lock_try not supported
+#endif
+  }
+
+static inline void
+_peak_spinlock_unlock(peak_spinlock_t *lockp)
+  {
+  if (!_peak_is_threaded) /* set only if peak uses several threads */
+    return;
+  
+#if USE_DARWIN_SPINLOCK
+  if (!_peak_is_threaded) /* set only if peak uses several threads */
+    return;
+  
+  _spin_unlock(lockp);
+
+#elif defined(__GNUC__)
+  /* The eieio instruction is a faster sync: a barrier providing an ordering
+   * (separately) for (a) cacheable stores and (b) loads and stores to
+   * non-cacheable memory (e.g. I/O devices).
+   */
+  __asm__ __volatile__("eieio		# spin_unlock": : :"memory");
+  lockp->lock = 0;
+#elif defined(_AIX)
+  _clear_lock(lockp, 0);
+#else
+#error _peak_spinlock_unlock not supported
+#endif
+  }
+
+#if defined(__cplusplus)
+}
+#endif
+
+#endif /* INCLUDED_PEAK_SPINLOCK_H_ */

@@ -1,0 +1,148 @@
+\hypertarget{group__stream__low}{
+\section{Non-buffered operations}
+\label{group__stream__low}\index{Non-buffered operations@{Non-buffered operations}}
+}
+
+
+\subsection{Detailed Description}
+Low level read/write primitives. 
+
+
+
+\subsection*{Defines}
+\begin{CompactItemize}
+\item 
+\#define \hyperlink{group__stream__low_ga6}{WRITE\_\-FORMAT\_\-BUFFER\_\-SIZE}\ 1024
+\begin{CompactList}\small\item\em Internal library format buffer size. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+int \hyperlink{group__stream__low_ga0}{peak\_\-stream\_\-read} (\hyperlink{group__stream_ga0}{peak\_\-stream} s, void $\ast$buffer, size\_\-t bufsize)
+\begin{CompactList}\small\item\em Read bytes on a stream. \item\end{CompactList}\item 
+int \hyperlink{group__stream__low_ga1}{peak\_\-stream\_\-recvfrom} (\hyperlink{group__stream_ga0}{peak\_\-stream} s, void $\ast$buffer, size\_\-t bufsize, struct sockaddr $\ast$from, int $\ast$fromlen)
+\begin{CompactList}\small\item\em Read bytes on a stream (advanced). \item\end{CompactList}\item 
+int \hyperlink{group__stream__low_ga2}{peak\_\-stream\_\-write} (\hyperlink{group__stream_ga0}{peak\_\-stream} s, const void $\ast$buffer, size\_\-t bufsize)
+\begin{CompactList}\small\item\em Write bytes to a stream. \item\end{CompactList}\item 
+int \hyperlink{group__stream__low_ga3}{peak\_\-stream\_\-write\_\-format} (\hyperlink{group__stream_ga0}{peak\_\-stream} s, const char $\ast$format,...)
+\begin{CompactList}\small\item\em Format string and write bytes to a stream. \item\end{CompactList}\item 
+int \hyperlink{group__stream__low_ga4}{peak\_\-stream\_\-write\_\-vformat} (\hyperlink{group__stream_ga0}{peak\_\-stream} s, const char $\ast$format, va\_\-list vl)
+\begin{CompactList}\small\item\em Format string with arguments and write bytes to a stream. \item\end{CompactList}\item 
+int \hyperlink{group__stream__low_ga5}{peak\_\-stream\_\-writev} (\hyperlink{group__stream_ga0}{peak\_\-stream} s, const struct iovec $\ast$iov, int iovcnt)
+\begin{CompactList}\small\item\em Gather data from iov array and write the bytes to a stream. \item\end{CompactList}\end{CompactItemize}
+
+
+\subsection{Define Documentation}
+\hypertarget{group__stream__low_ga6}{
+\index{stream_low@{stream\_\-low}!WRITE_FORMAT_BUFFER_SIZE@{WRITE\_\-FORMAT\_\-BUFFER\_\-SIZE}}
+\index{WRITE_FORMAT_BUFFER_SIZE@{WRITE\_\-FORMAT\_\-BUFFER\_\-SIZE}!stream_low@{stream\_\-low}}
+\subsubsection[WRITE\_\-FORMAT\_\-BUFFER\_\-SIZE]{\setlength{\rightskip}{0pt plus 5cm}\#define WRITE\_\-FORMAT\_\-BUFFER\_\-SIZE\ 1024}}
+\label{group__stream__low_ga6}
+
+
+Internal library format buffer size. 
+
+The length of a message formatted with \hyperlink{group__stream__low_ga47}{peak\_\-stream\_\-write\_\-format()} or \hyperlink{group__stream__low_ga48}{peak\_\-stream\_\-write\_\-vformat()} cannot be highter than that. 
+
+\subsection{Function Documentation}
+\hypertarget{group__stream__low_ga0}{
+\index{stream_low@{stream\_\-low}!peak_stream_read@{peak\_\-stream\_\-read}}
+\index{peak_stream_read@{peak\_\-stream\_\-read}!stream_low@{stream\_\-low}}
+\subsubsection[peak\_\-stream\_\-read]{\setlength{\rightskip}{0pt plus 5cm}int peak\_\-stream\_\-read (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s}, void $\ast$ {\em buffer}, size\_\-t {\em bufsize})}}
+\label{group__stream__low_ga0}
+
+
+Read bytes on a stream. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference. \item[{\em buffer}]Pointer to an allocated buffer. \item[{\em bufsize}]Size of the allocated buffer.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]The number of bytes actually read or -1 is an error occured. \end{Desc}
+\hypertarget{group__stream__low_ga1}{
+\index{stream_low@{stream\_\-low}!peak_stream_recvfrom@{peak\_\-stream\_\-recvfrom}}
+\index{peak_stream_recvfrom@{peak\_\-stream\_\-recvfrom}!stream_low@{stream\_\-low}}
+\subsubsection[peak\_\-stream\_\-recvfrom]{\setlength{\rightskip}{0pt plus 5cm}int peak\_\-stream\_\-recvfrom (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s}, void $\ast$ {\em buffer}, size\_\-t {\em bufsize}, struct sockaddr $\ast$ {\em from}, int $\ast$ {\em fromlen})}}
+\label{group__stream__low_ga1}
+
+
+Read bytes on a stream (advanced). 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference. \item[{\em buffer}]Pointer to an allocated buffer. \item[{\em bufsize}]Size of the allocated buffer. \item[{\em from}]Buffer to a sockaddr structure or NULL. \item[{\em fromlen}]Length of the \char`\"{}from\char`\"{} buffer.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]The number of bytes actually read or -1 is an error occured. \end{Desc}
+\hypertarget{group__stream__low_ga2}{
+\index{stream_low@{stream\_\-low}!peak_stream_write@{peak\_\-stream\_\-write}}
+\index{peak_stream_write@{peak\_\-stream\_\-write}!stream_low@{stream\_\-low}}
+\subsubsection[peak\_\-stream\_\-write]{\setlength{\rightskip}{0pt plus 5cm}int peak\_\-stream\_\-write (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s}, const void $\ast$ {\em buffer}, size\_\-t {\em bufsize})}}
+\label{group__stream__low_ga2}
+
+
+Write bytes to a stream. 
+
+Warning: this function doesn't do write-buffered. For that feature, you need to configure the stream for it, using \hyperlink{group__stream__buf_ga54}{peak\_\-stream\_\-set\_\-buffered()} and then use \hyperlink{group__stream__buf_ga56}{peak\_\-stream\_\-write\_\-buffered()}.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference. \item[{\em buffer}]The bytes to write. \item[{\em bufsize}]Number of bytes to write.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]The number of bytes which where written or -1 if an error occured. \end{Desc}
+\hypertarget{group__stream__low_ga3}{
+\index{stream_low@{stream\_\-low}!peak_stream_write_format@{peak\_\-stream\_\-write\_\-format}}
+\index{peak_stream_write_format@{peak\_\-stream\_\-write\_\-format}!stream_low@{stream\_\-low}}
+\subsubsection[peak\_\-stream\_\-write\_\-format]{\setlength{\rightskip}{0pt plus 5cm}int peak\_\-stream\_\-write\_\-format (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s}, const char $\ast$ {\em format}, ...)}}
+\label{group__stream__low_ga3}
+
+
+Format string and write bytes to a stream. 
+
+Warning: this function doesn't do write-buffered. For that feature, you need to configure the stream for it, using \hyperlink{group__stream__buf_ga54}{peak\_\-stream\_\-set\_\-buffered()} and then use \hyperlink{group__stream__buf_ga59}{peak\_\-stream\_\-msgbuf\_\-make()}.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference. \item[{\em format}]The format followed by the arguments.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]The number of bytes which where written or -1 if an error occured. \end{Desc}
+\hypertarget{group__stream__low_ga4}{
+\index{stream_low@{stream\_\-low}!peak_stream_write_vformat@{peak\_\-stream\_\-write\_\-vformat}}
+\index{peak_stream_write_vformat@{peak\_\-stream\_\-write\_\-vformat}!stream_low@{stream\_\-low}}
+\subsubsection[peak\_\-stream\_\-write\_\-vformat]{\setlength{\rightskip}{0pt plus 5cm}int peak\_\-stream\_\-write\_\-vformat (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s}, const char $\ast$ {\em format}, va\_\-list {\em vl})}}
+\label{group__stream__low_ga4}
+
+
+Format string with arguments and write bytes to a stream. 
+
+Warning: this function doesn't do write-buffered. For that feature, you need to configure the stream for it, using \hyperlink{group__stream__buf_ga54}{peak\_\-stream\_\-set\_\-buffered()} and then use \hyperlink{group__stream__buf_ga60}{peak\_\-stream\_\-msgbuf\_\-vmake()}.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference. \item[{\em format}]The format followed by the arguments. \item[{\em vl}]The arguments.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]The number of bytes which where written or -1 if an error occured. \end{Desc}
+\hypertarget{group__stream__low_ga5}{
+\index{stream_low@{stream\_\-low}!peak_stream_writev@{peak\_\-stream\_\-writev}}
+\index{peak_stream_writev@{peak\_\-stream\_\-writev}!stream_low@{stream\_\-low}}
+\subsubsection[peak\_\-stream\_\-writev]{\setlength{\rightskip}{0pt plus 5cm}int peak\_\-stream\_\-writev (\hyperlink{group__stream_ga0}{peak\_\-stream} {\em s}, const struct iovec $\ast$ {\em iov}, int {\em iovcnt})}}
+\label{group__stream__low_ga5}
+
+
+Gather data from iov array and write the bytes to a stream. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]The stream reference. \item[{\em iov}]A pointer to one or more iovec structures. \item[{\em iovcnt}]Number of iovec structures provided.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]The number of bytes which where written or -1 if an error occured. \end{Desc}

@@ -1,0 +1,83 @@
+/*
+ * m68k spinlock operations
+ * 
+ * No SMP with m68k, so these functions only implement simple locks that
+ * always depress with sched_yield().
+ * 
+ * $Id: spinlock.h.in,v 1.1 2007/05/24 12:54:09 mbuna Exp $
+ */
+#ifndef INCLUDED_PEAK_SPINLOCK_H_
+#define INCLUDED_PEAK_SPINLOCK_H_
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+#include <pthread.h>
+#include <unistd.h>
+#ifdef HAVE_SCHED_H
+#include <sched.h>
+#endif
+
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
+/* PEAK INTERNAL SPIN LOCK
+ * 
+ * _peak_spinlock_lock(lockp)
+ * _peak_spinlock_lock_try(lockp) - returns 0 (busy) or 1 (got the lock)
+ * _peak_spinlock_unlock(lockp)
+ * 
+ */
+
+extern int _peak_is_threaded;
+
+typedef volatile unsigned char peak_spinlock_t;
+#define PEAK_SPINLOCK_INITIALIZER (0)
+
+/* set *spinlock to 1 and returns previous value */
+static inline unsigned
+__peak_spinlock_testandset(register peak_spinlock_t *lockp)
+  {
+  int ret;
+  
+  __asm__ __volatile__("tas %1; "
+                       "seq %0"
+                       : "=dm" (ret), "=m" (*lockp)
+                       : "1" (*lockp));
+  return ret & 1;
+  }
+
+static inline void
+_peak_spinlock_lock(peak_spinlock_t *lockp)
+  {
+  if (!_peak_is_threaded) /* set only if peak uses several threads */
+    return;
+  
+  while (__peak_spinlock_testandset(lockp))
+    sched_yield();
+  }
+
+static inline int
+_peak_spinlock_lock_try(peak_spinlock_t *lockp)
+  {
+  if (!_peak_is_threaded)
+    return 1; /* always succeed */
+  
+  return !__peak_spinlock_testandset(lockp);
+  }
+
+static inline void
+_peak_spinlock_unlock(peak_spinlock_t *lockp)
+  {
+  if (!_peak_is_threaded)
+    return;
+  
+  *lockp = 0;
+  }
+
+#if defined(__cplusplus)
+}
+#endif
+
+#endif /* INCLUDED_PEAK_SPINLOCK_H_ */

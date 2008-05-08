@@ -1,0 +1,94 @@
+\hypertarget{struct__link__head__s}{
+\section{\_\-link\_\-head\_\-s Struct Reference}
+\label{struct__link__head__s}\index{_link_head_s@{\_\-link\_\-head\_\-s}}
+}
+{\tt \#include $<$dbprim.h$>$}
+
+Collaboration diagram for \_\-link\_\-head\_\-s:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=90pt]{struct__link__head__s__coll__graph}
+\end{center}
+\end{figure}
+
+
+\subsection{Detailed Description}
+\begin{Desc}
+\item[For internal use only.]
+This is the implementation of the \hyperlink{group__dbprim__link_ga0}{link\_\-head\_\-t} type.\end{Desc}
+
+
+
+
+Definition at line 637 of file dbprim.h.\subsection*{Data Fields}
+\begin{CompactItemize}
+\item 
+unsigned long \hyperlink{struct__link__head__s_o0}{lh\_\-magic}
+\item 
+unsigned long \hyperlink{struct__link__head__s_o1}{lh\_\-count}
+\item 
+\hyperlink{struct__link__elem__s}{link\_\-elem\_\-t} $\ast$ \hyperlink{struct__link__head__s_o2}{lh\_\-first}
+\item 
+\hyperlink{struct__link__elem__s}{link\_\-elem\_\-t} $\ast$ \hyperlink{struct__link__head__s_o3}{lh\_\-last}
+\item 
+void $\ast$ \hyperlink{struct__link__head__s_o4}{lh\_\-extra}
+\end{CompactItemize}
+
+
+\subsection{Field Documentation}
+\hypertarget{struct__link__head__s_o1}{
+\index{_link_head_s@{\_\-link\_\-head\_\-s}!lh_count@{lh\_\-count}}
+\index{lh_count@{lh\_\-count}!_link_head_s@{\_\-link\_\-head\_\-s}}
+\subsubsection[lh\_\-count]{\setlength{\rightskip}{0pt plus 5cm}unsigned long \hyperlink{struct__link__head__s_o1}{\_\-link\_\-head\_\-s::lh\_\-count}}}
+\label{struct__link__head__s_o1}
+
+
+Number of entries in the linked list. 
+
+Definition at line 639 of file dbprim.h.
+
+Referenced by ll\_\-add(), ll\_\-flush(), ll\_\-init(), ll\_\-remove(), and st\_\-find().\hypertarget{struct__link__head__s_o4}{
+\index{_link_head_s@{\_\-link\_\-head\_\-s}!lh_extra@{lh\_\-extra}}
+\index{lh_extra@{lh\_\-extra}!_link_head_s@{\_\-link\_\-head\_\-s}}
+\subsubsection[lh\_\-extra]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ \hyperlink{struct__link__head__s_o4}{\_\-link\_\-head\_\-s::lh\_\-extra}}}
+\label{struct__link__head__s_o4}
+
+
+Extra data associated with list. 
+
+Definition at line 642 of file dbprim.h.
+
+Referenced by ll\_\-init().\hypertarget{struct__link__head__s_o2}{
+\index{_link_head_s@{\_\-link\_\-head\_\-s}!lh_first@{lh\_\-first}}
+\index{lh_first@{lh\_\-first}!_link_head_s@{\_\-link\_\-head\_\-s}}
+\subsubsection[lh\_\-first]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{struct__link__elem__s}{link\_\-elem\_\-t}$\ast$ \hyperlink{struct__link__head__s_o2}{\_\-link\_\-head\_\-s::lh\_\-first}}}
+\label{struct__link__head__s_o2}
+
+
+First element in the list. 
+
+Definition at line 640 of file dbprim.h.
+
+Referenced by ll\_\-add(), ll\_\-find(), ll\_\-flush(), ll\_\-init(), ll\_\-iter(), ll\_\-move(), and ll\_\-remove().\hypertarget{struct__link__head__s_o3}{
+\index{_link_head_s@{\_\-link\_\-head\_\-s}!lh_last@{lh\_\-last}}
+\index{lh_last@{lh\_\-last}!_link_head_s@{\_\-link\_\-head\_\-s}}
+\subsubsection[lh\_\-last]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{struct__link__elem__s}{link\_\-elem\_\-t}$\ast$ \hyperlink{struct__link__head__s_o3}{\_\-link\_\-head\_\-s::lh\_\-last}}}
+\label{struct__link__head__s_o3}
+
+
+Last element in the list. 
+
+Definition at line 641 of file dbprim.h.
+
+Referenced by ll\_\-add(), ll\_\-flush(), ll\_\-init(), ll\_\-iter(), ll\_\-move(), and ll\_\-remove().\hypertarget{struct__link__head__s_o0}{
+\index{_link_head_s@{\_\-link\_\-head\_\-s}!lh_magic@{lh\_\-magic}}
+\index{lh_magic@{lh\_\-magic}!_link_head_s@{\_\-link\_\-head\_\-s}}
+\subsubsection[lh\_\-magic]{\setlength{\rightskip}{0pt plus 5cm}unsigned long \hyperlink{struct__link__head__s_o0}{\_\-link\_\-head\_\-s::lh\_\-magic}}}
+\label{struct__link__head__s_o0}
+
+
+Magic number. 
+
+Definition at line 638 of file dbprim.h.
+
+Referenced by ll\_\-init().
