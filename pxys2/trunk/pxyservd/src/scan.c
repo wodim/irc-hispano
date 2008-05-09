@@ -507,7 +507,16 @@ scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
     else
       reason2 = gConfig->gline.reason[0];
 
-    snprintf(reason, sizeof(reason), "(puerto %u) %s", proxy_port, reason2);
+#ifdef NIKOLAS
+    {
+      char fake_addr64[8];
+      fake_inttobase64(fake_addr64, ap->addr, 6);
+
+      snprintf(reason, sizeof(reason), "%s (puerto %u) (%s)", reason2, proxy_port, fake_addr64);    
+    }
+#else
+    snprintf(reason, sizeof(reason), "%s (puerto %u)", reason2, proxy_port);
+#endif
     irc_gline_send(addrp, cnt, reason);
     }
   }

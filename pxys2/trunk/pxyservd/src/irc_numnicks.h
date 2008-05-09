@@ -41,9 +41,11 @@
 #endif
 
 const char convert2y[64];
+const char fake_convert2y[64];
 const unsigned int convert2n[256];
 
 extern unsigned int base64toint(const char *s);
 extern const char * inttobase64(char *buf, unsigned int v, unsigned int count);
+extern const char * fake_inttobase64(char *buf, unsigned int v, unsigned int count);
 
 #endif /* INCLUDED_IRC_NUMNICKS_H */
