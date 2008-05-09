@@ -86,8 +86,18 @@ irc_gline_timer_callback(peak_timer ti, void *context)
               ap->hitcnt, ap->reason);
     
 #ifdef SPANISH
+#ifdef NIKOLAS
+    {
+      char fake_addr64[8];
+      fake_inttobase64(fake_addr64, ap->addr, 6);
+      
+      send_gline(ap->addr, gConfig->gline.delay, GLINE_PREFIX "[%ld] (%s) (puerto %u) %s",
+                   ap->hitcnt, fake_addr64, ap->port, ap->reason);
+    }
+#else
     send_gline(ap->addr, gConfig->gline.delay, GLINE_PREFIX "[%ld] (puerto %u) %s",
                ap->hitcnt, ap->port, ap->reason);
+#endif
 #else
     send_gline(ap->addr, gConfig->gline.delay, GLINE_PREFIX "[%ld] (port %u) %s",
                ap->hitcnt, ap->port, ap->reason);

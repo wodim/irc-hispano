@@ -38,6 +38,18 @@ const char convert2y[64] = {
   'w','x','y','z','0','1','2','3','4','5','6','7','8','9','[',']'
 };
 
+#ifdef NIKOLAS
+/* Por peticion de NiKoLaS, pongo esto que por motivos de seguridad
+ * no esta el orden real.
+ */
+const char fake_convert2y[64] = {
+  'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P',
+  'Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f',
+  'g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v',
+  'w','x','y','z','0','1','2','3','4','5','6','7','8','9','[',']'
+};
+#endif
+
 const unsigned int convert2n[256] = {
    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -82,3 +94,15 @@ inttobase64(char *buf, unsigned int v, unsigned int count)
   return buf;
   }
 
+#ifdef NIKOLAS
+const char *
+fake_inttobase64(char *buf, unsigned int v, unsigned int count)
+  {
+  buf[count] = '\0';
+  while(count > 0) {
+    buf[--count] = fake_convert2y[(v & NUMNICKMASK)];
+    v >>= NUMNICKLOG;
+    }
+  return buf;
+  }
+#endif
