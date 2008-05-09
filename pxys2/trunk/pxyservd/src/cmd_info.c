@@ -308,24 +308,6 @@ info_nick(const char *dst, toktabptr ttab)
   peak_release(tz);
   }
 
-#if 1 /* Provisional, cuando haya GMSiS, quitarlo */
-static void
-info_numeric(const char *dst, toktabptr ttab)
-  {
-  struct Client *u;
-
-  if (!(u = irc_network_find_client(yxx_to_int(++ttab->tok[4]))))
-    {
-    send_client_to_one(dst, "Usuario no encontrado.");
-    }
-  else
-    {
-    send_client_to_one(dst, "El numerico pertenece al usuario %s", u->nick);
-    }
-  }
-
-#endif
-
 void
 cmd_info(struct Client *cptr, toktabptr ttab)
   {
@@ -343,10 +325,6 @@ cmd_info(struct Client *cptr, toktabptr ttab)
   
   if (IsChannelName(ttab->tok[4]))
     info_chan(dst, ttab);
-#if 1 /* Provisional, cuando haya GMSiS, quitarlo */
-  else if ((*ttab->tok[4] == '!') && (cptr->flags & CLIENT_FLAG_HDDVIEWER))
-    info_numeric(dst, ttab);
-#endif
   else
     info_nick(dst, ttab);
   }
