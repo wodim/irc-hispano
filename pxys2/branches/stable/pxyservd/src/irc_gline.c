@@ -42,6 +42,7 @@
 #include "cfgloader.h"
 #include "glineq.h"
 #include "irc_send.h"
+#include "irc_numnicks.h" /* NiKoLaS */
 #include "irc_userbase.h"
 
 /* This module contains a transparent glines rate limiter to avoid flooding
@@ -89,7 +90,7 @@ irc_gline_timer_callback(peak_timer ti, void *context)
 #ifdef NIKOLAS
     {
       char fake_addr64[8];
-      fake_inttobase64(fake_addr64, ap->addr, 6);
+      fake_inttobase64(fake_addr64, ap->addr.s_addr, 6);
       
       send_gline(ap->addr, gConfig->gline.delay, GLINE_PREFIX "[%ld] (%s) (puerto %u) %s",
                    ap->hitcnt, fake_addr64, ap->port, ap->reason);

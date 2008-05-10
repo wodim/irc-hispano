@@ -484,7 +484,6 @@ scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
                                  cnt, proxy_descr, proxy_port, scantime,
                                  cptr->flags & CLIENT_FLAG_NICKREG ? " " : "",
                                  cptr->flags & CLIENT_FLAG_NICKREG ? "Reg" : "", cptr->nick);
-                                 cnt, ipbuf, scantime, cptr->nick);
 
       /* Private event notification */
       evreg_broadcast(EVREG_FLAG_NEWPROXY,
