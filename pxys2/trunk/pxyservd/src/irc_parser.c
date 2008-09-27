@@ -309,13 +309,8 @@ parse_nick(toktabptr ttab)
           }
         }
 
-#if 1 /* P10-Hispano */
       ip = ttab->tok[8];      /* base64 IP */
       nn = ttab->tok[9];      /* base64 numnick */
-#else
-      ip = ttab->tok[k];      /* base64 IP */
-      nn = ttab->tok[k + 1];  /* base64 numnick */
-#endif
       }
     else
       {
