@@ -522,99 +522,6 @@ scan_reply_proxy(const struct in_addr *addrp, uint32_t ud, int cached,
   }
 
 void
-scan_reply_dnsbl(const struct in_addr *addrp, uint32_t ud, int cached,
-                 int dnsbl_type, const char *server, const char *dnsbl_descr)
-  {
-  const char *reason;
-  struct Client *cptr = irc_network_find_client(yxx_unpack(ud));
-
-  /* Verify that, if a client still exists for this numeric, he has the same
-   * IP that we've just scanned.
-   */
-  if (cptr && cptr->addr.ip4.s_addr == addrp->s_addr
-      && (cptr->flags & CLIENT_FLAG_SCANNING))
-    {
-    char ipbuf[16];
-    int cnt;
-    time_t scantime;
-
-    scan_client_remove(cptr);
-
-    scantime = peak_time() - cptr->scan_timestamp;
-
-    if (!inet_ntop(AF_INET, &cptr->addr.ip4, ipbuf, sizeof(ipbuf)))
-      return;
-
-    /* /!\ O(n) count but everyone likes it...
-     *     Used for proxytop's stats too.
-     */
-    cnt = irc_userbase_proxycount(&cptr->addr.ip4);
-
-    if (cached)
-      {
-#ifdef SPANISH
-      log_write(LOGID_CURRENT, "*@%s [%ld] %s (%s DNSBL) cacheado", ipbuf, cnt,
-                dnsbl_descr, server);
-
-      if (gConfig->client.show_cached)
-        send_msg_client_to_console("PG *@%s [%ld] %s (%s DNSBL cached). Nick%s%s: %s",
-                                   ipbuf, cnt, dnsbl_descr, server,
-                                   cptr->flags & CLIENT_FLAG_NICKREG ? " " : "",
-                                   cptr->flags & CLIENT_FLAG_NICKREG ? "Reg" : "", cptr->nick);
-
-      evreg_broadcast(EVREG_FLAG_CACHED,
-                      "[EV] PG *@%s [%ld] %s (%s DNSBL cached)",
-                      ipbuf, cnt, dnsbl_descr, server);
-
-#else
-      log_write(LOGID_CURRENT, "*@%s [%ld] %s (%s DNSBL) cached", ipbuf, cnt,
-                dnsbl_descr, server);
-
-      if (gConfig->client.show_cached)
-        send_msg_client_to_console("PG *@%s [%ld] %s (%s DNSBL cached)",
-                                   ipbuf, cnt, dnsbl_descr, server);
-
-      evreg_broadcast(EVREG_FLAG_CACHED,
-                      "[EV] PG *@%s [%ld] %s (%s DNSBL cached)",
-                      ipbuf, cnt, dnsbl_descr, server);
-#endif
-      }
-    else
-      {
-      /* Logging */
-      log_write(LOGID_CURRENT, "*@%s [%ld] %s (%s DNSBL)", ipbuf, cnt,
-                dnsbl_descr, server);
-
-#ifdef SPANISH
-      /* Console channel */
-      send_msg_client_to_console("PG *@%s [%ld] %s (%s DNSBL %ds). Nick%s%s: %s", ipbuf,
-                                 cnt, dnsbl_descr, server, scantime,
-                                 cptr->flags & CLIENT_FLAG_NICKREG ? " " : "",
-                                 cptr->flags & CLIENT_FLAG_NICKREG ? "Reg" : "", cptr->nick);
-
-      /* Private event notification */
-      evreg_broadcast(EVREG_FLAG_NEWPROXY,
-                      "[EV] PG *@%s [%ld] %s (%s DNSBL %ds)",
-                      ipbuf, cnt, dnsbl_descr, server, scantime);
-#else
-      /* Console channel */
-      send_msg_client_to_console("PG *@%s [%ld] %s (%s DNSBL %ds)", ipbuf,
-                                 cnt, dnsbl_descr, server, scantime);
-
-      /* Private event notification */
-      evreg_broadcast(EVREG_FLAG_NEWPROXY,
-                      "[EV] PG *@%s [%ld] %s (%s DNSBL %ds)",
-                      ipbuf, cnt, dnsbl_descr, server, scantime);
-#endif
-      }
-
-    reason = gConfig->gline.dnsblreason;
-
-    irc_gline_send(addrp, cnt, reason);
-    }
-  }
-
-void
 scan_reply_error(const struct in_addr *addrp, uint32_t ud, uint32_t error)
   {
   /* Ok, can't scan this IP.. no luck ! */
@@ -646,13 +553,6 @@ scan_reply6_noproxy(const struct in6_addr *addrp, uint32_t ud, int cached)
 void
 scan_reply6_proxy(const struct in6_addr *addrp, uint32_t ud, int cached,
                   int proxy_type, uint16_t proxy_port, const char *proxy_descr)
-  {
-  /* Unused for now */
-  }
-
-void
-scan_reply6_dnsbl(const struct in6_addr *addrp, uint32_t ud, int cached,
-                  int dnsbl_type, const char *server, const char *dnsbl_descr)
   {
   /* Unused for now */
   }

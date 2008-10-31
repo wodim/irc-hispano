@@ -68,10 +68,6 @@ static void opas_support_reply_proxy_cb(struct opas_msg_reply_proxy *replyp,
                                         void *context);
 static void opas_support_reply6_proxy_cb(struct opas_msg_reply6_proxy *replyp,
                                          void *context);
-static void opas_support_reply_dnsbl_cb(struct opas_msg_reply_dnsbl *replyp,
-                                        void *context);
-static void opas_support_reply6_dnsbl_cb(struct opas_msg_reply6_dnsbl *replyp,
-                                         void *context);
 static void opas_support_reply_error_cb(struct opas_msg_reply_error *replyp,
                                         void *context);
 static void opas_support_reply6_error_cb(struct opas_msg_reply6_error *replyp,
@@ -95,12 +91,10 @@ static const struct opas_callbacks opas_support_callbacks =
   NULL, /* we don't handle query */
   opas_support_reply_noproxy_cb,
   opas_support_reply_proxy_cb,
-  opas_support_reply_dnsbl_cb,
   opas_support_reply_error_cb,
   NULL, /* we don't handle query6 */
   opas_support_reply6_noproxy_cb,
   opas_support_reply6_proxy_cb,
-  opas_support_reply6_dnsbl_cb,
   opas_support_reply6_error_cb,
   opas_support_msg_user_cb
   };
@@ -405,27 +399,6 @@ opas_support_reply6_proxy_cb(struct opas_msg_reply6_proxy *replyp,
                     replyp->proxy_type,
                     replyp->proxy_port,
                     replyp->proxy_descr);
-  }
-
-static void
-opas_support_reply_dnsbl_cb(struct opas_msg_reply_dnsbl *replyp, void *context)
-  {
-  scan_reply_dnsbl(&replyp->addr, replyp->user_data,
-                   replyp->head & OPAS_FLAG_CACH,
-                   replyp->dnsbl_type,
-                   replyp->server,
-                   replyp->dnsbl_descr);
-  }
-
-static void
-opas_support_reply6_dnsbl_cb(struct opas_msg_reply6_dnsbl *replyp,
-                             void *context)
-  {
-  scan_reply6_dnsbl(&replyp->addr, replyp->user_data,
-                    replyp->head & OPAS_FLAG_CACH,
-                    replyp->dnsbl_type,
-                    replyp->server,
-                    replyp->dnsbl_descr);
   }
 
 static void
