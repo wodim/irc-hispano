@@ -79,16 +79,6 @@
     (rp)->proxy_type = htons((rp)->proxy_type); \
     (rp)->proxy_port = htons((rp)->proxy_port); } while (0)
 
-#define OPAS_REPLY_DNSBL_NTOH(rp) do { \
-    (rp)->head = ntohl((rp)->head); \
-    (rp)->timestamp = ntohl((rp)->timestamp); \
-    (rp)->dnsbl_type = ntohs((rp)->dnsbl_type); } while (0)
-
-#define OPAS_REPLY_DNSBL_HTON(rp) do { \
-    (rp)->head = htonl((rp)->head); \
-    (rp)->timestamp = htonl((rp)->timestamp); \
-    (rp)->dnsbl_type = htons((rp)->dnsbl_type); } while (0)
-
 #define OPAS_MSG_USER_NTOH(mu) do { \
     (mu)->head = ntohl((mu)->head); \
     (mu)->data_length = ntohl((mu)->data_length); } while (0)
@@ -185,17 +175,6 @@ __opas_callout(opas_session_t session, uint32_t head, uint32_t msgsize,
           OPAS_REPLY_PROXY_NTOH(rp);
           if (session->cbs.reply_proxy_fun)
             (*session->cbs.reply_proxy_fun)(rp, session->context);
-          return 0;
-          }
-        }
-      else if (head & OPAS_FLAG_DNSBL)
-        {
-        if (msgsize >= sizeof(struct opas_msg_reply_dnsbl))
-          {
-          struct opas_msg_reply_dnsbl *rdns = (struct opas_msg_reply_dnsbl*)data;
-          OPAS_REPLY_DNSBL_NTOH(rdns);
-          if (session->cbs.reply_dnsbl_fun)
-            (*session->cbs.reply_dnsbl_fun)(rdns, session->context);
           return 0;
           }
         }
@@ -598,66 +577,6 @@ opas_reply6_proxy(opas_session_t session, struct opas_msg_query6 *queryp,
   
 #ifndef HAVE_ALLOCA
   free(replyp);
-#endif
-  }
-
-void
-opas_reply_dnsbl(opas_session_t session, struct opas_msg_query *queryp,
-                 int from_cache, time_t ts, uint16_t type, const char *server,
-                 const char *descr)
-  {
-  struct opas_msg_reply_dnsbl *replydns;
-  size_t len = sizeof(struct opas_msg_reply_dnsbl) + strlen(descr);
-
-#ifdef HAVE_ALLOCA
-  replydns = (struct opas_msg_reply_dnsbl *)alloca(len);
-#else
-  replydns = (struct opas_msg_reply_dnsbl *)malloc(len);
-#endif
-
-  replydns->head = OPAS_HEADER_MAKE(0,0,0,0,1,1,from_cache,0);
-  replydns->user_data = queryp->user_data;
-  replydns->addr = queryp->addr;
-  replydns->timestamp = ts;
-  replydns->dnsbl_type = type;
-  strcpy(replydns->server, server);
-  strcpy(replydns->dnsbl_descr, descr);
-  OPAS_HEADER_SETSIZE(replydns->head, len - 4);
-  OPAS_REPLY_DNSBL_HTON(replydns);
-  (*session->cbs.send_fun)(replydns, len, session->context);
-
-#ifndef HAVE_ALLOCA
-  free(replydns);
-#endif
-  }
-
-void
-opas_reply6_dnsbl(opas_session_t session, struct opas_msg_query6 *queryp,
-                  int from_cache, time_t ts, uint16_t type, const char *server,
-                  const char *descr)
-  {
-  struct opas_msg_reply6_dnsbl *replydns;
-  size_t len = sizeof(struct opas_msg_reply6_dnsbl) + strlen(descr);
-
-#ifdef HAVE_ALLOCA
-  replydns = (struct opas_msg_reply6_dnsbl *)alloca(len);
-#else
-  replydns = (struct opas_msg_reply6_dnsbl *)malloc(len);
-#endif
-
-  replydns->head = OPAS_HEADER_MAKE(0,0,1,0,1,1,from_cache,0);
-  replydns->user_data = queryp->user_data;
-  replydns->addr = queryp->addr;
-  replydns->timestamp = ts;
-  replydns->dnsbl_type = type;
-  strcpy(replydns->server, server);
-  strcpy(replydns->dnsbl_descr, descr);
-  OPAS_HEADER_SETSIZE(replydns->head, len - 4);
-  OPAS_REPLY_DNSBL_HTON(replydns);
-  (*session->cbs.send_fun)(replydns, len, session->context);
-
-#ifndef HAVE_ALLOCA
-  free(replypdnsbl);
 #endif
   }
 

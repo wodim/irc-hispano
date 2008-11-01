@@ -87,28 +87,6 @@ struct opas_msg_reply6_proxy
 
 
 
-struct opas_msg_reply_dnsbl
-  {
-  uint32_t head;
-  uint32_t user_data;
-  struct in_addr addr;
-  uint32_t timestamp;
-  uint16_t dnsbl_type;
-  char server[1];
-  char dnsbl_descr[1];
-  };
-
-struct opas_msg_reply6_dnsbl
-  {
-  uint32_t head;
-  uint32_t user_data;
-  struct in6_addr addr;
-  uint32_t timestamp;
-  uint16_t dnsbl_type;
-  char server[1];
-  char dnsbl_descr[1];
-  };
-
 struct opas_msg_user_header
   {
   uint32_t head;
