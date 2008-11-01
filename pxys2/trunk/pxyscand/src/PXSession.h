@@ -79,16 +79,12 @@ protected:
   static void OPASReplyNoProxy(struct opas_msg_query *replyp, void *context);
   static void OPASReplyProxy(struct opas_msg_reply_proxy *replyp,
                              void *context);
-  static void OPASReplyDNSBL(struct opas_msg_reply_dnsbl *replyp,
-                             void *context);  
 
   static void OPASQuery6(struct opas_msg_query6 *queryp, void *context);
   static void OPASReply6NoProxy(struct opas_msg_query6 *replyp,
                                 void *context);
   static void OPASReply6Proxy(struct opas_msg_reply6_proxy *replyp,
                               void *context);
-  static void OPASReply6DNSBL(struct opas_msg_reply6_dnsbl *replyp,
-                             void *context);
   
   static void OPASMsgUser(struct opas_msg_user_header *umsgp, void *data,
                           void *context);
