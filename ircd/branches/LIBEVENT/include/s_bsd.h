@@ -287,5 +287,25 @@ extern struct sockaddr_in vserv;
                                  (x)->user->virtualhost=NULL; \
                                  ClearIpVirtualPersonalizada(x); \
                                } while (0)
+#define SetSocketTimer(x,y)    do { \
+                                  struct timeval tv; \
+                                  assert(IsUser(x)); \
+                                  if((x)->evtimer) \
+                                    event_del((x)->evtimer); \
+                                  else \
+                                    (x)->evtimer=(struct event*)RunMalloc(sizeof(struct event)); \
+                                  if(!(x)->tm_timer) \
+                                    (x)->tm_timer=(struct timeval*)RunMalloc(sizeof(struct timeval)); \
+                                  evtimer_set((x)->evtimer, (void *)event_client_callback, (void *)(x)); \
+                                  evutil_timerclear((x)->tm_timer); \
+                                  (x)->tm_timer->tv_usec=0; \
+                                  (x)->tm_timer->tv_sec=(y); \
+                                  Debug((DEBUG_NOTICE, "timer on %s time %d", (x)->name, (x)->tm_timer->tv_sec)); \
+                                  evtimer_add((x)->evtimer, (x)->tm_timer); \
+                                } while (0)
+#define UpdateWrite(x)          do { \
+                                  assert(MyConnect(x)); \
+                                  event_add((x)->evwrite, NULL); \
+                                } while (0);
 
 #endif /* S_BSD_H */

@@ -382,7 +382,6 @@ int unixport(aClient *cptr, char *path, unsigned short int port)
   else if (cptr->fd >= MAXCLIENTS)
   {
     sendto_ops("No more connections allowed (%s)", cptr->name);
-    event_del(cptr->ev);
     close(cptr->fd);
     cptr->fd = -1;
     return -1;
@@ -398,7 +397,6 @@ int unixport(aClient *cptr, char *path, unsigned short int port)
 #if defined(USE_SYSLOG)
     syslog(LOG_WARNING, "error 'chmod 0755 %s': %s", path, strerror(errno));
 #endif
-    event_del(cptr->ev);
     close(cptr->fd);
     cptr->fd = -1;
     return -1;
@@ -415,7 +413,6 @@ int unixport(aClient *cptr, char *path, unsigned short int port)
   if (bind(cptr->fd, (struct sockaddr *)&un, strlen(unixpath) + 2) == -1)
   {
     report_error("error binding unix socket %s: %s", cptr);
-    event_del(cptr->ev);
     close(cptr->fd);
     return -1;
   }
@@ -1488,7 +1485,6 @@ static void add_unixconnection(aClient *cptr, int fd)
     {
       ircstp->is_ref++;
       acptr->fd = -2;
-      event_del(acptr->ev);
       free_client(acptr);
       close(fd);
       return;
@@ -1538,6 +1534,7 @@ static int read_packet(aClient *cptr, int socket_ready)
   size_t dolen = 0;
   int length = 0;
   int done;
+  int delay;
   
   if (socket_ready && !(IsUser(cptr) && DBufLength(&cptr->recvQ) > 6090))
   {
@@ -1639,25 +1636,14 @@ static int read_packet(aClient *cptr, int socket_ready)
     }
   }
   
-  if(DBufLength(&cptr->recvQ) && (cptr->since - now) >= 10) {  
-    if(cptr->evtimer) {
-      event_del(cptr->evtimer);
-      RunFree(cptr->tm_timer);
-      RunFree(cptr->evtimer);
-      cptr->evtimer=NULL;
-      cptr->tm_timer=NULL;
-    }
-    
-    cptr->evtimer=(struct event*)RunMalloc(sizeof(struct event));
-    evtimer_set(cptr->evtimer, (void *)event_client_callback, (void *)cptr);
-    
-    cptr->tm_timer=(struct timeval*)RunMalloc(sizeof(struct timeval));
-    evutil_timerclear(cptr->tm_timer);
-    cptr->tm_timer->tv_usec=0;
-    cptr->tm_timer->tv_sec=(cptr->since - now - 9);
-    //Debug((DEBUG_NOTICE, "timer on %s time %d", cptr->name, cptr->tm_timer->tv_sec));
-    evtimer_add(cptr->evtimer, cptr->tm_timer);
-  }
+  delay = (cptr->since - now - 9);
+  
+  if(delay<0)
+    delay=0;
+  
+  if(DBufLength(&cptr->recvQ)) // Si hay datos pendientes
+    SetSocketTimer(cptr, 0); // Programo una relectura
+  
   return 1;
 }
 
@@ -1768,6 +1754,11 @@ void event_auth_callback(int fd, short event, aClient *cptr)
     read_authports(cptr);
 }
 
+void deadsocket(aClient *cptr) {
+  exit_client(cptr, cptr, &me,
+      IsDead(cptr) ? LastDeadComment(cptr) : strerror(get_sockerr(cptr)));
+}
+
 /*
  * event_client_callback
  * 
@@ -1781,12 +1772,16 @@ void event_client_callback(int fd, short event, aClient *cptr) {
   //Debug((DEBUG_NOTICE, "event_client_callback fd %d event %d", fd, (int) event));
   
   update_now();
-  
-  if (IsMe(cptr))
-    return;
 
-  if (DoingDNS(cptr) || DoingAuth(cptr))
+  if(IsDead(cptr)) {
+    deadsocket(cptr);
     return;
+  }
+  
+  if (DoingDNS(cptr) || DoingAuth(cptr)) { // Intenta de nuevo en 1 segundo
+    SetSocketTimer(cptr, 1);
+    return;
+  }
 #if defined(DEBUGMODE)
   if (IsLog(cptr))
     return;
@@ -1808,9 +1803,7 @@ void event_client_callback(int fd, short event, aClient *cptr) {
         }
       if (IsDead(cptr) || write_err) // ERROR DE LECTURA/ESCRITURA
         {
-          deadsocket:
-          exit_client(cptr, cptr, &me,
-              IsDead(cptr) ? LastDeadComment(cptr) : strerror(get_sockerr(cptr)));
+          deadsocket(cptr);
           return;
         }
       return;
@@ -1818,11 +1811,12 @@ void event_client_callback(int fd, short event, aClient *cptr) {
   length = 1;                 /* for fall through case */
   if ((!NoNewLine(cptr) || event & EV_READ || event & EV_TIMEOUT) && !IsDead(cptr)) // DATOS PENDIENTES PARA LEER
     length = read_packet(cptr, event & EV_READ ? 1 : 0);
-  if ((length != CPTR_KILLED) && IsDead(cptr)) // ERROR LECTURA/ESCRITURA
-    goto deadsocket;
-  if (!(event & EV_READ) && length > 0)
-    return;
-  if (length > 0)
+  if ((length != CPTR_KILLED) && IsDead(cptr)) { // ERROR LECTURA/ESCRITURA
+    deadsocket(cptr);
+    return ;
+  }
+  
+  if (length > 0) // Si hay datos pendientes salgo
     return;
 
   /*

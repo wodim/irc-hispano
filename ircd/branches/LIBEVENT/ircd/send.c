@@ -39,6 +39,7 @@
 #include "slab_alloc.h"
 #include "sprintf_irc.h"
 #include "numnicks.h"
+#include <assert.h>
 
 RCSTAG_CC("$Id: send.c 259 2008-12-14 19:29:00Z dfmartinez $");
 
@@ -72,6 +73,8 @@ int sdbflag;
 static void dead_link(aClient *to, char *notice)
 {
   to->flags |= FLAGS_DEADSOCKET;
+  SetSocketTimer(to, 0);
+  
   /*
    * If because of BUFFERPOOL problem then clean dbuf's now so that
    * notices don't hurt operators below.
@@ -141,7 +144,7 @@ void send_queued(aClient *to)
 {
 #if !defined(pyr)
   if (to->flags & FLAGS_BLOCKED) {
-    event_add(to->evwrite, NULL);
+    UpdateWrite(to);
     return;                     /* Don't bother */
   }
 #endif
@@ -163,6 +166,7 @@ void send_queued(aClient *to)
      * though: It wouldn't save cpu and it might introduce a bug :/.
      * --Run
      */
+    SetSocketTimer(to, 0);
     return;
   }
   while (DBufLength(&to->sendQ) > 0)
@@ -185,12 +189,11 @@ void send_queued(aClient *to)
     {
       to->flags |= FLAGS_BLOCKED; /* Wait till select() says
                                      we can write again */
-      event_add(to->evwrite, NULL);
       break;
     }
   }
 
-
+  UpdateWrite(to);
   return;
 }
 
@@ -335,7 +338,7 @@ void sendbufto_one(aClient *to)
   if (DBufLength(&to->sendQ) / 1024 > to->lastsq)
     send_queued(to);
   else
-    event_add(to->evwrite, NULL);
+    UpdateWrite(to);
 }
 
 static void vsendto_prefix_one(aClient *to, aClient *from,
