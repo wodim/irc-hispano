@@ -1,0 +1,831 @@
+* 2008/12/21 dfm@unr.com                   (u2.10.H.10.99)           FIX
+------------------------------------------------------------------------
+  Eliminacion de alarms para enmascarar se~ales, ahora no son necesarios.
+  
+  Correcciones diversas de manejo de eventos.
+  
+  Correccion de bug arrastrado de hace tiempo de propagacion de quits al
+  servidor que los origina, generaba trafico inutil entre nodos de la
+  red.
+  
+  Correccion de fallo en uping, ahora se inicia inmediatalmente no con
+  un segundo de retardo, el primer ping no necesita temporizacion.
+
+* 2008/12/20 dfm@unr.com                   (u2.10.H.10.98)       FEATURE
+------------------------------------------------------------------------
+  Completo el parche anterior, ahora el ircd ya gestiona sen~ales con
+  libevent.
+  
+  Se puede ver mediante /STATS e el motor de eventos usado por el ircd.
+  
+  Queda /STATS E para ver las elines.
+
+* 2008/12/14 dfm@unr.com                   (u2.10.H.10.97)       FEATURE
+------------------------------------------------------------------------
+  Utilizo la libreria libevent ( http://monkey.org/~provos/libevent/ )
+  para gestionar los eventos del ircd.
+  
+  Ahora el ircd puede usar como motor de eventos (ordenados de menor
+  a mayor rendimiento):
+  
+  select(), poll(), /dev/poll, epoll() y kevent()
+  
+  El uso de /dev/poll, epoll() y kevent() mejora impresionantemente el
+  rendimiento en los sistemas operativos que lo soportan.
+  
+  En toodos los OS:
+  select(), poll()
+  
+  En Solaris:
+  /dev/poll
+  
+  En Linux > 2.5.66:
+  epoll()
+  
+  En FreeBSD y MacOS:
+  kevent()
+    
+  BUGS:
+  Este parche no esta completo porque aun queda gestionar las se~ales
+  con es misma libreria.
+  
+  Este parche NO esta probado lo suficiente para uso en produccion.
+  
+  No se puede ver mediante STATS que motor de eventos estoy usando.  
+
+* 2008/12/06 dfm@unr.com                   (u2.10.H.10.96)           FIX
+------------------------------------------------------------------------
+  Inicializo la semilla de /dev/urandom solo al principio para permitir
+  el funcionamiento con CHROOT
+  
+  Corrijo el problema de cambio de escuchar en puertos en rehash
+  
+  Cambio los permisos necesarios para /stats b, ahora son para IRCops y
+  helpers (opers)
+  
+  Cambio en fechas por otras mas cortas y comodas de leer (especialmente
+  en glines)
+  
+  A~ado respuesta de maxima conexion (numerico 250) a m_lusers para que la
+  respuesta sea igual a otros ircds
+
+* 2008/12/01 dfm@unr.com                   (u2.10.H.10.95)       FEATURE
+------------------------------------------------------------------------
+  Implemento sistema de autosemilla de numeros aleatorios mediante
+  /dev/urandom
+  
+  Ahora ya no es necesario introducir mediante make config una semilla
+  de inicio de numeros aleatorios, se regenera sola cada 256 numeros.
+  
+  BUGS:
+  
+  Si hago rehash y cambio el tipo de puerto puede que se cierre
+
+* 2008/11/29 dfm@unr.com                   (u2.10.H.10.94)       FEATURE
+------------------------------------------------------------------------
+  Implementacion de desafio-respuesta para la entrada de usuarios.
+  
+  Ahora es posible especificar que en algunos puertos en concreto el
+  usuario deba responder a un PING codificado para poder entrar.
+  
+  Si el puerto es con entrada de PING codificado se especificara en las
+  P:Lines y la clave de cifrado en el registro
+  'clave.de.cifrado.de.cookies' de la tabla z
+  
+  BUGS:
+  
+  Si hago rehash y cambio el tipo de puerto puede que se cierre
+
+* 2008/11/13 daijo@irc-dev.org             (u2.10.H.10.93)       FEATURE
+------------------------------------------------------------------------
+  Se ha incrementado la longitud del mensaje de salida (QUITLEN) a 300
+  caracteres.
+
+* 2008/11/12 dfm@unr.com                   (u2.10.H.10.92)       FEATURE
+------------------------------------------------------------------------
+  Nueva funcionalidad de lineas de excepcion (E-Lines).
+  
+  Estas lineas nos permiten configurar hosts que no se veran afectados
+  por G-Lines ni por K-Lines, se pueden configurar en el ircd.conf
+  o por la tabla 'e' de la BDD.
+  
+  Las del ircd.conf son compatibles con las de EFNet
+  
+  Se pueden ver las que estan activas usando STATS e
+  
+  En E mayuscula nos apareceran las del archivo ircd.conf
+  y e minuscula las de BDD
+  
+  De paso en este parche muevo la funcion reenvia_gline a s_serv.c ya que
+  solo es llamada desde ahi, y modifico el Makefile.in para eliminar la
+  dependencia de compilacion.
+
+* 2008/11/12 daijo@irc-dev.net             (u2.10.H.10.91)           FIX
+------------------------------------------------------------------------
+  Si el ircd se compila sin soporte de dns (NODNS), al buscar clones
+  cuando un usuario conecta, ya no se buscan los alias de un hipotetico
+  hostname que no existira bajo esa condicion.
+
+* 2008/11/11 daijo@irc-dev.net             (u2.10.H.10.90)           FIX
+------------------------------------------------------------------------
+  Unicamente operadores (+O, +o) y channel services (+k) pueden utilizar
+  el parametro 'b' en el comando stats.
+
+* 2008/11/11 dfm@unr.com                   (u2.10.H.10.89)           FIX
+------------------------------------------------------------------------
+
+  Correccion de fallo en reenvio de gline durante el BURST, se enviaba
+  un tiempo de expiracion equivocado.
+  
+* 2008/11/10 dfm@unr.com                   (u2.10.H.10.88)           FIX
+------------------------------------------------------------------------
+
+  Correccion de fallo en configure.in del parche (u2.10.H.10.85)
+
+* 2008/11/10 dfm@unr.com                   (u2.10.H.10.87)           FIX
+------------------------------------------------------------------------
+
+  Corrijo varios detalles de funcionamiento que fallaban incluidos
+  segfaults.
+  
+  Pongo una nueva proteccion, el nodo que envia GLINES debe estar haciendo
+  un burst o burst ack, sino las rechazo.
+  
+  Cuando se envian GLINE durante un BURST estas no se propagan por la red
+  se quedan entre los nodos que linkan, esta hecho asi por seguridad para
+  evitar que un nodo inyecte al resto de la red una gline tipo *@*
+
+* 2008/11/08 dfm@unr.com                   (u2.10.H.10.86)       FEATURE
+------------------------------------------------------------------------
+
+  Se propagan las GLINE en el burst y se protegen con TS, se usan las
+  siguientes condiciones:
+
+  Si Server que manda es un service:
+   - Acepto siempre la gline y pongo ultima modificacion a now
+  
+  Si Server que manda es no un service y no me manda TS:
+   - Rechazo la GLINE
+
+  Si Server que manda es no un service y si me manda TS:
+   
+   - Veo si la gline existe en mi
+   - Si la gline existe en mi y es mas nueva que la mia la acepto
+   - Si la gline existe en mi y la ts es antigua la rechazo
+   - Si estoy en un burst rechazo de forma silenciosa
+   - Si no estoy en un burst repropagando la gline para evitar dsync
+
+* 2008/11/08 daijo@irc-dev.net            (u2.10.H.10.85)        FEATURE
+------------------------------------------------------------------------
+  Se añade una comprobacion basica para determinar que el tipo uintptr_t
+  exista, y en caso contrario se define como unsigned long.
+
+* 2008/11/08 daijo@irc-dev.net            (u2.10.H.10.84)            FIX
+------------------------------------------------------------------------
+  Arreglo un segfault en plataformas de 64-bits al llamar a la funcion
+  db_persistent_commit(). Esta funcion utilizaba punteros a int sin
+  tener en cuenta el tamaño de destino, distinto segun el bitness de la
+  plataforma, por lo que se intentaban guardar valores de 64 bits en
+  variables de 32.
+
+  Al cambiar a uint_ptr ya no hay problema de compatibilidad, ya que su
+  valor lo define la libreria de C segun el bitness que se utilice en
+  ella.
+
+  Ademas se cambian las asignaciones de p, p_base y p2 a unas correctas.
+
+* 2008/11/03 freemind@unr.com             (u2.10.H.10.83)            FIX
+------------------------------------------------------------------------
+  Arreglo de warnings y Makefile en crypt/tea.
+  
+  Arreglo para que compile en maquinas cuyo sistema de archivos no
+  distingue entre mayusculas y minusculas (como el HFS+ de Mac OS X sin
+  case sensitive)
+
+* 2008/11/07 daijo@irc-dev.net       (u2.10.H.10.82)             CLEANUP
+------------------------------------------------------------------------
+  El boot_timestamp introducido en el parche anterior permitia compilar
+  el ircd, sin embargo, no obtenia la fecha correcta ya que provenia de
+  un cambio especifico en una version vieja.
+
+  Esta modificacion utiliza me.since en su lugar, limpiando el codigo
+  obsoleto y funcionando como debe.
+
+* 2008/11/07 daijo@irc-dev.net       (u2.10.H.10.81)                 FIX
+------------------------------------------------------------------------
+  Al utilizar la opcion de depuracion MEMTIMESTATS, se producia un error
+  de compilacion ya que boot_timestamp no estaba definido en la
+  estructura Server.
+
+* 2008/11/07 daijo@irc-dev.net       (u2.10.H.10.80)                 FIX
+------------------------------------------------------------------------
+  Sustituyo varios "return 0" por "exit(EXIT_SUCCESS)" en los archivos
+  que generan las claves encriptadas. Este cambio respeta el standard C
+  a la hora de volver al sistema operativo y no asume que este espere un
+  valor de retorno 0 como bueno.
+
+  Ademas, la funcion exit() ejecuta las funciones registradas mediante
+  atexit (y on_exit), limpiando la aplicacion antes de salir.
+
+* 2008/11/01 daijo@irc-dev.net       (u2.10.H.10.79)                 FIX
+------------------------------------------------------------------------
+  La busqueda de la funcion res_mkquery() se realiza sobre los simbolos
+  __res_mkquery y res_mkquery, ya que segun el sistema este puede variar
+  como sucede en Solaris 10.
+
+  Se ha modificado el configure.in y ejecutado autoconf. Probado con
+  Solaris 10 y Linux.
+
+* 2008/10/08 dfm@unr.com             (u2.10.H.10.78)             FEATURE
+------------------------------------------------------------------------
+  El sistema de cifrado permitia nicks de hasta 15 caracteres. Se 
+  modifica el sistema para que soporte nicks de 16 o mas caracteres. Se 
+  ha mantenido compatibilidad para los nicks de hasta 15 para evitar que
+  se tenga que regenerar las claves cifradas de todos los nicks.
+  
+  Se ajusta el NICKLEN a 30, por defecto, con la BDD vacia, el nicklen 
+  real es de 9 salvo si se inserta un registro "nicklen" con un valor 
+  mayor en la tabla z. Mirar parche u2.10.H.10.71
+  
+* 2008/10/20 zoltan@irc-dev.net      (u2.10.H.10.77)                 
+------------------------------------------------------------------------
+  No hay cambios, se libero un tar.gz con version 77 con codigo de 76.
+  Se gasta la version para evitar equivocaciones.
+  
+* 2008/10/20 zoltan@irc-dev.net      (u2.10.H.10.76)                 FIX
+------------------------------------------------------------------------
+  Al hacer cleanup en el parche u2.10.H.10.52, habia algun cabo suelto
+  por el codigo ininteligible. Lo pongo mas clarito.
+  
+* 2008/10/15 zoltan@irc-dev.net      (u2.10.H.10.75)                 FIX
+------------------------------------------------------------------------
+  En el parche u2.10.H.10.63 no contemplaba 1 de los 2 casos del WHOIS.
+  
+* 2008/10/08 zoltan@irc-dev.net      (u2.10.H.10.74)             FEATURE
+------------------------------------------------------------------------
+  Soporte de jupe de nicks con mascara, se permite comodines * y ?.
+  
+* 2008/10/08 zoltan@irc-dev.net      (u2.10.H.10.73)                 FIX
+------------------------------------------------------------------------
+  Fix del parche u2.10.H.10.67.
+  
+* 2008/09/26 zoltan@irc-dev.net      (u2.10.H.10.72)                 FIX
+------------------------------------------------------------------------
+  No se compila cuando se activa DEBUGMALLOC.
+  Reportado en el canal #ircu.
+  
+* 2008/09/25 zoltan@irc-dev.net      (u2.10.H.10.71)             FEATURE
+------------------------------------------------------------------------
+  Longitud de nicks dinamica, el minimo es 9 por el RFC1459 y el maximo
+  por el macro NICKLEN que tiene que tener el mismo valor en TODA la red.
+  
+  Ajustable via BDD mediante el valor "nicklen" en la tabla z.
+  
+* 2008/09/25 zoltan@irc-dev.net      (u2.10.H.10.70)             FEATURE
+------------------------------------------------------------------------
+  Personalizo los mensajes del numerico 433 (ERR_NICKNAMEINUSE) para ser
+  mas explicitos.
+  
+* 2008/09/23 zoltan@irc-dev.net      (u2.10.H.10.69)             FEATURE
+------------------------------------------------------------------------
+  Habilito la tabla d para registros de usuarios en los canales.
+
+* 2008/09/23 zoltan@irc-dev.net      (u2.10.H.10.68)             FEATURE
+------------------------------------------------------------------------
+  Modificacion en m_gline() para permitir 2 parametros opcionales que 
+  se usaran en el futuro.
+  
+* 2008/09/23 zoltan@irc-dev.net      (u2.10.H.10.67)             FEATURE
+------------------------------------------------------------------------
+  Soporte de SVSMODE para forzar modos de usuario desde un Service.
+  
+  En P09
+    <:nombre> SVSMODE <nick> <modos>
+        
+  En P10
+    <num> SM <numerico nick> <modos>
+
+  Se propaga un SVSMODE a todos los nodos P10 y un MODE a los nodos P09.
+              
+  Peticion de NiKoLaS.
+                
+* 2008/09/20 zoltan@irc-dev.net      (u2.10.H.10.66)                 FIX
+------------------------------------------------------------------------
+  Suprimo SNO_RENAME y SNO_RENAME2 de las mascaras de +s, creo el
+  SNO_SERVICE para notificaciones de comandos SVS*.
+  
+  Correccion de los mensajes de SNO_SERVICE.
+  
+* 2008/09/20 zoltan@irc-dev.net      (u2.10.H.10.65)                 FIX
+------------------------------------------------------------------------
+  Si mandamos SVSNICK/SN, lo trata como un rename. Admite numericos.
+  
+* 2008/09/20 zoltan@irc-dev.net      (u2.10.H.10.64)             FEATURE
+------------------------------------------------------------------------
+  Soporte de SVSJOIN y SVSPART para forzar JOIN/PART desde un Service.
+  
+  En P09
+  <:nombre> SVSJOIN <nick> <canal>
+  <:nombre> SVSPART <nick> <canal> [:mensaje]
+  
+  En P10
+  <num> SJ <numerico nick> <canal>
+  <num> SL <numerico nick> <canal> [:mensaje]
+  
+  Peticion de NiKoLaS.
+    
+* 2008/09/08 zoltan@irc-dev.net      (u2.10.H.10.63)             FEATURE
+------------------------------------------------------------------------
+  Se da la posibilidad de establecer un vhost diferente en el whois
+  usando la tabla w. Por ejemplo Whois de colores.
+  
+  Peticion de NiKoLaS.
+
+* 2008/09/08 zoltan@irc-dev.net      (u2.10.H.10.62)             FEATURE
+------------------------------------------------------------------------
+  Jupe de servidores via BDD de forma analoga al parche u2.10.H.10.59.
+  
+* 2008/09/05 zoltan@irc-dev.net      (u2.10.H.10.61)             FEATURE
+------------------------------------------------------------------------
+  Soporte de REHASH, RESTART y DIE remotos en P10 usando los mismos
+  parametros que el ircu de undernet.
+  
+  <Num> RH <target> [q opcional]
+  <Num> RS <target> <tiempo> :<motivo> 
+  <Num> DI <target> <tiempo> :<motivo>
+  
+  En tiempo se ignora debido a que el ircd no soporta restart/die diferido
+  pero se mantiene por compatibilidad para una red mixta ircd actual con
+  ircd futuro.
+  
+* 2008/09/05 zoltan@irc-dev.net      (u2.10.H.10.60)              FEATURE
+-------------------------------------------------------------------------
+  Para la transicion al nuevo ircd, doy de alta 2 tablas para residir en
+  la memoria para las comprobaciones.
+  
+  Se trata de f (features) y p (privilegios).
+  
+* 2008/09/05 zoltan@irc-dev.net      (u2.10.H.10.59)              FEATURE
+-------------------------------------------------------------------------
+  Soporte de jupe de nicks via BDD.
+  
+* 2008/09/03 zoltan@irc-dev.net      (u2.10.H.10.58)              CLEANUP
+-------------------------------------------------------------------------
+  Para normalizar, los registros de Uworld los muevo a la tabla u.
+
+* 2008/08/12 zoltan@irc-dev.net      (u2.10.H.10.57)              FEATURE
+-------------------------------------------------------------------------
+  Soporte de AUTO +i al conectar. Activable mediante tabla z, registro
+  "auto.invisible".
+
+  Peticion de NiKoLaS.
+   
+* 2008/08/12 zoltan@irc-dev.net      (u2.10.H.10.56)                  FIX
+-------------------------------------------------------------------------
+  Pequenio fix que no se compilaba sin modo debug heredado del 
+  u2.10.H.10.48.
+
+* 2008/08/12 zoltan@irc-dev.net      (u2.10.H.10.55)                  FIX
+-------------------------------------------------------------------------
+  Fix para compilar sin problemas en Solaris 10.
+  
+* 2008/08/09 zoltan@irc-dev.net      (u2.10.H.10.54)              FEATURE
+-------------------------------------------------------------------------
+  Burst de TOPIC como en los modernos IRCU de Undernet.
+  Se ha ampliado el comando TOPIC en P10 para mandar los TS de creacion
+  del canal y del topic para que en un burst solo se acepte el topic mas
+  reciente en un canal igual o mas viejo.
+  
+  Peticion de NiKoLaS.
+
+* 2008/08/09 zoltan@irc-dev.net      (u2.10.H.10.53)                  FIX
+-------------------------------------------------------------------------
+  Fix del parche de mount de rename_user que no se ajustaba localmente
+  un vhost si lo tiene personalizado al hacer un rename.
+  
+* 2008/08/06 zoltan@irc-dev.net      (u2.10.H.10.52)              CLEANUP
+-------------------------------------------------------------------------
+  Se elimina el soporte de tabla w ya que se deja de usar en IRC-Hispano.
+  Se optimiza el codigo de vhosts y se aumenta de 256 a 4096 las tablas
+  hash para la tabla v.
+
+* 2008/08/06 zoltan@irc-dev.net      (u2.10.H.10.51)              CLEANUP
+-------------------------------------------------------------------------
+  Se deshace el parche u2.10.H.05.34 de NiKoLaS de bans con caracteres
+  invalidos.
+
+* 2008/08/03 zoltan@irc-dev.net      (u2.10.H.10.50)                  FIX
+-------------------------------------------------------------------------
+  Fix del parche u2.10.H.10.48.
+  
+* 2008/07/08 zoltan@irc-dev.net      (u2.10.H.10.49)              FEATURE
+-------------------------------------------------------------------------
+  Agrego soporte limitado de +c de colores, solo para reconocer y 
+  propagar el modo. Parche de transicion.
+
+* 2008/07/07 zoltan@irc-dev.net      (u2.10.H.10.48)              FEATURE
+-------------------------------------------------------------------------
+  Para que el nuevo IRCD funcione sin problemas, he agregado soporte de
+  +h (HUB) y +s (Services) en la propagacion de SERVER.
+  
+  Mas info en u2.10.H.10.08.
+  
+* 2008/04/23 zoltan@irc-dev.net      (u2.10.H.10.47)                  FIX
+-------------------------------------------------------------------------
+  En ciertas circustancias se moria el IRCD, efecto colateral del parche
+  u2.10.H.10.27.
+  
+* 2008/04/13 zoltan@irc-dev.net      (u2.10.H.10.46)                  FIX
+-------------------------------------------------------------------------
+  En el caso de WIPEOUT en un burst, no se ajustaban los modos introducidos
+  por IRC-Hispano: +RASMCNuD.
+  
+* 2008/04/13 zoltan@irc-dev.net      (u2.10.H.10.45)                  FIX
+-------------------------------------------------------------------------
+  En un caso del BURST no se procesan los nuevos modos +CNuD.
+  
+* 2008/04/13 zoltan@irc-dev.net      (u2.10.H.10.44)              CLEANUP
+-------------------------------------------------------------------------
+  Dado que todos los servidores estan actualizados, eliminamos codigo
+  temporal de activacion de modos introducido en u2.10.H.10.17.
+  
+* 2008/04/08 zoltan@irc-dev.net      (u2.10.H.10.43)                  FIX
+-------------------------------------------------------------------------
+  En un caso, se mandaba el BURST sin token.
+
+* 2008/xx/xx zoltan@irc-dev.net      (u2.10.H.10.43)                  FIX
+-------------------------------------------------------------------------
+ 
+     
+* 2008/02/07 zoltan@irc-dev.net      (u2.10.H.10.41)              FEATURE
+-------------------------------------------------------------------------
+  Un whois a un nick de un service (u-line) muestra el servidor.
+
+* 2008/02/07 zoltan@irc-dev.net      (u2.10.H.10.40)                  FIX
+-------------------------------------------------------------------------
+  Un nick si esta baneado, o esta en un canal +R/+M sin +r o si esta en +m
+  no podra cambiarse de nick.
+
+* 2008/02/07 zoltan@irc-dev.net      (u2.10.H.10.39)                  FIX
+-------------------------------------------------------------------------
+  Efecto colateral del parche u2.10.H.10.37, en el whois.
+
+* 2008/02/03 zoltan@irc-dev.net      (u2.10.H.10.38)                  FIX
+-------------------------------------------------------------------------
+  Estaba incompleto el parche u2.10.H.10.36 porque el codigo no estaba
+  nada claro.
+
+* 2008/01/31 zoltan@irc-dev.net      (u2.10.H.10.37)              FEATURE
+-------------------------------------------------------------------------
+  Nuevos numericos RAW:
+
+  417 - ERR_INPUTTOOLONG - ":Input line was too long"
+
+  Se muestra cuando se manda mas de 510 caracteres, para indicar que por
+  la longitud, no se envia a la red.
+
+  338 - RPL_WHOISACTUALLY - "%s %s@%s %s :Actual user@host, Actual IP"
+
+  Indica el user@host y la IP del usuario. Solo sale si se hace un whois
+  a si mismo teniendo +x o un +X a cualquier nick con +x. 
+  Se cambia la forma de mostrar en el whois, si hay +x, no se muestra
+  la IP en el 311, sino el vhost.
+  Como consecuencia del cambio se elimina el 378 al no ser un estandar
+  y no estar reconocido por los clientes, y en cambio, el 338 si.
+
+  Tambien se muestra en el WHOWAS para los que tienen +X, hasta ahora no
+  se guardaban los hosts de los usuarios con +x.
+
+* 2008/01/30 zoltan@irc-dev.net      (u2.10.H.10.36)              FEATURE
+-------------------------------------------------------------------------
+  Implementacion de RENAME a un nick en concreto, es el segundo parametro.
+  Requiere actualizacion de todos los servidores para que funcione corre-
+  ctamente.
+
+* 2008/01/30 zoltan@irc-dev.net      (u2.10.H.10.35)                  FIX
+-------------------------------------------------------------------------
+  Bajo el define de HISPANO_WEBCHAT no se comprueba el IDENT.
+
+* 2008/01/30 zoltan@irc-dev.net      (u2.10.H.10.34)              FEATURE
+-------------------------------------------------------------------------
+  Hacemos que el chequeo de IDENT vuelva a estar disponible.
+
+  Esta vez es activable/desactivable por la BDD usando el registro
+  "activar.ident" en la tabla z.
+
+* 2008/01/28 zoltan@irc-dev.net      (u2.10.H.10.33)                  FIX
+-------------------------------------------------------------------------
+  Obfuscamos el origen de los mensajes de numericos remotos como un whois
+  silence, etc...
+
+* 2008/01/28 zoltan@irc-dev.net      (u2.10.H.10.32)              FEATURE
+-------------------------------------------------------------------------
+  Se aumenta el REALLEN de 50 a 70 que es el maximo que admite en el
+  textbox de Realname del mIRC.
+  
+  Peticion de NiKoLaS.
+
+* 2008/01/28 zoltan@irc-dev.net      (u2.10.H.10.31)              FEATURE
+-------------------------------------------------------------------------
+  Por peticion de NiKoLaS, se implementa la posibilidad de configurar el
+  nombre de servidor y descripcion bajo el modo obfuscado.
+
+  Se usan los registros "servidor.oculto" y "servidor.info.oculto" respe-
+  ctivamente en la tabla z.
+
+* 2008/01/24 zoltan@irc-dev.net      (u2.10.H.10.30)                  FIX
+-------------------------------------------------------------------------
+  Con ocultacion de servidores activado, haciendo un invite a un usuario
+  sale un Wallchops con el nombre de servidor del invitado.
+  Corregido.
+
+* 2008/01/21 zoltan@irc-dev.net      (u2.10.H.10.29)                  FIX
+-------------------------------------------------------------------------
+  Los usuarios, aun teniendo +s capado reciben service notices. Corrigo
+  poniendo a piñon la mascara a 0 cuando no es +o/+h
+
+* 2008/01/21 zoltan@irc-dev.net      (u2.10.H.10.28)                  FIX
+-------------------------------------------------------------------------
+  Los usuarios con +k se saltan los +CN.
+
+* 2008/01/17 zoltan@irc-dev.net      (u2.10.H.10.27)              FEATURE
+-------------------------------------------------------------------------
+  Reforma del comando LIST, los cambios son:
+
+  - Uso de mascaras/comodines para filtrar busqueda.
+  - LIST M para indicar los modos del canal, solo ircops y helpers.
+
+  El valor por defecto, cuando se hace /LIST sin parametros, es un minimo
+  de 10 usuarios. OJO, el /LIST del MIRC metpiñon un LIST con un
+  maximo.
+
+* 2008/01/17 zoltan@irc-dev.net      (u2.10.H.10.26)                  FIX
+-------------------------------------------------------------------------
+  Bajo ciertas circunstancias se propagaba un SILENCE con el origen de un
+  servidor, que provocaba un core dump al hub.
+  Se trata de un error del parche de migracion al P10 FULL del comando 
+  SILENCE.
+
+* 2008/01/05 zoltan@irc-dev.net      (u2.10.H.10.25)                  FIX
+-------------------------------------------------------------------------
+  Las GLINES a usuarios de Webch solo se hacian efecto en el momento y
+  no al reentrar.
+
+  Los renames provocados por la BDD (registro de nicks) provocaba un
+  efecto raro, danio colateral del parche 10.19.
+
+* 2008/01/04 zoltan@irc-dev.net      (u2.10.H.10.24)              FEATURE
+-------------------------------------------------------------------------
+  Se da soporte limitado del modo +D de canales de "Delayed-join", no
+  hace ningun efecto y el modo solo pueden poner los servidores, es un
+  parche de transicion al nuevo IRCD.
+
+* 2008/01/02 zoltan@irc-dev.net      (u2.10.H.10.23)                  FIX
+-------------------------------------------------------------------------
+  Modifico la forma de poner un nick aleatorio con NICK * porque el codigo
+  de rename_user generaba core dumped. 
+
+* 2008/01/01 zoltan@irc-dev.net      (u2.10.H.10.22)              FEATURE
+-------------------------------------------------------------------------
+  Paso de int de 8 bits a int de 16 bits el contador de numero de clones
+  que puede tener una IP.
+  En vez de 255 clones, ahora son 65535 clones como el ircd de irc-dev o 
+  el de Undernet.
+  Es para curarse en salud por el webchat por si hay mas de 250 usuarios
+  que usen el webchat.
+  Requiere que toda la red este actualizada para poder admitir mas de 255
+  clientes.
+
+* 2008/01/01 zoltan@irc-dev.net      (u2.10.H.10.21)              FEATURE
+-------------------------------------------------------------------------
+  Bajo el define de HISPANO_WEBCHAT esta el codigo especifico para que
+  los clientes de Webchat puedan mostrar su IP real en USERIP, Silences,
+  Bans, Glines, asi como propagar su IP real bajo el comando NICK del P10.
+
+  El webchat cuando tiene que conectar, tiene que mandar en el ultimo
+  parametro del comando USER, la IP real en vez del realname. El ircd 
+  pondra un realname especifico.
+
+  Lo malo es que a la hora de contablizar los clones, lo hace a la IP de
+  la web, pero es un mal menor. Esto si, se quita el chequeo de throttle.
+
+* 2007/12/25 zoltan@irc-dev.net      (u2.10.H.10.20)              FEATURE
+-------------------------------------------------------------------------
+  Para facilitar el registro de nicks/canales/apoyos desde la web,
+  mientras no esten los nuevos servicios, permito que un usuario con +k
+  pueda hacer rename a un usuario. 
+
+  Ese codigo solo se activara declarando lo siguiente:
+  #define HISPANO_WEBCHAT
+  
+  Peticion de NiKoLaS.
+
+* 2007/12/25 zoltan@irc-dev.net      (u2.10.H.10.19)              FEATURE
+-------------------------------------------------------------------------
+  Si especificamos un nick '*' se pone un nick de invitado. Esta indicado
+  para webchats.
+  
+
+* 2007/12/24 zoltan@irc-dev.net      (u2.10.H.10.18)                  FIX
+-------------------------------------------------------------------------
+  Se corrige un viejo bug introducido hace mucho tiempo, en un CPRIVMSG
+  se podia enviar mensajes privados sin tener +r hacia un usuario con +R.
+
+* 2007/12/23 zoltan@irc-dev.net      (u2.10.H.10.17)              FEATURE
+-------------------------------------------------------------------------
+  Para evitar lios de los usuarios en la aplicacion del parche u2.10.H.13
+  el ajuste de los nuevos modos +CNu por usuarios locales se desactiva
+  por defecto y se activa al insertar un registro en la tabla z de la BDD
+  llamada "activar.modos".
+
+  La operacion se debe realizar cuando TODOS los nodos tengan la version
+  u2.10.H.10.17 o superior.
+
+* 2007/12/23 zoltan@irc-dev.net      (u2.10.H.10.16)                  FIX
+-------------------------------------------------------------------------
+  Correcciones de los ultimos 3 parches.
+
+* 2007/12/16 zoltan@irc-dev.net      (u2.10.H.10.15)              FEATURE
+-------------------------------------------------------------------------
+  Se adapta la funcion hunt_server() para que mande en formato P09 o P10
+  FULL segun el caso.
+
+* 2007/12/16 zoltan@irc-dev.net      (u2.10.H.10.14)              FEATURE
+-------------------------------------------------------------------------
+  Se completan los parches de transicion para tener P10 Full manteniendo
+  el soporte P09 para facilitar la implementacion de nuevos services P10
+  como el Pxys 2.1 y linkar ircds de nueva generacion.
+  Los parches son 100% compatibles con las versiones u2.10.H.09 y u2.10.H.10.
+
+  Los cambios son:
+
+  (Rev.54) Comando AWAY
+  (Rev.55) Comando CONFIG
+  (Rev.56) Comando DBQ
+  (Rev.57) Comando GLINE
+  (Rev.58) Comando DESTRUCT
+  (Rev.59) Comando NOTICE
+  (Rev.60) Comando RENAME
+  (Rev.61) Comando RPING
+  (Rev.62) Comando SETTIME
+  (Rev.63) Comando SILENCE
+  (Rev.64) Comando TOPIC
+  (Rev.65) Comando WALLOPS
+
+  NOTA: El comando DB manda en formato P10 a servidores P09, no lo corrigo
+  por desconocer la posible incidencia con los actuales deep.space.
+
+* 2007/12/16 zoltan@irc-dev.net      (u2.10.H.10.13)              FEATURE
+-------------------------------------------------------------------------
+  Nuevos modos de canal:
+
+  +C No permite enviar CTCP al canal a excepcion del ACTION (/me).
+  +N No permite enviar NOTICES y WALLCHOPS (son notices al @) al canal.
+  +u Limpia los mensajes de QUIT y PART en el canal. Mismo funcionamiento
+     que +b o +m en el sentido de que si el usuario ea en al menos un 
+     canal con +u, se borrara el mensaje comun de QUIT.
+
+* 2007/11/29 zoltan@irc-dev.net      (u2.10.H.10.12)                  FIX
+-------------------------------------------------------------------------
+  Capamos el modo +s para usuarios.
+
+  FEATURE SF ID TRACKER: #1743993
+
+* 2007/11/29 zoltan@irc-dev.net      (u2.10.H.10.11)                  FIX
+-------------------------------------------------------------------------
+  Del parche de Ocultamiento de Servers faltaban capar los STATS para
+  usuarios normales:
+
+  C de Conexiones
+  D de Crules
+  F de Negociaciones
+  H de Hubs
+  L de Leafs
+  U de Uworld
+
+  Todos muestran informacion sobre hubs.
+
+* 2007/11/29 zoltan@irc-dev.net      (u2.10.H.10.10)                  FIX
+-------------------------------------------------------------------------
+  Bug introducido en el u2.10.H.07 que impedia linkar bajo ciertas
+  condiciones.
+
+* 2007/11/26 zoltan@irc-dev.net      (u2.10.H.10.09)              FEATURE
+-------------------------------------------------------------------------
+  Aplico el parche de FERGUSON FLUSHER procedente de Undernet para minimizar
+  las caidas por Buffer Allocation Error.
+
+* 2007/11/14 zoltan@irc-dev.net      (u2.10.H.10.08)              CLEANUP
+-------------------------------------------------------------------------
+  Revierto el parche u2.10.H.06.94 de JCEA porque rompe el protocolo P10
+  ya que el penultimo parametro no es para poner un timestamp sino para
+  poner los modos del servidor (+h de hub, +s de service o +6 de IPv6)
+  de los ircu 2.10.12 y superiores.
+  Dejo como Cero fijo, tal como se comportan en los ircu hasta el 2.10.11
+  y que es compatible con versiones superiores.
+
+  No toco nada en la parte del P09 para no afectar el funcionamiento con
+  los services P09.
+
+* 2007/11/13 zoltan@irc-dev.net      (u2.10.H.10.07)              FEATURE
+-------------------------------------------------------------------------
+  Se inician los parches de transicion para tener P10 Full manteniendo 
+  el soporte P09 para facilitar la implementacion de nuevos services P10
+  como el Pxys 2.1 y linkar ircds de nueva generacion.
+  Los parches son 100% compatibles con las versiones u2.10.H.09 y u2.10.H.10.
+
+  Los cambios son:
+  (Rev. 15) Revierto los parches u2.10.H.04.35 y u2.10.H.04.36 de JCEA
+  de PASS+SERVER inicial porque eran parches para Olimpo y que rompian
+  el protocolo P10.
+
+  (Rev.16) Comandos SERVER y SQUIT
+  (Rev.17) Comandos NICK y QUIT
+  (Rev.18) Comandos PING y PONG
+  (Rev.19) Comandos BURST, EOB y EOB_ACK
+  (Rev.20) Comandos CREATE, JOIN, PART y KICK
+  (Rev.21) Comando KILL
+  (Rev.22) Comando MODE
+  (Rev.23) Comandos PRIVMSG, CNOTICE y CPRIVMSG
+
+
+* 2007/09/07 zoltan@irc-dev.net      (u2.10.H.10.06)              FEATURE
+-------------------------------------------------------------------------
+  Parche de ocultacion de servidores para dificultar donde estan los
+  usuarios, que tipologia lleva la red, entre otros.
+
+  Se activa/desactiva a voluntad en la base de datos distribuida, es el
+  registro "ocultar.servidores" en la tabla z de la BDD.
+
+  Su activacion implica lo siguiente:
+
+  NETSPLIT: Se sustituye el quit de los usuarios cuando se forma un split,
+  en vez de salir los servidores, salen *.net *.split. En el notice que
+  sale teniendo mascara adecuada de +s salen los servidores, que esta 
+  puesto solo para ircops/opers.
+
+  NETJOIN: En los burst, en vez del servidor, sale *.irc-hispano.org
+  al ajustar los modos del canal.
+
+  WHO: No permite buscar usuarios por servidor.
+  En el hopcount sale siempre 3, salvo si es al mismo nick que sale 0
+  por temas de compatibilidad con clientes.
+  Los ircops/opers no tienen estas restricciones.
+
+  WHOWAS: No sale el nombre del servidor, sustituyendo por 
+  *.irc-hispano.org.
+  Los ircops/opers no tienen estas restricciones.
+
+  WHOIS: No sale el nombre del servidor, sustituyendo por
+  *.irc-hispano.org.
+  Para averiguar el idle hay que hacer /whois nick nick aunque hagamos 
+  a un nick en el mismo server.
+  Los ircops/opers no tienen estas restricciones.
+
+  KILL: Los KILL locales no sale el mensaje de "Local kill by..." sino
+  "Killed" como en los KILL remotos para no desvelar procedencia.
+  Tambien en las rutas se ocultan los servidores.
+
+  MAP y LINKS: Se restringen los comandos para solo Ircops y Opers.
+
+* 2007/09/06 daijo@irc-dev.net       (u2.10.H.10.05)                  FIX
+-------------------------------------------------------------------------
+  En los GCC modernos, salen warnings al utilizar size_t en las funciones
+  de red, en lugar de socklen_t que es el actual estandard.
+
+  Se incluye chequeo para comprobar si existe socklen_t en el sistema
+  durante la ejecucion del configure. En algunos sistemas como MacOS X
+  que no tienen socklen_t, y se define como un integer.
+
+  BUG SF ID TRACKER: #1754717
+
+* 2007/09/06 daijo@irc-dev.net       (u2.10.H.10.04)                  FIX
+-------------------------------------------------------------------------
+  La utilidad mkpasswd contiene una fuga de memoria.
+
+  BUG SF ID TRACKER: #1754122
+
+* 2007/09/04 daijo@irc-dev.net       (u2.10.H.10.03)                  FIX
+-------------------------------------------------------------------------
+  Corregido una asignacion multiple que no esta permitido en los GCC
+  modernos.
+
+  BUG SF ID TRACKER: #1754115
+
+* 2007/09/04 zoltan@irc-dev.net      (u2.10.H.10.02)              FEATURE
+-------------------------------------------------------------------------
+  Se agregan dentro del directorio ircd/crypt/tea dos aplicaciones para
+  pasar de IP real a IP virtual y viceversa.
+  
+* 2007/06/26 er.krali@gmail.com      (u2.10.H.10.01)                  FIX
+-------------------------------------------------------------------------
+  Compilación en amd64 y traducción de los mensajes.
+  Principalmente se ha eliminado el uso de variables de tipo "register"
+  y se ha actualizado la sintaxis de argumentos variables.
+
+  BUG SF ID TRACKER: #1743535
+
+* 2007/06/26 zoltan@irc-dev.net      (u2.10.H.10.00)              CLEANUP
+  -----------------------------------------------------------------------
+  Tres anios y 3 meses despues, volvemos a la carga.
+
