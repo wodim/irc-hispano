@@ -167,16 +167,7 @@ void start_auth(aClient *cptr)
   SetWRAuth(cptr);
   set_non_blocking(cptr->authfd, cptr);
   
-  cptr->evauthread = (struct event*)RunMalloc(sizeof(struct event));
-  event_set(cptr->evauthread, cptr->authfd, EV_READ|EV_PERSIST, (void *)event_auth_callback, (void *)cptr);
-  if(event_add(cptr->evauthread, NULL)==-1)
-    Debug((DEBUG_ERROR, "ERROR: event_add EV_READ (event_auth_callback) fd = %d", cptr->authfd));
-
-  cptr->evauthwrite = (struct event*)RunMalloc(sizeof(struct event));
-  event_set(cptr->evauthwrite, cptr->authfd, EV_WRITE, (void *)event_auth_callback, (void *)cptr);
-  if(event_add(cptr->evauthwrite, NULL)==-1)
-    Debug((DEBUG_ERROR, "ERROR: event_add EV_WRITE (event_auth_callback) fd = %d", cptr->authfd));
-
+  CreateRWAuthEvent(cptr);
   
   if (cptr->authfd > highest_fd)
     highest_fd = cptr->authfd;

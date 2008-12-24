@@ -73,7 +73,7 @@ int sdbflag;
 static void dead_link(aClient *to, char *notice)
 {
   to->flags |= FLAGS_DEADSOCKET;
-  SetSocketTimer(to, 0);
+  UpdateTimer(to, 0);
   
   /*
    * If because of BUFFERPOOL problem then clean dbuf's now so that
@@ -166,7 +166,7 @@ void send_queued(aClient *to)
      * though: It wouldn't save cpu and it might introduce a bug :/.
      * --Run
      */
-    SetSocketTimer(to, 0);
+    UpdateTimer(to, 0);
     return;
   }
   while (DBufLength(&to->sendQ) > 0)
@@ -193,7 +193,8 @@ void send_queued(aClient *to)
     }
   }
 
-  UpdateWrite(to);
+  if(DBufLength(&to->sendQ) > 0)
+    UpdateWrite(to);
   return;
 }
 

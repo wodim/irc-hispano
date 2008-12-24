@@ -345,10 +345,7 @@ int inetport(aClient *cptr, char *name, unsigned short int port)
   listen(cptr->fd, 128);        /* Use listen port backlog of 128 */
   loc_clients[cptr->fd] = cptr;
 
-  cptr->evread=(struct event*)RunMalloc(sizeof(struct event));
-  event_set(cptr->evread, cptr->fd, EV_READ|EV_PERSIST, (void *)event_connection_callback, (void *)cptr);
-  if(event_add(cptr->evread, NULL)==-1)
-    Debug((DEBUG_ERROR, "ERROR: event_add EV_READ (event_connection_callback) fd = %d", cptr->fd));
+  CreateREvent(cptr, event_connection_callback);
   
   return 0;
 }
@@ -424,11 +421,7 @@ int unixport(aClient *cptr, char *path, unsigned short int port)
   cptr->port = 0;
   loc_clients[cptr->fd] = cptr;
 
-  cptr->evread=(struct event*)RunMalloc(sizeof(struct event));
-  event_set(cptr->evread, cptr->fd, EV_READ|EV_PERSIST, (void *)event_connection_callback, (void *)cptr);
-  if(event_add(cptr->evread, NULL)==-1)
-    Debug((DEBUG_ERROR, "ERROR: event_add EV_READ (event_connection_callback) fd = %d", cptr->fd));
-  
+  CreateREvent(cptr, event_connection_callback);
   
   return 0;
 }
@@ -1432,15 +1425,7 @@ aClient *add_connection(aClient *cptr, int fd, int type)
   set_non_blocking(acptr->fd, acptr);
   set_sock_opts(acptr->fd, acptr);
 
-  acptr->evread=(struct event*)RunMalloc(sizeof(struct event));
-  event_set(acptr->evread, acptr->fd, EV_READ|EV_PERSIST, (void *)event_client_callback, (void *)acptr);
-  if(event_add(acptr->evread, NULL)==-1)
-    Debug((DEBUG_ERROR, "ERROR: event_add EV_READ (event_client_callback) fd = %d", acptr->fd));
-
-  acptr->evwrite=(struct event*)RunMalloc(sizeof(struct event));
-  event_set(acptr->evwrite, acptr->fd, EV_WRITE, (void *)event_client_callback, (void *)acptr);
-  if(event_add(acptr->evwrite, NULL)==-1)
-    Debug((DEBUG_ERROR, "ERROR: event_add EV_WRITE (event_client_callback) fd = %d", acptr->fd));
+  CreateRWEvent(acptr, event_client_callback);
   
   /*
    * Add this local client to the IPcheck registry.
@@ -1505,15 +1490,7 @@ static void add_unixconnection(aClient *cptr, int fd)
   set_non_blocking(acptr->fd, acptr);
   set_sock_opts(acptr->fd, acptr);
 
-  acptr->evread=(struct event*)RunMalloc(sizeof(struct event));
-  event_set(acptr->evread, acptr->fd, EV_READ|EV_PERSIST, (void *)event_client_callback, (void *)acptr);
-  if(event_add(acptr->evread, NULL)==-1)
-    Debug((DEBUG_ERROR, "ERROR: event_add EV_READ (event_client_callback) fd = %d", acptr->fd));
-
-  acptr->evwrite=(struct event*)RunMalloc(sizeof(struct event));
-  event_set(acptr->evwrite, acptr->fd, EV_WRITE, (void *)event_client_callback, (void *)acptr);
-  if(event_add(acptr->evwrite, NULL)==-1)
-    Debug((DEBUG_ERROR, "ERROR: event_add EV_WRITE (event_client_callback) fd = %d", acptr->fd));
+  CreateRWEvent(acptr, event_client_callback);
 
   SetAccess(acptr);
   return;
@@ -1638,11 +1615,11 @@ static int read_packet(aClient *cptr, int socket_ready)
   
   delay = (cptr->since - now - 9);
   
-  if(delay<0)
-    delay=0;
+  if(delay<1)
+    delay=1;
   
   if(DBufLength(&cptr->recvQ)) // Si hay datos pendientes
-    SetSocketTimer(cptr, 0); // Programo una relectura
+    UpdateTimer(cptr, delay); // Programo una relectura
   
   return 1;
 }
@@ -1778,10 +1755,8 @@ void event_client_callback(int fd, short event, aClient *cptr) {
     return;
   }
   
-  if (DoingDNS(cptr) || DoingAuth(cptr)) { // Intenta de nuevo en 1 segundo
-    SetSocketTimer(cptr, 1);
+  if (DoingDNS(cptr) || DoingAuth(cptr))
     return;
-  }
 #if defined(DEBUGMODE)
   if (IsLog(cptr))
     return;
@@ -2327,16 +2302,8 @@ static struct sockaddr *connect_inet(aConfItem *aconf, aClient *cptr, int *lenp)
   server.sin_port = htons(((aconf->port > 0) ? aconf->port : portnum));
 #endif
   *lenp = sizeof(server);
-
-  cptr->evread=(struct event*)RunMalloc(sizeof(struct event));
-  event_set(cptr->evread, cptr->fd, EV_READ|EV_PERSIST, (void *)event_client_callback, (void *)cptr);
-  if(event_add(cptr->evread, NULL)==-1)
-    Debug((DEBUG_ERROR, "ERROR: event_add EV_READ (event_client_callback) fd = %d", cptr->fd));
   
-  cptr->evwrite=(struct event*)RunMalloc(sizeof(struct event));
-  event_set(cptr->evwrite, cptr->fd, EV_WRITE, (void *)event_client_callback, (void *)cptr);
-  if(event_add(cptr->evwrite, NULL)==-1)
-    Debug((DEBUG_ERROR, "ERROR: event_add EV_WRITE (event_client_callback) fd = %d", cptr->fd));
+  CreateRWEvent(cptr, event_client_callback);
 
   return (struct sockaddr *)&server;
 }
@@ -2379,15 +2346,7 @@ static struct sockaddr *connect_unix(aConfItem *aconf, aClient *cptr, int *lenp)
 
   SetUnixSock(cptr);
 
-  cptr->evread=(struct event*)RunMalloc(sizeof(struct event));
-  event_set(cptr->evread, cptr->fd, EV_READ|EV_PERSIST, (void *)event_client_callback, (void *)cptr);
-  if(event_add(cptr->evread, NULL)==-1)
-    Debug((DEBUG_ERROR, "ERROR: event_add EV_READ (event_client_callback) fd = %d", cptr->fd));
-  
-  cptr->evwrite=(struct event*)RunMalloc(sizeof(struct event));
-  event_set(cptr->evwrite, cptr->fd, EV_WRITE, (void *)event_client_callback, (void *)cptr);
-  if(event_add(cptr->evwrite, NULL)==-1)
-    Debug((DEBUG_ERROR, "ERROR: event_add EV_WRITE (event_client_callback) fd = %d", cptr->fd));
+  CreateRWEvent(cptr, event_client_callback);
 
   return (struct sockaddr *)&sock;
 }

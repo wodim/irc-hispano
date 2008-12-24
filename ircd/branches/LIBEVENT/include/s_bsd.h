@@ -287,25 +287,53 @@ extern struct sockaddr_in vserv;
                                  (x)->user->virtualhost=NULL; \
                                  ClearIpVirtualPersonalizada(x); \
                                } while (0)
-#define SetSocketTimer(x,y)    do { \
-                                  struct timeval tv; \
-                                  assert(IsUser(x)); \
+// Eventos
+#define UpdateWrite(x)         do { \
+                                 assert(MyConnect(x)); \
+                                 assert(event_add((x)->evwrite, NULL)!=-1); \
+                               } while (0)
+#define DelEvent(x,y)          do { \
+                                 assert(MyConnect(x)); \
+                                 event_del((x)->y); \
+                               } while (0)
+#define DelWrite(x)            DelEvent(x,evread)
+#define DelRead(x)             DelEvent(x,evwrite)
+
+#define UpdateTimer(x,y)       do { \
+                                  assert(MyConnect(x)); \
+                                  assert(!IsListening(x)); \
+                                  assert((x)->evtimer); \
+                                  assert((x)->tm_timer); \
+                                  evutil_timerclear((x)->tm_timer); \
+                                  (x)->tm_timer->tv_usec=0; \
+                                  (x)->tm_timer->tv_sec=(y); \
+                                  Debug((DEBUG_NOTICE, "timer on %s time %d", (x)->name, (x)->tm_timer->tv_sec)); \
+                                  assert(evtimer_add((x)->evtimer, (x)->tm_timer)!=-1); \
+                                } while (0)
+#define CreateTimerEvent(x,y)   do { \
+                                  assert(MyConnect(x)); \
                                   if((x)->evtimer) \
                                     event_del((x)->evtimer); \
                                   else \
                                     (x)->evtimer=(struct event*)RunMalloc(sizeof(struct event)); \
                                   if(!(x)->tm_timer) \
                                     (x)->tm_timer=(struct timeval*)RunMalloc(sizeof(struct timeval)); \
-                                  evtimer_set((x)->evtimer, (void *)event_client_callback, (void *)(x)); \
-                                  evutil_timerclear((x)->tm_timer); \
-                                  (x)->tm_timer->tv_usec=0; \
-                                  (x)->tm_timer->tv_sec=(y); \
-                                  Debug((DEBUG_NOTICE, "timer on %s time %d", (x)->name, (x)->tm_timer->tv_sec)); \
-                                  evtimer_add((x)->evtimer, (x)->tm_timer); \
+                                  evtimer_set((x)->evtimer, (void *)(y), (void *)(x)); \
                                 } while (0)
-#define UpdateWrite(x)          do { \
-                                  assert(MyConnect(x)); \
-                                  event_add((x)->evwrite, NULL); \
-                                } while (0);
+#define CreateEvent(x,y,z,w,v)  do { \
+                                  assert(MyConnect(x) || (x) == &me); \
+                                  if((x)->z) \
+                                    event_del((x)->z); \
+                                  else \
+                                    (x)->z=(struct event*)RunMalloc(sizeof(struct event)); \
+                                  event_set((x)->z, (x)->v, (w), (void *)y, (void *)x); \
+                                  assert(event_add((x)->z, NULL)!=-1); \
+                                } while (0)
+#define CreateREvent(x,y)       CreateEvent(x,y,evread,(EV_READ|EV_PERSIST),fd)
+#define CreateWEvent(x,y)       CreateEvent(x,y,evwrite,(EV_WRITE),fd)
+#define CreateRWEvent(x,y)      CreateREvent(x,y);CreateWEvent(x,y);CreateTimerEvent(x,y)
+#define CreateRAuthEvent(x)     CreateEvent(x,event_auth_callback,evauthread,(EV_READ|EV_PERSIST),authfd)
+#define CreateWAuthEvent(x)     CreateEvent(x,event_auth_callback,evauthwrite,(EV_WRITE),authfd)
+#define CreateRWAuthEvent(x)    CreateRAuthEvent(x);CreateWAuthEvent(x)
 
 #endif /* S_BSD_H */

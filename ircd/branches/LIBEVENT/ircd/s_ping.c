@@ -40,6 +40,7 @@
 #endif
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <assert.h>
 #include "h.h"
 #include "s_debug.h"
 #include "struct.h"
@@ -135,7 +136,7 @@ int start_ping(aClient *cptr)
   cptr->since = UPINGTIMEOUT;
   cptr->flags |= (FLAGS_PING);
 
-  event_add(cptr->evwrite, NULL);
+  UpdateWrite(cptr);
   
   return 0;
 }
@@ -200,19 +201,7 @@ void send_ping(aClient *cptr)
     }
   }
 
-   if(cptr->evtimer)
-     event_del(cptr->evtimer);
-   else
-     cptr->evtimer=(struct event*)RunMalloc(sizeof(struct event));
-
-   if(!cptr->tm_timer)
-     cptr->tm_timer=(struct timeval*)RunMalloc(sizeof(struct timeval));          
-
-   evtimer_set(cptr->evtimer, (void *)event_ping_callback, (void *)cptr);
-   evutil_timerclear(cptr->tm_timer);
-   cptr->tm_timer->tv_usec=0;
-   cptr->tm_timer->tv_sec=1;
-   evtimer_add(cptr->evtimer, cptr->tm_timer);
+  UpdateTimer(cptr, 1);
   
   return;
 }
@@ -517,15 +506,8 @@ int m_uping(aClient *cptr, aClient *sptr, int parc, char *parv[])
   SlabStringAllocDup(&(cptr->name), aconf->name, 0);
   cptr->firsttime = 0;
 
-  cptr->evread=(struct event*)RunMalloc(sizeof(struct event));
-  event_set(cptr->evread, cptr->fd, EV_READ|EV_PERSIST, (void *)event_ping_callback, (void *)cptr);
-  if(event_add(cptr->evread, NULL)==-1)
-    Debug((DEBUG_ERROR, "ERROR: event_add EV_READ (event_ping_callback) fd = %d", cptr->fd));
+  CreateRWEvent(cptr, event_ping_callback);
 
-  cptr->evwrite=(struct event*)RunMalloc(sizeof(struct event));
-  event_set(cptr->evwrite, cptr->fd, EV_WRITE, (void *)event_ping_callback, (void *)cptr);
-  if(event_add(cptr->evwrite, NULL)==-1)
-    Debug((DEBUG_ERROR, "ERROR: event_add EV_WRITE (event_ping_callback) fd = %d", cptr->fd));
   
   switch (ping_server(cptr))
   {

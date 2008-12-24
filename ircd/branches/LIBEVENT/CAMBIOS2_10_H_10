@@ -1,3 +1,19 @@
+* 2008/12/24 dfm@unr.com         (u2.10.H.10.99.libevent.2)          FIX
+------------------------------------------------------------------------
+  Correccion del buffer overflow al pasar la clave de cifrado de cookies
+  de base64 a binario, el tama~o de la clave estaba puesto de forma
+  incorrecta como 24 cuando deberia ser 32, esto provocaba que se
+  machacara las variables de numero de clones maximo y de cifrado de ips.
+  
+  Este bug fue introducido en el parche u2.10.H.10.94
+  
+  Nuevas macros con asserts para eventos.
+  
+  Ahora leo mensajes encolados de entrada que se produjeron mediante la
+  resolucion de DNS y chequeo de ident
+  
+  Correccion de configure para que detecte librt de clock_gettime
+
 * 2008/12/23 dfm@unr.com          (u2.10.H.10.99.libevent.1)         FIX
 ------------------------------------------------------------------------
   Correcciones variadas en eventos, ahora pongo un evento cuando una
