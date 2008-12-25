@@ -160,6 +160,7 @@ void free_client(aClient *cptr)
     if(cptr->evtimer) {
       event_del(cptr->evtimer);
       RunFree(cptr->evtimer);
+      assert(cptr->tm_timer);
       RunFree(cptr->tm_timer);
     }
     if(cptr->evauthread) {
@@ -170,6 +171,13 @@ void free_client(aClient *cptr)
       event_del(cptr->evauthwrite);
       RunFree(cptr->evauthwrite);
     }
+    if(cptr->evcheckping) {
+      event_del(cptr->evcheckping);
+      RunFree(cptr->evcheckping);
+      assert(cptr->tm_checkping);
+      RunFree(cptr->tm_checkping);
+    }
+
   }
 
   RunFree(cptr);

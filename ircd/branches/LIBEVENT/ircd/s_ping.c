@@ -296,7 +296,8 @@ int ping_server(aClient *cptr)
 
     lin.flags = ASYNC_PING;
     lin.value.cptr = cptr;
-    nextdnscheck = 1;
+    update_nextdnscheck(0);
+    //nextdnscheck = 1;
     s = strchr(PunteroACadena(cptr->sockhost), '@');
     s++;                        /* should never be NULL;
                                    cptr->sockhost is actually a conf->host */

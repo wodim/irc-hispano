@@ -204,7 +204,6 @@ extern void close_connection(aClient *cptr);
 extern int get_sockerr(aClient *cptr);
 extern void set_non_blocking(int fd, aClient *cptr);
 extern aClient *add_connection(aClient *cptr, int fd, int type);
-extern int read_message(time_t delay);
 extern void get_my_name(aClient *cptr);
 extern int setup_ping(void);
 extern void event_async_dns_callback(int fd, short event, void *arg);
@@ -213,8 +212,7 @@ extern void event_ping_callback(int fd, short event, aClient *cptr);
 extern void event_auth_callback(int fd, short event, aClient *cptr);
 extern void event_client_callback(int fd, short event, aClient *cptr);
 extern void event_connection_callback(int fd, short event, aClient *cptr);
-
-
+extern void event_checkping_callback(int fd, short event, aClient *cptr);
 
 extern int highest_fd, resfd;
 extern unsigned int readcalls;
@@ -299,27 +297,32 @@ extern struct sockaddr_in vserv;
 #define DelWrite(x)            DelEvent(x,evread)
 #define DelRead(x)             DelEvent(x,evwrite)
 
-#define UpdateTimer(x,y)       do { \
+#define UpdateGTimer(x,y,z,w)  do { \
                                   assert(MyConnect(x)); \
                                   assert(!IsListening(x)); \
-                                  assert((x)->evtimer); \
-                                  assert((x)->tm_timer); \
-                                  evutil_timerclear((x)->tm_timer); \
-                                  (x)->tm_timer->tv_usec=0; \
-                                  (x)->tm_timer->tv_sec=(y); \
-                                  Debug((DEBUG_NOTICE, "timer on %s time %d", (x)->name, (x)->tm_timer->tv_sec)); \
-                                  assert(evtimer_add((x)->evtimer, (x)->tm_timer)!=-1); \
-                                } while (0)
-#define CreateTimerEvent(x,y)   do { \
+                                  assert((x)->z); \
+                                  assert((x)->w); \
+                                  evutil_timerclear((x)->w); \
+                                  (x)->w->tv_usec=0; \
+                                  (x)->w->tv_sec=(y); \
+                                  Debug((DEBUG_DEBUG, "timer on %s time %d", (x)->name, (x)->w->tv_sec)); \
+                                  assert(evtimer_add((x)->z, (x)->w)!=-1); \
+                               } while (0)
+#define UpdateTimer(x,y)       UpdateGTimer(x,y,evtimer,tm_timer)
+#define UpdateCheckPing(x,y)   UpdateGTimer(x,y,evcheckping,tm_checkping)
+#define CreateGTimerEvent(x,y,z,w) \
+                               do { \
                                   assert(MyConnect(x)); \
-                                  if((x)->evtimer) \
-                                    event_del((x)->evtimer); \
+                                  if((x)->z) \
+                                    event_del((x)->z); \
                                   else \
-                                    (x)->evtimer=(struct event*)RunMalloc(sizeof(struct event)); \
-                                  if(!(x)->tm_timer) \
-                                    (x)->tm_timer=(struct timeval*)RunMalloc(sizeof(struct timeval)); \
-                                  evtimer_set((x)->evtimer, (void *)(y), (void *)(x)); \
+                                    (x)->z=(struct event*)RunMalloc(sizeof(struct event)); \
+                                  if(!(x)->w) \
+                                    (x)->w=(struct timeval*)RunMalloc(sizeof(struct timeval)); \
+                                  evtimer_set((x)->z, (void *)(y), (void *)(x)); \
                                 } while (0)
+#define CreateTimerEvent(x,y) CreateGTimerEvent(x,y,evtimer,tm_timer)
+#define CreateCheckPingEvent(x) CreateGTimerEvent(x,event_checkping_callback,evcheckping,tm_checkping)
 #define CreateEvent(x,y,z,w,v)  do { \
                                   assert(MyConnect(x) || (x) == &me); \
                                   if((x)->z) \
@@ -332,6 +335,11 @@ extern struct sockaddr_in vserv;
 #define CreateREvent(x,y)       CreateEvent(x,y,evread,(EV_READ|EV_PERSIST),fd)
 #define CreateWEvent(x,y)       CreateEvent(x,y,evwrite,(EV_WRITE),fd)
 #define CreateRWEvent(x,y)      CreateREvent(x,y);CreateWEvent(x,y);CreateTimerEvent(x,y)
+#define CreateClientEvent(x)    CreateREvent(x,event_client_callback); \
+                                  CreateWEvent(x,event_client_callback); \
+                                  CreateTimerEvent(x,event_client_callback); \
+                                  CreateCheckPingEvent(x); \
+                                  UpdateCheckPing(x, CONNECTTIMEOUT)
 #define CreateRAuthEvent(x)     CreateEvent(x,event_auth_callback,evauthread,(EV_READ|EV_PERSIST),authfd)
 #define CreateWAuthEvent(x)     CreateEvent(x,event_auth_callback,evauthwrite,(EV_WRITE),authfd)
 #define CreateRWAuthEvent(x)    CreateRAuthEvent(x);CreateWAuthEvent(x)

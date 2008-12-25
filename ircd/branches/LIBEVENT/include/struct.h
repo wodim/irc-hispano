@@ -177,9 +177,11 @@ struct Client {
   struct event *evtimer;        /* Evento de temporizacion */
   struct timeval *tm_timer;     /* Temporizador del evento */
   
-  struct event *evauthread;         /* Evento que controla este auth EV_READ */
-  struct event *evauthwrite;        /* Evento que controla este auth EV_WRITE */
+  struct event *evauthread;     /* Evento que controla este auth EV_READ */
+  struct event *evauthwrite;    /* Evento que controla este auth EV_WRITE */
   
+  struct event *evcheckping;    /* Evento para controlar cuando se debe revisar el ping */
+  struct timeval *tm_checkping; /* Temporizador del chequeo del proximo ping */
 };
 
 struct Server {

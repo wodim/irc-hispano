@@ -56,8 +56,6 @@ RCSTAG_CC("$Id: res.c 264 2008-12-21 18:49:59Z dfmartinez $");
 #define ALIASDLEN (MAXPACKET)
 #define MAXGETHOSTLEN (ALIASBLEN + ADDRSBLEN + ADDRSDLEN + ALIASDLEN)
 
-#define AR_TTL		600           /* TTL in seconds for dns cache entries */
-
 #define ARES_CACSIZE	512
 #define MAXCACHED	2048
 
@@ -337,13 +335,19 @@ static ResRQ *make_request(Link *lp)
  * Remove queries from the list which have been there too long without
  * being resolved.
  */
-time_t timeout_query_list(void)
+void event_timeout_query_list_callback(int fd, short event, struct event *ev)
 {
   ResRQ *rptr;
   ResRQ *r2ptr;
   time_t next = 0;
   time_t tout = 0;
   aClient *cptr;
+  
+  Debug((DEBUG_DEBUG, "event_timeout_query_list_callback event: %d", (int)event));
+  
+  assert(event & EV_TIMEOUT);
+  
+  update_now();
 
   Debug((DEBUG_DNS, "timeout_query_list at %s", myctime(now)));
   for (rptr = first; rptr; rptr = r2ptr)
@@ -393,7 +397,8 @@ time_t timeout_query_list(void)
   Debug((DEBUG_DNS, "Next timeout_query_list() at %s, %ld",
       myctime((next > now) ? next : (now + AR_TTL)),
       (next > now) ? (next - now) : AR_TTL));
-  return (next > now) ? next : (now + AR_TTL);
+
+  update_nextdnscheck((next > now) ? (next - now) : (AR_TTL));
 }
 
 /*
@@ -1568,15 +1573,18 @@ static void rem_cache(aCache *ocp)
   cainfo.ca_dels++;
 }
 
-/*
- * Removes entries from the cache which are older than their expirey times.
- * returns the time at which the server should next poll the cache.
- */
-time_t expire_cache(void)
+
+void event_expire_cache_callback(int fd, short event, struct event *ev)
 {
   Reg1 aCache *cp, *cp2;
   Reg2 time_t next = 0;
 
+  Debug((DEBUG_DEBUG, "event_expire_cache_callback event: %d", (int)event));
+  
+  assert(event & EV_TIMEOUT);
+  
+  update_now();
+  
   for (cp = cachetop; cp; cp = cp2)
   {
     cp2 = cp->list_next;
@@ -1589,7 +1597,7 @@ time_t expire_cache(void)
     else if (!next || next > cp->expireat)
       next = cp->expireat;
   }
-  return (next > now) ? next : (now + AR_TTL);
+  update_nextexpire((next > now) ? (next - now) : (AR_TTL));
 }
 
 /*

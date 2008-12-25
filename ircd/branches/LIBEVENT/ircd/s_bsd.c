@@ -817,7 +817,8 @@ int check_server(aClient *cptr)
       ClearAccess(cptr);
       lin.value.aconf = aconf;
       lin.flags = ASYNC_CONF;
-      nextdnscheck = 1;
+      update_nextdnscheck(0);
+      //nextdnscheck = 1;
       if ((s = strchr(aconf->host, '@')))
         s++;
       else
@@ -1090,8 +1091,11 @@ void close_connection(aClient *cptr)
     aconf->hold = now;
     aconf->hold += (aconf->hold - cptr->since > HANGONGOODLINK) ?
         HANGONRETRYDELAY : ConfConFreq(aconf);
-    if (nextconnect > aconf->hold)
-      nextconnect = aconf->hold;
+    update_nextconnect(aconf->hold - now);
+    //update_nextconnect(now - aconf->hold);
+    //if (nextconnect > aconf->hold) {
+      //nextconnect = aconf->hold;
+    //}
   }
 
   if (cptr->authfd >= 0) {
@@ -1407,7 +1411,8 @@ aClient *add_connection(aClient *cptr, int fd, int type)
         write(fd, sendbuf, strlen(sendbuf));
       }
 #endif
-      nextdnscheck = 1;
+      update_nextdnscheck(0);
+      //nextdnscheck = 1;
 #if defined(NODNS)
     }
 #endif
@@ -1425,7 +1430,7 @@ aClient *add_connection(aClient *cptr, int fd, int type)
   set_non_blocking(acptr->fd, acptr);
   set_sock_opts(acptr->fd, acptr);
 
-  CreateRWEvent(acptr, event_client_callback);
+  CreateClientEvent(acptr);
   
   /*
    * Add this local client to the IPcheck registry.
@@ -1490,7 +1495,7 @@ static void add_unixconnection(aClient *cptr, int fd)
   set_non_blocking(acptr->fd, acptr);
   set_sock_opts(acptr->fd, acptr);
 
-  CreateRWEvent(acptr, event_client_callback);
+  CreateClientEvent(acptr);
 
   SetAccess(acptr);
   return;
@@ -1512,6 +1517,7 @@ static int read_packet(aClient *cptr, int socket_ready)
   int length = 0;
   int done;
   int delay;
+  int ping = IsRegistered(cptr) ? get_client_ping(cptr) : CONNECTTIMEOUT;
   
   if (socket_ready && !(IsUser(cptr) && DBufLength(&cptr->recvQ) > 6090))
   {
@@ -1519,6 +1525,7 @@ static int read_packet(aClient *cptr, int socket_ready)
     length = recv(cptr->fd, readbuf, sizeof(readbuf), 0);
 
     cptr->lasttime = now;
+    UpdateCheckPing(cptr, ping * 2);
     if (cptr->lasttime > cptr->since)
       cptr->since = cptr->lasttime;
     cptr->flags &= ~(FLAGS_PINGSENT | FLAGS_NONL);
@@ -1665,6 +1672,7 @@ int test_listen_port(aConfItem *aconf) {
  */
 void event_async_dns_callback(int fd, short event, void *arg)
 {
+  Debug((DEBUG_DEBUG, "event_async_dns_callback event: %d", (int)event));
   update_now();
   
   if (resfd >= 0) // LEO DNS
@@ -1680,6 +1688,7 @@ void event_async_dns_callback(int fd, short event, void *arg)
  */
 void event_udp_callback(int fd, short event, void *arg)
 {
+  Debug((DEBUG_DEBUG, "event_udp_callback event: %d", (int)event));
   update_now();
   
   if (udpfd >= 0) // COMPRUEBO SI HAY UDP PARA LEER
@@ -1695,6 +1704,7 @@ void event_udp_callback(int fd, short event, void *arg)
  */
 void event_ping_callback(int fd, short event, aClient *cptr)
 {
+  Debug((DEBUG_DEBUG, "event_ping_callback event: %d", (int)event));
   update_now();
   
   if (!IsPing(cptr))
@@ -1720,6 +1730,7 @@ void event_ping_callback(int fd, short event, aClient *cptr)
  */
 void event_auth_callback(int fd, short event, aClient *cptr)
 {
+  Debug((DEBUG_DEBUG, "event_auth_callback event: %d", (int)event));
   update_now();
   
   if (cptr->authfd < 0)
@@ -1746,7 +1757,7 @@ void deadsocket(aClient *cptr) {
 void event_client_callback(int fd, short event, aClient *cptr) {
   int length;
   
-  //Debug((DEBUG_NOTICE, "event_client_callback fd %d event %d", fd, (int) event));
+  Debug((DEBUG_DEBUG, "event_client_callback event: %d", (int)event));
   
   update_now();
 
@@ -1827,6 +1838,8 @@ void event_connection_callback(int loc_fd, short event, aClient *cptr)
 {
   int fd;
   
+  Debug((DEBUG_DEBUG, "event_connection_callback event: %d", (int)event));
+  
   update_now();
   
   if (!IsListening(cptr)) {// Si 
@@ -1904,10 +1917,142 @@ void event_connection_callback(int loc_fd, short event, aClient *cptr)
 #endif
       if (!add_connection(cptr, fd, ADCON_SOCKET))
         return;
-    nextping = now;
+    //nextping = now;
     if (!cptr->acpt)
       cptr->acpt = &me;
   }
+}
+/*
+ * event_checkping_callback
+ * 
+ * Gestion de checkeo de pings
+ * 
+ * -- FreeMind 20081224
+ */
+void event_checkping_callback(int fd, short event, aClient *cptr) {
+  int ping, rflag, timeout, oldest;
+  
+  Debug((DEBUG_DEBUG, "event_checkping_callback event: %d", (int)event));
+  
+  assert(event & EV_TIMEOUT);
+  assert(!IsMe(cptr));
+  assert(!IsLog(cptr));
+  assert(!IsPing(cptr));
+  
+  update_now();
+
+  /*
+   * Note: No need to notify opers here.
+   * It's already done when "FLAGS_DEADSOCKET" is set.
+   */
+  if (IsDead(cptr))
+    deadsocket(cptr);
+
+#if defined(R_LINES) && defined(R_LINES_OFTEN)
+  rflag = IsUser(cptr) ? find_restrict(cptr) : 0;
+#endif
+  ping = IsRegistered(cptr) ? get_client_ping(cptr) : CONNECTTIMEOUT;
+  UpdateCheckPing(cptr, ping);
+  Debug((DEBUG_DEBUG, "c(%s)=%d p %d r %d a %d",
+      PunteroACadena(cptr->name), cptr->status, ping, rflag, (int)(now - cptr->lasttime)));
+  /*
+   * Ok, so goto's are ugly and can be avoided here but this code
+   * is already indented enough so I think its justified. -avalon
+   */
+  if (!rflag && IsRegistered(cptr) && (ping >= now - cptr->lasttime))
+    goto ping_timeout;
+  /*
+   * If the server hasnt talked to us in 2*ping seconds
+   * and it has a ping time, then close its connection.
+   * If the client is a user and a KILL line was found
+   * to be active, close this connection too.
+   */
+  if (rflag ||
+      ((now - cptr->lasttime) >= (2 * ping) &&
+          (cptr->flags & FLAGS_PINGSENT)) ||
+          (!IsRegistered(cptr) && !IsHandshake(cptr) &&
+              (now - cptr->firsttime) >= ping))
+    {
+      if (!IsRegistered(cptr) && (DoingDNS(cptr) || DoingAuth(cptr)))
+        {
+          Debug((DEBUG_NOTICE, "%s/%s timeout %s", DoingDNS(cptr) ? "DNS" : "",
+              DoingAuth(cptr) ? "AUTH" : "", get_client_name(cptr, FALSE)));
+          if (cptr->authfd >= 0)
+            {
+              close(cptr->authfd);
+              cptr->authfd = -1;
+              cptr->count = 0;
+              *cptr->buffer = '\0';
+            }
+          del_queries((char *)cptr);
+          ClearAuth(cptr);
+          ClearDNS(cptr);
+          SetAccess(cptr);
+          cptr->firsttime = now;
+          cptr->lasttime = now;
+          return;
+        }
+      if (IsServer(cptr) || IsConnecting(cptr) || IsHandshake(cptr))
+        {
+          sendto_ops("No response from %s, closing link", PunteroACadena(cptr->name));
+          exit_client(cptr, cptr, &me, "Ping timeout");
+          return;
+        }
+      /*
+       * This is used for KILL lines with time restrictions
+       * on them - send a message to the user being killed first.
+       */
+#if defined(R_LINES) && defined(R_LINES_OFTEN)
+      else if (IsUser(cptr) && rflag)
+        {
+          sendto_ops("Restricting %s, closing link.",
+              get_client_name(cptr, FALSE));
+          exit_client(cptr, cptr, &me, "R-lined");
+        }
+#endif
+      else
+        {
+          if (!IsRegistered(cptr) && cptr->name && cptr->user->username)
+            {
+              sendto_one(cptr,
+                  ":%s %d %s :Your client may not be compatible with this server.",
+                  me.name, ERR_BADPING, cptr->name);
+              sendto_one(cptr,
+                  ":%s %d %s :Compatible clients are available at "
+                  "ftp://ftp.irc.org/irc/clients",
+                  me.name, ERR_BADPING, cptr->name);
+            }
+          exit_client_msg(cptr, cptr, &me, "Ping timeout");
+        }
+      return;
+    }
+  else if (IsRegistered(cptr) && (cptr->flags & FLAGS_PINGSENT) == 0)
+    {
+      /*
+       * If we havent PINGed the connection and we havent
+       * heard from it in a while, PING it to make sure
+       * it is still alive.
+       */
+      cptr->flags |= FLAGS_PINGSENT;
+      /* not nice but does the job */
+      cptr->lasttime = now - ping;
+      if (IsUser(cptr))
+        sendto_one(cptr, "PING :%s", me.name);
+      else {
+        if (Protocol(cptr) < 10)
+          sendto_one(cptr, ":%s PING :%s", me.name, me.name);
+        else
+          sendto_one(cptr, "%s " TOK_PING " :%s", NumServ(&me), me.name);
+      }
+    }
+  ping_timeout:
+  timeout = cptr->lasttime + ping;
+  while (timeout <= now)
+    timeout += ping;
+  if (timeout < oldest || !oldest)
+    oldest = timeout;
+
+  return;
 }
 
 /*
@@ -1995,19 +2140,6 @@ void close_listeners(void)
   }
 }
 
-int read_message(time_t timeout)
-{  
-  struct timeval tm;
-  if(timeout>0) {
-    tm.tv_sec=timeout;
-    tm.tv_usec=0;
-    event_loopexit(&tm);
-    event_loop(EVLOOP_ONCE);
-  }
-  update_now();
-  return 0;
-}
-
 /*
  * connect_server
  */
@@ -2070,7 +2202,8 @@ int connect_server(aConfItem *aconf, aClient *by, struct hostent *hp)
 
     lin.flags = ASYNC_CONNECT;
     lin.value.aconf = aconf;
-    nextdnscheck = 1;
+    update_nextdnscheck(0);
+    //nextdnscheck = 1;
     s = strchr(aconf->host, '@');
     s++;                        /* should NEVER be NULL */
     if ((aconf->ipnum.s_addr = inet_addr(s)) == INADDR_NONE)
@@ -2213,7 +2346,7 @@ int connect_server(aConfItem *aconf, aClient *by, struct hostent *hp)
   Count_newunknown(nrof);
   add_client_to_list(cptr);
   hAddClient(cptr);
-  nextping = now;
+  //nextping = now;
   
   return 0;
 }
@@ -2303,7 +2436,7 @@ static struct sockaddr *connect_inet(aConfItem *aconf, aClient *cptr, int *lenp)
 #endif
   *lenp = sizeof(server);
   
-  CreateRWEvent(cptr, event_client_callback);
+  CreateClientEvent(cptr);
 
   return (struct sockaddr *)&server;
 }
@@ -2346,7 +2479,7 @@ static struct sockaddr *connect_unix(aConfItem *aconf, aClient *cptr, int *lenp)
 
   SetUnixSock(cptr);
 
-  CreateRWEvent(cptr, event_client_callback);
+  CreateClientEvent(cptr);
 
   return (struct sockaddr *)&sock;
 }

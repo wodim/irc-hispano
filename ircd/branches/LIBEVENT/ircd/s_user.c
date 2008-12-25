@@ -732,7 +732,8 @@ static int register_user(aClient *cptr, aClient *sptr,
 #else
     m_motd(sptr, sptr, 1, parv);
 #endif
-    nextping = now;
+    UpdateCheckPing(sptr,0);
+    //nextping = now;
     if (sptr->snomask & SNO_NOISY)
       set_snomask(sptr, sptr->snomask & SNO_NOISY, SNO_ADD);
 #if defined(ALLOW_SNO_CONNEXIT)
