@@ -288,15 +288,11 @@ extern struct sockaddr_in vserv;
 // Eventos
 #define UpdateWrite(x)         do { \
                                  assert(MyConnect(x)); \
-                                 assert(event_add((x)->evwrite, NULL)!=-1); \
+                                 if(DBufLength(&(x)->sendQ)) \
+                                   assert(event_add((x)->evwrite, NULL)!=-1); \
+                                 else \
+                                   event_del((x)->evwrite); \
                                } while (0)
-#define DelEvent(x,y)          do { \
-                                 assert(MyConnect(x)); \
-                                 event_del((x)->y); \
-                               } while (0)
-#define DelWrite(x)            DelEvent(x,evread)
-#define DelRead(x)             DelEvent(x,evwrite)
-
 #define UpdateGTimer(x,y,z,w)  do { \
                                   assert(MyConnect(x)); \
                                   assert(!IsListening(x)); \
@@ -333,7 +329,7 @@ extern struct sockaddr_in vserv;
                                   assert(event_add((x)->z, NULL)!=-1); \
                                 } while (0)
 #define CreateREvent(x,y)       CreateEvent(x,y,evread,(EV_READ|EV_PERSIST),fd)
-#define CreateWEvent(x,y)       CreateEvent(x,y,evwrite,(EV_WRITE),fd)
+#define CreateWEvent(x,y)       CreateEvent(x,y,evwrite,(EV_WRITE|EV_PERSIST),fd)
 #define CreateRWEvent(x,y)      CreateREvent(x,y);CreateWEvent(x,y);CreateTimerEvent(x,y)
 #define CreateClientEvent(x)    CreateREvent(x,event_client_callback); \
                                   CreateWEvent(x,event_client_callback); \

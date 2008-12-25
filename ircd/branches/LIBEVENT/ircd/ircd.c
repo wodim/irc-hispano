@@ -143,19 +143,8 @@ RETSIGTYPE s_die2(HANDLER_ARG(int UNUSED(sig)))
 
 static RETSIGTYPE s_rehash(HANDLER_ARG(int UNUSED(sig)))
 {
-#if defined(POSIX_SIGNALS)
-  struct sigaction act;
-#endif
   dorehash = 1;
-#if defined(POSIX_SIGNALS)
-  act.sa_handler = s_rehash;
-  act.sa_flags = 0;
-  sigemptyset(&act.sa_mask);
-  sigaddset(&act.sa_mask, SIGHUP);
-  sigaction(SIGHUP, &act, NULL);
-#else
-  signal(SIGHUP, s_rehash);     /* sysV -argv */
-#endif
+  event_loopbreak();
 }
 
 #if defined(USE_SYSLOG)
@@ -173,6 +162,7 @@ void restart(char *UNUSED(mesg))
 RETSIGTYPE s_restart(HANDLER_ARG(int UNUSED(sig)))
 {
   restartFlag = 1;
+  event_loopbreak();
 }
 
 void server_reboot(void)

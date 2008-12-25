@@ -1622,8 +1622,8 @@ static int read_packet(aClient *cptr, int socket_ready)
   
   delay = (cptr->since - now - 9);
   
-  if(delay<1)
-    delay=1;
+  if(delay<0)
+    delay=0;
   
   if(DBufLength(&cptr->recvQ)) // Si hay datos pendientes
     UpdateTimer(cptr, delay); // Programo una relectura
@@ -1673,6 +1673,9 @@ int test_listen_port(aConfItem *aconf) {
 void event_async_dns_callback(int fd, short event, void *arg)
 {
   Debug((DEBUG_DEBUG, "event_async_dns_callback event: %d", (int)event));
+  
+  assert(event & EV_READ);
+  
   update_now();
   
   if (resfd >= 0) // LEO DNS
@@ -1689,6 +1692,9 @@ void event_async_dns_callback(int fd, short event, void *arg)
 void event_udp_callback(int fd, short event, void *arg)
 {
   Debug((DEBUG_DEBUG, "event_udp_callback event: %d", (int)event));
+  
+  assert(event & EV_READ);
+  
   update_now();
   
   if (udpfd >= 0) // COMPRUEBO SI HAY UDP PARA LEER
@@ -1705,6 +1711,10 @@ void event_udp_callback(int fd, short event, void *arg)
 void event_ping_callback(int fd, short event, aClient *cptr)
 {
   Debug((DEBUG_DEBUG, "event_ping_callback event: %d", (int)event));
+
+  assert(IsPing(cptr));
+  assert((event & EV_READ) || (event & EV_TIMEOUT));
+  
   update_now();
   
   if (!IsPing(cptr))
@@ -1713,12 +1723,11 @@ void event_ping_callback(int fd, short event, aClient *cptr)
   if (event & EV_READ)  // HAY DATOS PENDIENTES DE LEER
   {
     read_ping(cptr);          /* This can RunFree(cptr) ! */
+    return;
   }
-  else if ((event & EV_WRITE) || (event & EV_TIMEOUT)) // ESCRIBO PING
-  {
-    cptr->lasttime = now;
-    send_ping(cptr);          /* This can RunFree(cptr) ! */
-  }
+
+  cptr->lasttime = now;
+  send_ping(cptr);          /* This can RunFree(cptr) ! */
 }
 
 /*
@@ -1931,7 +1940,7 @@ void event_connection_callback(int loc_fd, short event, aClient *cptr)
  */
 void event_checkping_callback(int fd, short event, aClient *cptr)
 {
-  int ping, rflag;
+  int ping, rflag=0;
 
   Debug((DEBUG_DEBUG, "event_checkping_callback event: %d", (int)event));
 

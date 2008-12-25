@@ -1,3 +1,8 @@
+* 2008/12/25 dfm@unr.com         (u2.10.H.10.99.libevent.6)          FIX
+------------------------------------------------------------------------
+  Correcciones en eventos de escritura.
+
+
 * 2008/12/25 dfm@unr.com         (u2.10.H.10.99.libevent.5)          FIX
 ------------------------------------------------------------------------
   Correcciones diversas y retoques.

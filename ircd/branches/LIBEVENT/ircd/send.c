@@ -73,7 +73,6 @@ int sdbflag;
 static void dead_link(aClient *to, char *notice)
 {
   to->flags |= FLAGS_DEADSOCKET;
-  UpdateTimer(to, 0);
   
   /*
    * If because of BUFFERPOOL problem then clean dbuf's now so that
@@ -166,7 +165,6 @@ void send_queued(aClient *to)
      * though: It wouldn't save cpu and it might introduce a bug :/.
      * --Run
      */
-    UpdateTimer(to, 0);
     return;
   }
   while (DBufLength(&to->sendQ) > 0)
@@ -193,8 +191,8 @@ void send_queued(aClient *to)
     }
   }
 
-  if(DBufLength(&to->sendQ) > 0)
-    UpdateWrite(to);
+  
+  UpdateWrite(to);
   return;
 }
 
@@ -247,9 +245,10 @@ void sendbufto_one(aClient *to)
 
   if (to->from)
     to = to->from;
-  if (IsDead(to))
+  if (IsDead(to)) {
     return;                     /* This socket has already
                                    been marked as dead */
+  }
   if (to->fd < 0)
   {
     /* This is normal when 'to' was being closed (via exit_client

@@ -136,7 +136,7 @@ int start_ping(aClient *cptr)
   cptr->since = UPINGTIMEOUT;
   cptr->flags |= (FLAGS_PING);
 
-  UpdateWrite(cptr);
+  UpdateTimer(cptr, 0);
   
   return 0;
 }
@@ -507,7 +507,8 @@ int m_uping(aClient *cptr, aClient *sptr, int parc, char *parv[])
   SlabStringAllocDup(&(cptr->name), aconf->name, 0);
   cptr->firsttime = 0;
 
-  CreateRWEvent(cptr, event_ping_callback);
+  CreateREvent(cptr, event_ping_callback);
+  CreateTimerEvent(cptr, event_ping_callback);
 
   
   switch (ping_server(cptr))
