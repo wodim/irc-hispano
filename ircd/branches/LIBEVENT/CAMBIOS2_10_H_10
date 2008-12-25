@@ -1,3 +1,7 @@
+* 2008/12/25 dfm@unr.com         (u2.10.H.10.99.libevent.4)          FIX
+------------------------------------------------------------------------
+  Correccion de errores en los temporizadores de los pings.
+
 * 2008/12/25 dfm@unr.com         (u2.10.H.10.99.libevent.3)      FEATURE
 ------------------------------------------------------------------------
   Todas las posibles acciones del ircd se pasan a eventos usando

@@ -947,7 +947,7 @@ int m_server_estab(aClient *cptr, aConfItem *aconf, aConfItem *bconf)
     SetBurst(cptr);
   else
     cptr->flags |= FLAGS_TS8;
-  UpdateCheckPing(cptr,0);
+  UpdateCheckPing(cptr, get_client_ping(cptr));
   //nextping = now;
   if (cptr->serv->user && cptr->serv->by &&
       (acptr = findNUser(cptr->serv->by)) && acptr->user == cptr->serv->user)

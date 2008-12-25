@@ -1525,7 +1525,7 @@ static int read_packet(aClient *cptr, int socket_ready)
     length = recv(cptr->fd, readbuf, sizeof(readbuf), 0);
 
     cptr->lasttime = now;
-    UpdateCheckPing(cptr, ping * 2);
+    UpdateCheckPing(cptr, ping);
     if (cptr->lasttime > cptr->since)
       cptr->since = cptr->lasttime;
     cptr->flags &= ~(FLAGS_PINGSENT | FLAGS_NONL);
