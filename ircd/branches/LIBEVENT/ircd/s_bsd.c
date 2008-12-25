@@ -1929,16 +1929,17 @@ void event_connection_callback(int loc_fd, short event, aClient *cptr)
  * 
  * -- FreeMind 20081224
  */
-void event_checkping_callback(int fd, short event, aClient *cptr) {
-  int ping, rflag, timeout, oldest;
-  
+void event_checkping_callback(int fd, short event, aClient *cptr)
+{
+  int ping, rflag;
+
   Debug((DEBUG_DEBUG, "event_checkping_callback event: %d", (int)event));
-  
+
   assert(event & EV_TIMEOUT);
   assert(!IsMe(cptr));
   assert(!IsLog(cptr));
   assert(!IsPing(cptr));
-  
+
   update_now();
 
   /*
@@ -1960,7 +1961,7 @@ void event_checkping_callback(int fd, short event, aClient *cptr) {
    * is already indented enough so I think its justified. -avalon
    */
   if (!rflag && IsRegistered(cptr) && (ping >= now - cptr->lasttime))
-    goto ping_timeout;
+    return;
   /*
    * If the server hasnt talked to us in 2*ping seconds
    * and it has a ping time, then close its connection.
@@ -2045,14 +2046,6 @@ void event_checkping_callback(int fd, short event, aClient *cptr) {
           sendto_one(cptr, "%s " TOK_PING " :%s", NumServ(&me), me.name);
       }
     }
-  ping_timeout:
-  timeout = cptr->lasttime + ping;
-  while (timeout <= now)
-    timeout += ping;
-  if (timeout < oldest || !oldest)
-    oldest = timeout;
-
-  return;
 }
 
 /*
