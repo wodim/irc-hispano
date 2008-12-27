@@ -1,3 +1,15 @@
+* 2008/12/27 dfm@unr.com         (u2.10.H.10.99.libevent.7)          FIX
+------------------------------------------------------------------------
+  Correccion de consumo CPU 100% cuando un usuario estaba en el proceso
+  de conexion y no tiene la DNS resuelta.
+  
+  Correccion de quedarse colgado el socket cuando el usuario envia datos
+  antes del chequeo DNS/Ident.
+  
+  Correccion de bug de no cambiar el fd a los eventos cuando el fd de
+  la conexion cambia.
+
+
 * 2008/12/25 dfm@unr.com         (u2.10.H.10.99.libevent.6)          FIX
 ------------------------------------------------------------------------
   Correcciones en eventos de escritura.

@@ -102,7 +102,10 @@
 #define DoingDNS(x)		(assert(MyConnect(x)),((x)->flags_local & FLAGS_DOINGDNS))
 #define SetAuth(x)              (assert(MyConnect(x)),((x)->flags_local |= FLAGS_AUTH))
 #define SetWRAuth(x)            (assert(MyConnect(x)),((x)->flags_local |= FLAGS_WRAUTH))
-#define SetAccess(x)		((x)->flags |= FLAGS_CHKACCESS)
+#define SetAccess(x)		do { \
+                                  (x)->flags |= FLAGS_CHKACCESS; \
+                                  UpdateTimer(x,0); \
+                                } while (0)
 #define DoingAuth(x)		(assert(MyConnect(x)),((x)->flags_local & FLAGS_AUTH))
 #define DoingWRAuth(x)		(assert(MyConnect(x)),((x)->flags_local & FLAGS_WRAUTH))
 #define NoNewLine(x)		((x)->flags & FLAGS_NONL)
@@ -210,7 +213,8 @@ extern void event_async_dns_callback(int fd, short event, void *arg);
 extern void event_udp_callback(int fd, short event, void *arg);
 extern void event_ping_callback(int fd, short event, aClient *cptr);
 extern void event_auth_callback(int fd, short event, aClient *cptr);
-extern void event_client_callback(int fd, short event, aClient *cptr);
+extern void event_client_read_callback(int fd, short event, aClient *cptr);
+extern void event_client_write_callback(int fd, short event, aClient *cptr);
 extern void event_connection_callback(int fd, short event, aClient *cptr);
 extern void event_checkping_callback(int fd, short event, aClient *cptr);
 
@@ -286,6 +290,33 @@ extern struct sockaddr_in vserv;
                                  ClearIpVirtualPersonalizada(x); \
                                } while (0)
 // Eventos
+
+  
+#define DelEvent(x,y)          do { \
+                                 assert(MyConnect(x)); \
+                                 if((x)->y) \
+                                   event_del((x)->y); \
+                               } while (0)
+#define DelReadEvent(x)        DelEvent(x, evread)
+#define DelWriteEvent(x)       DelEvent(x, evwrite)
+#define DelTimerEvent(x)       DelEvent(x, evtimer)
+#define DelRWEvent(x)          do { \
+                                 DelReadEvent(x); \
+                                 DelWriteEvent(x); \
+                               } while (0)
+#define DelRWTEvent(x)         do { \
+                                 DelReadEvent(x); \
+                                 DelWriteEvent(x); \
+                                 DelTimerEvent(x); \
+                               } while (0)
+#define DelRWAuthEvent(x)      do { \
+                                 DelEvent(x, evauthread); \
+                                 DelEvent(x, evauthwrite); \
+                               } while (0)
+#define UpdateRead(x)          do { \
+                                 assert(MyConnect(x)); \
+                                 assert(event_add((x)->evread, NULL)!=-1); \
+                               } while (0)
 #define UpdateWrite(x)         do { \
                                  assert(MyConnect(x)); \
                                  if(DBufLength(&(x)->sendQ)) \
@@ -330,12 +361,18 @@ extern struct sockaddr_in vserv;
                                 } while (0)
 #define CreateREvent(x,y)       CreateEvent(x,y,evread,(EV_READ|EV_PERSIST),fd)
 #define CreateWEvent(x,y)       CreateEvent(x,y,evwrite,(EV_WRITE|EV_PERSIST),fd)
-#define CreateRWEvent(x,y)      CreateREvent(x,y);CreateWEvent(x,y);CreateTimerEvent(x,y)
-#define CreateClientEvent(x)    CreateREvent(x,event_client_callback); \
-                                  CreateWEvent(x,event_client_callback); \
-                                  CreateTimerEvent(x,event_client_callback); \
+#define CreateRWEvent(x,y)      do { \
+                                  CreateREvent(x,y); \
+                                  CreateWEvent(x,y); \
+                                  CreateTimerEvent(x,y); \
+                                } while (0)
+#define CreateClientEvent(x)    do { \
+                                  CreateREvent(x,event_client_read_callback); \
+                                  CreateWEvent(x,event_client_write_callback); \
+                                  CreateTimerEvent(x,event_client_read_callback); \
                                   CreateCheckPingEvent(x); \
-                                  UpdateCheckPing(x, CONNECTTIMEOUT)
+                                  UpdateCheckPing(x, CONNECTTIMEOUT); \
+                                } while (0) 
 #define CreateRAuthEvent(x)     CreateEvent(x,event_auth_callback,evauthread,(EV_READ|EV_PERSIST),authfd)
 #define CreateWAuthEvent(x)     CreateEvent(x,event_auth_callback,evauthwrite,(EV_WRITE),authfd)
 #define CreateRWAuthEvent(x)    CreateRAuthEvent(x);CreateWAuthEvent(x)

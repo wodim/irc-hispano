@@ -1100,10 +1100,7 @@ void close_connection(aClient *cptr)
 
   if (cptr->authfd >= 0) {
     close(cptr->authfd);
-    if(cptr->evauthread)
-      event_del(cptr->evauthread);
-    if(cptr->evauthwrite)
-      event_del(cptr->evauthwrite);
+    DelRWAuthEvent(cptr);
   }
 
   if (cptr->fd >= 0)
@@ -1111,6 +1108,7 @@ void close_connection(aClient *cptr)
     flush_connections(cptr->fd);
     loc_clients[cptr->fd] = NULL;
     close(cptr->fd);
+    DelRWTEvent(cptr);
     cptr->fd = -2;
   }
 
@@ -1150,8 +1148,22 @@ void close_connection(aClient *cptr)
         return;
       if (dup2(j, i) == -1)
         return;
+      
       loc_clients[i] = loc_clients[j];
       loc_clients[i]->fd = i;
+      DelRWEvent(loc_clients[i]);
+      // Renumero tambien los eventos
+      if(loc_clients[i]->evread)
+      {
+        loc_clients[i]->evread->ev_fd=i;
+        UpdateRead(loc_clients[i]);
+      }
+      if(loc_clients[i]->evwrite)
+      {
+        loc_clients[i]->evwrite->ev_fd=i;
+        UpdateWrite(loc_clients[i]);
+      }
+
       loc_clients[j] = NULL;
       close(j);
       while (!loc_clients[highest_fd])
@@ -1516,7 +1528,6 @@ static int read_packet(aClient *cptr, int socket_ready)
   size_t dolen = 0;
   int length = 0;
   int done;
-  int delay;
   int ping = IsRegistered(cptr) ? get_client_ping(cptr) : CONNECTTIMEOUT;
   
   if (socket_ready && !(IsUser(cptr) && DBufLength(&cptr->recvQ) > 6090))
@@ -1558,6 +1569,9 @@ static int read_packet(aClient *cptr, int socket_ready)
     if (!dbuf_put(NULL, &cptr->recvQ, readbuf, length))
       return exit_client(cptr, cptr, &me, "dbuf_put fail");
 
+    if (DoingDNS(cptr) || DoingAuth(cptr))
+      return 1;
+    
 #if !defined(NOFLOODCONTROL)
     if (IsUser(cptr) && DBufLength(&cptr->recvQ) > CLIENT_FLOOD
 #if defined(CS_NO_FLOOD_ESNET)
@@ -1570,9 +1584,9 @@ static int read_packet(aClient *cptr, int socket_ready)
     while (DBufLength(&cptr->recvQ) && (!NoNewLine(cptr))
 #if !defined(NOFLOODCONTROL)
 #if defined(CS_NO_FLOOD_ESNET)
-        && (!socket_ready || IsChannelService(cptr) || cptr->since - now < 10)
+        && (IsChannelService(cptr) || cptr->since - now < 10)
 #else
-        && (!socket_ready || IsTrusted(cptr) || cptr->since - now < 10)
+        && (IsTrusted(cptr) || cptr->since - now < 10)
 #endif
 #endif
         )
@@ -1619,14 +1633,9 @@ static int read_packet(aClient *cptr, int socket_ready)
         return CPTR_KILLED;
     }
   }
-  
-  delay = (cptr->since - now - 9);
-  
-  if(delay<0)
-    delay=0;
-  
-  if(DBufLength(&cptr->recvQ)) // Si hay datos pendientes
-    UpdateTimer(cptr, delay); // Programo una relectura
+    
+  if(DBufLength(&cptr->recvQ) && !NoNewLine(cptr)) // Si hay datos pendientes
+    UpdateTimer(cptr, 2); // Programo una relectura
   
   return 1;
 }
@@ -1740,6 +1749,9 @@ void event_ping_callback(int fd, short event, aClient *cptr)
 void event_auth_callback(int fd, short event, aClient *cptr)
 {
   Debug((DEBUG_DEBUG, "event_auth_callback event: %d", (int)event));
+  
+  assert((event & EV_READ) || (event & EV_WRITE));
+  
   update_now();
   
   if (cptr->authfd < 0)
@@ -1757,16 +1769,23 @@ void deadsocket(aClient *cptr) {
 }
 
 /*
- * event_client_callback
+ * event_client_read_callback
  * 
- * Gestion de evento para mensajes de clientes (servidores incluidos)
+ * Gestion de evento para lectura de mensajes de clientes (servidores incluidos)
  * 
  * -- FreeMind 20081214
  */
-void event_client_callback(int fd, short event, aClient *cptr) {
-  int length;
+void event_client_read_callback(int fd, short event, aClient *cptr) {
+  int length=1;
   
-  Debug((DEBUG_DEBUG, "event_client_callback event: %d", (int)event));
+  Debug((DEBUG_DEBUG, "event_client_read_callback event: %d", (int)event));
+  
+  assert((event & EV_READ) || (event & EV_TIMEOUT));
+  assert(cptr->fd<0 || (cptr->fd == cptr->evread->ev_fd));
+  
+#if defined(DEBUGMODE)
+  assert(!IsLog(cptr));
+#endif
   
   update_now();
 
@@ -1775,36 +1794,7 @@ void event_client_callback(int fd, short event, aClient *cptr) {
     return;
   }
   
-  if (DoingDNS(cptr) || DoingAuth(cptr))
-    return;
-#if defined(DEBUGMODE)
-  if (IsLog(cptr))
-    return;
-#endif
-  if (event & EV_WRITE) // EVENTO DE ESCRITURA
-    {
-      int write_err = 0;
-      /*
-       *  ...room for writing, empty some queue then...
-       */
-      cptr->flags &= ~FLAGS_BLOCKED;
-      if (IsConnecting(cptr))
-        write_err = completed_connection(cptr);
-      if (!write_err)
-        {
-          if (cptr->listing && DBufLength(&cptr->sendQ) < 2048)
-            list_next_channels(cptr);
-          send_queued(cptr);
-        }
-      if (IsDead(cptr) || write_err) // ERROR DE LECTURA/ESCRITURA
-        {
-          deadsocket(cptr);
-          return;
-        }
-      return;
-    }
-  length = 1;                 /* for fall through case */
-  if ((!NoNewLine(cptr) || event & EV_READ || event & EV_TIMEOUT) && !IsDead(cptr)) // DATOS PENDIENTES PARA LEER
+  if (!IsDead(cptr))
     length = read_packet(cptr, event & EV_READ ? 1 : 0);
   if ((length != CPTR_KILLED) && IsDead(cptr)) { // ERROR LECTURA/ESCRITURA
     deadsocket(cptr);
@@ -1837,6 +1827,53 @@ void event_client_callback(int fd, short event, aClient *cptr) {
 }
 
 /*
+ * event_client_write_callback
+ * 
+ * Gestion de evento para escritura de mensajes de clientes (servidores incluidos)
+ * 
+ * -- FreeMind 20081226
+ */
+
+void event_client_write_callback(int fd, short event, aClient *cptr) {
+  int write_err = 0;
+
+  Debug((DEBUG_DEBUG, "event_client_write_callback event: %d", (int)event));
+
+  assert(event & EV_WRITE);
+  assert(cptr->fd < 0 || (cptr->fd == cptr->evwrite->ev_fd));
+
+#if defined(DEBUGMODE)
+  assert(!IsLog(cptr));
+#endif
+
+  update_now();
+  
+  if(IsDead(cptr)) {
+    deadsocket(cptr);
+    return;
+  }
+
+  /*
+   *  ...room for writing, empty some queue then...
+   */
+  cptr->flags &= ~FLAGS_BLOCKED;
+  if (IsConnecting(cptr))
+    write_err = completed_connection(cptr);
+  if (!write_err)
+    {
+      if (cptr->listing && DBufLength(&cptr->sendQ) < 2048)
+        list_next_channels(cptr);
+      send_queued(cptr);
+    }
+  if (IsDead(cptr) || write_err) // ERROR DE LECTURA/ESCRITURA
+    {
+      deadsocket(cptr);
+      return;
+    }
+}
+
+
+/*
  * event_connection_callback
  * 
  * Gestion de evento para nuevas conexiones
@@ -1851,10 +1888,7 @@ void event_connection_callback(int loc_fd, short event, aClient *cptr)
   
   update_now();
   
-  if (!IsListening(cptr)) {// Si 
-    event_del(cptr->evread);
-    return;
-  }
+  assert(IsListening(cptr)); 
 
   // ENTRA UNA NUEVA CONEXION
   {
