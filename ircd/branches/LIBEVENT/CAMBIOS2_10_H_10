@@ -1,3 +1,8 @@
+* 2008/12/27 dfm@unr.com         (u2.10.H.10.99.libevent.8)          FIX
+------------------------------------------------------------------------
+  Actualizo el evento de escritura cuando completo un microburst.
+
+
 * 2008/12/27 dfm@unr.com         (u2.10.H.10.99.libevent.7)          FIX
 ------------------------------------------------------------------------
   Correccion de consumo CPU 100% cuando un usuario estaba en el proceso
