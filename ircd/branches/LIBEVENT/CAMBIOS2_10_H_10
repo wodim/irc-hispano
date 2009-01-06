@@ -1,3 +1,16 @@
+* 2009/01/06 dfm@unr.com         (u2.10.H.10.99.libevent.9)          FIX
+------------------------------------------------------------------------
+  Correccion de bug en m_quit que hacia que mandase el quit al que lo
+  enviaba, pongo parte del m_quit del ircu2.10 de undernet.
+  
+  Corrijo el bug introducido en otro parte en exit_client al intentar
+  corregir el m_quit erroneamente.
+  
+  No eliminaba temporizador de checkping cuando un cliente salia.
+  
+  Pongo el chequeo de indent con evento de escritura persistente.
+
+
 * 2008/12/27 dfm@unr.com         (u2.10.H.10.99.libevent.8)          FIX
 ------------------------------------------------------------------------
   Actualizo el evento de escritura cuando completo un microburst.

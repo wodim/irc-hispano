@@ -179,18 +179,22 @@ extern int strnCasecmp(const char *a, const char *b, const size_t n);
 #define DelReadEvent(x)        DelEvent(x, evread)
 #define DelWriteEvent(x)       DelEvent(x, evwrite)
 #define DelTimerEvent(x)       DelEvent(x, evtimer)
+#define DelCheckPingEvent(x)   DelEvent(x, evcheckping)
 #define DelRWEvent(x)          do { \
                                  DelReadEvent(x); \
                                  DelWriteEvent(x); \
                                } while (0)
-#define DelRWTEvent(x)         do { \
+#define DelClientEvent(x)      do { \
                                  DelReadEvent(x); \
                                  DelWriteEvent(x); \
                                  DelTimerEvent(x); \
+                                 DelCheckPingEvent(x); \
                                } while (0)
+#define DelRAuthEvent(x)       DelEvent(x, evauthread)
+#define DelWAuthEvent(x)       DelEvent(x, evauthwrite)
 #define DelRWAuthEvent(x)      do { \
-                                 DelEvent(x, evauthread); \
-                                 DelEvent(x, evauthwrite); \
+                                 DelRAuthEvent(x); \
+                                 DelWAuthEvent(x); \
                                } while (0)
 #define UpdateRead(x)          do { \
                                  assert(MyConnect(x)); \
@@ -227,7 +231,7 @@ extern int strnCasecmp(const char *a, const char *b, const size_t n);
                                     (x)->w=(struct timeval*)RunMalloc(sizeof(struct timeval)); \
                                   evtimer_set((x)->z, (void *)(y), (void *)(x)); \
                                 } while (0)
-#define CreateTimerEvent(x,y) CreateGTimerEvent(x,y,evtimer,tm_timer)
+#define CreateTimerEvent(x,y)   CreateGTimerEvent(x,y,evtimer,tm_timer)
 #define CreateCheckPingEvent(x) CreateGTimerEvent(x,event_checkping_callback,evcheckping,tm_checkping)
 #define CreateEvent(x,y,z,w,v)  do { \
                                   assert(MyConnect(x) || (x) == &me); \
@@ -253,6 +257,9 @@ extern int strnCasecmp(const char *a, const char *b, const size_t n);
                                   UpdateCheckPing(x, CONNECTTIMEOUT); \
                                 } while (0) 
 #define CreateRAuthEvent(x)     CreateEvent(x,event_auth_callback,evauthread,(EV_READ|EV_PERSIST),authfd)
-#define CreateWAuthEvent(x)     CreateEvent(x,event_auth_callback,evauthwrite,(EV_WRITE),authfd)
-#define CreateRWAuthEvent(x)    CreateRAuthEvent(x);CreateWAuthEvent(x)
+#define CreateWAuthEvent(x)     CreateEvent(x,event_auth_callback,evauthwrite,(EV_WRITE|EV_PERSIST),authfd)
+#define CreateRWAuthEvent(x)    do { \
+                                  CreateRAuthEvent(x); \
+                                  CreateWAuthEvent(x); \
+                                } while (0)
 #endif /* COMMON_H */

@@ -218,7 +218,7 @@ void send_authports(aClient *cptr)
     cptr->authfd = -1;
 
     ClearAuth(cptr);
-    event_del(cptr->evauthread);
+    DelRAuthEvent(cptr);
     
     if (IsUserPort(cptr))
     {
@@ -230,8 +230,8 @@ void send_authports(aClient *cptr)
       SetAccess(cptr);
   }
   ClearWRAuth(cptr);
+  DelWAuthEvent(cptr);
   
-  event_del(cptr->evauthwrite);
   return;
 }
 
@@ -304,6 +304,7 @@ void read_authports(aClient *cptr)
   cptr->count = 0;
   cptr->authfd = -1;
   ClearAuth(cptr);
+  DelRWAuthEvent(cptr);
   if (!DoingDNS(cptr))
     SetAccess(cptr);
   if (len > 0)
