@@ -454,7 +454,10 @@ static void db_eliminar_registro(unsigned char tabla, char *clave,
   }
 
   hashi = db_hash_registro(c, tabla_residente_y_len[tabla]);
-
+  if(cptr && !IsBurstOrBurstAck(cptr))
+    sendto_op_mask(SNO_SERVICE,
+        "%s DB DELETE T='%c' C='%s' H=%u", cptr->name, tabla, reg->clave, hashi);
+  
   reg3 = &tabla_datos[tabla][hashi];
 
   for (reg = *reg3; reg != NULL; reg = reg2)
@@ -700,7 +703,10 @@ static void db_insertar_registro(unsigned char tabla, char *clave, char *valor,
   /*
      sendto_ops("Inserto T='%c' C='%s' H=%u",tabla, reg->clave, hashi);
    */
-
+  if(cptr && !IsBurstOrBurstAck(cptr))
+    sendto_op_mask(SNO_SERVICE,
+        "%s DB INSERT T='%c' C='%s' H=%u", cptr->name, tabla, reg->clave, hashi);
+  
   reg->next = tabla_datos[tabla][hashi];
   tabla_datos[tabla][hashi] = reg;
 

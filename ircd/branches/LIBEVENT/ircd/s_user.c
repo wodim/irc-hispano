@@ -1573,18 +1573,23 @@ int m_user(aClient *cptr, aClient *sptr, int parc, char *parv[])
 /*
  * m_quit
  *
+ * cptr = Quien manda el mensaje de quit
+ * sptr = Quien recibe el QUIT
+ * 
  * parv[0] = sender prefix
  * parv[parc-1] = comment
  */
 int m_quit(aClient *cptr, aClient *sptr, int parc, char *parv[])
 {
+  char *comment = (parc > 1 && !BadPtr(parv[parc - 1])) ? parv[parc - 1] : NULL;
+  
   assert(0 != cptr);
   assert(0 != sptr);
 
-  if(IsServer(sptr))
+  if(IsServer(sptr)) /* Un quit no puede tener de objeivo un servidor */
     return 0;
   
-  if (MyUser(sptr))
+  if (MyConnect(sptr)) /* Si es una conexion local */
   {
     if (sptr->user)
     {
@@ -1593,12 +1598,18 @@ int m_quit(aClient *cptr, aClient *sptr, int parc, char *parv[])
         if ((can_send(sptr, lp->value.chptr) != 0) || (lp->value.chptr->mode.mode & MODE_NOQUITPARTS))
           return exit_client(cptr, sptr, sptr, "Signed off");
     }
+    if (comment)
+    {
+      if(strlen(comment)>QUITLEN)
+        comment[QUITLEN]='\0';
+      return exit_client_msg(cptr, sptr, &me, "Quit: %s", comment);
+    }
+    else
+      return exit_client(cptr, sptr, &me, "Quit");
   }
-  
-  if (parc > 1 && !BadPtr(parv[parc - 1]))
-    return exit_client_msg(cptr, sptr, sptr, "User Quit: %s", parv[parc - 1]);
-  else
-    return exit_client(cptr, sptr, sptr, "Quit");
+
+  /* Si es un quit externo lo reenviamos tal cual */
+  return exit_client(cptr, sptr, sptr, comment ? comment : "\0");
 }
 
 /*
