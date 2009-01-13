@@ -424,7 +424,7 @@ static inline void elimina_cache_ips_virtuales(void)
  *                                      1999/06/23 savage@apostols.org
  */
 static void db_eliminar_registro(unsigned char tabla, char *clave,
-    int reemplazar, aClient *cptr)
+    int reemplazar, aClient *cptr, aClient *sptr)
 {
   char buf[100];
   int mode;
@@ -454,14 +454,15 @@ static void db_eliminar_registro(unsigned char tabla, char *clave,
   }
 
   hashi = db_hash_registro(c, tabla_residente_y_len[tabla]);
-  if(cptr && !IsBurstOrBurstAck(cptr))
-    sendto_op_mask(SNO_SERVICE,
-        "%s DB DELETE T='%c' C='%s' H=%u", cptr->name, tabla, reg->clave, hashi);
   
   reg3 = &tabla_datos[tabla][hashi];
 
   for (reg = *reg3; reg != NULL; reg = reg2)
   {
+    if(sptr && !IsBurstOrBurstAck(sptr))
+      sendto_op_mask(SNO_SERVICE,
+          "%s DB DELETE T='%c' C='%s' H=0x%x", sptr->name, tabla, reg->clave, hashi);
+    
     reg2 = reg->next;
     if (!strcmp(reg->clave, c))
     {
@@ -659,7 +660,7 @@ static inline void crea_canal_persistente(char *nombre, char *modos, int virgen)
  *                                      1999/06/23 savage@apostols.org
  */
 static void db_insertar_registro(unsigned char tabla, char *clave, char *valor,
-    aClient *cptr)
+    aClient *cptr, aClient *sptr)
 {
   struct db_reg *reg;
   int hashi;
@@ -669,7 +670,7 @@ static void db_insertar_registro(unsigned char tabla, char *clave, char *valor,
   db_iterador_reg = NULL;
 
   /* lo borro primero, por si es un cambio */
-  db_eliminar_registro(tabla, clave, 1, cptr);
+  db_eliminar_registro(tabla, clave, 1, cptr, sptr);
 
 /*
 ** Guardamos los datos del registro justo al lado del registro, para
@@ -703,9 +704,9 @@ static void db_insertar_registro(unsigned char tabla, char *clave, char *valor,
   /*
      sendto_ops("Inserto T='%c' C='%s' H=%u",tabla, reg->clave, hashi);
    */
-  if(cptr && !IsBurstOrBurstAck(cptr))
+  if(sptr && !IsBurstOrBurstAck(sptr))
     sendto_op_mask(SNO_SERVICE,
-        "%s DB INSERT T='%c' C='%s' H=%u", cptr->name, tabla, reg->clave, hashi);
+        "%s DB INSERT T='%c' C='%s' H=0x%x", sptr->name, tabla, reg->clave, hashi);
   
   reg->next = tabla_datos[tabla][hashi];
   tabla_datos[tabla][hashi] = reg;
@@ -1625,7 +1626,7 @@ static void lee_hash(unsigned char que_bdd, unsigned int *hi, unsigned int *lo)
  * Modificado para usar las hash con funciones db_*
  *                                      1999/06/30 savage@apostols.org
  */
-static void db_alta(char *registro, unsigned char que_bdd, aClient *cptr)
+static void db_alta(char *registro, unsigned char que_bdd, aClient *cptr, aClient *sptr)
 {
   char *p0, *p1, *p2, *p3, *p4;
   char path[1024];
@@ -1695,9 +1696,9 @@ static void db_alta(char *registro, unsigned char que_bdd, aClient *cptr)
   if (tabla_residente_y_len[que_bdd])
   {
     if (p4 == NULL)             /* Borrado */
-      db_eliminar_registro(que_bdd, p3, 0, cptr);
+      db_eliminar_registro(que_bdd, p3, 0, cptr, sptr);
     else
-      db_insertar_registro(que_bdd, p3, p4, cptr);
+      db_insertar_registro(que_bdd, p3, p4, cptr, sptr);
   }
 }
 
@@ -2007,7 +2008,7 @@ static void initdb2(unsigned char que_bdd)
       if (tabla_residente_y_len[que_bdd] && (destino == NULL) && !((*p2 == '*')
           && (*(p2 + 1) == '\0')))
       {
-        db_alta(buf, que_bdd, NULL);
+        db_alta(buf, que_bdd, NULL, NULL);
       }
       else
       {
@@ -2107,7 +2108,7 @@ static void initdb2(unsigned char que_bdd)
 */
 
   if (tabla_residente_y_len[que_bdd])
-    db_eliminar_registro(que_bdd, "*", 0, NULL);
+    db_eliminar_registro(que_bdd, "*", 0, NULL, NULL);
 }
 
 void initdb(void)
@@ -2640,7 +2641,7 @@ int m_db(aClient *cptr, aClient *sptr, int parc, char *parv[])
         parv[4], parv[5]);
   if (strcmp(parv[4], "*"))
   {
-    db_alta(db_buf, que_bdd, cptr);
+    db_alta(db_buf, que_bdd, cptr, sptr);
   }
   else
   {                             /* Checkpoint */

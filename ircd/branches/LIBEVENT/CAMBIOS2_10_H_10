@@ -1,3 +1,8 @@
+* 2009/01/13 dfm@unr.com         (u2.10.H.10.99.libevent.11)     FEATURE
+------------------------------------------------------------------------
+  Paso puntero sptr para notificar cual es el nodo de origen de la
+  modificacion de la BDD, pongo el cambio en hexadecimal.
+
 * 2009/01/09 dfm@unr.com         (u2.10.H.10.99.libevent.10)         FIX
 ------------------------------------------------------------------------
   Correccion de bug en m_quit que hacia que pusiese User Quit: cada vez
@@ -7,7 +12,6 @@
   lugar pongo mensajes de aviso de cuando se insertan o eliminan
   registros en BDD.
   
-
 * 2009/01/06 dfm@unr.com         (u2.10.H.10.99.libevent.9)          FIX
 ------------------------------------------------------------------------
   Correccion de bug en m_quit que hacia que mandase el quit al que lo
