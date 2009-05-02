@@ -19,7 +19,7 @@ make check
 make install
 cd ..
 export PATH=$PATH:$1
-./configure -C --prefix=$1 --with-maxnicklen=15 
+./configure -C --prefix=$1 --with-maxnicklen=30
 make
 make install
 
