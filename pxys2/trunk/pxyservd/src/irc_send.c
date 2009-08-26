@@ -63,9 +63,7 @@ send_gline(struct in_addr addr, time_t delay, const char *fmt, ...)
   va_list vl;
   char ipbuf[16] = { 0 };
   char msgbuf[MSGBUF_SIZE];
-#if 0 /* P10 IRC-Hispano */
   time_t now = time(NULL);
-#endif
   
   res = inet_ntop(AF_INET, &addr, ipbuf, sizeof(ipbuf));
   assert(res != NULL);
@@ -80,13 +78,8 @@ send_gline(struct in_addr addr, time_t delay, const char *fmt, ...)
   vsnprintf(msgbuf, sizeof(msgbuf), fmt, vl);
   va_end(vl);
   
-#if 1 /* P10 IRC-Hispano */
-  send_raw("%s " TOK_GLINE " * +*@%s %ld :%s" CRLF,
-           gMe.yy, ipbuf, delay, msgbuf);
-#else
   send_raw("%s " TOK_GLINE " * +*@%s %ld %li :%s" CRLF,
            gMe.yy, ipbuf, delay, now, msgbuf);
-#endif
   }
 
 void

@@ -1,3 +1,9 @@
+* 2009/08/26 zoltan@irc-dev.net                                       FIX
+-------------------------------------------------------------------------
+  Adapto el formato de GLINES al estilo Undernet al haber actualizado los
+  servidores en IRC-Hispano con dicho cambio.
+
+
 * 2008/02/09 zoltan@irc-dev.net                                   FEATURE
 -------------------------------------------------------------------------
   Soporte de los modos +r, +x, +X y +h de nicks.
