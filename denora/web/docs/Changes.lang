@@ -1,0 +1,130 @@
+phpDenora version 1.4.5
+-----------------------
+*** New Strings:
+
+*** Mod Strings:
+
+*** Del Strings:
+
+
+phpDenora version 1.4.4
+-----------------------
+*** New Strings:
+
+*** Mod Strings:
+
+*** Del Strings:
+
+
+phpDenora version 1.4.3
+-----------------------
+*** New Strings:
+
+*** Mod Strings:
+
+*** Del Strings:
+
+
+phpDenora version 1.4.2
+-----------------------
+*** New Strings:
+
+*** Mod Strings:
+
+*** Del Strings:
+
+
+phpDenora version 1.4.1
+-----------------------
+*** New Strings:
+
+*** Mod Strings:
+
+*** Del Strings:
+
+
+phpDenora version 1.4.0
+-----------------------
+*** New Strings:
+
+*** Mod Strings:
+	_UI_UINFO
+
+*** Del Strings:
+
+
+phpDenora version 1.2.3
+-----------------------
+*** New Strings:
+
+*** Mod Strings:
+
+*** Del Strings:
+
+
+phpDenora version 1.2.2
+-----------------------
+*** New Strings:
+	_SM_NSMONTHS
+	_PT_NSU2M
+	_PT_NSC2M
+	_PT_NSS2M
+
+*** Mod Strings:
+	_ER_NOINVITES
+	_ER_NOBANS
+	_ER_NOEXCEPTS
+	_SM_INVITES
+	_SM_BANS
+	_SM_EXCEPTS
+
+*** Del Strings:
+
+
+phpDenora version 1.2.1
+-----------------------
+*** New Strings:
+
+*** Mod Strings:
+
+*** Del Strings:
+
+
+phpDenora version 1.2.0
+-----------------------
+*** New Strings:
+	_TM_GRAPHS
+	_SM_NETSPLIT
+	_SM_SEARCHIRC
+	_SM_NSWEEKS
+	_SM_NSYEARS
+	_SM_NSHISTORY
+	_PT_NSU2W
+	_PT_NSC2W
+	_PT_NSS2W
+	_PT_NSU2Y
+	_PT_NSC2Y
+	_PT_NSS2Y
+	_PT_NSHYS
+	_FP_BIGGESTCHANS
+	_OT_CGENTIME
+	_UI_WHOIS10
+	_ER_DENIED
+
+*** Mod Strings:
+	_FP_USERS
+	_FP_CHANS
+	_FP_OPERS
+	_FP_SERVERS
+
+*** Del Strings:
+
+
+phpDenora version 1.0.1
+-----------------------
+*** New Strings:
+	_FP_GO
+
+*** Mod Strings:
+
+*** Del Strings:

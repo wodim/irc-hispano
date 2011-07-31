@@ -1,0 +1,29 @@
+#!/bin/sh
+# Make file
+#
+# (c) 2004-2011 Denora Team
+# Contact us at info@denorastats.org
+#
+# Please read COPYING and README for further details.
+#
+# Based on the original code of Anope by Anope Team.
+# Based on the original code of Thales by Lucas.
+#
+# $Id: configure 386 2011-01-04 17:16:43Z hal9000 $
+#
+
+echo -n "SRCS=" > ./Makefile.inc
+FIRST=1
+for oldfile in *.c
+do
+	if [ "$FIRST" = 1 ] ; then
+		echo -n " "$oldfile >> ./Makefile.inc
+	else
+		echo "\\" >> ./Makefile.inc
+		echo -n "     " $oldfile >> ./Makefile.inc
+	fi
+	FIRST=0
+done
+echo "" >> ./Makefile.inc
+
+exit 0

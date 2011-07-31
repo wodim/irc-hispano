@@ -1,0 +1,18 @@
+phpDenora - CREDITS
+-------------------
+
+Portions of this software are based on code written by
+Trystan and DukePyrolator from the Denora project.
+http://www.denorastats.org/
+
+The engine used to generate the real-time graphs is jpGraph and is
+integrated in this phpDenora distribution
+http://www.jpgraph.net/
+
+Big thanks to all language file contributors, which make phpDenora
+useable by a wider range of people.
+
+Special thanks also go to all the people from the Denora IRC channel
+and Forums, and to those using the bug tracker for testing, reporting
+problems, and making suggestions.
+I couldn't keep improving phpDenora without you!

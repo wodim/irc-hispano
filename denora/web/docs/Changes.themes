@@ -1,0 +1,121 @@
+phpDenora version 1.4.5
+-----------------------
+*** New Items:
+
+*** Mod Items:
+
+*** Del Items:
+
+
+phpDenora version 1.4.4
+-----------------------
+*** New Items:
+
+*** Mod Items:
+
+*** Del Items:
+
+
+phpDenora version 1.4.3
+-----------------------
+*** New Items:
+
+*** Mod Items:
+
+*** Del Items:
+
+
+phpDenora version 1.4.2
+-----------------------
+*** New Items:
+
+*** Mod Items:
+
+*** Del Items:
+
+
+phpDenora version 1.4.1
+-----------------------
+*** New Items:
+
+*** Mod Items:
+
+*** Del Items:
+
+
+phpDenora version 1.4.0
+-----------------------
+*** New Items:
+
+*** Mod Items:
+
+*** Del Items:
+
+
+phpDenora version 1.2.3
+-----------------------
+*** New Items:
+
+*** Mod Items:
+
+*** Del Items:
+
+
+phpDenora version 1.2.2
+-----------------------
+*** New Items:
+
+*** Mod Items:
+
+*** Del Items:
+
+
+phpDenora version 1.2.1
+-----------------------
+*** New Items:
+
+*** Mod Items:
+
+*** Del Items:
+
+
+phpDenora version 1.2.0
+-----------------------
+*** New Items:
+theme.php:
+	$tpl_network_users
+	$tpl_network_chans
+	$tpl_network_opers
+	$tpl_network_servers
+	$tpl_network_max
+
+css/layout.css:
+	table.stats
+
+*** Mod Items:
+
+*** Del Items:
+theme.php:
+	$tpl_logo
+	$tpl_home
+	$tpl_net
+	$tpl_chans
+	$tpl_users
+	$tpl_search
+	$tpl_config
+
+css/layout.css:
+	div.fpmodt
+	div.fpmodc
+	table#stats
+
+css/menu.css:
+	div.idmenutitle
+
+phpDenora version 1.0.1
+-----------------------
+*** New Items:
+
+*** Mod Items:
+
+*** Del Items:

@@ -1,0 +1,681 @@
+phpDenora Version 1.4.5
+-----------------------
+11/02/04 F Fixed encoding problem on channel names                      [     ]
+11/02/02 A Added option to block info for secret/private channels       [#1239]
+11/02/01 F Workaround for systems which have magic_quotes_gpc enabled   [     ]
+11/02/01 F Fixed security issue reported by Oliver Kuckertz
+           http://sourceforge.net/users/mologie/                        [     ]
+11/02/01 U Updated country flags                                        [     ]
+
+
+phpDenora Version 1.4.4
+-----------------------
+10/05/29 A Added mibbit support                                         [#1133]
+10/05/29 F Fixed wrong channel parameters in remote documentation       [     ]
+10/05/29 A Report user channel status in userlist                       [#1131]
+10/05/29 A Added default graph cache directory                          [     ]
+10/05/29 U Updated JpGraph libs to v3.0.7                               [     ]
+10/01/06 F Fixed broken order parameter                                 [     ]
+
+Provided by drak <drak@clubeirc.com>
+10/05/29 A Brazilian Portuguese language file                           [     ]
+
+Provided by Jobe <jobe@mdbnet.co.uk>
+10/07/05 F Hide Opers with services_protection mode set                 [     ]
+10/07/05 A Added support for services_protection to P10 ircds           [     ]
+
+phpDenora Version 1.4.3
+-----------------------
+09/10/16 F Fixed SQL injection reported by bubby from 6667.eu            [ #00]
+
+
+phpDenora Version 1.4.2
+-----------------------
+09/09/17 F Fixed remote.php not working properly since 1.4.1 release     [ #00]
+09/09/16 F Fixed remote example producing errors in some cases           [ #00]
+09/09/16 F Fixed broken newlines in motd display                         [ #00]
+
+
+phpDenora Version 1.4.1
+-----------------------
+09/09/11 R Removed persistent mysql connection option                    [ #00]
+09/09/11 F Reduced opening connections to sql server. Thanks screenman!  [ #00]
+09/09/10 F Tiny IE8 fix in futura theme                                  [ #00]
+09/09/08 A Nefarious 1.3 support                                         [ #00]
+09/09/08 U Updated JpGraph libs to v3.0.3                                [ #00]
+09/09/04 A Completely rewrote colorconvert function                      [ #00]
+09/09/04 F Fixed PHP 5.3 compatibility                                   [ #00]
+09/05/15 F jpgraph now reverts to normal font if no ttf support in php   [ #00]
+09/05/13 F Removed obsolete menu entries in config page                  [ #00]
+
+
+phpDenora Version 1.4.0
+-----------------------
+09/05/04 F Fixed wrong pie graph percentages                             [#534]
+
+
+phpDenora Version 1.4.0-RC1
+---------------------------
+09/03/04 R Current chanhide implementation was useless so removed        [ #00]
+09/03/04 A Added nick change flood channel mode support                  [ #00]
+09/03/04 F Fixed pie graph calculating wrong total with chanhide         [ #00]
+09/03/04 U Denora 1.4.0+ is now a requirement                            [ #00]
+09/03/04 F Fixed hostnames showing (null) on some systems                [#511]
+09/03/04 A Added scarynet ircd support                                   [ #00]
+09/03/04 R Removed ircds which are not supported in Denora 1.4 anymore   [ #00]
+09/03/02 A Show more clearly nick and ustats group on user info page     [ #00]
+09/02/27 F Fixed remote showing info for noshow channels                 [#500]
+09/02/27 A Added support for & ' channel prefixes                        [#506]
+09/02/22 F Fixed +p chanmode handling on Plexus3                         [ #00]
+09/02/16 U Updated JpGraph libs to v2.3.4                                [ #00]
+09/02/16 F Fixed XSS vulnerability reported by phrozen77                 [ #00]
+08/03/11 F Removed unused field from an SQL query                        [#492]
+08/02/26 A Added support for inspircd +J mode                            [ #00]
+08/02/05 F Fixed text in graphs limited to ASCII output                  [#475]
+08/02/05 R Removed deprecated configuration options                      [ #00]
+08/02/05 A PHP GD module is now a requirement                            [ #00]
+08/02/05 R Removed PHP4 support. PHP 5.2 is minimum requirement now      [ #00]
+08/02/05 U Completely rearranged file structure                          [ #00]
+08/02/05 A Added UTF-8 support                                           [ #00]
+08/02/05 A Added DejaVu TTF font for JpGraph                             [ #00]
+08/02/03 F Fixed warning about unsupported htmlentities encoding         [ #00]
+08/02/03 F Fixed chan mode +p being handled as private in charybdis      [ #00]
+08/01/07 U Updated JpGraph libs to v2.30 (php5)                          [ #00]
+07/12/01 F Fixed some conversion specifiers not working on windows       [ #00]
+07/11/29 U Small rearrangements to the example config file               [ #00]
+07/11/29 U Updated mIRC icon                                             [ #00]
+07/11/14 U Updated JpGraph libs to v1.22 (php4)                          [ #00]
+07/10/07 F Yearly graph legends now are better positioned                [#438]
+
+
+phpDenora Version 1.2.2
+-----------------------
+09/19 U Updated some documentation files                          [ #00]
+09/13 F Fixes to the denora version checking function             [ #00]
+09/13 F Updated inspircd protocol definition file                 [ #00]
+08/30 F Fixed pie graph rendering problem on some systems         [ #00]
+08/19 A Added netsplit.de monthly graphs                          [ #00]
+08/19 R Removed option to enable yearly netsplit.de graphs        [ #00]
+08/19 F Fixed monitored channels shown on +p users                [ #00]
+08/12 R Removed ban/except/invex options since made little sense  [ #00]
+08/11 F Added bot mode to nefarious protocol module               [#409]
+08/07 F Be more clear about bans/ban excepts/invite excepts       [ #00]
+08/07 F Fixed chans hidden from config still shown in top chans   [ #00]
+08/07 F Fixed halfops being marked as available for help          [ #00]
+07/30 F Fixed wrong links in oper list                            [ #00]
+07/25 A Added keyword/description meta tags                       [ #00]
+07/18 U Updated Denora/phpDenora links to the new domain name     [ #00]
+07/18 F Fixed oper list not working on fqircd                     [ #00]
+06/16 F Fixed encoding not being considered in color convert      [ #00]
+05/14 F Fixed SearchIRC graph URL on front page                   [ #00]
+
+Provided by lawer <lawer@maglan.ru>
+06/16 A Added Russian language file                               [ #00]
+
+
+phpDenora Version 1.2.1
+-----------------------
+04/15 F Fixed infinite loop on insufficient mysql privileges      [#375]
+04/15 U Updated JpGraph libs to v1.21b (php4) and v2.2.0 (php5)   [ #00]
+04/01 A Added ircd type to devel versioning                       [ #00]
+04/01 F Fixed sorting not working correctly on newer mysql5 dbs   [#385]
+03/30 U Updated JpGraph libs to v1.21a (php4)                     [ #00]
+01/12 F Helper and bot user modes now defined in protocol files   [ #00]
+01/12 F Setup page now recognizes Denora 1.3 as supported         [ #00]
+12/04 F Make sure channels are lowered in SQL queries             [ #00]
+11/25 F Fixed CSS validation in network page                      [ #00]
+
+Provided by MaD <mad@madito.net>
+11/26 A Added Portuguese language file                            [ #00]
+11/26 U Updated Spanish language file                             [ #00]
+
+
+phpDenora Version 1.2.0
+-----------------------
+11/22 F Fixed infinite loop in setup page when checking blank dbs [ #00]
+11/21 U Updated JpGraph libs to  v2.1.4 (php5)                    [ #00]
+11/21 F Make JpGraph work on PHP 5.0 again (again...)             [ #22]
+11/21 A Pointing out some stuff in config file and setup page     [ #00]
+11/17 F Fixed wrong links to server details                       [ #00]
+11/17 F Invert start and end time in graphs on negative timeframe [ #00]
+11/17 A Show timezone in full time outputs                        [ #00]
+11/16 F Fixed custom graphs form not working properly             [ #00]
+11/13 A Improved submission form in setup page                    [ #00]
+11/13 U Updated Dutch language file                               [ #00]
+11/12 U Updated some documentation files                          [ #00]
+11/12 A Improved error messages on incompatible langs/themes      [ #00]
+11/12 F Reset cookie when loading incompatible langs or themes    [ #00]
+
+Provided by RA3OR <ra3or@toxicnet.ro>
+11/13 U Updated Romanian language file                            [ #00]
+
+Provided by ToXiC <toxic@freemail.gr>
+11/14 U Updated Greek language file                               [ #00]
+
+Provided by OUTsider <outsider@scarynet.org>
+11/23 U Updated Dutch language file                               [ #00]
+
+Provided by MaD <mad@madito.net>
+11/23 U Updated Spanish language file                             [ #00]
+
+
+phpDenora Version 1.1.1-dev
+---------------------------
+11/11 F Fixed yearly graphs not working in some cases             [ #00]
+11/11 F Fixed $denora_noshow_chans not being escaped for sql      [ #00]
+11/10 F Fixed colorconvert function stripping slashes             [ #00]
+11/09 F Oops, oper list got lost, readded now :)                  [ #00]
+11/08 F Fixed old menus not truncating long nick/chan anymore     [ #00]
+11/08 A Moved server list to main network page                    [ #00]
+11/08 F Cleaned up configuration file                             [ #00]
+11/08 A Improved bars in chanstats tables now in all themes       [ #00]
+11/08 A Graphs now show time of generation                        [ #00]
+10/31 F Fix wrong position for ban list in menu                   [ #00]
+10/18 F Avoid +i/+k/+O channel info to be showed                  [ #31]
+
+Provided by OUTsider <outsider@scarynet.org>
+10/12 F Hit netsplit.de urls to make sure graphs are generated    [ #00]
+10/11 F Make channel search and topic request case insensitive    [ #00]
+
+Provided by iScripters <iScripters@gmail.com>
+10/12 U Updated Dutch language file                               [ #00]
+
+Provided by Obi_Wan <webmaster@st-city.net>
+11/08 U Updated Spanish language file                             [ #00]
+
+Provided by illu <illu@icedslash.org>
+11/10 U Updated French languge file                               [ #00]
+
+
+phpDenora Version 1.1.0-dev
+---------------------------
+10/10 A Green-red colored bars in chanstats tables (futura theme) [ #00]
+10/09 U Updated JpGraph libs to v1.20.5 (php4) and v2.1.3 (php5)  [ #00]
+10/09 F Fixed users marked as offline on ircds without cloaking   [ #00]
+09/17 F Better handle 0 timestamps in server details              [ #00]
+09/17 F Fixed SearchIRC graphs URL as they changed it             [ #00]
+09/17 F Fixed graphs not working anymore with old config file     [ #00]
+09/17 F denora_noshow_chans not working properly in channel list  [ #00]
+09/10 A Updated theme thumbnails and some modification to futura  [ #00]
+09/10 R Removed Classic XP theme                                  [ #00]
+09/09 F Don't show away status if user is offline                 [ #00]
+09/09 A Added swhois and quit message display to user info page   [ #00]
+09/07 A Added brand new "Futura" theme                            [ #00]
+08/26 A Way improved and theme-dependent menu generation          [ #00]
+08/26 A phpDenora now checks for compatible lang/theme versions   [ #00]
+08/26 F Fixed errors in config page if theme/lang index not found [ #00]
+08/26 A Improved chan/user stats table listings                   [ #00]
+08/25 A Ability to enable/disable chan invite/ban/exception lists [ #00]
+08/25 F Fixed tld pie showing in network page even if disabled    [ #00]
+08/24 F Better behavior if no user/nick is found from aliases     [ #00]
+08/21 A Improved positioning of country flags                     [ #00]
+08/21 A New phpDenora logo                                        [ #00]
+08/21 A SearchIRC.com graphs are now all on one page              [ #00]
+08/21 A Added Google Ads to the menu pane as well                 [ #00]
+08/20 F Various fixes and improvements to the setup page          [ #00]
+08/19 F Fixes to netsplit.de graphs                               [ #25]
+08/18 A Added Page gzip compression support                       [ #00]
+08/18 A Added Google AdSense support                              [ #00]
+08/18 F Fixed top chans/users returning data with 0 lines         [ #00]
+08/18 A Improved visual quality of some icons                     [ #00]
+08/18 F Fixed some mistakes in css files                          [ #00]
+08/17 A Improved the front page content- and layout-wise          [ #00]
+08/17 A Moved main layout stuff into themes for more flexibility  [ #00]
+08/17 A Added user/chan/server pages to network graphs            [ #00]
+08/17 F Better reaction on missing php-mysql module               [ #00]
+08/17 A Redesigned front page                                     [ #00]
+08/17 A Added svn revision to versioning                          [ #00]
+08/16 A Slightly modified Themes for new features                 [ #00]
+08/16 A Added nick field to the Quick Stats form                  [ #00]
+08/16 A Moved all network graphs to a separate Graphs section     [ #00]
+08/16 A Added NetSplit.de graphs integration                      [ #00]
+08/16 A Added SearchIRC.com graphs integration                    [ #00]
+08/16 F Approx query count as it's not predictable with caching   [ #00]
+08/16 A Implemented caching of graphs to reduce load              [ #00]
+08/12 A Added support for ?nick= direct URLs                      [ #00]
+08/12 A Added support for SearchIRC ranking icon integration      [ #00]
+08/12 F Make JpGraph work on PHP 5.0 again                        [ #22]
+08/12 F Fixed user submenu not showing if called with $nick       [ #00]
+08/12 F Better nick/channel name truncating in layout             [ #00]
+08/12 A Added robots.txt and meta tag for search engine exclusion [ #00]
+07/24 F User info search results had wrong link to user page      [ #00]
+07/24 F Fixed Uninitialized string offset in init function        [ #00]
+07/24 F Tiny layout fix for IE for $pd_statuslookup = false       [ #00]
+07/13 U Updated README for Denora rev >= 624                      [ #00]
+
+
+phpDenora Version 1.0.1
+-----------------------
+06/26 A Added support for Plexus3 IRCd                            [ #00]
+06/21 F Fixed undeclared variable in server list                  [ #00]
+06/19 F Non-persistent SQL connection support was actually broken [ #00]
+05/27 F Fixed ircd file not being loaded in pie graphs (oh dear)  [ #00]
+05/27 F JpGraph 1.20.4 was broken. Updated to 1.20.4a             [ #00]
+05/26 A Added QPL license file to JpGraph libraries               [ #00]
+05/26 U Updated JpGraph libs to v1.20.4 (php4) and v2.1.2 (php5)  [ #00]
+05/25 F Bar graphs are actually lines, not words                  [ #00]
+05/21 F The "Go" button on the front page had no language string  [ #00]
+05/03 F System default setting for debug not working so removed   [ #00]
+05/03 F Fixed graphs not respecting debug setting                 [ #00]
+04/20 F Fixed wrong default theme variable in graphs              [ #00]
+04/20 F Reduced query load on server details                      [ #00]
+04/20 F Reduced query load on server list                         [ #00]
+04/18 F Fixed hidden channels showing up in remote function       [ #00]
+04/12 F Fixed problem with DB check in setup page on IIS          [ #00]
+04/10 F Fix problem with undefined variable if $pd_exec is false  [ #00]
+
+Provided by RA3OR <ra3or@toxicnet.ro>
+05/21 U Updated Romanian language file                            [ #00]
+
+Provided by meepmeep <meepmeep@gmail.com>
+04/15 F Return 0 users for non-existant (empty) channels          [ #00]
+
+
+phpDenora Version 1.0.0
+-----------------------
+04/10 A MySQL errors are now detected and reported                [ #00]
+04/07 F Fixed client showing up in user info even if disabled     [ #18]
+03/29 A Modifications to the setup page                           [ #00]
+03/28 F Avoid wrapping in MOTDs                                   [ #00]
+03/21 F Some fixes to channel list layout in IE                   [ #00]
+03/13 F Corrections to the Dutch language file                    [ #16]
+03/09 F Fixed potential problem in server details function        [ #00]
+02/28 F Fixed nick tracking on channel stats pages                [ #00]
+
+Provided by crazy <crazy@frugalware.org>
+04/09 U Updated Romanian language file                            [ #00]
+
+Provided by iScripters <iScripters@gmail.com>
+04/09 U Updated Dutch language file                               [ #00]
+
+
+phpDenora Version 1.0.0-rc3
+---------------------------
+02/26 F Top users/chans on front page now link to daily stats     [ #00]
+02/26 F Improved nick tracking implementation                     [ #00]
+02/20 F Fixed channel stats not being detected on some systems    [ #00]
+02/20 F Fixed url encoding in user details page                   [ #00]
+02/20 F Net and pie graphs now get drawn even with no data        [ #00]
+02/20 A Default net graphs changed to monthly                     [ #00]
+02/20 U Updated JpGraph libs to v1.20.3 (php4) and v2.1.1 (php5)  [ #00]
+02/10 F Did not strip the \n char in remote parsing function      [ #00]
+02/10 F Fixed chan variable parsing in case of & character        [ #00]
+02/09 A Added 'seenuser' (user info) function to remote api       [ #00]
+02/09 A Added parameter to remote channel list for minimum users  [ #00]
+02/09 F Rewrote chan variable handling which should fix problems  [ #00]
+02/03 A Denora 1.2.0 is now required                              [ #00]
+02/03 F Fixed problem in net graphs under some circumstances      [ #00]
+02/01 F Fixed undefined indexes in array average of net graphs    [ #00]
+01/31 F Variable parsing now prevent css attacks reported by Maxi [ #00]
+01/31 A Added channel list function to remote api                 [ #00]
+01/31 A Rewrote and cleaned up remaining api functions            [ #00]
+01/30 F Fixed error if operator list is empty                     [ #00]
+
+
+phpDenora Version 1.0.0-rc2
+---------------------------
+01/27 F Fixed error on chan info page when no topic is set        [ #00]
+01/25 A Finalized the basic remote api request interface          [ #00]
+01/23 F Fixed current stats function not returning times          [ #00]
+01/23 A Added documentation for integration in web sites          [ #00]
+01/23 A Added basic remote api request interface                  [ #00]
+01/23 F Cleaned up and reorganized api functions                  [ #00]
+01/22 F Fixed users marked offline even if status lookup is off   [ #00]
+01/21 F Improved error handling on setup page                     [ #00]
+01/20 F Fixed protocol files for hybrid, ratbox and rageircd      [ #00]
+01/19 F Fixes to +s/+p chans behaviour                            [ #00]
+01/18 A Ability to set character set in language files            [ #00]
+01/18 F Fixed browser language detection function                 [ #00]
+01/16 U Updated JpGraph libraries to v1.20.2 (php4)               [ #00]
+01/16 F Network status page didn't consider missing GD libraries  [ #00]
+01/16 F Error reporting now set to on before loading config       [ #00]
+01/16 F ini_set not working properly on some systems              [ #00]
+01/14 F denora_noshow_chans option was not properly implemented   [ #00]
+
+Provided by tronic <tronic@hotmail.com.tr>
+01/12 A Added Turkish language file                               [ #00]
+
+Provided by ToXiC <toxic@freemail.gr>
+01/21 A Added Greek language file                                 [ #00]
+
+
+phpDenora Version 1.0.0-rc1
+---------------------------
+01/11 F Fixes to ircd support for live users on channel list      [ #00]
+01/11 F Got x-labels in net graphs under control                  [ #00]
+01/11 F Better behavior of links in search results                [ #00]
+01/11 A Implemented search for channel stats                      [ #00]
+01/10 F All dates now make use of the format set in langfile      [ #00]
+01/09 A Improved search page layout                               [ #00]
+01/08 F Fixed some chan modes being taken from wrong table        [ #00]
+01/08 A Improved "who is on channel" user list                    [ #00]
+01/08 F Less restrictive for users on ulined servers              [ #00]
+01/08 F Chat icons now added in channel stat lists too            [ #00]
+01/08 F Queries needed for user stats lists cut by half           [ #00]
+01/08 A Added icons to indicate user status                       [ #00]
+01/08 A Improved and better looking error handling                [ #00]
+01/08 F Fixed users on u-lined servers showing up on chan info    [ #00]
+01/08 A Added seen user functionality to search page              [ #00]
+01/07 U Updated documentation files                               [ #00]
+01/05 F Operators list more careful on ircd protocols             [ #00]
+01/05 F Improved sorting of Operators list                        [ #08]
+01/03 F Completelly rewritten network graphs logic                [ #00]
+01/03 U Updated JpGraph libraries to v1.20.1 (php4)               [ #00]
+01/02 F Optimized SQL queries for channel list                    [ #00]
+01/02 A Added links to irc:// and web chat for channels           [ #00]
+01/02 F "Who is online" list now needs just one query             [ #00]
+01/02 A Added Operators list to network section                   [ #08]
+01/01 A Several improvements and cleanups to the SQL library      [ #00]
+01/01 F Fixed irc text not wrapping in some cases                 [ #00]
+12/31 F Needed queries for "who is online" lists cut to half      [ #00]
+12/27 F Menu showed links to invites/excepts even if not in ircd  [ #00]
+12/22 A More improvements to current/max net stats handling       [ #00]
+12/22 F Fixed setup page always executing db checks               [ #00]
+12/22 F Fixed validation problems on ustats pages                 [ #00]
+12/22 A User status page improved                                 [ #00]
+12/22 A Network status page improved                              [ #00]
+12/22 F Fixes in channel status page for channels with uppercases [ #00]
+12/22 F Current/Max stats on front page tolerant if broken table  [ #00]
+
+Provided by RA3OR <ra3or@as.ro>
+12/22 U Updated Romanian Language File                            [ #00]
+
+Provided by Alvaro <alvaro@xateros.com>
+01/11 U Updated Spanish Language File                             [ #00]
+
+Provided by Elephantman <elephantman@europnet.org>
+01/12 U Updated French language file                              [ #00]
+
+
+phpDenora Version 0.9.4
+-----------------------
+12/20 F Fixes to the control codes parsing function               [ #07]
+12/20 F Better behavior in case of no channel data                [ #00]
+12/20 F Fixed lots of channel/user escaping bugs                  [ #00]
+12/19 F Monitored user channel list shown even if user not cached [ #00]
+12/19 F phpDenora now follows Denora's nick tracking system       [ #00]
+12/18 A Some updates and changes to the themes                    [ #00]
+12/18 F Fixed overlapping labels in pie graphs                    [ #00]
+12/18 F Fixed channel excepts and invites not checking protocol   [ #00]
+12/18 A Made network graphs more understandable                   [ #00]
+12/18 F Fixed user stats graph not using theme                    [ #00]
+12/18 A Finally improved the "Home" page                          [ #00]
+12/18 A Added FAQ file in docs                                    [ #00]
+12/17 F Fixed max stats sorting on front page                     [ #00]
+12/17 A Colors for new graphs system now set in themes            [ #00]
+12/17 A Option to hide ulined servers                             [ #00]
+12/17 A Options to disable online status and country lookups      [ #00]
+12/16 A Pie graphs switched to jpgraph libs                       [ #00]
+12/16 F Fixed version check on Denora rev >501                    [ #00]
+12/16 A Bar charts now using jpgraph libraries                    [ #00]
+12/16 A Readded config option to enable graphs                    [ #00]
+12/16 A Graphs now make use of langfiles                          [ #00]
+12/14 F Correctly handle missing mysql extension in setup page    [ #00]
+12/07 A Various improvements to the graphs                        [ #00]
+12/07 A Setup page fixes hourly stats tables (Denora bug #107)    [ #00]
+12/07 A Added custom graphs feature                               [ #00]
+12/06 A Network graphs now enabled by default :)                  [ #00]
+12/06 F Workaround Denora bug #107 to fix broken data for graphs  [ #00]
+12/05 U Raised minimum requirement to Denora 1.1.0 rev. 449       [ #00]
+12/04 A Yearly graphs now use a single query and are more precise [ #00]
+12/04 F Rewritten config file to avoid tab-layout problems        [ #00]
+12/04 F Fixed the maximum user value in User Stats list           [ #00]
+12/04 F Fixed links in User Stats List and Search pages           [ #00]
+12/04 A Monthly graphs now more precise                           [ #00]
+12/04 A Network graphs now disabled by default (Denora bug #107)  [ #00]
+12/04 A Added weekly network graphs                               [ #00]
+12/04 U Updated JpGraph libraries to v1.20 (php4) and v2.0 (php5) [ #00]
+12/03 U Minimum required php version raised to 4.3.1              [ #00]
+12/03 F Prevent no data points errors in daily graphs             [ #00]
+12/03 F Added missing table parameters for the graphs :)          [ #00]
+12/02 A Added basic Network Graphs. Still needs work...           [ #00]
+12/02 A Added JpGraph libraries v2.0rc2 for php5                  [ #00]
+12/02 A Added JpGraph libraries v1.19 for php4                    [ #00]
+12/02 F Some db check fixes and layout tweaks to the setup page   [ #00]
+12/01 F Fixed url parsing being bogus in some cases               [ #00]
+12/01 F Long words are now wrapped in topics                      [ #00]
+11/30 A Setup page now checks for file permissions                [ #00]
+11/30 A Moved setup page to setup.php                             [ #00]
+11/25 F Fixed control codes parsing on some php versions          [ #04]
+11/19 F Setup page also fixes missing current chans value in sql  [ #00]
+11/19 F Fixed handling of current channels value on front page    [ #03]
+11/12 F Inverted topic author and set time on channel status      [ #00]
+
+Provided by StalkR <stalkr@stalkr.net>
+11/12 F Fixed automatic language detection on some php versions   [ #04]
+
+Provided by RA3OR <ra3or@as.ro>
+12/03 U Updated Romanian Language File                            [ #00]
+12/02 A Added Romanian Language File                              [ #00]
+
+Provided by crazy <da.crew@gmx.net>
+12/17 U Updated Romanian language file                            [ #00]
+
+Provided by iScripters <iScripters@gmail.com>
+12/19 U Updated Dutch language file                               [ #00]
+
+Provided by Psychik <psychik@neurotropic.info>
+12/19 U Updated French language file                              [ #00]
+
+
+phpDenora Version 0.9.3
+-----------------------
+11/10 F Work around Denora bug on last server split times         [ #00]
+11/09 F Fixed direct chan url variable not working properly       [ #00]
+11/09 F Fixed control codes being stripped in some cases          [ #00]
+11/09 F Reimplemented color parsing, now it's valid xhtml         [ #00]
+11/08 F Improved link detection in control codes parsing function [ #00]
+11/08 A Modified pie graph color palettes                         [ #00]
+11/08 F Fixed color array handling in pie graphs                  [ #00]
+11/08 F Fixed max stats function failing on different row order   [ #00]
+11/08 F Denora bug #122 now really gets fixed on setup page       [ #00]
+11/05 F Fixed incorrect user search results count                 [ #00]
+11/05 F Fixed wrong URL encoding in top channels on front page    [ #00]
+11/01 A Added option to block specific channels                   [ #00]
+11/01 F Setup page now behaves better on missing db/data          [ #00]
+11/01 F Fixed undefined index in chan bans/excepts/invites        [ #00]
+11/01 F Avoid division by zero for activity bars                  [ #00]
+10/31 F Fixed channels with #-chars in them not working           [ #00]
+10/27 A Channel /who list now spans on multiple pages             [ #00]
+10/27 F Channel information formatting now like net/user info     [ #00]
+10/27 F Reverted mysql escaping changes of rev. 78                [ #00]
+10/26 F Fixed tooltips in mozilla for flags and asc/desc arrows   [ #00]
+10/26 A Implemented multiple pages on all stat outputs            [ #00]
+10/26 F Better mysql escaping                                     [ #00]
+10/26 F Tooltips in column charts now show in mozilla             [ #00]
+10/24 A Added a sort of /whois to user stat pages                 [ #00]
+10/24 A Country flag displayed on /who list                       [ #00]
+10/24 A Displaying Online status in server list                   [ #00]
+10/24 F Better behavior in case no sql data is returned           [ #00]
+10/24 F Avoid displaying channel stats link if chan not monitored [ #00]
+10/22 F Fixed some characters not being displayed if colorparsed  [ #00]
+10/22 F Avoid displaying channels with 0 users in chan list       [ #00]
+10/22 A Channel list supports multiple pages and asc/desc sorting [ #00]
+10/21 A Implemented automatic browser language detection          [ #00]
+10/21 A User search now returns results in user stats style       [ #00]
+10/21 A Channel search now searches channel list instead of stats [ #00]
+10/21 A Redesigned channel /list, now sortable                    [ #00]
+10/19 A Cleaned up Denora API                                     [ #00]
+10/17 F Fixed country flags not showing up in users section       [ #00]
+10/17 A Network section reorganized                               [ #00]
+10/17 F Server list is now sorted alphabetically                  [ #00]
+10/17 A Channel modes now shown on channel status page            [ #00]
+10/17 F Control codes parsing produces valid xhtml (needs work)   [ #00]
+10/16 F Fixed nick and channel slash stripping                    [ #00]
+10/15 F 'Who is on channel' list is now sorted alphabetically     [ #00]
+10/10 A Reorganized channel stats and added many new features     [ #00]
+10/09 A Country statistics can be disabled in config              [ #00]
+10/09 A User stats now show the country and online status         [ #00]
+10/09 A Default stats type and ordering can be configured         [ #00]
+10/09 A Added ngircd IRCD support                                 [ #00]
+10/09 A Added Charybdis IRCD support                              [ #00]
+10/08 A Better looking chan/user stat tables with bars            [ #00]
+10/08 A Updated some documentation                                [ #00]
+10/08 A Redesigned the configuration page                         [ #00]
+10/08 A Improved languages design                                 [ #00]
+10/08 A Improved themes design                                    [ #00]
+10/07 A Language and Theme lists now get generated automatically  [ #00]
+10/07 A Added index files to avoid directory listing              [ #00]
+10/06 F Fixed stupid case problems on some channel stats pages    [ #00]
+10/06 F Secret channels don't show up in user stats anymore       [ #00]
+10/06 A Graphical features automatically disabled if GD missing   [ #00]
+10/06 F Denora bug #122 gets automatically fixed on setup page    [ #00]
+10/05 A Improved Setup Page                                       [ #00]
+10/04 F Fixed level 2 warnings on css validation in all themes    [ #00]
+09/30 F Better nick&chan truncating on front page                 [ #00]
+
+Provided by crazy <da.crew@gmx.net>
+10/17 U Updated German language file                              [ #00]
+
+Provided by iScripters <iScripters@gmail.com>
+10/27 U Updated Dutch language file                               [ #00]
+
+Provided by Mateo <mathieuduluc@free.fr> and
+            Elephantman <elephantman@europnet.org>
+10/31 U Updated French language file                              [ #00]
+
+Provided by Kaetzchen <Ezpharess@aol.com>
+10/31 U Updated German language file                              [ #00]
+
+Provided by Alfred <alfred.dunhill@gmail.com>
+11/11 U Updated Spanish language file                             [ #00]
+
+
+phpDenora Version 0.9.2
+-----------------------
+09/28 A Little theme updates                                      [ #00]
+09/28 A Improved example.cfg.php file                             [ #00]
+09/28 A Implemented smart config checker for smoother upgrades    [ #00]
+09/28 A Modern Theme finished and now default                     [ #00]
+09/28 F Fixed some alignments in table headers                    [ #00]
+09/28 F Long nicknames and channels now get truncated in the menu [ #00]
+09/27 F Fixed button behavior in Classic theme                    [ #00]
+09/27 A Welcome Page updated                                      [ #00]
+09/27 F Network Registration now works                            [ #00]
+09/27 A Setup page improved                                       [ #00]
+09/27 A Restored Classic theme from rev. 53                       [ #00]
+09/27 A Classic theme updated and renamed to Modern               [ #00]
+09/23 F Fixed last split behavior on newer denora revisions       [ #00]
+09/08 A Changed project URL and author email address              [ #00]
+09/08 F Fixed background picture not showing in mozilla/firefox   [ #00]
+09/08 A New phpDenora logo                                        [ #00]
+09/08 A Classic theme updated and now default                     [ #00]
+08/30 F Really fixed 'who is on channel' not working correctly    [ #01]
+08/17 F Server offline status did not get translated              [ #00]
+08/16 F Fixed 'who is on channel' not working on most ircds       [ #00]
+08/16 F Fixed pie graphics not working on most ircds              [ #00]
+08/16 A Added option to show hidden channels                      [ #00]
+08/16 A Added support for beware, dreamforge, liquidircd, musircd [ #00]
+07/28 F Server descriptions are now parsed for colors             [ #00]
+
+
+phpDenora Version 0.9.1
+-----------------------
+07/27 F Current time is shown if data is null in server details   [ #00]
+07/27 F Fixed wrong url generation in ustats page                 [ #00]
+07/26 F Unix CR/LF on all files                                   [ #00]
+07/25 F Long nicks and channel names now truncated on front page  [ #00]
+07/25 A Split classic theme into classic and classic xp           [ #00]
+07/25 F Avoid showing time in server details if data is null      [ #00]
+07/25 F Modifications to the welcome page                         [ #00]
+07/24 F Channel /list will now show +p channels                   [ #00]
+07/24 F welcome.php named welcome.dist.php to avoid overwrites    [ #00]
+07/23 F Modes in channel /list now works for all supported ircds  [ #00]
+07/23 A Channel /list page now also shows channel modes           [ #00]
+07/23 F Improved channel /list page layout                        [ #00]
+07/23 F Improved left menu usability                              [ #00]
+07/23 A Welcome page now checks if Denora version is compatible   [ #00]
+07/23 A Added registration form to welcome page                   [ #00]
+07/23 F Tld and client piecharts are now shown on separate pages  [ #00]
+07/22 A Added Server Details page                                 [ #00]
+07/22 A Added Configuration page                                  [ #00]
+07/22 F Removed useless sql queries on persistent connections     [ #00]
+07/22 A Some work on the new Front Page                           [ #00]
+07/20 F Column charts was always using the default theme image    [ #00]
+07/20 F Appearance settings form now uses post method             [ #00]
+07/19 A Language and Theme now selectable from home page (cookie) [ #00]
+07/19 F Max user time is now translated into the active language  [ #00]
+07/19 A Locale now set in langfiles                               [ #00]
+07/19 F Server list takes into account the configured date format [ #00]
+07/19 F Fixed case sensitiveness problem in search queries too    [ #00]
+07/19 F Fixed case sensitiveness problem in some sql queries      [ #00]
+07/19 F Fixed +p users behavior in piecharts                      [ #00]
+07/19 F Less restrictive behavior for +s/+p channels              [ #00]
+07/19 F Moved date format configuration to langfiles              [ #00]
+07/18 F 'Classic' theme improvements                              [ #00]
+07/18 A Added 'Alternative' theme                                 [ #00]
+07/18 A Persistent sql connection and port now configurable       [ #00]
+07/18 F More sql performance improvements                         [ #00]
+07/18 A Added debug level 3 for query output                      [ #00]
+07/18 F Improved overall sql query performance                    [ #00]
+07/18 F Fixed wrong image path in colcharts                       [ #00]
+07/18 F Improved sql query performance in search                  [ #00]
+07/18 F Search now filters +s/+p channels from results            [ #00]
+07/18 F Status page now refuses to show data for hidden servers   [ #00]
+07/18 A Channel /list feature re-enabled                          [ #00]
+07/18 A Added Home page (still needs some work)                   [ #00]
+07/18 A Piechart font, border and bg colors now settable in theme [ #00]
+07/18 A Added Search button to top menu                           [ #00]
+07/18 A Templates renamed to Themes                               [ #00]
+
+Provided by crazy <da.crew@gmx.net>
+07/26 U Updated German language file                              [ #00]
+
+Provided by DrStein <an-drstein@dezeserver.nl>
+07/25 A Added Spanish language file                               [ #00]
+
+Provided by Trinity <trinity@united-irc.com>
+07/21 A Added French language file                                [ #00]
+
+Provided by iScripters <iScripters@gmail.com>
+07/26 U Updated Dutch language file                               [ #00]
+07/20 A Added Dutch language file                                 [ #00]
+
+
+phpDenora Version 0.9.0
+-----------------------
+07/14 F Fixed network country piechart                            [ #00]
+07/14 R Channel /list feature disabled for now                    [ #00]
+07/14 F Fixed xhtml for motd output                               [ #00]
+07/14 F All php files are now secured against direct access       [ #00]
+07/14 F Fixed debug mode not working                              [ #00]
+07/13 F Various XHTML validation fixes                            [ #00]
+07/13 F Color codes of MOTDs are now being parsed                 [ #00]
+07/13 F Some minor fixes for the userstats pages                  [ #00]
+07/13 U Finalized Langfile                                        [ #00]
+07/12 U Denora web-api updated to latest version                  [ #00]
+07/11 F Slashes in MOTD output are now stripped                   [ #00]
+07/11 A Debug mode split into different levels                    [ #00]
+07/11 A Number of SQL queries are counted                         [ #00]
+07/11 F Fixed overlapping variable in userstats                   [ #00]
+07/11 F Cleaned up channelstats and userstats code                [ #00]
+07/11 F Fixed other php warnings                                  [ #00]
+07/11 A Added debug mode                                          [ #00]
+07/11 F Fixed php warnings                                        [ #00]
+07/11 F Stats on +p users will not show channels they are on      [ #00]
+07/11 A SQL Tables are now configurable                           [ #00]
+07/10 A Now using sql api for all functions                       [ #00]
+07/10 A Cleaned up column charts code                             [ #00]
+07/10 F Cleaned up channel/user search code and fixed limit       [ #00]
+07/10 F +s/+p channels are not shown in stats anymore             [ #00]
+07/10 F Fixed hidden servers setting being case sensitive         [ #00]
+07/10 F Fixed server count in api                                 [ #00]
+07/10 U Updated the ircd files from the denora api                [ #00]
+07/10 A Cleaned up piecharts code, colors now set in template     [ #00]
+07/09 F Fixed some piechart colors being too similar              [ #00]
+07/09 F Fixed server list showing hidden servers                  [ #00]
+07/09 F Various XHTML fixes                                       [ #00]
+07/09 F Fixed local users display in network status               [ #00]
+07/09 A Client version piechart can now be disabled in config     [ #00]
+07/09 A Search results limit is now configurable                  [ #00]
+07/09 A Improved template system, images now definable            [ #00]
+07/09 F Fixed channel search and list pages not being loaded      [ #00]
+07/09 A User's channels are now always shown in ustats            [ #00]
+07/09 A Stats types for user stats now in menu                    [ #00]
+07/09 F Fixed menu behavior in channels page list                 [ #00]
+07/09 F Fixed max user time display in server list                [ #00]
+07/09 F Various cleanups for svn                                  [ #00]
+07/08 F Moved some configuration options into phpdenora.cfg.php   [ #00]
+
+Provided by crazy <da.crew@gmx.net>
+07/13 A Added German language file                                [ #00]

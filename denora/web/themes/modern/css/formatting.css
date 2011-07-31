@@ -1,0 +1,81 @@
+/* $Id: formatting.css 223 2006-08-26 14:17:35Z Hal9000 $ */
+
+img {
+	border: 0;
+	margin: 0;
+}
+
+p,h1,h3,pre {
+	margin: 0px 10px 10px 10px;
+	padding: 0px 5px 0px 5px;
+}
+
+p{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	color: #666666;
+	letter-spacing: normal;
+	text-indent: 0pt;
+	vertical-align: baseline;
+	margin: 0px;
+	text-align: justify;
+}
+
+h1{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12pt;
+	font-weight: bold;
+	font-style: normal;
+	font-variant: small-caps;
+	color: #333333;
+	margin: 0px;
+}
+
+h3 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	font-weight: bold;
+	font-style: normal;
+	font-variant: small-caps;
+	color: #666666;
+	margin: 0px;
+	text-align: center;
+}
+
+pre { font-size: 8pt; }
+
+.center { text-align: center }
+.left { text-align: left }
+.right { text-align: right }
+
+a, a:link, a:visited {
+	color: #FF9900;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+
+a.topic, a:link.topic, a:visited.topic {
+	color: #000066;
+	text-decoration: none;
+}
+a:hover.topic {
+	text-decoration: underline;
+}
+
+.color {
+	color: #5083b7;
+}
+
+form {
+	padding: 5px;
+	margin: 0px auto 0px auto;
+	text-align: left;
+}
+input,select,textarea{ font-size: 8pt; }

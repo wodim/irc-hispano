@@ -1,0 +1,82 @@
+/* $Id: main.css 217 2006-08-21 09:57:41Z Hal9000 $ */
+
+body {
+	background-color: #555967;
+	margin: 0px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #666666;
+}
+
+div#pd_frame {
+	margin: 7px auto 5px auto;
+	padding: 0px;
+	text-align: left;
+	width: 820px;
+}
+
+div#pd_header {
+	padding: 5px 2px 2px 2px;
+	margin: 0px;
+	text-align:left;
+	height: 58px;
+	color: #003366;
+	border-bottom: 2px solid #FF9900;
+	border-left: 1px solid #CCCCCC;
+	border-top: 1px solid #CCCCCC;
+	border-right: 1px solid #CCCCCC;
+	background:#FFFFFF url("../img/header_bg.png") no-repeat right;
+}
+div#pd_header a {
+	color: #555967;
+	text-decoration: none;
+}
+
+div#pd_main {
+	padding: 0px;
+	margin: 0px;
+	background-color: #FFFFFF;
+	border-left: 1px solid #CCCCCC;
+	border-right: 1px solid #CCCCCC;
+}
+
+div#pd_menu {
+	width: 150px;
+	padding: 15px 0px 15px 0px;
+	margin: 0px;
+}
+
+div#pd_content {
+	margin-right: auto;
+	margin-left: auto;
+	text-align: center;
+	padding: 0px 5px 10px 5px;
+	width: 650px;
+}
+
+div#pd_footer {
+	padding: 0px;
+	margin: 0px 0px 15px 0px;
+	border-top: 1px solid #CCCCCC;
+}
+div#pd_footer h6 {
+	font-size: 7pt;
+	color: #999999;
+	padding: 0px;
+	margin: 0px;
+}
+
+table#maintable {
+	border-collapse: collapse;
+}
+
+td#pd_menutd {
+	border-right: 1px solid #CCCCCC;
+	background-color: #f9f3df;
+	padding: 0px;
+	margin: 0px;
+}
+
+img#logo {
+	margin: 2px;
+}

@@ -1,0 +1,37 @@
+phpDenora 1.4 Frequently Asked Questions
+----------------------------------------
+
+Q: phpDenora seems not to show any data
+A: Check that phpDenora has proper access to the SQL database, check that
+   your Denora installation is setup for SQL and running correctly.
+
+Q: phpDenora does not show "Top 10 channels" and "Top 10 users" on front page
+A: You need to assign the Denora bot to some channels to gather stats.
+   Usually something like '/msg StatServ CHANSTATS ADD #channel'
+   See the 'CHANSTATS ADD' command in the Denora documentation
+
+Q: No MOTD is shown for my server
+A: UnrealIRCd does not send the MOTD remotelly if it's named differently
+   than ircd.motd. Just create a symlink named that way and restart Denora
+   for changes to take effect.
+
+Q: My Client Pie Graphs always show 100% unknown
+A: Denora has the ctcp versioning on users disabled. Enable that feature,
+   or disable the client pie graphs in the phpDenora configuration file.
+
+Q: phpDenora seems not to track users correctly
+A: This is an issue with Denora 1.1. The newest 1.4 releases (at the time
+   of writing 1.4.3-RC1) have an improved nick tracking system. Due to the
+   nature of Denora tracking all users connected it's impossible to
+   guarantee perfect nick tracking. If users don't change their mask
+   (username and provider) and/or provider they should be on the safe side.
+   However you could enable the ustatsregistered option which then makes
+   Denora track only registered +r users. We recommend you enable this.
+
+Q: Some dates are displayed in English instead of my chosen language
+A: The UTF-8 locale of the selected language must be installed on the
+   system running phpDenora. Please consult your server administrator.
+
+Q: Some dates are displayed with wrong or missing characters
+A: The UTF-8 locale of the selected language must be installed on the
+   system running phpDenora. Please consult your server administrator.

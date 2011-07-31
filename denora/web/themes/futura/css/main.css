@@ -1,0 +1,119 @@
+/* $Id: main.css 208 2006-08-17 22:45:49Z Hal9000 $ */
+
+body {
+	background-color: #555967;
+	margin: 5px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #666666;
+}
+
+/* Main Frame */
+div#frame {
+	margin: 7px auto 5px auto;
+	padding: 0px;
+	text-align: left;
+	width: 810px;
+}
+
+/* Main Layout Table */
+table#maintable {
+	border: 2px solid #333333;
+}
+
+/* Cell containing the Site Logo */
+td#sitelogo {
+	background:#FFFFFF url(../img/logo.png) no-repeat;
+	border-bottom: 1px solid #333333;
+	border-right: 1px solid #333333;
+	width: 150px;
+	height: 85px;
+}
+
+/* Cell containing top site ads */
+td#siteads {
+	background-color:#FFFFFF;
+	border-bottom: 1px solid #333333;
+}
+
+td#nositeads {
+	background:#F0F0F0 url(../img/newsgradient.png) no-repeat left top;
+	border-bottom: 1px solid #333333;
+}
+
+/* Cell containing menu table and left site ads */
+td#sitemenu {
+	background-color:#E6E6E6;
+	border-right: 1px solid #333333;
+	width: 150px;
+}
+
+/* Cell containing bottom menu buttons */
+td#bottombuttons {
+	background-color:#E6E6E6;
+	border-right: 1px solid #333333;
+	width: 150px;
+}
+
+/* Table containing menu buttons */
+table#menutable {
+	background:#FCFCFC url(../img/menubg.png) no-repeat left top;
+	border-bottom: 1px solid #333333;
+}
+table#menutable td {
+	margin: 0px;
+	padding: 0px;
+}
+table#menutable td a {
+	display: block;
+	text-decoration: none;
+	color: #003366;
+	padding: 5px;
+}
+table#menutable td a:hover {
+	background-color: #D2E7EE;
+}
+
+/* Table containing bottom menu buttons */
+table#bottomtable {
+	background:#FCFCFC url(../img/menubg.png) no-repeat left top;
+	border-top: 1px solid #333333;
+}
+table#bottomtable td {
+	margin: 0px;
+	padding: 0px;
+}
+table#bottomtable td a {
+	display: block;
+	text-decoration: none;
+	color: #003366;
+	padding: 5px;
+}
+table#bottomtable td a:hover {
+	background-color: #D2E7EE;
+}
+
+/* Cell containing site content */
+
+div#content {
+	background: #FFFFFF url(../img/itemgradient.png) no-repeat left top;
+	padding: 5px 5px 10px 5px;
+}
+
+td#sitecontent {
+	background-color: #FFFFFF;
+	margin: 0px;
+	padding: 0px;
+	text-align: center;
+}
+
+table#submenu {
+	background-color: #FCFCFC;
+	border: 1px solid #CCCCCC;
+	margin: auto 0px auto auto;
+}
+table#submenu td {
+	border: 1px dotted #CCCCCC;
+	padding-left: 5px;
+	padding-right: 5px;
+}

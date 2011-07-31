@@ -1,0 +1,33 @@
+A Theme Set for phpDenora 1.1.0 - 1.4.x is organized as follows:
+
+themes/
+	theme-name/
+		index.php
+		theme.php
+		main.php
+		thumbnail.png
+		css/
+			default.css
+			...
+		img/
+			logo.png
+			...
+
+To create your own theme, follow this procedure:
+
+1. Copy any theme folder and name the folder like your theme. For example: 'ocean'
+2. Edit the main.php template and css files as you wish.
+3. Replace the images in the img/ folder as you wish.
+4. Create a thumbnail image of your theme in action
+5. Edit the theme.php file to set the image files and dimensions
+
+To upgrade your existing phpDenora 1.0.x template, follow this procedure:
+
+1. Copy themes/modern/main.php into themes/yourtheme/
+2. Edit the file and replace all occurences of 'modern' with 'yourthemename'
+3. Copy graphs.png, user.png, oper.png, server.png, channel.png and max.png
+   from themes/modern/img/ into themes/yourtheme/img/
+4. Read docs/Changes.theme for a list of stuff you need to add or remove, and
+   copy those from an existing new theme.
+5. Rename themes/yourtheme/css/main.css into themes/yourtheme/css/default.css
+5. Edit themes/yourtheme/index.php and change the value of $theme_ver to '1.2.0'

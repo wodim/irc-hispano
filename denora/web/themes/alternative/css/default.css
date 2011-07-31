@@ -1,0 +1,15 @@
+/* $Id: default.css 223 2006-08-26 14:17:35Z Hal9000 $ */
+
+/*
+ * The following files contain the CSS needed by the template's
+ * main.php file, and their content can be changed as you wish
+ */
+@import url(main.css);
+@import url(menu.css);
+
+/*
+ * The following files contain CSS needed by the phpDenora cora.
+ * You can modify, but NOT rename or remove the blocks!
+ */
+@import url(layout.css);
+@import url(formatting.css);

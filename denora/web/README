@@ -1,0 +1,79 @@
++-----------------------+
+| phpDenora Quick Start |
++-----------------------+
+
+REQUIREMENTS:
+- Denora 1.4.x, with MySQL support enabled
+  http://www.denorastats.org/
+- A web server, obviously
+- PHP 5.2.0 or greater
+- PHP MySQL module
+- PHP GD module
+
+REQUIRED DENORA SETTINGS:
+
+   CHANGE this to a higher value, such as 15 days (15d) to keep information for a longer time.
+   Important: the servercache value must NOT be smaller than the usercache value!
+   - usercache 15d;
+   - servercache 30d;
+
+   CHANGE this to 1h
+   - uptimefreq 1h;
+
+   ENABLE the following parameters by removing the '#' in front:
+   - ctcpusers;
+   - keepusers;
+   - keepservers;
+
+   DISABLE the following parameter by adding a '#' in front:
+   - #largenet;
+
+OPTIONAL DENORA SETTINGS:
+
+   Limiting chanstats to +r users improves nick tracking.
+   To use this feature ENABLE the following parameters by removing the '#' in front:
+   - ustatsregistered;   
+
+INSTALLATION:
+- Upload all files to your web server
+- Edit example.cfg.php and configure phpDenora accordignly
+- Rename example.cfg.php to phpdenora.cfg.php
+- Open your phpDenora URL in the web browser and follow instructions for completing setup
+- If you enabled graph caching, it is recommended that you add a command to your crontab
+  to regurarly clean up the cache folder. For example:
+  0 0 * * * rm /path/to/your/phpdenora/cache/directory/* >/dev/null 2>&1
+
+UPGRADE from phpDenora 1.2.x:
+- If you have an old language file that is not part of the phpDenora 1.3.0 distribution,
+  it will not work anymore. Please read docs/TRANSLATIONS for instructions on how to
+  update your language file.
+  
+UPGRADE from phpDenora 1.0.x:
+- The old configuration file is still compatible, but you should look at docs/Changes.conf
+  for new configuration parameters. Or just start from scratch again using example.cfg.php,
+  as you prefer :)
+- If you have an old language file that is not part of the phpDenora 1.3.0 distribution,
+  it will not work anymore. Please read docs/TRANSLATIONS for instructions on how to
+  update your language file.
+- If you created your own theme, it will not work anymore. Please read docs/THEMES for
+  instructions on how to upgrade your theme.
+- The "Classic XP" theme has been removed, so please remove it from your themes/ directory
+  on your server and make sure it is not set as default theme.
+
+CUSTOMIZATION:
+- To replace the phpDenora logo with your logo, just place your logo image into the
+  themes/<theme-name>/img directory and edit the themes/<theme-name>/theme.php to
+  specify file name, width and height for the network logo.
+- For further customization, please read the docs/THEMES file.
+
+KNOWN ISSUES:
+There are no real issues known (yet), but you might find an answer to common problems
+in the docs/FAQ file
+
+SUPPORT:
+- Please visit our project homepage for support on phpDenora:
+  http://www.denorastats.org/
+- For further documentation, please refer to the docs/ directory
+- To report bugs or feature requests please visit the bug tracker:
+  http://dev.denorastats.org/projects/phpdenora/
+- To contact the author send an email to hal9000@denorastats.org

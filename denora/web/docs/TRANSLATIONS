@@ -1,0 +1,19 @@
+Translating phpDenora into your language is an easy task:
+
+1. Simply copy the lang/en/ directory and name it to your language,
+   preferably using two letters. For example: lang/de/
+2. Edit index.php and modify parameters accordignly
+3. Edit lang.php and translate all the strings. For example,
+   "DEFINE('_TM_NETWORK','Network');" would become
+   "DEFINE('_TM_NETWORK','Rete');"
+4. When you are done, zip your language directory up and send it to me and
+   I will post it on the phpDenora web site and include it in the next release.
+
+To upgrade your existing phpDenora 1.0.x-1.2.x language file, follow this procedure:
+
+1. Read docs/Changes.lang to see which strings were added/modified/removed
+2. Look at lang/en/lang.php for the original english translation
+   and update your language file accordignly
+3. Edit lang/yourlang/index.php and change the value of $lang_ver to '1.3.0'
+4. When you are done, zip your language directory up and send it to me and
+   I will post it on the phpDenora web site and include it in the next release.

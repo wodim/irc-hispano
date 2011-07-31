@@ -1,0 +1,74 @@
+/* $Id: layout.css 209 2006-08-17 23:37:59Z Hal9000 $ */
+
+div.title {
+	text-align: left;
+	font-size: 10pt;
+	font-weight: bold;
+	font-style: normal;
+	font-variant: small-caps;
+	color: #666666;
+	border-bottom: 1px solid #666666;
+	margin: 10px 0px 5px 0px;
+}
+
+div.error {
+	width: 350px;
+	margin: 50px auto 50px auto;
+	border: 2px solid #F5F5F5;
+}
+
+table.error {
+	width: 100%;
+}
+table.error td.lerr {
+	background-color: #FFFFFF;
+}
+table.error td.rerr {
+	background-color: #F5F5F5;
+	border-left: 1px solid #CCCCCC;
+	width: 100%;
+}
+
+table.stats {
+	margin-left: auto;
+	margin-right: auto;
+	text-align: left;
+	color: #666666;
+}
+
+table.stats td.b { border-bottom: 1px dotted #CCCCCC; }
+table.stats td.s { background-color: #F4F4F4; }
+table.stats td.n { border-left: 4px solid #F4F4F4; }
+
+table.bar {
+	border: 1px solid #F4F4F4;
+}
+table.bar td.fill {
+	background:#FFFFFF url(../img/barbg.png) no-repeat;
+	height: 4px;
+}
+table.bar td.nofill {
+	background-color: #FFFFFF;
+	height: 4px;
+}
+
+table.center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+td.topmenu {
+	margin: 0px;
+	padding: 0px;
+	width: 70px;
+}
+td.topmenu a {
+	display: block;
+	width: 69px;
+}
+td.topmenu a:hover {
+	border-left: 1px solid #CCCCCC;
+	border-top: 1px solid #CCCCCC;
+}
+
+th { white-space: nowrap; }

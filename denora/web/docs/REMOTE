@@ -1,0 +1,166 @@
+phpDenora Remote API
+--------------------
+
+This file contains some documentation about the possibility of
+integrating some stats values and graphs into external web sites.
+
+   ------------------------------.
+1) Getting data using remote.php |
+   ------------------------------´
+
+The file needs to be called this way:
+<phpdenora-url>/remote.php?func=<function-name>&param=<parameter>
+So for example:
+http://stats.denorastats.org/remote.php?func=numinchan&param=%23denora
+
+Please note: %23 stands for # and is required when you specify a channel in a url.
+For other channel prefixes, you must use the html equivalent.
+
+
+1.1 List of the available functions:
+-----------------------------------
+
+- 'currentstats'
+  Returns the following values, one per line:
+  'current users', 'time', 'current channels', 'time', 'current opers', 'time',
+  'current servers', 'time', 'daily users', 'time'
+  Usage: remote.php?func=currentstats
+
+- 'maxstats'
+  Returns the following tabbed pair of values, one per line:
+  'max users' 'time', 'max channels' 'time', 'max opers' 'time', 'max servers' 'time'
+  Usage: remote.php?func=maxstats
+
+- 'topusers'
+  Returns a list of the 'n' most active users, one per line.
+  Usage: remote.php?func=topusers&param=n (where 'n' is a number)
+
+- 'topchans'
+  Returns a list of the 'n' most active channels, one per line.
+  Usage: remote.php?func=topchans&param=n (where 'n' is a number)
+
+- 'serverlist'
+  Returns a list of the network's servers in database, one per line.
+  Usage: remote.php?func=serverlist
+
+- 'chanlist'
+  Returns a list of the current channels on the network.
+  Each line contains 3 tab-separated values: 'channel', 'users', 'topic'
+  Usage: remote.php?func=chanlist&param=n (where 'n' is the minimum amount of users)
+
+- 'userlist'
+  Returns a list of the users currently present in the specified channel, followed by
+  their channel status, if set
+  Usage: remote.php?func=userlist&param=%23mychannel
+
+- 'numinchan'
+  Returns the current number of users in the given channel
+  Usage: remote.php?func=numinchan&param=%23mychannel
+
+- 'chanpeak'
+  Returns the peak user count of the given channel
+  Usage: remote.php?func=chanpeak&param=%23mychannel
+
+- 'chantopic'
+  Returns the following values, one per line:
+  'channel topic', 'topic author', 'topic time'
+  Usage: remote.php?func=chantopic&param=%23mychannel
+
+- 'operlist'
+  Returns a list of the operators online, one per line:
+  Usage: remote.php?func=operlist
+
+- 'seenuser'
+  Returns a detailed list of users (online and offline) matching the parameter
+  Each line contains these tab-separated values: 'nick', 'realname', 'username',
+  'hostname', 'online', 'away', 'connecttime', 'lastquit', 'uline'
+  Usage: remote.php&func=seenuser&param=user
+
+
+1.2 How to process the data you got
+-----------------------------------
+
+- For PHP users:
+  You may want to have a look at the docs/phpdenora.php file for some examples
+  and useful functions
+
+- For JavaScript users:
+  Sorry, no documentation / examples yet
+
+
+   --------------------------------.
+2) Showing graphs on your web site |
+   --------------------------------´
+
+The graphs need to be integrated as if they were a normal image:
+<img src="<phpdenora-url>/libs/phpdenora/graphs/<file>.php?<parameters>" alt="" />
+So for example:
+<img src="http://stats.denorastats.org/libs/phpdenora/graphs/pie.php?mode=country&chan=global" alt="Global Cuntry Stats" />
+
+
+2.1 Pie graphs (piegraphs.php)
+--------------
+
+Needed parameters:
+mode: 'country' for tld stats or 'version' for client stats
+chan: 'channel-name' for channel stats or 'global' for network global stats
+
+Example:
+piegraphs.php?mode=country&chan=%23denora
+
+
+2.2 Bar graphs (bargraphs.php)
+--------------
+
+Needed parameters:
+mode: 'chan' for channel stats or 'user' for user stats
+chan: 'channel-name' for channel stats or 'global' for network global stats
+type: '0' for total, '3' for monthly, '2' for weekly, '1' for daily
+
+Optional parameters:
+user: 'user-name' for user stats
+
+Examples:
+Channel activity graph this month: bargraphs.php?&mode=chan&chan=%23denora&type=3
+User network activity this week: bargraphs.php?&mode=user&user=homer&chan=global&type=2
+User activity on a channel today: bargraphs.php?&mode=user&user=homer&chan=%23denora&type=1
+
+
+2.3 Network graphs (graphs.php)
+------------------
+
+Needed parameters:
+mode: 'users', 'channels' or 'servers'
+
+Optional parameters:
+sy: start year (4 digits)
+sm: start month (1-2 digits)
+sd: start day (1-2 digits)
+ey: stop year (4 digits)
+em: stop month (1-2 digits)
+ed: stop day (1-2 digits)
+
+Any non-specified parameter will be replaced by the current date values.
+
+Examples:
+Server graph of today: graphs.php?mode=servers
+User graph from 10/01/2005 until today: graphs.php?mode=users&sy=2005&sm=10&sd=1
+Channel graph from 09/01/2005 to 12/31/2005: graphs.php?mode=channels&sy=2005&sm=9&sd=1&ey=2005&em=12&ed=31
+
+Suggestion:
+To display a graph containing the "last month" data, you can do the following (assuming you have php):
+
+	<?php
+	$start_date = explode("/",strftime('%m/%d/%Y',strtotime("-1 month"))); // This gets the date 1 month back from now
+	echo "<img src=\"http://your-php-denora-url/libs/phpdenora/graphs/line.php?theme=$theme&amp;lang=$lang&amp;mode=users&amp;sy=".$start_date[2]."&amp;sm=".$start_date[0]."&amp;sd=".$start_date[1]."\" alt=\"Users on our network in the past month\" />";
+	?>
+
+
+2.4 Additional parameters
+-------------------------
+
+Each of the graphs supports two additional parameters: 'theme' and 'lang'.
+This will affect language and colors of the graph.
+
+Example:
+http://stats.denorastats.org/libs/phpdenora/graphs/pie.php?theme=classic&lang=de&mode=version&chan=%23denora

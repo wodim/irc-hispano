@@ -1,0 +1,12 @@
+# (c) 2004-2011 Denora Team
+# Contact us at info@denorastats.org
+#
+# Please read COPYING and README for furhter details.
+#
+# $Id: version.in 411 2011-02-07 13:34:57Z hal9000 $
+
+VERSION_MAJOR="1"
+VERSION_MINOR="4"
+VERSION_PATCH="5"
+VERSION_EXTRA=""
+VERSION_BUILD="411"
